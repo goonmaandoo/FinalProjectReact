@@ -1,27 +1,35 @@
-import { useState } from 'react'
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MyPage from './pages/myPage/MyPage';
 import UserInfo from './pages/myPage/UserINfo';
 import RegisterCheck from "./pages/RegisterCheck";
 import OwnerRegister from "./pages/OwnerRegister";
 import UserRegister from "./pages/UserRegister";
-function App() {
 
+function App() {
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    fetch('/api/hello')
+      .then(res => res.text())
+      .then(data => setMessage(data))
+      .catch(err => console.error(err));
+  }, []);
 
   return (
-    <>
+    <div>
+      <div>{message}</div>
       <BrowserRouter>
         <Routes>
           <Route path="/mypage" element={<MyPage />} />
-          <Route index element={<UserInfo />} />
-          <Route path="userinfo" element={<UserInfo />} />
+          <Route path="/mypage/userinfo" element={<UserInfo />}gi />
           <Route path="/ownerusercheck" element={<RegisterCheck />} />
           <Route path="/ownerregister" element={<OwnerRegister />} />
           <Route path="/userregister" element={<UserRegister />} />
         </Routes>
       </BrowserRouter>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
