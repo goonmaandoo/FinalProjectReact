@@ -1,9 +1,9 @@
 import styles from "../../CSS/MyPage.module.css";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-import UserInfo from "./UserINfo";
-
+import MyHeader from "./MyHeader";
 
 export default function MyPage() {
+    const location = useLocation();
     const currentMenu = location.pathname.split("/").pop();
     const menuList = [
         { name: "회원정보", path: "userinfo" },
@@ -75,6 +75,7 @@ export default function MyPage() {
                         ))}
                     </ul>
                     <div className={styles.my_Menu_right}>
+                        <MyHeader menuList={menuList} />
                         <Outlet></Outlet>
                     </div>
                 </div>
