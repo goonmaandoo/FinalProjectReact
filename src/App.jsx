@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MyPage from './pages/myPage/MyPage';
 import UserInfo from './pages/myPage/UserINfo';
+import RegisterCheck from "./pages/RegisterCheck";
+import OwnerRegister from "./pages/OwnerRegister";
+import UserRegister from "./pages/UserRegister";
 
 function App() {
   const [message, setMessage] = useState('');
@@ -20,6 +23,9 @@ function App() {
         <Routes>
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/mypage/userinfo" element={<UserInfo />}gi />
+          <Route path="/ownerusercheck" element={<RegisterCheck />} />
+          <Route path="/ownerregister" element={<OwnerRegister />} />
+          <Route path="/userregister" element={<UserRegister />} />
         </Routes>
       </BrowserRouter>
     </div>
