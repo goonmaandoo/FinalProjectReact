@@ -6,6 +6,10 @@ import UserInfo from './pages/myPage/UserINfo';
 import MainPage from './pages/MainPage';
 import MainHeader from './components/header/MainHeader';
 import Header from './components/header/Header'
+import Login from "./pages/loginPage/Login";
+import RegisterCheck from "./pages/loginPage/RegisterCheck";
+import OwnerRegister from "./pages/loginPage/OwnerRegister";
+import UserRegister from "./pages/loginPage/UserRegister";
 
 function App() {
   const [message, setMessage] = useState('');
@@ -32,6 +36,10 @@ function App() {
           <Route path="/mainpage" element={<MainPage />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/mypage/userinfo" element={<UserInfo />}gi />
+          <Route path="/login" element={<Login />} />
+          <Route path="/ownerusercheck" element={<RegisterCheck />} />
+          <Route path="/ownerregister" element={<OwnerRegister />} />
+          <Route path="/userregister" element={<UserRegister />} />
         </Routes>
     </div>
   );
