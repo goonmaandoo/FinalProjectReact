@@ -14,12 +14,6 @@ import UserRegister from "./pages/loginPage/UserRegister";
 function App() {
   const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    fetch('/api/hello')
-      .then(res => res.text())
-      .then(data => setMessage(data))
-      .catch(err => console.error(err));
-  }, []);
   const location = useLocation();
   const isMainPage = location.pathname === "/mainpage";
 
@@ -30,7 +24,6 @@ function App() {
       ) : (
         <Header/>
       )}
-      <div>{message}</div>
         <Routes>
           <Route path="/" element={<Navigate to="/mainpage" replace />} />
           <Route path="/mainpage" element={<MainPage />} />
