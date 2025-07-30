@@ -20,7 +20,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/mypage" element={<MyPage />} />
-          <Route path="/mypage/userinfo" element={<UserInfo />} />
+          <Route path="/mypage/userinfo" element={<UserInfo />}gi />
         </Routes>
       </BrowserRouter>
     </div>
@@ -28,4 +28,3 @@ function App() {
 }
 
 export default App;
-햣
