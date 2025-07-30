@@ -16,7 +16,6 @@ function App() {
   return (
     <div>
       <div>{message}</div>
-
       <BrowserRouter>
         <Routes>
           <Route path="/mypage" element={<MyPage />} />
