@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MyPage from './pages/myPage/MyPage';
 import UserInfo from './pages/myPage/UserINfo';
+
 import './App.css';
 
 function App() {
@@ -15,16 +16,16 @@ function App() {
   }, []);
 
   return (
-    <>
+    <div>
       <div>{message}</div>
+
       <BrowserRouter>
         <Routes>
           <Route path="/mypage" element={<MyPage />} />
-          <Route index element={<UserInfo />} />
-          <Route path="userinfo" element={<UserInfo />} />
+          <Route path="/mypage/userinfo" element={<UserInfo />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </div>
   );
 }
 
