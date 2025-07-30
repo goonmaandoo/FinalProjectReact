@@ -1,5 +1,7 @@
-import { useState } from 'react'
-import './App.css'
+import { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import MyPage from './pages/myPage/MyPage';
+import UserInfo from './pages/myPage/UserINfo';
 
 function App() {
   const [message, setMessage] = useState('');
@@ -11,7 +13,17 @@ function App() {
       .catch(err => console.error(err));
   }, []);
 
-  return <div>{message}</div>;
+  return (
+    <div>
+      <div>{message}</div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/mypage/userinfo" element={<UserInfo />}gi />
+        </Routes>
+      </BrowserRouter>
+    </div>
+  );
 }
 
 export default App;
