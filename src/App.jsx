@@ -3,8 +3,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MyPage from './pages/myPage/MyPage';
 import UserInfo from './pages/myPage/UserINfo';
 
-import './App.css';
-
 function App() {
   const [message, setMessage] = useState('');
 
@@ -30,3 +28,4 @@ function App() {
 }
 
 export default App;
+햣
