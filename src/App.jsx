@@ -38,10 +38,7 @@ function App() {
           <Route path="/mainpage" element={<MainPage />} />
 
           <Route path="/roomPage/AllRoom" element={<AllRoom />} />
-          <Route path="/mypage" element={
-            <LoginCheck>
-              <MyPage />
-            </LoginCheck>}>
+          <Route path="/mypage" element={<MyPage />}>
             <Route index element={<UserInfo />} />
             <Route path="userinfo" element={<UserInfo />} />
             <Route path="edituser" element={<EditUser />} />
