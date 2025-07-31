@@ -13,8 +13,12 @@ import Login from "./pages/loginPage/Login";
 import RegisterCheck from "./pages/loginPage/RegisterCheck";
 import OwnerRegister from "./pages/loginPage/OwnerRegister";
 import UserRegister from "./pages/loginPage/UserRegister";
+import StoreListPage from "./pages/storePage/StoreListPage";
+import StoreDetail from "./pages/storePage/StoreDetail";
+import AllRoom from './pages/roomPage/AllRoom';
 import Error404Page from './pages/Error404Page';
 import LoginCheck from './components/user/loginCheck';
+
 
 
 function App() {
@@ -33,15 +37,19 @@ function App() {
           <Route path="/" element={<Navigate to="/mainpage" replace />} />
           <Route path="/mainpage" element={<MainPage />} />
 
+          <Route path="/roomPage/AllRoom" element={<AllRoom />} />
           <Route path="/mypage" element={
             <LoginCheck>
               <MyPage />
             </LoginCheck>}>
-          <Route index element={<UserInfo />} />
-          <Route path="userinfo" element={<UserInfo />} />
-          <Route path="edituser" element={<EditUser />} />
-          <Route path="myqna" element={<MyQna />} />
-        </Route>
+            <Route index element={<UserInfo />} />
+            <Route path="userinfo" element={<UserInfo />} />
+            <Route path="edituser" element={<EditUser />} />
+            <Route path="myqna" element={<MyQna />} />
+          </Route>
+
+          <Route path="/storelist" element={<StoreListPage />} />
+          <Route path="/store/:store_id" element={<StoreDetail />} />
 
           <Route path="/login" element={<Login />} />
           <Route path="/ownerusercheck" element={<RegisterCheck />} />
