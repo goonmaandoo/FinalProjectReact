@@ -185,4 +185,13 @@ a {
         margin-left: 20px;
         width: 16rem;
     }
+    .hLogo_img img {
+        height: 45px;
+    }
+}
+@media (max-width:600px){
+    .search_value {
+        margin-left: 20px;
+        width: 13rem;
+    }
 }
