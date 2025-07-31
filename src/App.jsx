@@ -18,7 +18,6 @@ import Error404Page from './pages/Error404Page';
 
 function App() {
 
-
   const location = useLocation();
   const isMainPage = location.pathname === "/mainpage";
 
@@ -29,7 +28,6 @@ function App() {
       ) : (
         <Header/>
       )}
-
         <Routes>
           <Route path="/" element={<Navigate to="/mainpage" replace />} />
           <Route path="/mainpage" element={<MainPage />} />
