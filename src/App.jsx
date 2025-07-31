@@ -13,7 +13,9 @@ import Login from "./pages/loginPage/Login";
 import RegisterCheck from "./pages/loginPage/RegisterCheck";
 import OwnerRegister from "./pages/loginPage/OwnerRegister";
 import UserRegister from "./pages/loginPage/UserRegister";
+import AllRoom from './pages/roomPage/AllRoom';
 import Error404Page from './pages/Error404Page';
+
 
 
 
@@ -32,7 +34,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/mainpage" replace />} />
           <Route path="/mainpage" element={<MainPage />} />
-          <Route path="/mypage" element={<MyPage />}>
+          <Route path="/roomPage/AllRoom" element={<AllRoom />} />
+           <Route path="/mypage" element={<MyPage />}>
           <Route index element={<UserInfo />} />
           <Route path="userinfo" element={<UserInfo />} />
           <Route path="edituser" element={<EditUser />} />
