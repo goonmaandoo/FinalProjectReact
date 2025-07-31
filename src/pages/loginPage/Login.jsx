@@ -16,6 +16,31 @@ function Login() {
             return;
         }
 
+        try {
+            const response = await fetch("/api/users/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            if (!response.ok) {
+                alert("로그인 실패: 이메일 또는 비밀번호를 확인하세요.");
+                return;
+            } else{
+                alert("로그인 성공! 메인화면으로 이동합니다.");
+                navigate("/mainpage");
+            }
+
+            const userData = await response.json();
+            setUser(userData);
+            setNickname(userData.nickname); // 만약 닉네임 필드 이름이 다르면 맞게 바꾸세요
+        } catch (error) {
+            console.error("로그인 에러:", error);
+            alert("로그인 중 오류가 발생했습니다.");
+        }
+
     };
     const onKeyDown = (e) => {
         if (e.key === "Enter") {
