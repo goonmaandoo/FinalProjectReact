@@ -17,7 +17,7 @@ import StoreListPage from "./pages/storePage/StoreListPage";
 import StoreDetail from "./pages/storePage/StoreDetail";
 import AllRoom from './pages/roomPage/AllRoom';
 import Error404Page from './pages/Error404Page';
-
+import LoginCheck from './components/user/loginCheck';
 
 
 
@@ -38,7 +38,10 @@ function App() {
           <Route path="/mainpage" element={<MainPage />} />
 
           <Route path="/roomPage/AllRoom" element={<AllRoom />} />
-          <Route path="/mypage" element={<MyPage />}>
+          <Route path="/mypage" element={
+            <LoginCheck>
+              <MyPage />
+            </LoginCheck>}>
             <Route index element={<UserInfo />} />
             <Route path="userinfo" element={<UserInfo />} />
             <Route path="edituser" element={<EditUser />} />
@@ -47,10 +50,13 @@ function App() {
 
           <Route path="/storelist" element={<StoreListPage />} />
           <Route path="/store/:store_id" element={<StoreDetail />} />
+
           <Route path="/login" element={<Login />} />
           <Route path="/ownerusercheck" element={<RegisterCheck />} />
           <Route path="/ownerregister" element={<OwnerRegister />} />
           <Route path="/userregister" element={<UserRegister />} />
+
+          
           <Route path="*" element={<Error404Page/>} />
         </Routes>
         <Footer/>
