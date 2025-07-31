@@ -15,7 +15,9 @@ import OwnerRegister from "./pages/loginPage/OwnerRegister";
 import UserRegister from "./pages/loginPage/UserRegister";
 import StoreListPage from "./pages/storePage/StoreListPage";
 import StoreDetail from "./pages/storePage/StoreDetail";
+import AllRoom from './pages/roomPage/AllRoom';
 import Error404Page from './pages/Error404Page';
+
 
 
 
@@ -35,6 +37,7 @@ function App() {
           <Route path="/" element={<Navigate to="/mainpage" replace />} />
           <Route path="/mainpage" element={<MainPage />} />
 
+          <Route path="/roomPage/AllRoom" element={<AllRoom />} />
           <Route path="/mypage" element={<MyPage />}>
             <Route index element={<UserInfo />} />
             <Route path="userinfo" element={<UserInfo />} />
