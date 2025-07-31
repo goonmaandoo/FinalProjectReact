@@ -31,7 +31,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/mainpage" replace />} />
           <Route path="/mainpage" element={<MainPage />} />
-           <Route path="/mypage" element={<MyPage />}>
+          <Route path="/mypage" element={<MyPage />}>
           <Route index element={<UserInfo />} />
           <Route path="userinfo" element={<UserInfo />} />
           <Route path="edituser" element={<EditUser />} />
