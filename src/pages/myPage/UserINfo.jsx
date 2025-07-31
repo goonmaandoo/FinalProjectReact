@@ -1,8 +1,10 @@
-
+import styles from '../../CSS/MyPage.module.css';
+import { useNavigate } from "react-router-dom";
 
 export default function UserInfo() {
-    const editButton = () => {
-        alert("버튼만들기")
+  const navigate = useNavigate();  
+  const editButton = () => {
+        navigate("/mypage/edituser");
     }
     const quitButton = () => {
         alert("버튼만들기")

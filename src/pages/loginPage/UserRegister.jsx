@@ -1,14 +1,17 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import style from "../../CSS/Register.module.css";
-
+import axios from "axios";
 
 function UserRegister() {
-const [email, setEmail] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [nickname, setNickname] = useState("");
-    const [phoneNum, setPhoneNum] = useState("");    
+    const [phoneNum, setPhoneNum] = useState("");
+    const [ownerNum, setOwnerNum] = useState("");
+    const [isNicknameChecked, setIsNicknameChecked] = useState(null);
+    const [isNicknameDuplicate, setIsNicknameDuplicate] = useState(null);
 
     const navigate = useNavigate();
 
@@ -16,6 +19,22 @@ const [email, setEmail] = useState("");
         if (!nickname.trim()) {
             alert("닉네임을 입력해주세요!");
             return;
+        }
+
+        try {
+            const nicknameResult = await axios.get(`/api/users/nicknameCheck?nickname=${nickname}`)
+            if (nicknameResult.data.duplicate) {
+                setIsNicknameChecked(true);
+                setIsNicknameDuplicate(true);
+                alert("이미 사용 중인 닉네임입니다.");
+            } else {
+                setIsNicknameChecked(true);
+                setIsNicknameDuplicate(false);
+                alert("사용 가능한 닉네임입니다.")
+            }
+        } catch(error) {
+            console.error("중복확인 오류", error);
+            alert("중복확인 오류")
         }
 
     };
@@ -32,21 +51,31 @@ const [email, setEmail] = useState("");
         }
 
         if (!isNicknameChecked) {
-            alert("닉네임 중복체크를 해주세요!");
+            alert("닉네임 중복확인을 해주세요!");
             return;
         }
 
         if (isNicknameDuplicate) {
-            alert("이미 사용 중인 닉네임 입니다.");
+            alert("이미 사용 중인 닉네임입니다.");
             return;
         }
 
-        if (error) {
-            alert("회원가입 실패! " + error.message);
-            return;
-        }
 
-        navigate("/"); // 메인으로 이동
+        try {
+            const response = await axios.post("/api/users/register", {
+                email,
+                password,
+                nickname,
+                phoneNum,
+                role: "user"
+            });
+
+            alert(response.data);
+            navigate("/"); // 메인으로
+        } catch {
+            console.log("회원가입 실패");
+            alert("회원가입 실패");
+        }
     };
 
     return (
@@ -123,7 +152,7 @@ const [email, setEmail] = useState("");
                                     placeholder="전화번호"
                                     value={phoneNum}
                                     onChange={(e) => setPhoneNum(e.target.value)}
-                                    />
+                                />
                             </td>
                         </tr>
                     </tbody>
@@ -138,6 +167,8 @@ const [email, setEmail] = useState("");
         </>
 
     );
+
+
 }
 
 export default UserRegister;
