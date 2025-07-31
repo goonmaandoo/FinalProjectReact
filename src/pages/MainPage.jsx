@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react';
 export default function MainPage() {
     const [keyword, setKeyword] = useState('');
     const [rooms, setRooms] = useState([]);
+    const [category, setCategory] = useState([]);
+    const [popular, setPopular] = useState([]);
     const navigate = useNavigate();
 
     //검색창
@@ -20,8 +22,9 @@ export default function MainPage() {
         }
         navigate(`/`);
     };
-    //공구방 조회
+
     useEffect(() => {
+        //공구방 조회
         fetch('http://localhost:8080/room/allWithCount')
         .then(res => {
             if (!res.ok) throw new Error('서버 에러');
@@ -29,7 +32,26 @@ export default function MainPage() {
         })
         .then(data => setRooms(data))
         .catch(console.error);
+
+        //카테고리 조회
+        fetch('http://localhost:8080/category/all')
+        .then(res => {
+            if (!res.ok) throw new Error('서버 에러');
+            return res.json();
+        })
+        .then(data => setCategory(data))
+        .catch(console.error);
+
+        //인기메뉴 조회
+        fetch('http://localhost:8080/popular/all')
+        .then(res => {
+            if (!res.ok) throw new Error('서버 에러');
+            return res.json();
+        })
+        .then(data => setPopular(data))
+        .catch(console.error);
     },[]);
+    
 
     return (
         <>
@@ -60,7 +82,18 @@ export default function MainPage() {
                             </Link>
                         </div>
                         <div className={styles["circle_category_wrap"]}>
-
+                            {category.map((item) => (
+                                <Link key={item.id} to="/storelist">
+                                    <div className={styles["circle_with_text"]}>
+                                        <div className={styles["circle"]}>
+                                            <img
+                                                src={`http://localhost:8080/image/imgfile/category/${item.category}.png`}
+                                                alt={`${item.category} 이미지`} />
+                                        </div>
+                                        <div className={styles["circle_text"]}>{item.num}</div>
+                                    </div>
+                                </Link>
+                            ))}
                         </div>
                         <div className={styles["gongu_wrap"]}>
                             <div className={styles["gongu_list"]}>진행중인 공구방</div>
@@ -102,7 +135,22 @@ export default function MainPage() {
                     <div className={styles["body_bottom_container"]}>
                         <div className={styles["popular_text"]}>지금 인기있는 메뉴</div>
                         <div className={styles["popular_list_wrap"]}>
-
+                            {popular.slice(0, 5).map((item) => (
+                                <Link key={item.id} to={`/store/${item.storeId}`}>
+                                    <div className={styles["popular_with_text"]}>
+                                        <img
+                                            className={styles["popular_img"]}
+                                            src={`http://localhost:8080/image/imgfile/popular/popular_${item.id}.jpg`} />
+                                        <div className={styles["popular_square"]}>
+                                            <div className={styles["popular_title"]}>{item.title}</div>
+                                            <div className={styles["popular_detail"]}>
+                                                <div className={styles["popular_star"]}>★★★★★</div>
+                                                <div className={styles["popular_detail_text"]}>{item.price}원</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Link>
+                            ))}
                         </div>
                     </div>
                 </div>
