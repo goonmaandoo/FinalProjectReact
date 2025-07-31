@@ -8,12 +8,13 @@ import UserInfo from './pages/myPage/UserInfo';
 import MainPage from './pages/MainPage';
 import MainHeader from './components/header/MainHeader';
 import Header from './components/header/Header'
+import Footer from './components/footer/Footer'
 import Login from "./pages/loginPage/Login";
 import RegisterCheck from "./pages/loginPage/RegisterCheck";
 import OwnerRegister from "./pages/loginPage/OwnerRegister";
 import UserRegister from "./pages/loginPage/UserRegister";
 import Error404Page from './pages/Error404Page';
-
+import LoginCheck from './components/user/loginCheck';
 
 
 function App() {
@@ -31,18 +32,26 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/mainpage" replace />} />
           <Route path="/mainpage" element={<MainPage />} />
-          <Route path="/mypage" element={<MyPage />}>
+
+          <Route path="/mypage" element={
+            <LoginCheck>
+              <MyPage />
+            </LoginCheck>}>
           <Route index element={<UserInfo />} />
           <Route path="userinfo" element={<UserInfo />} />
           <Route path="edituser" element={<EditUser />} />
           <Route path="myqna" element={<MyQna />} />
         </Route>
+
           <Route path="/login" element={<Login />} />
           <Route path="/ownerusercheck" element={<RegisterCheck />} />
           <Route path="/ownerregister" element={<OwnerRegister />} />
           <Route path="/userregister" element={<UserRegister />} />
+
+          
           <Route path="*" element={<Error404Page/>} />
         </Routes>
+        <Footer/>
     </div>
   );
 }
