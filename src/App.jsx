@@ -12,7 +12,7 @@ import Login from "./pages/loginPage/Login";
 import RegisterCheck from "./pages/loginPage/RegisterCheck";
 import OwnerRegister from "./pages/loginPage/OwnerRegister";
 import UserRegister from "./pages/loginPage/UserRegister";
-
+import AllRoom from './pages/roomPage/AllRoom';
 
 function App() {
 
@@ -31,6 +31,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/mainpage" replace />} />
           <Route path="/mainpage" element={<MainPage />} />
+          <Route path="/roomPage/AllRoom" element={<AllRoom />} />
            <Route path="/mypage" element={<MyPage />}>
           <Route index element={<UserInfo />} />
           <Route path="userinfo" element={<UserInfo />} />
