@@ -1,51 +1,57 @@
-/* Footer.css */
 .footer {
     width: 100%;
-    height: 300px;
     background-color: #2F4F4F;
+    color: #fff;
+    margin-top: 20px;
+    height: 300px;
+
+    display: flex;
+    align-items: center;       /* 세로 가운데 정렬 */
+    justify-content: center;   /* 가로 가운데 정렬 (optional) */
+    box-sizing: border-box;
+    padding: 0 20px;
+}
+
+.footer-inner {
+    max-width: 80rem;
+    /* 헤더의 .container와 동일하게 */
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px 0;
-    box-sizing: border-box;
-    margin-top: 20px;
+    gap: 20px;
 }
 
-.footer_table {
-    width: 1280px;
-    margin: 0 auto 20px auto;
-    border-collapse: collapse;
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 14px;
 }
 
-.footer th,
-.footer td {
-    width: calc(100% / 3);
-    box-sizing: border-box;
-    text-align: center;
-    padding: 5px 0;
+.footer-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    font-size: 14px;
 }
 
-.footer th {
-    color: #FFE66D;
-    font-size: 1.1em;
-    padding-bottom: 15px;
+.footer-section {
+    min-width: 250px;
 }
 
-.footer td {
-    color: #DDDDDD;
+.footer a {
+    color: #fff;
+    text-decoration: none;
 }
 
-.footer tr:last-child td {
-    padding-bottom: 0;
+.footer a:hover {
+    text-decoration: underline;
 }
 
-.footer .copyright {
-    color: #DDDDDD;
-    font-size: 0.85em;
-    margin-top: 10px;
-    border-top: 1px solid #666;
-    padding-top: 15px;
-    width: 1280px;
-    text-align: center;
+.copyright {
+    font-size: 12px;
+    color: #ccc;
 }
