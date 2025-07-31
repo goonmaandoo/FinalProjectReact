@@ -8,6 +8,7 @@ import UserInfo from './pages/myPage/UserInfo';
 import MainPage from './pages/MainPage';
 import MainHeader from './components/header/MainHeader';
 import Header from './components/header/Header'
+import Footer from './components/footer/Footer'
 import Login from "./pages/loginPage/Login";
 import RegisterCheck from "./pages/loginPage/RegisterCheck";
 import OwnerRegister from "./pages/loginPage/OwnerRegister";
@@ -43,6 +44,7 @@ function App() {
           <Route path="/userregister" element={<UserRegister />} />
           <Route path="*" element={<Error404Page/>} />
         </Routes>
+        <Footer/>
     </div>
   );
 }
