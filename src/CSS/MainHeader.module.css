@@ -14,6 +14,10 @@
     border: none;
     outline: none;
 }
+.hLogo_link{
+    text-decoration: none; 
+    color: inherit;
+}
 .main_container {
     max-width: 80rem;
     width: 100%;
@@ -143,6 +147,7 @@
     }
     .main_menu{
         justify-items: center;
+        display: none;
     }
     .hLogo_img {
         padding: 15px 10px;
