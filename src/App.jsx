@@ -13,6 +13,8 @@ import Login from "./pages/loginPage/Login";
 import RegisterCheck from "./pages/loginPage/RegisterCheck";
 import OwnerRegister from "./pages/loginPage/OwnerRegister";
 import UserRegister from "./pages/loginPage/UserRegister";
+import StoreListPage from "./pages/storePage/StoreListPage";
+import StoreDetail from "./pages/storePage/StoreDetail";
 import Error404Page from './pages/Error404Page';
 
 
@@ -32,12 +34,16 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/mainpage" replace />} />
           <Route path="/mainpage" element={<MainPage />} />
+
           <Route path="/mypage" element={<MyPage />}>
-          <Route index element={<UserInfo />} />
-          <Route path="userinfo" element={<UserInfo />} />
-          <Route path="edituser" element={<EditUser />} />
-          <Route path="myqna" element={<MyQna />} />
-        </Route>
+            <Route index element={<UserInfo />} />
+            <Route path="userinfo" element={<UserInfo />} />
+            <Route path="edituser" element={<EditUser />} />
+            <Route path="myqna" element={<MyQna />} />
+          </Route>
+
+          <Route path="/storelist" element={<StoreListPage />} />
+          <Route path="/store/:store_id" element={<StoreDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/ownerusercheck" element={<RegisterCheck />} />
           <Route path="/ownerregister" element={<OwnerRegister />} />
