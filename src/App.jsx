@@ -12,6 +12,8 @@ import Login from "./pages/loginPage/Login";
 import RegisterCheck from "./pages/loginPage/RegisterCheck";
 import OwnerRegister from "./pages/loginPage/OwnerRegister";
 import UserRegister from "./pages/loginPage/UserRegister";
+import Error404Page from './pages/Error404Page';
+
 
 
 function App() {
@@ -41,6 +43,7 @@ function App() {
           <Route path="/ownerusercheck" element={<RegisterCheck />} />
           <Route path="/ownerregister" element={<OwnerRegister />} />
           <Route path="/userregister" element={<UserRegister />} />
+          <Route path="*" element={<Error404Page/>} />
         </Routes>
     </div>
   );
