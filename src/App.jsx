@@ -21,6 +21,11 @@ import LoginCheck from './components/user/loginCheck';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from './redux/user';
 import axios from 'axios';
+import MoaPolicy1 from './pages/footerPage/MoaPolicy1';
+import MoaPolicy2 from './pages/footerPage/MoaPolicy2';
+import MoaPolicy3 from './pages/footerPage/MoaPolicy3';
+import MoaPolicy4 from './pages/footerPage/MoaPolicy4';
+import SafetyGuide from './pages/footerPage/SafetyGuide';
 
 function parseJwt(token) {
   try {
@@ -89,6 +94,12 @@ function App() {
         <Route path="/ownerregister" element={<OwnerRegister />} />
         <Route path="/userregister" element={<UserRegister />} />
 
+
+        <Route path="/moapolicy1" element={<MoaPolicy1/>}/>
+        <Route path="/moapolicy2" element={<MoaPolicy2/>}/>
+        <Route path="/moapolicy3" element={<MoaPolicy3/>}/>
+        <Route path="/moapolicy4" element={<MoaPolicy4/>}/>
+        <Route path="safetyguide" element={<SafetyGuide/>}/>
         <Route path="*" element={<Error404Page />} />
       </Routes>
       <Footer />
