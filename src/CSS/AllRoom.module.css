@@ -83,6 +83,7 @@
     position: absolute;
     padding: 0 15px;
     box-sizing: border-box;
+    left: 0px;
 }
 .roomAddress {
     font-weight: 600px;

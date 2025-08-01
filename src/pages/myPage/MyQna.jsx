@@ -3,7 +3,7 @@ import styles from '../../CSS/MyPage.module.css';
 import axios from "axios";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import EditModal from "./EditModal";
-
+import FormattedDate from "../../component/funtion/common/FormattedDate";
 export default function MyQna() {
     const [qnaList, setQnaList] = useState([])
     const [loading, setLoading] = useState(true)
@@ -109,7 +109,7 @@ export default function MyQna() {
                 paginatedQna.map((qna) => (
                     <div key={qna.id} className={styles.myQna}>
                         <div className={styles.qnaDate}>
-                            {qna.createdAt}
+                            <FormattedDate dateString={qna.createdAt} />
                         </div>
                         <div className={styles.qnaTitle}>
                             <b>Q. {qna.title}</b>

@@ -26,7 +26,7 @@ import MoaPolicy2 from './pages/footerPage/MoaPolicy2';
 import MoaPolicy3 from './pages/footerPage/MoaPolicy3';
 import MoaPolicy4 from './pages/footerPage/MoaPolicy4';
 import SafetyGuide from './pages/footerPage/SafetyGuide';
-
+import AuthQna from './pages/Auth/AuthQna';
 function parseJwt(token) {
   try {
     const base64Payload = token.split('.')[1];
@@ -77,7 +77,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/mainpage" replace />} />
         <Route path="/mainpage" element={<MainPage />} />
-
         <Route path="/roomPage/AllRoom" element={<AllRoom />} />
         <Route path="/mypage" element={<MyPage />}>
           <Route index element={<UserInfo />} />
@@ -94,7 +93,7 @@ function App() {
         <Route path="/ownerregister" element={<OwnerRegister />} />
         <Route path="/userregister" element={<UserRegister />} />
 
-
+        <Route path="/auth/qna" element={<AuthQna />} />
         <Route path="/moapolicy1" element={<MoaPolicy1/>}/>
         <Route path="/moapolicy2" element={<MoaPolicy2/>}/>
         <Route path="/moapolicy3" element={<MoaPolicy3/>}/>

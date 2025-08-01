@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import styles from '../../CSS/EditModal.module.css';
 import axios from "axios";
+import FormattedDate from "../../component/funtion/common/FormattedDate";
 
 export default function EditModal({ qnaId, onClose }) {
     const [qna, setQna] = useState(null);
@@ -47,15 +48,13 @@ export default function EditModal({ qnaId, onClose }) {
     return (
         <div className={styles.overlay}>
             <div className={styles.modal}>
-                <h2>문의 수정</h2>
+                <div className={styles.qnaUpdate}>문의 수정</div>
                 {loading ? (
                     <b>로딩중입니다...</b>
                 ) : (
                     <>
                         <div className={styles.qnaDate}>
-                            <h1>
-                                {date}
-                            </h1>
+                            <FormattedDate dateString={date} />
                         </div>
 
                         <div className={styles.editTitle}>
@@ -72,6 +71,7 @@ export default function EditModal({ qnaId, onClose }) {
                                 className={styles.contentsInput}
                                 value={contents}
                                 onChange={(e) => setContents(e.target.value)}
+                                style={{ resize: 'none' }}
                             />
                         </div>
 

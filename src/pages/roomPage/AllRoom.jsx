@@ -19,28 +19,28 @@ export default function AllRoom() {
     const scrollContainerRef = useRef(null);
 
     // 1. 처음 마운트 시, userId를 기반으로 userCoords를 가져와 설정
-   useEffect(() => {
-    const fetchUserLocation = async () => {
-        try {
-            await loadKakaoApi();
-            const userResponse = await axios.get(`/api/users/getUserAddress/${userId}`);
-            const fetchedAddress = userResponse.data.address;
-            const detailAddress = userResponse.data.addressDetail;
-            console.log("상세주소",detailAddress);
-            // ✅ 로컬 변수를 사용해 getCoordinates를 호출
-            const coords = await getCoordinates(fetchedAddress);
-            
-            // ✅ 두 상태를 동시에 업데이트
-            setUserAddress(fetchedAddress);
-            setUserCoords(coords);
-            
-        } catch (error) {
-            console.error("사용자 위치를 가져오는 중 오류 발생:", error);
-            setError("사용자 위치 정보를 가져올 수 없습니다.");
-        }
-    };
-    fetchUserLocation();
-}, []);
+    useEffect(() => {
+        const fetchUserLocation = async () => {
+            try {
+                await loadKakaoApi();
+                const userResponse = await axios.get(`/api/users/getUserAddress/${userId}`);
+                const fetchedAddress = userResponse.data.address;
+                const detailAddress = userResponse.data.addressDetail;
+                console.log("상세주소", detailAddress);
+                // ✅ 로컬 변수를 사용해 getCoordinates를 호출
+                const coords = await getCoordinates(fetchedAddress);
+
+                // ✅ 두 상태를 동시에 업데이트
+                setUserAddress(fetchedAddress);
+                setUserCoords(coords);
+
+            } catch (error) {
+                console.error("사용자 위치를 가져오는 중 오류 발생:", error);
+                setError("사용자 위치 정보를 가져올 수 없습니다.");
+            }
+        };
+        fetchUserLocation();
+    }, []);
     // 2. userCoords가 변경될 때마다 roomList를 다시 가져와 필터링
     useEffect(() => {
         const fetchRoomsByLocation = async () => {
@@ -102,9 +102,33 @@ export default function AllRoom() {
         setUserAddress(newAddress);
         setUserCoords(newCoords);
     };
-    const roomClick = (e, roomId) => {
-        alert('룸클릭');
-        
+    const roomClick = async (e, roomId) => {
+        e.preventDefault();
+
+        try {
+            const response = await axios.get('/api/roomJoin/statusCheck', {
+                params: { roomId: roomId, userId: userId }
+            });
+
+            const joinData = response.data;
+
+            if (joinData) {
+                // 데이터가 있으면 참여중
+                const move = window.confirm("이미 참여중인 방입니다. 이동하시겠습니까?");
+                if (move) {
+                    navigate(`/room/${roomId}`);
+                }
+            } else {
+                // 데이터 없으면 참여 안 한 상태
+                const confirmJoin = window.confirm("이 공구방에 참여하시겠습니까?");
+                if (confirmJoin) {
+                    navigate(`/room/${roomId}`);
+                }
+            }
+        } catch (error) {
+            console.error('API 호출 실패:', error);
+            // 에러 처리 추가 가능 (예: alert 띄우기)
+        }
     };
 
     return (

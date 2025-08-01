@@ -45,7 +45,7 @@
 }
 
 .contentsInput {
-  width: 880px;
+  width: 838px;
   height: 200px;
   border-radius: 5px;
   border: solid 1px #9e9a9a;
@@ -53,38 +53,48 @@
 }
 
 .saveButton {
-  width: 50px;
-  height: 30px;
-  margin-left: 7px;
-  margin-right: 10px;
   border-radius: 5px;
-  font-weight: 500;
-  background-color: #ff6b6b;
-  color: white;
+  margin: 10px;
+  cursor: pointer;
+  width: 60px;
+  height: 30px;
+  font-weight: 400;
+  font-size: 14px;
+  background-color: #ffb1b1;
   border: none;
 }
 
 .cansleButton {
-  width: 50px;
-  height: 30px;
   border-radius: 5px;
-  font-weight: 500;
-  background-color: #ff6b6b;
-  color: white;
+  margin: 10px 0;
+  cursor: pointer;
+  width: 60px;
+  height: 30px;
+  font-weight: 400;
+  font-size: 14px;
+  background-color: #d4d4d4;
   border: none;
 }
 
 .cansleButton:hover {
-  background: #e35a5a;
+  background-color: #ceced3;
 }
+
 .saveButton:hover {
-  background: #e35a5a;
+  background-color: #ff8a8a;
 }
+
 .qnaDate {
   padding: 0px;
   border-bottom: 1px dotted;
   color: gray;
-  font-size: 8px;
+  font-size: 15px;
   font-weight: 700;
   box-sizing: border-box;
+  margin: 5px 0px 5px 0px;
+}
+
+.qnaUpdate {
+  font-weight: 700;
+  font-size: 20px;
 }
