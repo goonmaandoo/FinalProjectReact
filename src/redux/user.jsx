@@ -6,10 +6,12 @@ const LOGOUT = "LOGOUT";
 export const loginSuccess = (user, token) => ({
     type: LOGIN_SUCCESS,
     payload: { user, token },
+    loading: false,
 });
 
 export const logout = () => ({
     type: LOGOUT,
+    loading: false,
 });
 
 // 초기 상태
@@ -17,6 +19,7 @@ const initialState = {
     user: null,
     token: null,
     isAuthenticated: false,
+    loading: true,
 };
 
 // 리듀서
