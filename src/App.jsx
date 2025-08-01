@@ -15,6 +15,7 @@ import OwnerRegister from "./pages/loginPage/OwnerRegister";
 import UserRegister from "./pages/loginPage/UserRegister";
 import StoreListPage from "./pages/storePage/StoreListPage";
 import StoreDetail from "./pages/storePage/StoreDetail";
+import SelectRoom from "./pages/storePage/SelectedRoom";
 import AllRoom from './pages/roomPage/AllRoom';
 import Error404Page from './pages/Error404Page';
 import LoginCheck from './components/user/loginCheck';
@@ -88,10 +89,10 @@ function App() {
         </Route>
 
         <Route path="/storelist/:categoryId" element={<StoreListPage />} />
-          <Route path="/store/:storeId" element={<StoreDetail />} />
-
+        <Route path="/store/:storeId" element={<StoreDetail />} />
+        <Route path="/selectroom/:storeId" element={<SelectRoom />} />
+        <Route path="/store/:storeId" element={<StoreDetail />} />
         <Route path="/roomcreate" element={<RoomCreate/>} />
-
         <Route path="/login" element={<Login />} />
         <Route path="/ownerusercheck" element={<RegisterCheck />} />
         <Route path="/ownerregister" element={<OwnerRegister />} />

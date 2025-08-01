@@ -83,10 +83,14 @@ export default function StoreListPage() {
                                         <img src={`http://localhost:8080/image/imgfile/store/store_${item.id}.jpg`} alt={`${item.storeName} 이미지`} />
                                     </div>
                                     <div className={styles["storeexplain"]}>
-                                        <h2>{item.store_name}</h2>
-                                        <h4>가게 위치: {item.storeAddress}</h4>
-                                        <h5>배달비: <span className={styles["deliveryfree"]}>무료배달</span></h5>
-                                        <h5>최소 주문: {item.minPrice}원</h5>
+                                        <div className={styles["score_name"]}>{item.storeName}</div>
+                                        <div className={styles["score"]}>가게 위치: {item.storeAddress}</div>
+                                        <div className={styles["score"]}>배달비: <span className={styles["deliveryfree"]}>무료배달</span></div>
+                                        <div className={styles["score"]}>최소 주문: {item.minPrice}원</div>
+                                        <div className={styles["store_star"]}>
+                                            <span className={styles["star"]}>★</span>
+                                            <span className={styles["score"]}>4.9(1689)</span>
+                                        </div>
                                     </div>
                                 </div>
                             </Link>
