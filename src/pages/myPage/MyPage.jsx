@@ -1,10 +1,17 @@
 import styles from "../../CSS/MyPage.module.css";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
 import MyHeader from "./MyHeader";
 
 export default function MyPage() {
     const location = useLocation();
     const currentMenu = location.pathname.split("/").pop();
+
+    const dispatch = useDispatch();
+
+    const user = useSelector((state) => state.auth.user);
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
     const menuList = [
         { name: "회원정보", path: "userinfo" },
         { name: "주문내역", path: "orderlist" },
@@ -38,7 +45,7 @@ export default function MyPage() {
                                     className={styles.bearImage}
                                     src={"" /* bear image src */}
                                 />
-                                <div className={styles.usernickName}>{"" /* myNickname */} 님</div>
+                                <div className={styles.usernickName}>{user?.nickname} 님</div>
                             </div>
                         </div>
                     </div>
