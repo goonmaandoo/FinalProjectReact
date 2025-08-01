@@ -26,6 +26,7 @@ import MoaPolicy2 from './pages/footerPage/MoaPolicy2';
 import MoaPolicy3 from './pages/footerPage/MoaPolicy3';
 import MoaPolicy4 from './pages/footerPage/MoaPolicy4';
 import SafetyGuide from './pages/footerPage/SafetyGuide';
+import RoomCreate from './pages/roomPage/RoomCreate';
 
 function parseJwt(token) {
   try {
@@ -88,6 +89,8 @@ function App() {
 
         <Route path="/storelist/:categoryId" element={<StoreListPage />} />
           <Route path="/store/:storeId" element={<StoreDetail />} />
+
+        <Route path="/roomcreate" element={<RoomCreate/>} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/ownerusercheck" element={<RegisterCheck />} />
