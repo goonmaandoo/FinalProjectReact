@@ -94,7 +94,6 @@ function App() {
         <Route path="/ownerregister" element={<OwnerRegister />} />
         <Route path="/userregister" element={<UserRegister />} />
 
-
         <Route path="/moapolicy1" element={<MoaPolicy1/>}/>
         <Route path="/moapolicy2" element={<MoaPolicy2/>}/>
         <Route path="/moapolicy3" element={<MoaPolicy3/>}/>
