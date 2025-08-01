@@ -1,11 +1,7 @@
 import styles from '../../CSS/StoreDetail.module.css'
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useRef } from "react";
-<<<<<<< HEAD
 // import thousands from "thousands";
-=======
-import thousands from "thousands";
->>>>>>> 41e59a1da5dde829347220cba2ff8b86ac5ef28a
 import axios from "axios";
 
 export default function StoreDetail(){
