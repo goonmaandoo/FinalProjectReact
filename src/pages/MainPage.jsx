@@ -22,6 +22,9 @@ export default function MainPage() {
         }
         navigate(`/`);
     };
+    const onCategoryClick = (categoryId) => {
+        navigate(`/storelist/${categoryId}`)
+    }
     useEffect(() => {
         //공구방 조회
         fetch('http://localhost:8080/room/allWithCount')
@@ -75,13 +78,14 @@ export default function MainPage() {
                     <div className={styles["body_container"]}>
                         <div className={styles["food_category_wrap"]}>
                             <div className={styles["food_category"]}>음식 카테고리</div>
-                            <Link to="/storelist">
+                            <Link to="/storelist/1">
                                 <div className={styles["food_category_move"]}>전체보기→</div>
                             </Link>
                         </div>
                         <div className={styles["circle_category_wrap"]}>
                             {category.map((item) => (
-                                <Link key={item.id} to="/storelist">
+                                <Link key={item.id} to={`/storelist/${item.id}`} 
+                                onClick={() => onCategoryClick(item.id)}>
                                     <div className={styles["circle_with_text"]}>
                                         <div className={styles["circle"]}>
                                             <img

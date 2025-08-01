@@ -86,8 +86,8 @@ function App() {
           <Route path="myqna" element={<MyQna />} />
         </Route>
 
-        <Route path="/storelist" element={<StoreListPage />} />
-        <Route path="/store/:store_id" element={<StoreDetail />} />
+        <Route path="/storelist/:categoryId" element={<StoreListPage />} />
+          <Route path="/store/:storeId" element={<StoreDetail />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/ownerusercheck" element={<RegisterCheck />} />
