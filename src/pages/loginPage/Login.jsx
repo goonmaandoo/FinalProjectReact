@@ -55,8 +55,7 @@ function Login() {
                 <div className={style["login-box"]}>
                     <div className={style["login-left"]}>
                         <img
-                            src="https://epfwvrafnhdgvyfcrhbo.supabase.co/storage/v1/object/public/imgfile/main_img/login_logo.png"
-                            alt="배달모아 로고"
+                            src="http://localhost:8080/image/imgfile/main_img/main_logo.png" alt='로고'
                             className={style["login-logo"]}
                         />
                     </div>
