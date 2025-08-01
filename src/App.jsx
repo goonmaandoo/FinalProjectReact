@@ -15,6 +15,7 @@ import OwnerRegister from "./pages/loginPage/OwnerRegister";
 import UserRegister from "./pages/loginPage/UserRegister";
 import StoreListPage from "./pages/storePage/StoreListPage";
 import StoreDetail from "./pages/storePage/StoreDetail";
+import SelectRoom from "./pages/storePage/SelectedRoom";
 import AllRoom from './pages/roomPage/AllRoom';
 import Error404Page from './pages/Error404Page';
 import LoginCheck from './components/user/loginCheck';
@@ -26,7 +27,11 @@ import MoaPolicy2 from './pages/footerPage/MoaPolicy2';
 import MoaPolicy3 from './pages/footerPage/MoaPolicy3';
 import MoaPolicy4 from './pages/footerPage/MoaPolicy4';
 import SafetyGuide from './pages/footerPage/SafetyGuide';
+
 import AuthQna from './pages/Auth/AuthQna';
+
+import RoomCreate from './pages/roomPage/RoomCreate';
+
 function parseJwt(token) {
   try {
     const base64Payload = token.split('.')[1];
@@ -85,15 +90,18 @@ function App() {
           <Route path="myqna" element={<MyQna />} />
         </Route>
 
-        <Route path="/storelist" element={<StoreListPage />} />
-        <Route path="/store/:store_id" element={<StoreDetail />} />
-
+        <Route path="/storelist/:categoryId" element={<StoreListPage />} />
+        <Route path="/store/:storeId" element={<StoreDetail />} />
+        <Route path="/selectroom/:storeId" element={<SelectRoom />} />
+        <Route path="/store/:storeId" element={<StoreDetail />} />
+        <Route path="/roomcreate" element={<RoomCreate/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/ownerusercheck" element={<RegisterCheck />} />
         <Route path="/ownerregister" element={<OwnerRegister />} />
         <Route path="/userregister" element={<UserRegister />} />
 
         <Route path="/auth/qna" element={<AuthQna />} />
+
         <Route path="/moapolicy1" element={<MoaPolicy1/>}/>
         <Route path="/moapolicy2" element={<MoaPolicy2/>}/>
         <Route path="/moapolicy3" element={<MoaPolicy3/>}/>

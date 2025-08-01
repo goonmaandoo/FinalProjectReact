@@ -1,8 +1,10 @@
 .storelist_body {
-    width: 1280px;
+    width: 80rem;
+    max-width: 100%;
     margin: 0 auto;
     padding: 0 20px;
     box-sizing: border-box;
+    min-height: 1000px;
 }
 
 .circle_category_wrap {
@@ -16,7 +18,7 @@
     flex: 1;
     min-width: 0;
     scrollbar-width: none;
-    width: 1280px;
+    width: 100%;
 }
 
 .circle_category_wrap::-webkit-scrollbar {
@@ -111,6 +113,25 @@
     margin-left: 20px;
     padding-left: 40px;
     padding-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.score_name{
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+.store_star{
+    align-items: center;
+    gap: 4px; 
+}
+.star{
+    color: rgb(255, 217, 0);
+    font-size:20px;
+}
+.score{
+    font-size:18px;
 }
 
 .deliveryfree {
@@ -120,4 +141,11 @@
 .room_no_result{
     padding: 80px;
     text-align: center;
+}
+
+@media (max-width:800px){
+    .circle{
+        width: 80px;
+        height: 80px;
+    }
 }

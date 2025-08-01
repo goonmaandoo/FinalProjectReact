@@ -1,37 +1,58 @@
 import { useState, useEffect } from "react";
-import styles from '../../CSS/MyPage.module.css';
+import styles from "../../CSS/MyPage.module.css";
 import axios from "axios";
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import EditModal from "./EditModal";
 import FormattedDate from "../../component/funtion/common/FormattedDate";
+import QnaWriteModal from "./QnaWriteModal";
+
 export default function MyQna() {
-    const [qnaList, setQnaList] = useState([])
-    const [loading, setLoading] = useState(true)
+    const [qnaList, setQnaList] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(0);
 
-    const userId = 1
+    const userId = 1;
     useEffect(() => {
-        axios.get("/api/qna/getQnaList", {
-            params: { userId }
-        }).then((response) => {
-            console.log(response.data);
-            setQnaList(response.data);
-            console
-            setCurrentPage(0);
-            setLoading(false);
-        }).catch((err) => {
-            console.error(err);
-            setError('불러오기 실패');
-            setLoading(false);
-        })
+        axios
+            .get("/api/qna/getQnaList", {
+                params: { userId },
+            })
+            .then((response) => {
+                console.log(response.data);
+                setQnaList(response.data);
+                console;
+                setCurrentPage(0);
+                setLoading(false);
+            })
+            .catch((err) => {
+                console.error(err);
+                setError("불러오기 실패");
+                setLoading(false);
+            });
     }, []);
     useEffect(() => {
-  console.log("🔥 qnaList 상태가 변경됨:", qnaList);
-}, [qnaList]);
+        console.log("🔥 qnaList 상태가 변경됨:", qnaList);
+    }, [qnaList]);
     // 빈배열 userId로 추후 변경
 
     // 문의 CRUD
+    // 문의 등록
+    const handleInsert = async (newQna) => {
+        try {
+            await axios.post("/api/qna/insertQna", newQna);
+            alert("문의가 등록됐습니다.");
+            const response = await axios.get("/api/qna/getQnaList",
+                {
+                    params: { userId },
+                });
+            setQnaList(response.data);
+        } catch (error) {
+            console.error("등록 실패", error);
+            alert("예기치 못한 오류로 문의 등록을 하지 못했습니다.");
+        }
+    };
+
     // 문의 수정
     const [editQnaById, setEditQnaById] = useState(null);
     const [editing, setEditing] = useState(false);
@@ -40,26 +61,26 @@ export default function MyQna() {
         if (!confirmed) return;
         setEditQnaById(qna.id);
         setEditing(true);
-    }
+    };
     // 모달 열기
-    const[modalOpen, setModalOpen] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
     // 문의 수정 모달 닫기
     const closeModal = () => {
         setEditing(false);
         setEditQnaById(null);
-    }
+    };
     // 문의 삭제
     const reviewDelete = async (qnaId) => {
         const confirmed = window.confirm("문의를 삭제하시겠습니까?");
-        console.log("qnaId:"+ qnaId);
+        console.log("qnaId:" + qnaId);
         if (!confirmed) return;
-        
+
         try {
             await axios.delete(`/api/qna/${qnaId}`);
             alert("문의가 삭제되었습니다.");
             setQnaList((prevList) => prevList.filter((qna) => qna.id !== qnaId));
         } catch (error) {
-            console.error("삭제 실패",error);
+            console.error("삭제 실패", error);
             alert("문의 삭제에 실패했습니다.");
         }
     };
@@ -68,7 +89,7 @@ export default function MyQna() {
     const toggleAnswer = (id) => {
         setShowAnswerId((prev) => (prev === id ? null : id));
     };
-    // 페이지 네이션 
+    // 페이지 네이션
     const itemsPerPage = 3;
     const paginatedQna = qnaList.slice(
         currentPage * itemsPerPage,
@@ -86,13 +107,12 @@ export default function MyQna() {
                     문의 남기기
                 </button>
             </div>
-
-            {/*<QnaWriteModal
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-        onSubmit={handleQnaInsert}
-        userId={userId}
-      /> */}
+            <QnaWriteModal
+                open={modalOpen}
+                onClose={() => setModalOpen(false)}
+                onSubmit={handleInsert}
+                userId={userId}
+            />
             {loading ? (
                 <>
                     {Array.from({ length: itemsPerPage }).map((_, i) => (
@@ -196,8 +216,8 @@ export default function MyQna() {
                 </div>
             )}
             {editing && editQnaById && (
-        <EditModal qnaId={editQnaById} onClose={closeModal} />
-      )} 
+                <EditModal qnaId={editQnaById} onClose={closeModal} />
+            )}
         </>
-    )
+    );
 }
