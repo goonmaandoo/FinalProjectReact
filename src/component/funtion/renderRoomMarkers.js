@@ -19,37 +19,43 @@ export const renderRoomMarkers = ({
   roomMarkers.current = [];
 
   roomList.forEach((room) => {
-    geocoder.current.addressSearch(room.room_address, (res, status) => {
+    geocoder.current.addressSearch(room.roomAddress, (res, status) => {
       if (status !== window.kakao.maps.services.Status.OK) return;
 
       const roomCoords = new window.kakao.maps.LatLng(res[0].y, res[0].x);
+      // const distance = getDistance(
+      //   { lat: userCoords.getLat(), lng: userCoords.getLng() },
+      //   { lat: res[0].y, lng: res[0].x }
+      // );
       const distance = getDistance(
-        { lat: userCoords.getLat(), lng: userCoords.getLng() },
+        { lat: userCoords.lat, lng: userCoords.lng }, // ✅ userCoords 객체의 속성을 직접 사용
         { lat: res[0].y, lng: res[0].x }
       );
+
 
       if (distance > 1) return;
 
       const marker = new window.kakao.maps.Marker({
         map: mapInstance.current,
         position: roomCoords,
-        title: room.room_name,
+        title: room.roomName,
         image: new window.kakao.maps.MarkerImage(
-          `${import.meta.env.BASE_URL}/web_logo.png`,
+          "http://localhost:8080/image/imgfile/main_img/web_logo.png",
           new window.kakao.maps.Size(38.55, 33.55)
         ),
       });
+
 
       roomMarkers.current.push(marker);
 
       const content = `
         <div class="${styles.mapOverlay}" id="overlay-${room.id}">
           <div id="roomImage-${room.id}">
-            <img class="${styles.infowindowImg}" src="https://epfwvrafnhdgvyfcrhbo.supabase.co/storage/v1/object/public/imgfile/store/store_${room.store_id}.jpg" />
+            <img class="${styles.infowindowImg}" src="http://localhost:8080/image/imgfile/store/store_${room.storeId}.jpg" />
           </div>
-          <strong id="roomName-${room.id}" class="${styles.mapRoomName}">${room.room_name}</strong>
+          <strong id="roomName-${room.id}" class="${styles.mapRoomName}">${room.roomName}</strong>
           <button id="closeButton-${room.id}" class="${styles.infowindowClose}">×</button>
-          <div id="roomAddress-${room.id}" class="${styles.mapAddress}">${room.room_address}</div>
+          <div id="roomAddress-${room.id}" class="${styles.mapAddress}">${room.roomAddress}</div>
           <div>(${Math.floor(room.distance * 10) / 10}km)</div>
         </div>`;
 
@@ -78,13 +84,13 @@ export const renderRoomMarkers = ({
           });
 
           const clickRoom = () => {
-            if (!window.confirm(`"${room.room_name}" 공구방으로 이동하시겠습니까?`)) return;
+            if (!window.confirm(`"${room.roomName}" 공구방으로 이동하시겠습니까?`)) return;
             navigate(`/room/${room.id}`);
           };
 
           const clickRoute = () => {
             window.open(
-              `https://map.kakao.com/link/to/${encodeURIComponent(room.room_name)},${res[0].y},${res[0].x}`,
+              `https://map.kakao.com/link/to/${encodeURIComponent(room.roomName)},${res[0].y},${res[0].x}`,
               "_blank"
             );
           };
@@ -93,7 +99,7 @@ export const renderRoomMarkers = ({
           document.getElementById(`roomName-${room.id}`)?.addEventListener("click", clickRoom);
           document.getElementById(`roomAddress-${room.id}`)?.addEventListener("click", clickRoute);
         }, 0);
-        
+
         // 외부 클릭 감지 리스너 등록
         outsideClickListenerRef.current = (e) => {
           const overlayEl = document.getElementById(`overlay-${room.id}`);

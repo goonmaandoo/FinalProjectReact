@@ -3,8 +3,9 @@ import { useRef, useState, useEffect } from "react";
 import { initUserMap } from "../../component/funtion/kakaoMapUtils";
 import { renderRoomMarkers } from "../../component/funtion/renderRoomMarkers";
 import styles from '../../CSS/CloseRoom.module.css';
+import axios from "axios";
 
-export default function CloseRoom({ userId, roomList, onSelectRoomId }) {
+export default function CloseRoom({ userId, roomList, onSelectRoomId, userAddress, userCoords, onUserLocationUpdate }) {
     const navigate = useNavigate();
 
     const mapRef = useRef(null);
@@ -14,8 +15,8 @@ export default function CloseRoom({ userId, roomList, onSelectRoomId }) {
     const currentOverlay = useRef(null);
     const roomMarkers = useRef([]);
     const outsideClickListenerRef = useRef(null);
-    const [userAddress, setUserAddress] = useState("");
-    const [userCoords, setUserCoords] = useState(null);
+    //const [userAddress, setUserAddress] = useState("");
+    //const [userCoords, setUserCoords] = useState(null);
     // backend 업데이트 호출 user / address
     const updateAddress = async (newAddress) => {
         console.log("업데이트할 userId:" + userId);
@@ -26,7 +27,7 @@ export default function CloseRoom({ userId, roomList, onSelectRoomId }) {
                 address: newAddress
             };
             const response = await axios.put("/api/users/addressUpdate", updatedData);
-            
+            console.log("업데이트 성공");
         }catch (error) {
             console.error("주소 업데이트 에러",error);
         }
@@ -34,17 +35,22 @@ export default function CloseRoom({ userId, roomList, onSelectRoomId }) {
 
     // 지도 및 사용자 마커 설정
     useEffect(() => {
+         if (!userCoords) {
+            console.log("유저 좌표가 없음");
+            return; // userCoords가 없으면 초기화하지 않음
+        }
+        console.log("유저 좌표가 있음");
         initUserMap({
             userAddress,
-            mapRef,
-            mapInstance,
-            geocoder,
-            userMarker,
-            setUserCoords,
-            setUserAddress,
-            updateAddress,
+        userCoords,
+        mapRef,
+        mapInstance,
+        geocoder,
+        userMarker,
+        onUserLocationUpdate,
+        updateAddress,
         });
-    }, [userAddress]);
+    }, [userCoords, userAddress, onUserLocationUpdate]);
      // 방 마커 렌더링
     useEffect(() => {
         renderRoomMarkers({

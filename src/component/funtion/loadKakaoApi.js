@@ -4,7 +4,7 @@ export function loadKakaoApi() {
       resolve();
     } else {
       const script = document.createElement('script');
-      script.src = 'https://dapi.kakao.com/v2/maps/sdk.js?appkey=08f9c36b943ab13d757aa791223a47bc&libraries=services,geometry&autoload=false';
+      script.src = 'https://dapi.kakao.com/v2/maps/sdk.js?appkey=cc136d443442275458b1d05e6c2d1fde&libraries=services,geometry&autoload=false';
       script.onload = () => {
         window.kakao.maps.load(() => {
           resolve();
