@@ -23,9 +23,11 @@ function Login() {
             const response = await axios.post("/api/users/login", { email, password });
 
             if (response.data) {
+                const {user, token} = response.data; // 구조분해
                 alert("로그인 성공! 메인화면으로 이동합니다.");
                 setUser(response.data);
-                dispatch(loginSuccess(response.data)); // redux에 저장
+                localStorage.setItem("token", token);
+                dispatch(loginSuccess(user, token)); // redux에 저장
                 setNickname(response.data.nickname);
                 navigate("/mainpage");
             }

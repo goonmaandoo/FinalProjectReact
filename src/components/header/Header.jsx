@@ -1,10 +1,22 @@
 import styles from '../../CSS/Header.module.css'
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../redux/user';
 
 export default function Header() {
     const [keyword, setKeyword] = useState('');
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const user = useSelector((state) => state.auth.user);
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+    const handleLogout = () => {
+        dispatch(logout());
+        localStorage.removeItem("token");
+        navigate("/mainpage");
+    }
 
     //검색창
     const onKeyDown = (e) => {
@@ -45,6 +57,20 @@ export default function Header() {
                     <div className={styles["location_gps"]}>
 
                     </div>
+                </div>
+                <div className={styles[""]}>
+                    {isAuthenticated ? (
+                        <>
+                        <span>{user?.nickname} 님 </span>
+                        <button onClick={handleLogout}> 로그아웃 </button>
+                        </>
+
+                    ) : (
+                        <>
+                            <Link to="/login"> 로그인 </Link>
+                            <Link to="/ownerusercheck"> 회원가입 </Link>
+                        </>
+                    )}
                 </div>
                 <div className={styles["hamburger"]}>
                         <button onClick={(e) => {

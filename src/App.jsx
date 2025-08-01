@@ -18,45 +18,80 @@ import StoreDetail from "./pages/storePage/StoreDetail";
 import AllRoom from './pages/roomPage/AllRoom';
 import Error404Page from './pages/Error404Page';
 import LoginCheck from './components/user/loginCheck';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from './redux/user';
+import axios from 'axios';
 
-
+function parseJwt(token) {
+  try {
+    const base64Payload = token.split('.')[1];
+    const decodedPayload = atob(base64Payload); // Base64 디코딩
+    return JSON.parse(decodedPayload);
+  } catch (e) {
+    console.error('토큰 파싱 실패', e);
+    return null;
+  }
+}
 
 function App() {
-
   const location = useLocation();
   const isMainPage = location.pathname === "/mainpage";
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decoded = parseJwt(token);
+      if (!decoded) return;
+
+      const email = decoded.sub;
+
+      axios.get("/api/users/me", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(res => {
+        const user = res.data;
+        dispatch(loginSuccess(user, token));
+      })
+      .catch(err => {
+        console.error("유저 정보 불러오기 실패", err);
+        localStorage.removeItem("token");
+      });
+    }
+  }, []);
 
   return (
     <div>
       {isMainPage ? (
-        <MainHeader/>
+        <MainHeader />
       ) : (
-        <Header/>
+        <Header />
       )}
-        <Routes>
-          <Route path="/" element={<Navigate to="/mainpage" replace />} />
-          <Route path="/mainpage" element={<MainPage />} />
+      <Routes>
+        <Route path="/" element={<Navigate to="/mainpage" replace />} />
+        <Route path="/mainpage" element={<MainPage />} />
 
-          <Route path="/roomPage/AllRoom" element={<AllRoom />} />
-          <Route path="/mypage" element={<MyPage />}>
-            <Route index element={<UserInfo />} />
-            <Route path="userinfo" element={<UserInfo />} />
-            <Route path="edituser" element={<EditUser />} />
-            <Route path="myqna" element={<MyQna />} />
-          </Route>
+        <Route path="/roomPage/AllRoom" element={<AllRoom />} />
+        <Route path="/mypage" element={<MyPage />}>
+          <Route index element={<UserInfo />} />
+          <Route path="userinfo" element={<UserInfo />} />
+          <Route path="edituser" element={<EditUser />} />
+          <Route path="myqna" element={<MyQna />} />
+        </Route>
 
-          <Route path="/storelist" element={<StoreListPage />} />
-          <Route path="/store/:store_id" element={<StoreDetail />} />
+        <Route path="/storelist" element={<StoreListPage />} />
+        <Route path="/store/:store_id" element={<StoreDetail />} />
 
-          <Route path="/login" element={<Login />} />
-          <Route path="/ownerusercheck" element={<RegisterCheck />} />
-          <Route path="/ownerregister" element={<OwnerRegister />} />
-          <Route path="/userregister" element={<UserRegister />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/ownerusercheck" element={<RegisterCheck />} />
+        <Route path="/ownerregister" element={<OwnerRegister />} />
+        <Route path="/userregister" element={<UserRegister />} />
 
-          
-          <Route path="*" element={<Error404Page/>} />
-        </Routes>
-        <Footer/>
+        <Route path="*" element={<Error404Page />} />
+      </Routes>
+      <Footer />
     </div>
   );
 }
