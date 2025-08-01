@@ -74,24 +74,25 @@ function App() {
       ) : (
         <Header />
       )}
-        <Routes>
-          <Route path="/" element={<Navigate to="/mainpage" replace />} />
-          <Route path="/mainpage" element={<MainPage />} />
-            
-          <Route path="/roomPage/AllRoom" element={<AllRoom />} />
-          <Route path="/mypage" element={<MyPage />}>
-            <Route index element={<UserInfo />} />
-            <Route path="userinfo" element={<UserInfo />} />
-            <Route path="edituser" element={<EditUser />} />
-            <Route path="myqna" element={<MyQna />} />
-          </Route>
+      <Routes>
+        <Route path="/" element={<Navigate to="/mainpage" replace />} />
+        <Route path="/mainpage" element={<MainPage />} />
 
-          <Route path="/storelist/:categoryId" element={<StoreListPage />} />
+        <Route path="/roomPage/AllRoom" element={<AllRoom />} />
+        <Route path="/mypage" element={<MyPage />}>
+          <Route index element={<UserInfo />} />
+          <Route path="userinfo" element={<UserInfo />} />
+          <Route path="edituser" element={<EditUser />} />
+          <Route path="myqna" element={<MyQna />} />
+        </Route>
+
+        <Route path="/storelist/:categoryId" element={<StoreListPage />} />
           <Route path="/store/:storeId" element={<StoreDetail />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/ownerusercheck" element={<RegisterCheck />} />
-          <Route path="/ownerregister" element={<OwnerRegister />} />
-          <Route path="/userregister" element={<UserRegister />} />
+
+        <Route path="/login" element={<Login />} />
+        <Route path="/ownerusercheck" element={<RegisterCheck />} />
+        <Route path="/ownerregister" element={<OwnerRegister />} />
+        <Route path="/userregister" element={<UserRegister />} />
 
         <Route path="/moapolicy1" element={<MoaPolicy1/>}/>
         <Route path="/moapolicy2" element={<MoaPolicy2/>}/>
