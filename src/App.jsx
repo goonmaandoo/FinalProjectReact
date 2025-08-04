@@ -27,6 +27,7 @@ import MoaPolicy2 from './pages/footerPage/MoaPolicy2';
 import MoaPolicy3 from './pages/footerPage/MoaPolicy3';
 import MoaPolicy4 from './pages/footerPage/MoaPolicy4';
 import SafetyGuide from './pages/footerPage/SafetyGuide';
+import Hamburger from './components/Hamburger';
 
 import AuthQna from './pages/Auth/AuthQna';
 
@@ -116,14 +117,12 @@ function App() {
         <Route path="safetyguide" element={<SafetyGuide/>}/>
         <Route path="*" element={<Error404Page />} />
       </Routes>
-      {/* {isOpen && (
+      {isOpen && (
         <Hamburger
           isOpen={isOpen}
-          handleLogout={handleLogout}
           onClose={() => setIsOpen(false)}
-
         />
-      )} */}
+      )}
       <Footer />
     </div>
   );
