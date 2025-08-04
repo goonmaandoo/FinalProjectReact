@@ -28,7 +28,7 @@ export default function EditUser() {
     if(!user){
         return <div> 로딩중 ... </div>
     }
-    
+
     const editComplete = async () => {
         try {
             const nicknameResult = await axios.get(`/api/users/nicknameCheck?nickname=${nickname}`)

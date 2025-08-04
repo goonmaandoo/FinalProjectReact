@@ -34,6 +34,7 @@ import Hamburger from './components/Hamburger';
 import AuthQna from './pages/Auth/AuthQna';
 
 
+
 function parseJwt(token) {
   try {
     const base64Payload = token.split('.')[1];
@@ -101,6 +102,7 @@ function App() {
           <Route index element={<UserInfo />} />
           <Route path="userinfo" element={<UserInfo />} />
           <Route path="edituser" element={<EditUser />} />
+          <Route path="passwordcheck" element={<PasswordCheck/>} />
           <Route path="myqna" element={<MyQna />} />
         </Route>
 

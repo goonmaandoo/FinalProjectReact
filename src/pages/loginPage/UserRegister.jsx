@@ -82,9 +82,8 @@ function UserRegister() {
         <>
 
             <div className={style['register_container']}>
-                <div className={style['register_h2h3']}>
+                <div className={style['register_h2']}>
                     <h2>회원가입</h2>
-                    <h3> ● 표시는 필수 입력 항목입니다. </h3>
                 </div>
                 <table className={style['register_table']}>
                     <tbody>
