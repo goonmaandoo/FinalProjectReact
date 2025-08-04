@@ -10,6 +10,7 @@ import Login from "./pages/loginPage/Login";
 import RegisterCheck from "./pages/loginPage/RegisterCheck";
 import OwnerRegister from "./pages/loginPage/OwnerRegister";
 import UserRegister from "./pages/loginPage/UserRegister";
+import OrderComplete from "./pages/orders/OrderComplete";
 
 function App() {
   const [message, setMessage] = useState('');
@@ -35,11 +36,12 @@ function App() {
           <Route path="/" element={<Navigate to="/mainpage" replace />} />
           <Route path="/mainpage" element={<MainPage />} />
           <Route path="/mypage" element={<MyPage />} />
-          <Route path="/mypage/userinfo" element={<UserInfo />}gi />
+          <Route path="/mypage/userinfo" element={<UserInfo />} />
           <Route path="/login" element={<Login />} />
           <Route path="/ownerusercheck" element={<RegisterCheck />} />
           <Route path="/ownerregister" element={<OwnerRegister />} />
           <Route path="/userregister" element={<UserRegister />} />
+          <Route path="/orders/:orderId" element={<OrderComplete />} />
         </Routes>
     </div>
   );
