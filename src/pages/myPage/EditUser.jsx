@@ -84,7 +84,7 @@ export default function EditUser() {
 
                 />
                 <button className={styles.editnameButton} onClick={editComplete}>
-                    중복<br></br>확인
+                    중복확인
                 </button>
             </div>
 
