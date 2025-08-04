@@ -28,7 +28,7 @@ export default function EditUser() {
     if(!user){
         return <div> 로딩중 ... </div>
     }
-    
+
     const editComplete = async () => {
         try {
             const nicknameResult = await axios.get(`/api/users/nicknameCheck?nickname=${nickname}`)
@@ -84,7 +84,7 @@ export default function EditUser() {
 
                 />
                 <button className={styles.editnameButton} onClick={editComplete}>
-                    중복확인
+                    중복<br></br>확인
                 </button>
             </div>
 

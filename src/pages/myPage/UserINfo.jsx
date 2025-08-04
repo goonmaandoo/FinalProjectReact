@@ -5,8 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function UserInfo() {
   const navigate = useNavigate();  
 
-  const dispatch = useDispatch();
-
   const user = useSelector((state) => state.auth.user);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const pwcheckButton = () => {
@@ -31,8 +29,7 @@ export default function UserInfo() {
                 <div className={styles.value}>{user?.createdAt}</div>
               </div>
               <div className={styles.myButtonContainer}>
-                <button className={styles.myButtonEdit} onClick={pwcheckButton}>수정하기</button>
-                <button className={styles.myButtonQuit} onClick={pwcheckButton}>회원탈퇴</button>
+                <button className={styles.editemailButton} onClick={pwcheckButton}>수정 및 탈퇴</button>
               </div>
             </div>
     )

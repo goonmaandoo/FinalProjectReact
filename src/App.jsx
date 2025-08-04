@@ -33,6 +33,7 @@ import Hamburger from './components/Hamburger';
 import AuthQna from './pages/Auth/AuthQna';
 
 import RoomCreate from './pages/roomPage/RoomCreate';
+import PasswordCheck from './pages/myPage/PasswordCheck';
 
 function parseJwt(token) {
   try {
@@ -100,6 +101,7 @@ function App() {
           <Route index element={<UserInfo />} />
           <Route path="userinfo" element={<UserInfo />} />
           <Route path="edituser" element={<EditUser />} />
+          <Route path="passwordcheck" element={<PasswordCheck/>} />
           <Route path="myqna" element={<MyQna />} />
         </Route>
 
