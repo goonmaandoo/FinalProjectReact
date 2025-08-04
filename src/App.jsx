@@ -19,7 +19,7 @@ import SelectRoom from "./pages/storePage/SelectedRoom";
 import AllRoom from './pages/roomPage/AllRoom';
 import Error404Page from './pages/Error404Page';
 import LoginCheck from './components/user/loginCheck';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginSuccess } from './redux/user';
 import axios from 'axios';
 import MoaPolicy1 from './pages/footerPage/MoaPolicy1';
@@ -48,6 +48,8 @@ function App() {
   const location = useLocation();
   const isMainPage = location.pathname === "/mainpage";
   const dispatch = useDispatch();
+
+
 
   useEffect(() => {
     const token = localStorage.getItem("token");
