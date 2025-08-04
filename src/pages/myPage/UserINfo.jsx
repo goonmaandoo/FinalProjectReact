@@ -9,11 +9,8 @@ export default function UserInfo() {
 
   const user = useSelector((state) => state.auth.user);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const editButton = () => {
-        navigate("/mypage/edituser");
-    }
-    const quitButton = () => {
-        alert("버튼만들기")
+  const pwcheckButton = () => {
+        navigate("/mypage/passwordcheck");
     }
     return (
           <div className={styles.userInfo}>
@@ -27,15 +24,15 @@ export default function UserInfo() {
               </div>
               <div className={styles.infoRow}>
                 <div className={styles.label}>전화번호:</div>
-                <div className={styles.value}>{user?.phone_num}</div>
+                <div className={styles.value}>{user?.phoneNum}</div>
               </div>
               <div className={styles.infoRow}>
                 <div className={styles.label}>가입일:</div>
-                <div className={styles.value}>{user?.created_at}</div>
+                <div className={styles.value}>{user?.createdAt}</div>
               </div>
               <div className={styles.myButtonContainer}>
-                <button className={styles.myButtonEdit} onClick={editButton}>수정하기</button>
-                <button className={styles.myButtonQuit} onClick={quitButton}>회원탈퇴</button>
+                <button className={styles.myButtonEdit} onClick={pwcheckButton}>수정하기</button>
+                <button className={styles.myButtonQuit} onClick={pwcheckButton}>회원탈퇴</button>
               </div>
             </div>
     )
