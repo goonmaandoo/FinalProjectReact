@@ -2,7 +2,8 @@ import styles from "../../CSS/MyPage.module.css";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import MyHeader from "./MyHeader";
-
+import { useState, useEffect } from "react";
+import GaugeBar from "../../component/funtion/common/gaugeBar";
 export default function MyPage() {
     const location = useLocation();
     const currentMenu = location.pathname.split("/").pop();
@@ -17,6 +18,18 @@ export default function MyPage() {
         { name: "주문내역", path: "orderlist" },
         { name: "문의내역", path: "myqna" },
     ];
+    const [bear, setBear] = useState("web_logo");
+    useEffect(() => {
+        if (!user) return;
+        console.log("유저레이팅:", user.userRating);
+        if (user.userRating >= 80) {
+            setBear("good");
+        } else if (user.userRating < 30) {
+            setBear("bad");
+        } else {
+            setBear("soso");
+        }
+    },[user]);
     return (
         <main className={styles.myPage_main}>
             <div className={styles.myPage_box}>
@@ -33,7 +46,7 @@ export default function MyPage() {
                                 <div>프로필수정</div>
                                 <img
                                     className={styles.circle_pencil}
-                                    src="https://epfwvrafnhdgvyfcrhbo.supabase.co/storage/v1/object/public/imgfile/main_img/line-md_pencil%20(1).png"
+                                    src="http://localhost:8080/image/imgfile/main_img/line-md_pencil (1).png"
                                 />
                             </label>
                         </div>
@@ -43,17 +56,18 @@ export default function MyPage() {
                             <div className={styles.userDetail}>
                                 <img
                                     className={styles.bearImage}
-                                    src={"" /* bear image src */}
+                                    src={`http://localhost:8080/image/imgfile/main_img/${bear}.png`}
                                 />
                                 <div className={styles.usernickName}>{user?.nickname} 님</div>
                             </div>
+                            {user && <GaugeBar value={user.userRating} />}
                         </div>
                     </div>
 
                     <div className={styles.user_cash}>
                         <img
                             className={styles["coin_imo"]}
-                            src="https://epfwvrafnhdgvyfcrhbo.supabase.co/storage/v1/object/public/imgfile/main_img/coin.png"
+                            src="http://localhost:8080/image/imgfile/main_img/coin.png"
                             alt="코인"
                         />
                         <div className={styles["coin_confirm"]}>

@@ -1,0 +1,173 @@
+.authQnaContainer {
+    border: 1px solid black;
+    width: 1170px;
+    padding: 10px 10px 10px 0px;
+    background-color: #e0e0e0;
+}
+
+.AuthHeadContainer {
+    width: 1245px;
+    height: 50px;
+    margin-bottom: 20px;
+    position: relative;
+    /* 기준 잡기 */
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.headMain {
+    font-weight: 700;
+    font-size: large;
+}
+
+.headSub {
+    font-weight: 300;
+    font-size: small;
+    /* 오타 수정: 'samll' -> 'small' */
+    margin-top: 2px;
+}
+
+.radioWrapper {
+    position: absolute;
+    bottom: -15px;
+    right: 10px;
+    font-size: 14px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 300px;
+}
+
+.authQnaCard {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.authnQnatitle {
+    display: flex;
+    justify-content: flex-start;
+    /* 기본값이지만 명시 */
+    align-items: center;
+    padding: 8px;
+    height: 30px;
+    font-weight: 700;
+}
+
+.authQnatitleRight {
+    margin-left: auto;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.authnQnatitleText {
+    font-size: 16px;
+}
+
+.answerStatusOn {
+    padding-top: 3px;
+    border-radius: 7px;
+    border: none;
+    background: #ff7272;
+    font-weight: 500;
+    width: 75px;
+    height: 30px;
+    text-align: center;
+    color: white;
+    font-size: 15px;
+}
+
+.answerStatus {
+    padding-top: 3px;
+    border-radius: 7px;
+    border: none;
+
+    font-weight: 500;
+    width: 75px;
+    height: 30px;
+    text-align: center;
+    color: white;
+    font-size: 15px;
+}
+
+
+
+.authnQnaContents {
+    margin-left: auto;
+    font-weight: bold;
+    border-radius: 7px;
+    background-color: #e0e0e0;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    height: 80px;
+    padding: 7px;
+    font-weight: 400;
+}
+
+.addAnswerBtn {
+    border-radius: 7px;
+    border: 1px solid #ffb8b8;
+    background-color: white;
+    font-weight: 600;
+    width: 75px;
+    height: 30px;
+}
+
+.addAnswerBtn:hover {
+    cursor: pointer;
+    background-color: #ffc2c2;
+}
+
+.completeAnswerBtn {
+    border-radius: 7px;
+    border: none;
+    background: #ffe9e9;
+    font-weight: 600;
+    width: 75px;
+    height: 30px;
+}
+
+.completeAnswerBtn:hover {
+    cursor: pointer;
+    background-color: #ffc2c2;
+}
+
+.arrowIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.answerCard {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.answerCard .completeWrapper {
+    display: flex;
+    justify-content: flex-end;
+    /* 오른쪽 정렬 */
+}
+
+.answerBody {
+    border-radius: 7px;
+    border: none;
+    background-color: #e0e0e0;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    height: 80px;
+    padding: 5px;
+}
+
+.answerBody textarea {
+    border-radius: 7px;
+    border: none;
+    background-color: #e0e0e0;
+    width: 1105px;
+    height: 70px;
+}
