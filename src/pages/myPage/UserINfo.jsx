@@ -8,12 +8,14 @@ export default function UserInfo() {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.auth.user);
+  console.log("유저정보",user);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  console.log("관리자여부",isAuthenticated);
   const editButton = () => {
         navigate("/mypage/edituser");
     }
     const quitButton = () => {
-        alert("버튼만들기")
+        alert("회원탈퇴 미구현")
     }
     return (
           <div className={styles.userInfo}>

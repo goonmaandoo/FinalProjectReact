@@ -15,7 +15,7 @@ export default function EditModal({ qnaId, onClose }) {
             console.log(response.data);
             setQna(response.data);
             setTitle(response.data.title);
-            setContents(response.data.qcontents);
+            setContents(response.data.qContents);
             setDate(response.data.createdAt);
         }).catch((err) => {
             console.error(err);
@@ -33,7 +33,7 @@ export default function EditModal({ qnaId, onClose }) {
             const updatedData = {
                 id: qnaId,
                 title: title,
-                qcontents: contents
+                qContents: contents
             };
             console.log("updatedData:", updatedData);
             const response = await axios.put("/api/qna/updateQna", updatedData);

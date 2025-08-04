@@ -2,18 +2,21 @@ import { useState, useEffect } from "react";
 import styles from "../../CSS/MyPage.module.css";
 import axios from "axios";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import EditModal from "./EditModal";
 import FormattedDate from "../../component/funtion/common/FormattedDate";
 import QnaWriteModal from "./QnaWriteModal";
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function MyQna() {
     const [qnaList, setQnaList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(0);
-
-    const userId = 1;
+    const user = useSelector((state) => state.auth.user);
+    const userId = user?.id;
     useEffect(() => {
+        if(!userId) return;
         axios
             .get("/api/qna/getQnaList", {
                 params: { userId },
@@ -30,7 +33,7 @@ export default function MyQna() {
                 setError("불러오기 실패");
                 setLoading(false);
             });
-    }, []);
+    }, [user]);
     useEffect(() => {
         console.log("🔥 qnaList 상태가 변경됨:", qnaList);
     }, [qnaList]);
@@ -61,6 +64,9 @@ export default function MyQna() {
         if (!confirmed) return;
         setEditQnaById(qna.id);
         setEditing(true);
+        setEditTitle(qna.title);
+        console.log("문의내용",qna.qcontents);
+        setEditContent(qna.qContents);
     };
     // 모달 열기
     const [modalOpen, setModalOpen] = useState(false);
@@ -83,6 +89,10 @@ export default function MyQna() {
             console.error("삭제 실패", error);
             alert("문의 삭제에 실패했습니다.");
         }
+    };
+    const refreshQnaList = async () => {
+        const response = await axios.get("/api/qna/getQnaList", { params: { userId } });
+        setQnaList(response.data);
     };
     // 답변 보기
     const [showAnswerId, setShowAnswerId] = useState(null);
@@ -137,7 +147,7 @@ export default function MyQna() {
                                 <textarea
                                     className={styles.qnaTextArea}
                                     disabled
-                                    value={qna.qcontents}
+                                    value={qna.qContents}
                                 />
                             </div>
                             <div className={styles.qnaanswer}>
@@ -169,11 +179,13 @@ export default function MyQna() {
                                         수정하기
                                     </button>
                                 )}
-                                {qna.qanswer ? (
-                                    <ArrowDropDownIcon className={styles.downIcon} />
-                                ) : (
-                                    ""
-                                )}
+                               {qna.qanswer && (
+    showAnswerId === qna.id ? (
+      <ArrowDropUpIcon className={styles.downIcon} />
+    ) : (
+      <ArrowDropDownIcon className={styles.downIcon} />
+    )
+  )}
                             </div>
                         </div>
                         {qna.qanswer && showAnswerId === qna.id && (
@@ -216,7 +228,10 @@ export default function MyQna() {
                 </div>
             )}
             {editing && editQnaById && (
-                <EditModal qnaId={editQnaById} onClose={closeModal} />
+                <EditModal qnaId={editQnaById} onClose={() => {
+                    closeModal();
+                    refreshQnaList();
+                }} />
             )}
         </>
     );
