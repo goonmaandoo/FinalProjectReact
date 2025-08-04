@@ -16,10 +16,11 @@ import UserRegister from "./pages/loginPage/UserRegister";
 import StoreListPage from "./pages/storePage/StoreListPage";
 import StoreDetail from "./pages/storePage/StoreDetail";
 import SelectRoom from "./pages/storePage/SelectedRoom";
+import OrderComplete from './pages/orders/OrderComplete';
 import AllRoom from './pages/roomPage/AllRoom';
 import Error404Page from './pages/Error404Page';
 import LoginCheck from './components/user/loginCheck';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginSuccess } from './redux/user';
 import axios from 'axios';
 import MoaPolicy1 from './pages/footerPage/MoaPolicy1';
@@ -27,6 +28,7 @@ import MoaPolicy2 from './pages/footerPage/MoaPolicy2';
 import MoaPolicy3 from './pages/footerPage/MoaPolicy3';
 import MoaPolicy4 from './pages/footerPage/MoaPolicy4';
 import SafetyGuide from './pages/footerPage/SafetyGuide';
+import Hamburger from './components/Hamburger';
 
 import AuthQna from './pages/Auth/AuthQna';
 
@@ -47,6 +49,9 @@ function App() {
   const location = useLocation();
   const isMainPage = location.pathname === "/mainpage";
   const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = useState(false);
+
+
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -72,17 +77,25 @@ function App() {
     }
   }, []);
 
+  const toggleMenu = (e) => {
+    e?.stopPropagation();
+    console.log("toggleMenu called");
+    setIsOpen(!isOpen);
+  };
+
   return (
     <div>
       {isMainPage ? (
-        <MainHeader />
+        <MainHeader toggleMenu={toggleMenu}/>
       ) : (
-        <Header />
+        <Header toggleMenu={toggleMenu}/>
       )}
+
       <Routes>
         <Route path="/" element={<Navigate to="/mainpage" replace />} />
         <Route path="/mainpage" element={<MainPage />} />
         <Route path="/roomPage/AllRoom" element={<AllRoom />} />
+        <Route path="/ordercomplete/:orderId" element={<OrderComplete />} />
         <Route path="/mypage" element={<MyPage />}>
           <Route index element={<UserInfo />} />
           <Route path="userinfo" element={<UserInfo />} />
@@ -109,7 +122,14 @@ function App() {
         <Route path="safetyguide" element={<SafetyGuide/>}/>
         <Route path="*" element={<Error404Page />} />
       </Routes>
+      {isOpen && (
+        <Hamburger
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+        />
+      )}
       <Footer />
+
     </div>
   );
 }

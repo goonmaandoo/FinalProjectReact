@@ -9,18 +9,25 @@ export const loginSuccess = (user, token) => ({
     loading: false,
 });
 
-export const logout = () => ({
-    type: LOGOUT,
-    loading: false,
-});
+export const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    return {
+        type: LOGOUT,
+        loading: false,
+    };
+};
+
 
 // 초기 상태
 const initialState = {
-    user: null,
-    token: null,
-    isAuthenticated: false,
-    loading: true,
+    user: JSON.parse(localStorage.getItem("user")) || null,
+    token: localStorage.getItem("token") || null,
+    isAuthenticated: !!localStorage.getItem("token"),
+    loading: false,
 };
+
 
 // 리듀서
 const authReducer = (state = initialState, action) => {
@@ -31,6 +38,7 @@ const authReducer = (state = initialState, action) => {
                 user: action.payload.user,
                 token: action.payload.token,
                 isAuthenticated: true,
+                loading: false,
             };
         case LOGOUT:
             return initialState;

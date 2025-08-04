@@ -1,6 +1,9 @@
 import styles from '../CSS/MainPage.module.css';
 import { Link, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { logout } from '../redux/user';
+// import LoginCheck from '../components/user/LoginCheck';
 
 export default function MainPage() {
     const [keyword, setKeyword] = useState('');
@@ -8,6 +11,17 @@ export default function MainPage() {
     const [category, setCategory] = useState([]);
     const [popular, setPopular] = useState([]);
     const navigate = useNavigate();
+
+    // //로그인
+    // const user = useSelector((state) => state.auth.user);
+    // const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+        
+    // //로그아웃
+    //     const handleLogout = () => {
+    //         dispatch(logout());
+    //         localStorage.removeItem("token");
+    //         navigate("/mainpage");
+    //     }
 
     //검색창
     const onKeyDown = (e) => {
@@ -108,6 +122,7 @@ export default function MainPage() {
                                 <div className={styles["no_room_message"]}>참여 가능한 공구가 없습니다.</div>
                             ) : (
                                 rooms.slice(0, 6).map((items) => (
+                                    // <LoginCheck>
                                     <Link key={items.id} to={`/room/${items.id}`} style={{ cursor: "pointer" }}>
                                         <div className={styles["gongu_with_text"]}>
                                             <img className={styles["square_img"]}
@@ -128,6 +143,7 @@ export default function MainPage() {
                                             </div>
                                         </div>
                                     </Link>
+                                    // </LoginCheck>
                                 ))
                             )}
                         </div>
