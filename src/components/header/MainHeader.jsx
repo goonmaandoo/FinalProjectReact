@@ -22,11 +22,12 @@ export default function MainHeader({ toggleMenu }) {
         localStorage.removeItem("token");
         navigate("/mainpage");
     }
-
+    //햄버거버튼
     const handleHamburgerClick = (e) => {
         e.stopPropagation();
         toggleMenu(e);
     }
+    
     const handleClick = () => {
         new window.daum.Postcode({
             oncomplete: function (data) {
