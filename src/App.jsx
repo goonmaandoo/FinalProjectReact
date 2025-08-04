@@ -17,6 +17,7 @@ import StoreListPage from "./pages/storePage/StoreListPage";
 import StoreDetail from "./pages/storePage/StoreDetail";
 import SelectRoom from "./pages/storePage/SelectedRoom";
 import OrderComplete from './pages/orders/OrderComplete';
+import RoomCreate from './pages/roomPage/RoomCreate';
 import AllRoom from './pages/roomPage/AllRoom';
 import Error404Page from './pages/Error404Page';
 import LoginCheck from './components/user/loginCheck';
@@ -32,8 +33,7 @@ import Hamburger from './components/Hamburger';
 
 import AuthQna from './pages/Auth/AuthQna';
 
-import RoomCreate from './pages/roomPage/RoomCreate';
-import PasswordCheck from './pages/myPage/PasswordCheck';
+
 
 function parseJwt(token) {
   try {
@@ -96,6 +96,7 @@ function App() {
         <Route path="/" element={<Navigate to="/mainpage" replace />} />
         <Route path="/mainpage" element={<MainPage />} />
         <Route path="/roomPage/AllRoom" element={<AllRoom />} />
+        <Route path="/roomPage/create" element={<RoomCreate />} />
         <Route path="/ordercomplete/:orderId" element={<OrderComplete />} />
         <Route path="/mypage" element={<MyPage />}>
           <Route index element={<UserInfo />} />
@@ -121,7 +122,7 @@ function App() {
         <Route path="/moapolicy2" element={<MoaPolicy2/>}/>
         <Route path="/moapolicy3" element={<MoaPolicy3/>}/>
         <Route path="/moapolicy4" element={<MoaPolicy4/>}/>
-        <Route path="safetyguide" element={<SafetyGuide/>}/>
+        <Route path="/safetyguide" element={<SafetyGuide/>}/>
         <Route path="*" element={<Error404Page />} />
       </Routes>
       {isOpen && (
