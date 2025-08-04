@@ -47,6 +47,7 @@ function App() {
   const location = useLocation();
   const isMainPage = location.pathname === "/mainpage";
   const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -72,12 +73,18 @@ function App() {
     }
   }, []);
 
+  const toggleMenu = (e) => {
+    e?.stopPropagation();
+    console.log("toggleMenu called");
+    setIsOpen(!isOpen);
+  };
+
   return (
     <div>
       {isMainPage ? (
-        <MainHeader />
+        <MainHeader toggleMenu={toggleMenu}/>
       ) : (
-        <Header />
+        <Header toggleMenu={toggleMenu}/>
       )}
       <Routes>
         <Route path="/" element={<Navigate to="/mainpage" replace />} />
@@ -109,6 +116,14 @@ function App() {
         <Route path="safetyguide" element={<SafetyGuide/>}/>
         <Route path="*" element={<Error404Page />} />
       </Routes>
+      {/* {isOpen && (
+        <Hamburger
+          isOpen={isOpen}
+          handleLogout={handleLogout}
+          onClose={() => setIsOpen(false)}
+
+        />
+      )} */}
       <Footer />
     </div>
   );
