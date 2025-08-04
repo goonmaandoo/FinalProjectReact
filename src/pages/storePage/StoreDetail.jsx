@@ -85,7 +85,7 @@ export default function StoreDetail() {
                         </div>
                     </div>
                 </div>
-                {/* <div className={styles["menu_box"]}>
+                <div className={styles["menu_box"]}>
                     <div className={styles["menu_btn"]}>
                         <button onClick={() => {
                             navigate(`/room/create/${storeId}`) 
@@ -108,7 +108,7 @@ export default function StoreDetail() {
                             <hr className={styles["menu_hr"]} ></hr>
                         </div>
                     ))}
-                </div> */}
+                </div>
             </div>
         </main>
     ) : null;
