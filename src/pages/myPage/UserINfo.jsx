@@ -3,11 +3,20 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function UserInfo() {
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
   const user = useSelector((state) => state.auth.user);
+  console.log("유저정보", user);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  console.log("관리자여부", isAuthenticated);
+  const editButton = () => {
+    navigate("/mypage/edituser");
+  }
+  const quitButton = () => {
+    alert("회원탈퇴 미구현")
+  }
   const pwcheckButton = () => {
+
         navigate("/mypage/passwordcheck");
     }
     return (
