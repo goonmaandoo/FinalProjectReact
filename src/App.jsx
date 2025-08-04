@@ -31,6 +31,7 @@ import SafetyGuide from './pages/footerPage/SafetyGuide';
 import AuthQna from './pages/Auth/AuthQna';
 
 import RoomCreate from './pages/roomPage/RoomCreate';
+import PasswordCheck from './pages/myPage/PasswordCheck';
 
 function parseJwt(token) {
   try {
@@ -87,6 +88,7 @@ function App() {
           <Route index element={<UserInfo />} />
           <Route path="userinfo" element={<UserInfo />} />
           <Route path="edituser" element={<EditUser />} />
+          <Route path="passwordcheck" element={<PasswordCheck/>} />
           <Route path="myqna" element={<MyQna />} />
         </Route>
 
@@ -99,6 +101,7 @@ function App() {
         <Route path="/ownerusercheck" element={<RegisterCheck />} />
         <Route path="/ownerregister" element={<OwnerRegister />} />
         <Route path="/userregister" element={<UserRegister />} />
+        
 
         <Route path="/auth/qna" element={<AuthQna />} />
 
