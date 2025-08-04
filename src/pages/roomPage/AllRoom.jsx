@@ -6,10 +6,12 @@ import axios from "axios";
 import { getCoordinates } from "../../component/funtion/Coord";
 import { loadKakaoApi } from "../../component/funtion/loadKakaoApi";
 import { getDistance } from "../../component/funtion/Distance";
+import { useSelector } from "react-redux";
 
 export default function AllRoom() {
     const navigate = useNavigate();
-    const userId = 1;
+    const user = useSelector((state) => state.auth.user);
+    const userId = user?.id;
     const [roomList, setRoomList] = useState([]);
     const [selectedRoomId, setSelectedRoomId] = useState(null);
     const [error, setError] = useState();
@@ -20,8 +22,11 @@ export default function AllRoom() {
 
     // 1. 처음 마운트 시, userId를 기반으로 userCoords를 가져와 설정
     useEffect(() => {
+        if(!user?.id) return;
+
         const fetchUserLocation = async () => {
             try {
+                console.log("사용할 유저아이디", userId);
                 await loadKakaoApi();
                 const userResponse = await axios.get(`/api/users/getUserAddress/${userId}`);
                 const fetchedAddress = userResponse.data.address;
@@ -39,8 +44,8 @@ export default function AllRoom() {
                 setError("사용자 위치 정보를 가져올 수 없습니다.");
             }
         };
-        fetchUserLocation();
-    }, []);
+            fetchUserLocation();
+    }, [user]);
     // 2. userCoords가 변경될 때마다 roomList를 다시 가져와 필터링
     useEffect(() => {
         const fetchRoomsByLocation = async () => {
@@ -138,7 +143,7 @@ export default function AllRoom() {
                     <img
                         onClick={() => { navigate(-1); }}
                         className={styles.back_btn}
-                        src="https://epfwvrafnhdgvyfcrhbo.supabase.co/storage/v1/object/public/imgfile/main_img/backbtn.png"
+                        src="http://localhost:8080/image/imgfile/main_img/backbtn.png"
                         alt="뒤로가기 버튼"
                     />
                     <div>진행중인 공구방</div>
