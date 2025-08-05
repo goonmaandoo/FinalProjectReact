@@ -39,13 +39,38 @@ export default function PasswordCheck() {
         }
     }
 
+    const deleteuser = async () => {
+        const confirmed = window.confirm("정말 회원 탈퇴하시겠습니까?");
+        if (!confirmed) return; // 취소 누르면 탈퇴 요청 안 보냄
+
+        try {
+            const response = await axios.post("/api/users/delete", {
+                id: user.id
+            });
+
+            if (response.status === 200) {
+                alert("회원 탈퇴가 완료되었습니다.");
+                navigate("/mainpage");
+            } else {
+                alert("회원 탈퇴에 실패했습니다.");
+            }
+        } catch (error) {
+            console.error("회원 탈퇴 오류 : ", error);
+            alert("오류가 발생했습니다.");
+        }
+    };
+
+
     return (
         <>
             <div className={styles.userInfo}>
+                
                 <div className={styles.infoRow}>
                     <div className={styles.label}>이메일 :</div>
                     <input
                         type="text"
+                        className={styles.editInput}
+                        placeholder="이메일"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
@@ -54,17 +79,20 @@ export default function PasswordCheck() {
                     <div className={styles.label}>비밀번호 :</div>
                     <input
                         type="password"
+                        className={styles.editInput}
                         placeholder="비밀번호"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
+                <div className={styles.infoRow}>
+                    {error && <div style={{ color: 'red' }}>{error}</div>}
+                </div>
 
-                {error && <div style={{ color: 'red' }}>{error}</div>}
 
                 <div className={styles.myButtonContainer}>
                     <button className={styles.myButtonEdit} onClick={edituser}>수정하기</button>
-                    <button className={styles.myButtonQuit}>회원탈퇴</button>
+                    <button className={styles.myButtonQuit} onClick={deleteuser}>회원탈퇴</button>
                 </div>
             </div>
 

@@ -17,6 +17,7 @@ import StoreListPage from "./pages/storePage/StoreListPage";
 import StoreDetail from "./pages/storePage/StoreDetail";
 import SelectRoom from "./pages/storePage/SelectedRoom";
 import OrderComplete from './pages/orders/OrderComplete';
+import RoomCreate from './pages/roomPage/RoomCreate';
 import AllRoom from './pages/roomPage/AllRoom';
 import Error404Page from './pages/Error404Page';
 import LoginCheck from './components/user/loginCheck';
@@ -29,10 +30,10 @@ import MoaPolicy3 from './pages/footerPage/MoaPolicy3';
 import MoaPolicy4 from './pages/footerPage/MoaPolicy4';
 import SafetyGuide from './pages/footerPage/SafetyGuide';
 import Hamburger from './components/Hamburger';
-//import RoomPage from './pages/room/RoomPage';
+import PasswordCheck from './pages/myPage/PasswordCheck';
 import AuthQna from './pages/Auth/AuthQna';
 
-import RoomCreate from './pages/roomPage/RoomCreate';
+
 
 function parseJwt(token) {
   try {
@@ -95,12 +96,12 @@ function App() {
         <Route path="/" element={<Navigate to="/mainpage" replace />} />
         <Route path="/mainpage" element={<MainPage />} />
         <Route path="/roomPage/AllRoom" element={<AllRoom />} />
-        {/*<Route path="/room/:room_id" element={<RoomPage />} /> */}
         <Route path="/ordercomplete/:orderId" element={<OrderComplete />} />
         <Route path="/mypage" element={<MyPage />}>
           <Route index element={<UserInfo />} />
           <Route path="userinfo" element={<UserInfo />} />
           <Route path="edituser" element={<EditUser />} />
+          <Route path="passwordcheck" element={<PasswordCheck/>} />
           <Route path="myqna" element={<MyQna />} />
         </Route>
 
@@ -120,7 +121,7 @@ function App() {
         <Route path="/moapolicy2" element={<MoaPolicy2/>}/>
         <Route path="/moapolicy3" element={<MoaPolicy3/>}/>
         <Route path="/moapolicy4" element={<MoaPolicy4/>}/>
-        <Route path="safetyguide" element={<SafetyGuide/>}/>
+        <Route path="/safetyguide" element={<SafetyGuide/>}/>
         <Route path="*" element={<Error404Page />} />
       </Routes>
       {isOpen && (
