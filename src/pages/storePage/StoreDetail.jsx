@@ -60,19 +60,19 @@ export default function StoreDetail() {
                     <div className={styles["address_box"]}>
                         <div className={styles["address_text"]}>
                             <div className={styles["address_flex"]}>
-                                <div>가게배달</div>
+                                <div className={styles["address_title"]}>가게배달</div>
                                 <div>29~44분</div>
                             </div>
                             <div className={styles["address_flex"]}>
-                                <div>최소주문</div>
+                                <div className={styles["address_title"]}>최소주문</div>
                                 <div>{thousands(store.minPrice)}원</div>
                             </div>
                             <div className={styles["address_flex"]}>
-                                <div>가게배달</div>
+                                <div className={styles["address_title"]}>가게배달</div>
                                 <div>{store.storeAddress}</div>
                             </div>
                             <div className={styles["address_flex"]}>
-                                <div>가게번호</div>
+                                <div className={styles["address_title"]}>가게번호</div>
                                 <div>{store.tel}</div>
                             </div>
                         </div>
@@ -100,7 +100,7 @@ export default function StoreDetail() {
                             <div className={styles["menu_detail_box"]}>
                             <div className={styles["menu_text"]}>
                                 <div className={styles["menu_title"]}>{item.menuName}</div>
-                                <div>{thousands(item.menuPrice)}원</div>
+                                <div className={styles["menu_price"]}>{thousands(item.menuPrice)}원</div>
                             </div>
                             <img className={styles["menu_img"]} 
                             src={`http://localhost:8080/image/imgfile/${item.folder}/${item.filename}`} alt={item.menuName}/>

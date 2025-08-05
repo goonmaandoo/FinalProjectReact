@@ -32,7 +32,7 @@ export default function MainPage() {
     }
     useEffect(() => {
         //공구방 조회
-        fetch('http://localhost:8080/room/allWithCount')
+        fetch('http://localhost:8080/api/room/allWithCount')
         .then(res => {
             if (!res.ok) throw new Error('서버 에러');
             return res.json();
