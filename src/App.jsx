@@ -30,7 +30,7 @@ import MoaPolicy3 from './pages/footerPage/MoaPolicy3';
 import MoaPolicy4 from './pages/footerPage/MoaPolicy4';
 import SafetyGuide from './pages/footerPage/SafetyGuide';
 import Hamburger from './components/Hamburger';
-
+import PasswordCheck from './pages/myPage/PasswordCheck';
 import AuthQna from './pages/Auth/AuthQna';
 
 
