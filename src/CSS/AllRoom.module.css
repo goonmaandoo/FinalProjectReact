@@ -1,156 +1,262 @@
-.main_body{
-    width: 100%;
-    display: flex;
-    justify-content: center;
+.main_body {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
-.main_container{
-    margin: 80px 20px;
-    width: 1280px;
-    box-sizing: border-box;
+.main_container {
+  margin: 80px 20px;
+  width: 1280px;
+  box-sizing: border-box;
 }
-.AllRoomhead{
-    width: 1240px;
-    height: 65px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 4px 6px 2px rgba(0, 0, 0, 0.2);
-    box-sizing: border-box;
-    margin-bottom: 20px;
-    font-size: 24px;
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
+.AllRoomhead {
+  width: 1240px;
+  height: 65px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 4px 6px 2px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
 }
-
 .AllRoomBody {
-    display: flex;
-    width: 1240px;
-    height: 640px;
-    box-sizing: border-box;
-    padding: 20px 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 4px 6px 2px rgba(0, 0, 0, 0.2);
+  display: flex;
+  width: 1240px;
+  height: 640px;
+  box-sizing: border-box;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 4px 6px 2px rgba(0, 0, 0, 0.2);
 }
-
 .rooms {
-    width: 400px;
-    box-sizing: border-box;
-    overflow-y: auto;
-    padding-right: 20px;
-    height: auto;
-    scroll-behavior: smooth;
+  width: 400px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  padding-right: 20px;
+  height: auto;
+  scroll-behavior: smooth;
 }
-.room_no_result{
-    width: 380px;
-    height: 600px;
-    background-color: #F7F7F7;
-    border-radius: 10px;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.room_no_result {
+  width: 380px;
+  height: 600px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.roomMap{
-    width: 800px;
-    box-sizing: border-box;
+.roomMap {
+  width: 800px;
+  box-sizing: border-box;
 }
 .roomList {
-    border-radius: 10px;
-    width: 380px;
-    height: 200px;
-    overflow: hidden;
-    display: flex;
-    margin-bottom: 20px;
-    box-sizing: border-box;
+  border-radius: 10px;
+  width: 380px;
+  height: 200px;
+  overflow: hidden;
+  display: flex;
+  margin-bottom: 20px;
+  box-sizing: border-box;
 }
-.roomWithText{
-    position: relative;
-    height: 200px;
-    width: 380px;
+.roomWithText {
+  position: relative;
+  height: 200px;
+  width: 380px;
 }
 .roomTitle {
-    font-weight: bold;
-    font-size: large;
-    opacity: 100%;
+  font-weight: bold;
+  font-size: large;
+  opacity: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 95%;
 }
-.roomDetail{
-    width: 380px;
-    height: 93px;
-    background-color: white;
-    opacity: 80%;
-    bottom: 0;
-    position: absolute;
-    padding: 0 15px;
-    box-sizing: border-box;
-    left: 0px;
+.roomDetail {
+  width: 380px;
+  height: 93px;
+  background-color: white;
+  opacity: 80%;
+  bottom: 0;
+  position: absolute;
+  padding: 0 15px;
+  box-sizing: border-box;
+  left: 0px;
 }
 .roomAddress {
-    font-weight: 600px;
-    opacity: 100%;
-    margin-bottom: -5px;
+  font-weight: 600;
+  opacity: 100%;
+  margin-bottom: -5px;
 }
 .roomDistance {
-    float: left;
-    font-size: medium;
-    font-weight: 600px;
-    opacity: 100%;
-    margin-bottom: -5px;
+  float: left;
+  font-size: medium;
+  font-weight: 600;
+  opacity: 100%;
+  margin-bottom: -5px;
 }
-
 .roomListImg {
-    width: 390px;
-    height: 100px;
-    border-radius: 10px 10px 0 0;
-    object-fit: cover;
-    object-position: center 80%;
-    display: block;
-    box-sizing: border-box;
+  width: 390px;
+  height: 100px;
+  border-radius: 10px 10px 0 0;
+  object-fit: cover;
+  object-position: center 80%;
+  display: block;
+  box-sizing: border-box;
 }
-.back_btn{
-    padding: 24px;
-    cursor: pointer;
+.back_btn {
+  padding: 24px;
+  cursor: pointer;
 }
 .gongu_progress {
-    width: 100%;
-    height: 9px;
-    appearance: none;
-    -webkit-appearance: none;
-    overflow: hidden;
-    border: none;
-    border-radius: 10px;
-    margin: 0;
-    opacity: 100%;
+  width: 100%;
+  height: 9px;
+  appearance: none;
+  -webkit-appearance: none;
+  overflow: hidden;
+  border: none;
+  border-radius: 10px;
+  margin: 0;
+  opacity: 100%;
 }
-
 .gongu_progress::-webkit-progress-bar {
-    background-color: #eee;
-    border-radius: 10px;
+  background-color: #eee;
+  border-radius: 10px;
 }
-
 .gongu_progress::-webkit-progress-value {
-    background-color: #FFB1B1;
-    border-radius: 10px;
+  background-color: #ffb1b1;
+  border-radius: 10px;
 }
 .gongu_progress::-moz-progress-bar {
-    background-color: #FFB1B1;
-    border-radius: 10px;
+  background-color: #ffb1b1;
+  border-radius: 10px;
 }
-.gongu_bottom{
-    margin-top: 0px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.gongu_bottom {
+  margin-top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .gongu_people {
-    font-size: 14px;
+  font-size: 14px;
 }
-.gongu_delivery{
-    font-size: 14px;
+.gongu_delivery {
+  font-size: 14px;
 }
-.roomTitle{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 95%;
+
+/* 1280px 미만 (데스크탑) */
+@media (max-width: 1280px) {
+  .main_container {
+    width: 100%;
+    padding: 60px 15px;
+  }
+  .AllRoomhead {
+    width: 100%;
+    font-size: 22px;
+  }
+  .AllRoomBody {
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    padding: 15px;
+  }
+  .rooms {
+    width: 100%;
+    padding-right: 0;
+    margin-bottom: 20px;
+    height: 300px; /* 고정 높이 또는 화면에 따라 조절 */
+  }
+  .room_no_result {
+    width: 100%;
+    height: 300px;
+  }
+  .roomMap {
+    width: 100%;
+  }
+  .roomList {
+    width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+  }
+  .roomWithText {
+    width: 100%;
+    height: auto;
+  }
+  .roomListImg {
+    width: 100%;
+    height: 150px;
+  }
+  .roomDetail {
+    width: 100%;
+    height: auto;
+    padding: 10px 15px;
+    position: static;
+    opacity: 100%;
+  }
+}
+
+/* 768px 미만 (태블릿) */
+@media (max-width: 768px) {
+  .main_container {
+    padding: 40px 10px;
+  }
+  .AllRoomhead {
+    font-size: 20px;
+    height: 55px;
+  }
+  .rooms {
+    height: 250px;
+  }
+  .room_no_result {
+    height: 250px;
+  }
+  .roomListImg {
+    height: 120px;
+  }
+  .roomTitle {
+    font-size: 18px;
+  }
+  .roomAddress,
+  .roomDistance,
+  .gongu_people,
+  .gongu_delivery {
+    font-size: 12px;
+  }
+}
+
+/* 480px 미만 (모바일) */
+@media (max-width: 480px) {
+  .main_container {
+    padding: 20px 5px;
+  }
+  .AllRoomhead {
+    font-size: 16px;
+    height: 45px;
+    padding: 0 10px;
+  }
+  .AllRoomBody {
+    padding: 10px;
+  }
+  .rooms {
+    height: 200px;
+  }
+  .room_no_result {
+    height: 200px;
+  }
+  .roomListImg {
+    height: 100px;
+  }
+  .roomTitle {
+    font-size: 16px;
+  }
+  .roomDetail {
+    padding: 8px 10px;
+  }
+  .gongu_progress {
+    height: 6px;
+  }
 }

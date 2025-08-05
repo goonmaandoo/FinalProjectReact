@@ -4,10 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import MyHeader from "./MyHeader";
 import { useState, useEffect } from "react";
 import GaugeBar from "../../component/funtion/common/gaugeBar";
+import axios from "axios";
 export default function MyPage() {
     const location = useLocation();
     const currentMenu = location.pathname.split("/").pop();
-
+    const [profileUrl, setProfileUrl] = useState("");
     const dispatch = useDispatch();
 
     const user = useSelector((state) => state.auth.user);
@@ -29,7 +30,42 @@ export default function MyPage() {
         } else {
             setBear("soso");
         }
-    },[user]);
+    }, [user]);
+
+    useEffect(() => {
+        if (user?.profileUrl) {
+            setProfileUrl(`http://localhost:8080${user.profileUrl}`);
+        }
+    }, [user]);
+
+    const basic_profile = "https://epfwvrafnhdgvyfcrhbo.supabase.co/storage/v1/object/public/profile-image/mypagePerson.png"
+
+    const updateProfile = async (file) => {
+        try {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('userId', user.id);
+
+            const res = await axios.post("/api/users/uploadProfileImage", formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+
+            const profileUrlFromBackend = res.data.profileUrl;
+            console.log("백엔드에서 받은 profileUrl:", profileUrlFromBackend);
+            setProfileUrl(`http://localhost:8080${profileUrlFromBackend}?t=${new Date().getTime()}`);
+            alert("프로필 이미지가 업데이트 되었습니다!");
+        } catch (e) {
+            console.error("업로드 실패:", e);
+            alert("실패");
+        }
+    };
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        updateProfile(file);
+    };
     return (
         <main className={styles.myPage_main}>
             <div className={styles.myPage_box}>
@@ -37,12 +73,12 @@ export default function MyPage() {
                     <div className={styles.circle_with_text}>
                         <img
                             className={styles.circle}
-                            src={"" /* profileUrl or basic_profile */}
-                            onError={(e) => (e.target.src = "")}
+                            src={profileUrl || basic_profile}
+                            onError={(e) => (e.target.src = basic_profile)}
                         />
                         <div>
                             <label className={styles.circle_text}>
-                                <input type="file" onChange={() => { }} className={styles.fileUpload} />
+                                <input type="file" onChange={handleFileChange} className={styles.fileUpload} />
                                 <div>프로필수정</div>
                                 <img
                                     className={styles.circle_pencil}

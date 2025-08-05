@@ -20,6 +20,7 @@ import OrderComplete from './pages/orders/OrderComplete';
 import GonguComplete from './pages/roomPage/GonguComplete';
 import RoomCreate from './pages/roomPage/RoomCreate';
 import AllRoom from './pages/roomPage/AllRoom';
+import SearchPage from './pages/SearchPage';
 import Error404Page from './pages/Error404Page';
 import LoginCheck from './components/user/loginCheck';
 import { useDispatch, useSelector } from 'react-redux';
@@ -33,6 +34,7 @@ import SafetyGuide from './pages/footerPage/SafetyGuide';
 import Hamburger from './components/Hamburger';
 import PasswordCheck from './pages/myPage/PasswordCheck';
 import AuthQna from './pages/Auth/AuthQna';
+import ForgotPassword from './pages/loginPage/ForgotPassword';
 
 
 
@@ -98,6 +100,7 @@ function App() {
         <Route path="/mainpage" element={<MainPage />} />
         <Route path="/roomPage/AllRoom" element={<AllRoom />} />
         <Route path="/room/create/:storeId" element={<RoomCreate />} />
+
         <Route path="/ordercomplete/:orderId" element={<OrderComplete />} />
         <Route path="/gongucomplete/:roomId" element={<GonguComplete />} />
         <Route path="/mypage" element={<MyPage />}>
@@ -116,7 +119,9 @@ function App() {
         <Route path="/ownerusercheck" element={<RegisterCheck />} />
         <Route path="/ownerregister" element={<OwnerRegister />} />
         <Route path="/userregister" element={<UserRegister />} />
+        <Route path="/forgotpw" element={<ForgotPassword/>}/>
 
+        <Route path="/search" element={<SearchPage />} />
         <Route path="/auth/qna" element={<AuthQna />} />
 
         <Route path="/moapolicy1" element={<MoaPolicy1/>}/>
