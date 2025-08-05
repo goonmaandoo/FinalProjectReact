@@ -34,6 +34,7 @@ import SafetyGuide from './pages/footerPage/SafetyGuide';
 import Hamburger from './components/Hamburger';
 import PasswordCheck from './pages/myPage/PasswordCheck';
 import AuthQna from './pages/Auth/AuthQna';
+import OrderList from'./pages/myPage/OrderList';
 import ForgotPassword from './pages/loginPage/ForgotPassword';
 import OwnerDashboard from './pages/ownerPage/OwnerDashboard';
 import StoreRegister from './pages/ownerPage/StoreRegister';
