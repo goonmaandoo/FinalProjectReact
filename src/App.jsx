@@ -19,6 +19,7 @@ import SelectRoom from "./pages/storePage/SelectedRoom";
 import OrderComplete from './pages/orders/OrderComplete';
 import RoomCreate from './pages/roomPage/RoomCreate';
 import AllRoom from './pages/roomPage/AllRoom';
+import SearchPage from './pages/SearchPage';
 import Error404Page from './pages/Error404Page';
 import LoginCheck from './components/user/loginCheck';
 import { useDispatch, useSelector } from 'react-redux';
@@ -97,7 +98,6 @@ function App() {
         <Route path="/" element={<Navigate to="/mainpage" replace />} />
         <Route path="/mainpage" element={<MainPage />} />
         <Route path="/roomPage/AllRoom" element={<AllRoom />} />
-        <Route path="/roomPage/create" element={<RoomCreate />} />
         <Route path="/ordercomplete/:orderId" element={<OrderComplete />} />
         <Route path="/mypage" element={<MyPage />}>
           <Route index element={<UserInfo />} />
@@ -118,6 +118,7 @@ function App() {
         <Route path="/userregister" element={<UserRegister />} />
         <Route path="/forgotpw" element={<ForgotPassword/>}/>
 
+        <Route path="/search" element={<SearchPage />} />
         <Route path="/auth/qna" element={<AuthQna />} />
 
         <Route path="/moapolicy1" element={<MoaPolicy1/>}/>

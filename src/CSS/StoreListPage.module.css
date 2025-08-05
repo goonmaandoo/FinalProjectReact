@@ -2,7 +2,7 @@
     width: 80rem;
     max-width: 100%;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 80px 20px;
     box-sizing: border-box;
     min-height: 1000px;
 }
@@ -35,7 +35,6 @@
     background-color: #FFFFFF;
     border-radius: 10px;
     padding: 20px;
-    margin-top: 80px;
     margin-bottom: 40px;
     box-shadow: 4px 6px 2px rgba(0, 0, 0, 0.2);
 }
@@ -44,7 +43,7 @@
 .scroll_button {
     background-color: white;
     border: none;
-    font-size: 24px;
+    font-size: 1.5rem;
     cursor: pointer;
     padding: 10px;
     z-index: 1;
@@ -79,7 +78,7 @@
 .circle_text {
     margin-top: 8px;
     text-align: center;
-    font-size: 20px;
+    font-size: 1.25rem;
 }
 
 .second_body {
@@ -94,33 +93,44 @@
 
 .img_explain_wrap {
     display: flex;
-    padding-top: 40px;
+    gap: 20px;
+    height: auto;
 }
-
+.storelist_wrap {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
 .storelist_wrap img {
-    margin-left: 80px;
     width: 300px;
-    height: 300px;
+    height: 100%;
     border-radius: 10px;
     object-fit: cover;
 }
 
 .storeexplain {
-    width: 720px;
+    width: 100%;
     height: auto;
     background-color: #F9F9F9;
     border-radius: 10px;
-    margin-left: 20px;
-    padding-left: 40px;
-    padding-top: 40px;
+    padding: 40px;
     display: flex;
     flex-direction: column;
     gap: 15px;
+    justify-content: center;
 }
 
 .score_name{
     font-size: 1.5rem;
     font-weight: 700;
+}
+.score_detail{
+    display: flex;
+    gap: 15px;
+}
+.score{
+    font-size:1.125rem;
 }
 .store_star{
     align-items: center;
@@ -128,10 +138,7 @@
 }
 .star{
     color: rgb(255, 217, 0);
-    font-size:20px;
-}
-.score{
-    font-size:18px;
+    font-size:1.25rem;
 }
 
 .deliveryfree {
@@ -143,9 +150,131 @@
     text-align: center;
 }
 
-@media (max-width:800px){
+@media (max-width:900px){
     .circle{
         width: 80px;
         height: 80px;
+    }
+    .circle img{
+        width: 45px;
+        height: 45px;
+    }
+    .storelist_body {
+        padding: 40px 20px;
+    }
+    .circle_category_wrap {
+        gap: 20px;
+        padding-left: 10px;
+    }
+    .circle_with_text {
+        width: 80px;
+        font-size: 1rem;
+    }
+    .storelist_wrap img {
+        width: 250px;
+    }
+    .score_name{
+        font-size: 1.25rem;
+    }
+    .score{
+        font-size:1rem;
+    }
+    .storelist_wrap {
+        padding: 30px;
+        gap: 20x;
+    }
+    .storeexplain {
+        padding: 30px;
+        gap: 10px;
+    }
+}
+@media (max-width:750px){
+    .storelist_wrap img {
+        width: 200px;
+    }
+    .score_name{
+        font-size: 1.1rem;
+    }
+    .score{
+        font-size:0.9rem;
+    }
+    .storeexplain {
+        padding: 25px;
+        gap: 10px;
+    }
+    .img_explain_wrap {
+        gap: 15px;
+    }
+}
+@media (max-width:650px){
+    .circle{
+        width: 65px;
+        height: 65px;
+        margin: 0;
+    }
+    .circle img{
+        width: 40px;
+        height: 40px;
+    }
+    .circle_category_outer {
+        margin-bottom: 30px;
+        padding: 10px;
+    }
+    .storelist_body {
+        padding: 30px 20px;
+    }
+    .circle_with_text {
+        width: 65px;
+    }
+    .circle_text {
+        font-size: 0.875rem;
+    }
+    .scroll_button {
+        padding: 0;
+        width: 20px;
+    }
+    .storelist_wrap img {
+        width: 175px;
+    }
+    .storeexplain {
+        padding: 20px;
+        gap: 10px;
+    }
+    .score_name{
+        font-size: 0.875rem;
+    }
+    .score{
+        font-size:0.75rem;
+    }
+    .star{
+        font-size:1rem;
+    }
+    .store_star{
+        margin-top: -2px;
+    }
+    .storeexplain {
+        padding: 20px;
+        gap: 10px;
+    }
+}
+@media (max-width:550px){
+    .circle{
+        width: 55px;
+        height: 55px;
+        margin: 0;
+    }
+    .circle img{
+        width: 35px;
+        height: 35px;
+    }
+    .circle_category_wrap {
+        gap: 5px;
+    }
+    .storelist_wrap img {
+        width: 130px;
+    }
+    .storeexplain {
+        padding: 15px;
+        gap: 7px;
     }
 }

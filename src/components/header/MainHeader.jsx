@@ -17,11 +17,6 @@ export default function MainHeader({ toggleMenu }) {
     const user = useSelector((state) => state.auth.user);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
-    const handleLogout = () => {
-        dispatch(logout());
-        localStorage.removeItem("token");
-        navigate("/mainpage");
-    }
     //햄버거버튼
     const handleHamburgerClick = (e) => {
         e.stopPropagation();
