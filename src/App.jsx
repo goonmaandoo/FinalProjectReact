@@ -16,26 +16,32 @@ import UserRegister from "./pages/loginPage/UserRegister";
 import StoreListPage from "./pages/storePage/StoreListPage";
 import StoreDetail from "./pages/storePage/StoreDetail";
 import SelectRoom from "./pages/storePage/SelectedRoom";
-import OrderComplete from "./pages/orders/OrderComplete";
-import GonguComplete from "./pages/roomPage/GonguComplete";
-import RoomCreate from "./pages/roomPage/RoomCreate";
-import AllRoom from "./pages/roomPage/AllRoom";
-import SearchPage from "./pages/SearchPage";
-import Error404Page from "./pages/Error404Page";
-import LoginCheck from "./components/user/loginCheck";
-import { useDispatch, useSelector } from "react-redux";
-import { loginSuccess } from "./redux/user";
-import axios from "axios";
-import MoaPolicy1 from "./pages/footerPage/MoaPolicy1";
-import MoaPolicy2 from "./pages/footerPage/MoaPolicy2";
-import MoaPolicy3 from "./pages/footerPage/MoaPolicy3";
-import MoaPolicy4 from "./pages/footerPage/MoaPolicy4";
-import SafetyGuide from "./pages/footerPage/SafetyGuide";
-import Hamburger from "./components/Hamburger";
-import PasswordCheck from "./pages/myPage/PasswordCheck";
-import AuthQna from "./pages/Auth/AuthQna";
-import ForgotPassword from "./pages/loginPage/ForgotPassword";
-import OrderList from "./pages/myPage/OrderList";
+import OrderComplete from './pages/orders/OrderComplete';
+import GonguComplete from './pages/roomPage/GonguComplete';
+import RoomCreate from './pages/roomPage/RoomCreate';
+import AllRoom from './pages/roomPage/AllRoom';
+import SearchPage from './pages/SearchPage';
+import Error404Page from './pages/Error404Page';
+import LoginCheck from './components/user/loginCheck';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginSuccess } from './redux/user';
+import axios from 'axios';
+import MoaPolicy1 from './pages/footerPage/MoaPolicy1';
+import MoaPolicy2 from './pages/footerPage/MoaPolicy2';
+import MoaPolicy3 from './pages/footerPage/MoaPolicy3';
+import MoaPolicy4 from './pages/footerPage/MoaPolicy4';
+import SafetyGuide from './pages/footerPage/SafetyGuide';
+import Hamburger from './components/Hamburger';
+import PasswordCheck from './pages/myPage/PasswordCheck';
+import AuthQna from './pages/Auth/AuthQna';
+import ForgotPassword from './pages/loginPage/ForgotPassword';
+import OwnerDashboard from './pages/ownerPage/OwnerDashboard';
+import StoreRegister from './pages/ownerPage/StoreRegister';
+import OwnerMenuEdit from './pages/ownerPage/OwnerMenuEdit';
+import DeliveryState from './pages/ownerPage/DeliveryState';
+import ReviewManagement from './pages/ownerPage/ReviewManagement';
+import OrderYesNo from './pages/ownerPage/OrderYesNo';
+
 
 function parseJwt(token) {
   try {
@@ -51,6 +57,7 @@ function parseJwt(token) {
 function App() {
   const location = useLocation();
   const isMainPage = location.pathname === "/mainpage";
+  const isOwnerPage = location.pathname === "/ownerdashboard";
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -91,6 +98,7 @@ function App() {
         <MainHeader toggleMenu={toggleMenu} />
       ) : (
         <Header toggleMenu={toggleMenu} />
+
       )}
 
       <Routes>
@@ -130,6 +138,13 @@ function App() {
         <Route path="/moapolicy4" element={<MoaPolicy4 />} />
         <Route path="/safetyguide" element={<SafetyGuide />} />
         <Route path="*" element={<Error404Page />} />
+
+        <Route path="/ownerdashboard" element={<OwnerDashboard/>}/>
+        <Route path="/storeregister" element={<StoreRegister/> }/>
+        <Route path="/ownermenuedit" element={<OwnerMenuEdit/> }/>
+        <Route path="/deliverystate" element={<DeliveryState/>}/>
+        <Route path="/reviewmanagement" element={<ReviewManagement/>}/>
+        <Route path="/orderyesno" element={<OrderYesNo/>}/>
       </Routes>
       {isOpen && <Hamburger isOpen={isOpen} onClose={() => setIsOpen(false)} />}
       <Footer />

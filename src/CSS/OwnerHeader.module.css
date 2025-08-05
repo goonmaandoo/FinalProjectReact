@@ -1,0 +1,14 @@
+.owner_header{
+    background-color: #ff6b6b;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    margin-top: 80px;
+    padding-bottom: 20px;
+}
+
+.owner_header h2{
+    color: white;
+    margin-left: 20px;
+    font-size: 40px;
+}
