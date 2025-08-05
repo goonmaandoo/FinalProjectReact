@@ -32,6 +32,7 @@ import SafetyGuide from './pages/footerPage/SafetyGuide';
 import Hamburger from './components/Hamburger';
 import PasswordCheck from './pages/myPage/PasswordCheck';
 import AuthQna from './pages/Auth/AuthQna';
+import ForgotPassword from './pages/loginPage/ForgotPassword';
 
 
 
@@ -115,6 +116,7 @@ function App() {
         <Route path="/ownerusercheck" element={<RegisterCheck />} />
         <Route path="/ownerregister" element={<OwnerRegister />} />
         <Route path="/userregister" element={<UserRegister />} />
+        <Route path="/forgotpw" element={<ForgotPassword/>}/>
 
         <Route path="/auth/qna" element={<AuthQna />} />
 
