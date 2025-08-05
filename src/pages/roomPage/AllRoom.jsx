@@ -55,7 +55,7 @@ export default function AllRoom() {
             }
 
             try {
-                const response = await axios.get("http://localhost:8080/room/allRoomSelect");
+                const response = await axios.get("http://localhost:8080/api/room/allRoomSelect");
                 const rooms = response.data;
 
                 const roomsWithDistance = await Promise.all(
