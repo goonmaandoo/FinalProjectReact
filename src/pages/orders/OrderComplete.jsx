@@ -16,7 +16,8 @@ const OrderComplete = () => {
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const response = await axios.get(`/api/orders/getTheOrder/${orderId}`);
+        const response = await axios.get(`/api/order/getTheOrder/${orderId}`);
+
         setOrderData(response.data);
       } catch (error) {
         console.error("주문 정보 불러오기 실패:", error);
