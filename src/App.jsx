@@ -35,8 +35,12 @@ import Hamburger from './components/Hamburger';
 import PasswordCheck from './pages/myPage/PasswordCheck';
 import AuthQna from './pages/Auth/AuthQna';
 import ForgotPassword from './pages/loginPage/ForgotPassword';
-
-
+import OwnerDashboard from './pages/ownerPage/OwnerDashboard';
+import StoreRegister from './pages/ownerPage/StoreRegister';
+import OwnerMenuEdit from './pages/ownerPage/OwnerMenuEdit';
+import DeliveryState from './pages/ownerPage/DeliveryState';
+import ReviewManagement from './pages/ownerPage/ReviewManagement';
+import OrderYesNo from './pages/ownerPage/OrderYesNo';
 
 function parseJwt(token) {
   try {
@@ -52,6 +56,7 @@ function parseJwt(token) {
 function App() {
   const location = useLocation();
   const isMainPage = location.pathname === "/mainpage";
+  const isOwnerPage = location.pathname === "/ownerdashboard";
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -91,7 +96,7 @@ function App() {
     <div>
       {isMainPage ? (
         <MainHeader toggleMenu={toggleMenu}/>
-      ) : (
+      ) : ( 
         <Header toggleMenu={toggleMenu}/>
       )}
 
@@ -130,6 +135,13 @@ function App() {
         <Route path="/moapolicy4" element={<MoaPolicy4/>}/>
         <Route path="/safetyguide" element={<SafetyGuide/>}/>
         <Route path="*" element={<Error404Page />} />
+
+        <Route path="/ownerdashboard" element={<OwnerDashboard/>}/>
+        <Route path="/storeregister" element={<StoreRegister/> }/>
+        <Route path="/ownermenuedit" element={<OwnerMenuEdit/> }/>
+        <Route path="/deliverystate" element={<DeliveryState/>}/>
+        <Route path="/reviewmanagement" element={<ReviewManagement/>}/>
+        <Route path="/orderyesno" element={<OrderYesNo/>}/>
       </Routes>
       {isOpen && (
         <Hamburger

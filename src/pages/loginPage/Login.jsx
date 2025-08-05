@@ -60,7 +60,7 @@ function Login() {
     return (
         <div className={style["login-container"]}>
             {user && nickname ? (
-                <div id="user_login">{/* 이미 로그인 후면 이 부분은 필요 없어요 */}</div>
+                <div id="user_login"></div>
             ) : (
                 <div className={style["login-box"]}>
                     <div className={style["login-left"]}>
