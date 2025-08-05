@@ -17,6 +17,7 @@ import StoreListPage from "./pages/storePage/StoreListPage";
 import StoreDetail from "./pages/storePage/StoreDetail";
 import SelectRoom from "./pages/storePage/SelectedRoom";
 import OrderComplete from './pages/orders/OrderComplete';
+import GonguComplete from './pages/roomPage/GonguComplete';
 import RoomCreate from './pages/roomPage/RoomCreate';
 import AllRoom from './pages/roomPage/AllRoom';
 import SearchPage from './pages/SearchPage';
@@ -98,7 +99,10 @@ function App() {
         <Route path="/" element={<Navigate to="/mainpage" replace />} />
         <Route path="/mainpage" element={<MainPage />} />
         <Route path="/roomPage/AllRoom" element={<AllRoom />} />
+        <Route path="/room/create/:storeId" element={<RoomCreate />} />
+
         <Route path="/ordercomplete/:orderId" element={<OrderComplete />} />
+        <Route path="/gongucomplete/:roomId" element={<GonguComplete />} />
         <Route path="/mypage" element={<MyPage />}>
           <Route index element={<UserInfo />} />
           <Route path="userinfo" element={<UserInfo />} />
@@ -111,7 +115,6 @@ function App() {
         <Route path="/store/:storeId" element={<StoreDetail />} />
         <Route path="/selectroom/:storeId" element={<SelectRoom />} />
         <Route path="/store/:storeId" element={<StoreDetail />} />
-        <Route path="/roomcreate" element={<RoomCreate/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/ownerusercheck" element={<RegisterCheck />} />
         <Route path="/ownerregister" element={<OwnerRegister />} />

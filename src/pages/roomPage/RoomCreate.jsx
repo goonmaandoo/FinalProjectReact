@@ -5,7 +5,7 @@ import style from "../../CSS/RoomCreate.module.css";
 
 export default function RoomCreate() {
   const navigate = useNavigate();
-  const { store_id } = useParams();
+  const { storeId } = useParams(); // store_id → storeId로 수정
 
   const [roomName, setRoomName] = useState('');
   const [authUser, setAuthUser] = useState(null);
@@ -41,22 +41,22 @@ export default function RoomCreate() {
     const roomData = {
       roomName,
       roomAddress,
-      roomAddressDetail,
+      roomAddressDetail: roomDetailAddress,  // 여기 수정됨
       maxPeople,
       leaderId: authUser.id,
-      storeId: parseInt(store_id),
+      storeId: parseInt(storeId),
       status: '모집중',
       users: authUser.id,
     };
 
     try {
-      const response = await axios.post('/room/create', roomData, {
+      const response = await axios.post('/api/room/create', roomData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
       });
-      alert(`공구방 생성 완료! ID: ${response.data}`);
-      navigate(`/room/${response.data}`);
+      alert(`공구방 생성 완료! ID: ${response.data.id || response.data}`);
+      navigate(`/room/${response.data.id || response.data}`);
     } catch (error) {
       alert('공구방 생성 실패: ' + (error.response?.data || error.message));
     }
