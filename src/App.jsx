@@ -18,6 +18,7 @@ import StoreDetail from "./pages/storePage/StoreDetail";
 import SelectRoom from "./pages/storePage/SelectedRoom";
 import OrderComplete from './pages/orders/OrderComplete';
 import AllRoom from './pages/roomPage/AllRoom';
+import SearchPage from './pages/SearchPage';
 import Error404Page from './pages/Error404Page';
 import LoginCheck from './components/user/loginCheck';
 import { useDispatch } from 'react-redux';
@@ -110,7 +111,7 @@ function App() {
         <Route path="/ownerusercheck" element={<RegisterCheck />} />
         <Route path="/ownerregister" element={<OwnerRegister />} />
         <Route path="/userregister" element={<UserRegister />} />
-
+        <Route path="/search" element={<SearchPage />} />
         <Route path="/auth/qna" element={<AuthQna />} />
 
         <Route path="/moapolicy1" element={<MoaPolicy1/>}/>

@@ -12,29 +12,20 @@ export default function MainPage() {
     const [popular, setPopular] = useState([]);
     const navigate = useNavigate();
 
-    // //로그인
-    // const user = useSelector((state) => state.auth.user);
-    // const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-        
-    // //로그아웃
-    //     const handleLogout = () => {
-    //         dispatch(logout());
-    //         localStorage.removeItem("token");
-    //         navigate("/mainpage");
-    //     }
-
     //검색창
     const onKeyDown = (e) => {
         if (e.key === "Enter") {
             search();
         }
     }
+    
+    //검색창
     const search = () => {
         if (!keyword.trim()) {
             alert("검색어를 입력하세요.");
             return;
         }
-        navigate(`/`);
+        navigate(`/search?keyword=${encodeURIComponent(keyword)}`);
     };
     const onCategoryClick = (categoryId) => {
         navigate(`/storelist/${categoryId}`)
