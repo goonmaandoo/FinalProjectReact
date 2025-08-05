@@ -1,3 +1,6 @@
+/* MyPage.module.css */
+
+/* 기본 스타일 (1280px 이상) */
 .myPage_main {
   display: flex;
   justify-content: center;
@@ -119,7 +122,6 @@
   margin-left: 10px;
   transition: background-color 0.3s ease;
 }
-
 .charge_Button:hover {
   background-color: #ff6b6b;
   color: white;
@@ -256,7 +258,6 @@
 .order_body {
   box-sizing: border-box;
 }
-
 .qnaButtonWrapper {
   display: flex;
   justify-content: flex-end;
@@ -322,11 +323,9 @@
   background-color: #ffb1b1;
   border: none;
 }
-
 .editReview:hover {
   background-color: #ff8a8a;
 }
-
 .deleteReview:hover {
   background-color: #ceced3;
 }
@@ -341,7 +340,6 @@
 .gaugeFill {
   background-color: "#ff6b6b";
 }
-
 .myButtonQuit {
   text-align: center;
   width: 160px;
@@ -355,43 +353,35 @@
   cursor: pointer;
   border: none;
 }
-
 .myButtonQuit:hover {
   background-color: #ceced3;
 }
-
 input[readOnly] {
   background-color: #d4d4d4;
 }
-
 .passwordEye {
   border-bottom: solid;
   width: 540px;
   margin-left: 25px;
   padding-bottom: 5px;
 }
-
 .passwordEye input {
   border: none;
   font-size: x-large;
   margin-right: 200px;
 }
-
 .answer {
   border-top: 1px solid #d0d0d0;
   margin-top: 10px;
   padding: 10px;
 }
-
 .answer b {
   padding-top: 10px;
 }
-
 .answer h4 {
   padding-left: 10px;
   font-weight: 400;
 }
-
 .qnaPages {
   text-align: center;
   margin-top: 10px;
@@ -400,36 +390,28 @@ input[readOnly] {
   justify-content: center;
   gap: 12px;
 }
-
 .qnaPages button {
   font-size: medium;
   border: none;
   cursor: pointer;
   opacity: 0.5;
-  /* 기본 연하게 */
   font-weight: normal;
   margin: 0 5px;
   padding: 5px 10px;
   background: none;
   color: rgb(66, 64, 64);
-  /* 기본 글자색 연한 회색 */
   transition: opacity 0.3s, font-weight 0.3s, color 0.3s;
 }
-
 .qnaPages button:hover:not(:disabled) {
   opacity: 0.8;
-  /* 호버 시 살짝 강조 */
   color: #333;
-  /* 호버 시 글자색 조금 진하게 */
 }
-
 .qnaPages button.activePage {
   font-weight: bold;
   opacity: 1;
   color: black;
   cursor: default;
 }
-
 .downIcon {
   font-size: 30px;
   color: #ff6b6b;
@@ -444,13 +426,11 @@ input[readOnly] {
   font-size: 16px;
   border: none;
 }
-
 .menuSticky {
   position: sticky;
-  top: 25px; /* 헤더 높이 만큼 여백 (상황에 맞게 조정) */
-  z-index: 10; /* 필요시 */
+  top: 25px;
+  z-index: 10;
 }
-
 .qnaWriteBtn {
   background-color: #ff6b6b;
   color: white;
@@ -461,11 +441,9 @@ input[readOnly] {
   cursor: pointer;
   transition: background-color 0.2s;
 }
-
 .qnaWriteBtn:hover {
   background-color: #e35a5a;
 }
-
 .myPage {
   display: flex;
   background-color: white;
@@ -474,17 +452,13 @@ input[readOnly] {
   box-shadow: 4px 6px 2px rgba(0, 0, 0, 0.2);
   gap: 20px;
 }
-
 .myPageLeft {
   flex: 0 0 340px;
-  /* 고정 너비 (px 단위 권장) */
   border-right: 1px solid #ccc;
   padding: 20px;
   box-sizing: border-box;
   min-width: 200px;
-  /* 최소 너비 지정 */
 }
-
 .profile {
   border: 1px solid #ccc;
   margin: 2px;
@@ -494,13 +468,11 @@ input[readOnly] {
   position: relative;
   box-shadow: 4px 6px 2px rgba(0, 0, 0, 0.2);
 }
-
 .userName {
   font-size: large;
   font-weight: bold;
   margin: 18px 125px 1px 22px;
 }
-
 .gaugeBar {
   margin: -11px 20px 5px;
   position: relative;
@@ -510,12 +482,10 @@ input[readOnly] {
   overflow: hidden;
   box-sizing: border-box;
 }
-
 .gaugeFill {
   height: 100%;
   transition: width 0.6s ease-in-out;
 }
-
 .gaugeText {
   position: absolute;
   top: 50%;
@@ -527,55 +497,40 @@ input[readOnly] {
   pointer-events: none;
   user-select: none;
 }
-
 .myCash {
   display: flex;
-  /* 좌우 끝에 배치 */
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  /* 가로 전체 차지 */
   max-width: 300px;
-  /* 최대 크기 제한 (필요하면 조정) */
   margin-right: 180px;
   font-size: large;
   box-sizing: border-box;
   padding: 0 25px;
-  /* 양옆 약간 패딩 */
 }
-
 .label {
   flex-shrink: 0;
-  /* 줄어들지 않게 */
 }
-
 .amount {
   text-align: left;
   white-space: nowrap;
-  /* 줄바꿈 방지 */
   overflow: hidden;
   text-overflow: ellipsis;
-  /* 너무 길면 말줄임표 처리 */
   max-width: 100px;
-  /* 최소 너비 */
   margin-left: 10px;
 }
-
 /* MyPage.module.css */
 .myMenu {
   padding: 0px 7px 0px 95px;
 }
-
 .myMenuUl {
   list-style-type: none;
   padding-left: 20px;
 }
-
 .myMenuLi {
   font-size: 21px;
   margin: 10px 10px 30px 40px;
 }
-
 .myMenuLi::before {
   content: "- ";
   color: black;
@@ -584,16 +539,13 @@ input[readOnly] {
   display: inline-block;
   width: 12px;
 }
-
 .myPageRight {
   flex: 1 1 700px;
-  /* 여유 공간을 채움, 최소 700px */
   padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;
   border-right: solid 1px #ccc;
   min-width: 300px;
-  /* 최소 너비 */
 }
 .chargeButton {
   padding: 4px 9px;
@@ -605,7 +557,6 @@ input[readOnly] {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
 .chargeButton:hover {
   background-color: #1fab89;
   color: white;
@@ -618,7 +569,6 @@ input[readOnly] {
   background: #f9f9fa;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
-
 .skeletonBox {
   background: linear-gradient(90deg, #eeeeee 25%, #dddddd 50%, #eeeeee 75%);
   background-size: 200% 100%;
@@ -627,7 +577,6 @@ input[readOnly] {
   height: 16px;
   margin-bottom: 10px;
 }
-
 @keyframes shimmer {
   0% {
     background-position: -200% 0;
@@ -636,7 +585,6 @@ input[readOnly] {
     background-position: 200% 0;
   }
 }
-
 .short {
   width: 40%;
 }
@@ -646,7 +594,6 @@ input[readOnly] {
 .long {
   width: 80%;
 }
-
 .qnaSkeletonCard {
   padding: 16px;
   border: 1px solid #ddd;
@@ -656,7 +603,6 @@ input[readOnly] {
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
   min-height: 360px;
 }
-
 .qnaSkeletonBox {
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 200% 100%;
@@ -665,7 +611,6 @@ input[readOnly] {
   height: 16px;
   margin-bottom: 10px;
 }
-
 .qnaShort {
   width: 30%;
 }
@@ -674,4 +619,214 @@ input[readOnly] {
 }
 .qnaLong {
   width: 90%;
+}
+
+/* 1280px 미만 (데스크탑) */
+@media (max-width: 1280px) {
+  .myPage_box {
+    width: 100%;
+    padding: 60px 15px;
+  }
+  .myPage_userInfo {
+    flex-direction: column;
+    height: auto;
+    padding: 30px 15px;
+    text-align: center;
+  }
+  .circle_with_text {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+  .userRating_body {
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  .userRating {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  .userDetail {
+    justify-content: center;
+    width: 100%;
+  }
+  .user_cash {
+    width: 100%;
+    justify-content: center;
+    padding: 20px;
+  }
+  .coin_confirm {
+    margin-left: 10px;
+  }
+  .main_body {
+    flex-direction: column;
+    padding: 20px;
+  }
+  .my_MenuUl {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding-left: 0;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+  }
+  .my_MenuLi {
+    margin-bottom: 10px;
+  }
+  .my_Menu_right {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+/* 768px 미만 (태블릿) */
+@media (max-width: 768px) {
+  .myPage_userInfo {
+    padding: 20px 10px;
+  }
+  .circle {
+    width: 80px;
+    height: 80px;
+  }
+  .usernickName {
+    font-size: 20px;
+  }
+  .bearImage {
+    width: 25px;
+    height: 25px;
+  }
+  .progress_box {
+    width: 100%;
+  }
+  .user_cash {
+    height: 100px;
+    padding: 15px;
+  }
+  .coin_imo {
+    width: 30px;
+    height: 30px;
+  }
+  .coin_confirm {
+    font-size: 18px;
+  }
+  .charge_Button {
+    font-size: 18px;
+    padding: 4px 8px;
+  }
+  .my_MenuUl {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .my_MenuLi {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  .my_MenuLi a {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  .my_MenuLi a[style*="font-weight: bold"] {
+    background-color: #ffb1b1;
+    color: white !important;
+    border-color: #ffb1b1;
+  }
+  .myHeader {
+    font-size: 22px;
+  }
+  .userInfo {
+    padding: 25px 50px;
+  }
+  .infoRow {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 30px;
+  }
+  .infoRow .label {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  .infoRow .value, .editInput, .passwordEye {
+    width: 100%;
+    margin-left: 0;
+  }
+  .editnameButton {
+    width: 100%;
+    margin-top: 10px;
+  }
+  .myButtonEdit, .myButtonQuit, .editemailButton {
+    width: 100%;
+    margin: 5px 0;
+  }
+  .sendemailbtn {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 10px;
+  }
+}
+
+/* 480px 미만 (모바일) */
+@media (max-width: 480px) {
+  .myPage_box {
+    padding: 40px 10px;
+  }
+  .myPage_userInfo {
+    padding: 20px 5px;
+  }
+  .circle {
+    width: 60px;
+    height: 60px;
+  }
+  .circle_text {
+    font-size: 14px;
+  }
+  .circle_pencil {
+    width: 18px;
+    height: 18px;
+  }
+  .usernickName {
+    font-size: 18px;
+  }
+  .bearImage {
+    width: 20px;
+    height: 20px;
+  }
+  .coin_confirm {
+    font-size: 16px;
+  }
+  .charge_Button {
+    font-size: 16px;
+  }
+  .my_MenuUl {
+    flex-direction: column;
+    align-items: center;
+    border-bottom: none;
+  }
+  .my_MenuLi {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .my_Menu_right {
+    padding: 10px;
+  }
+  .myHeader {
+    font-size: 20px;
+  }
+  .userInfo {
+    padding: 15px;
+  }
+  .infoRow .label {
+    font-size: 16px;
+  }
+  .infoRow .value, .editInput, .passwordEye {
+    font-size: 16px;
+  }
+  .myButtonEdit, .myButtonQuit, .editemailButton {
+    font-size: 16px;
+    height: 40px;
+  }
+  .qnaWriteBtn {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
 }

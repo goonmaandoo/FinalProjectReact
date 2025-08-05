@@ -29,7 +29,7 @@ import MoaPolicy3 from './pages/footerPage/MoaPolicy3';
 import MoaPolicy4 from './pages/footerPage/MoaPolicy4';
 import SafetyGuide from './pages/footerPage/SafetyGuide';
 import Hamburger from './components/Hamburger';
-
+//import RoomPage from './pages/room/RoomPage';
 import AuthQna from './pages/Auth/AuthQna';
 
 import RoomCreate from './pages/roomPage/RoomCreate';
@@ -95,6 +95,7 @@ function App() {
         <Route path="/" element={<Navigate to="/mainpage" replace />} />
         <Route path="/mainpage" element={<MainPage />} />
         <Route path="/roomPage/AllRoom" element={<AllRoom />} />
+        {/*<Route path="/room/:room_id" element={<RoomPage />} /> */}
         <Route path="/ordercomplete/:orderId" element={<OrderComplete />} />
         <Route path="/mypage" element={<MyPage />}>
           <Route index element={<UserInfo />} />

@@ -1,6 +1,7 @@
 import styles from '../../CSS/MyPage.module.css';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
+import FormattedDate from "../../component/funtion/common/FormattedDate";
 
 export default function UserInfo() {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ export default function UserInfo() {
       </div>
       <div className={styles.infoRow}>
         <div className={styles.label}>가입일:</div>
-        <div className={styles.value}>{user?.createdAt}</div>
+        <div className={styles.value}><FormattedDate dateString={user?.createdAt} /></div>
       </div>
       <div className={styles.myButtonContainer}>
         <button className={styles.myButtonEdit} onClick={pwcheckButton}>수정하기</button>
