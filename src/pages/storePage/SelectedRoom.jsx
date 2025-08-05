@@ -22,7 +22,7 @@ export default function SelectRoom() {
             })
             .catch(console.error);
         //개설된 공구방 조회
-        axios.get(`http://localhost:8080/room/storeid/${storeId}`)
+        axios.get(`http://localhost:8080/api/room/storeid/${storeId}`)
         .then(res => {
             setRoom(res.data);
         })
@@ -59,9 +59,7 @@ export default function SelectRoom() {
                                 {activeRoomId === item.id && (
                                     <KakaoMap address={item.roomAddress} className={styles["address_map"]}></KakaoMap>
                                 )}
-                                <div key={item.id} className={styles["search_result"]} onClick={() => {
-                                    setActiveRoomId(item.id);
-                                }}>
+                                <div key={item.id} className={styles["search_result"]} >
                                     <img className={styles["search_store_img"]}
                                             src={`http://localhost:8080/image/imgfile/store/store_${item.storeId}.jpg`} alt={`${item.storeId}`}></img>
                                     <div className={styles["search_store_detail"]}>
@@ -70,10 +68,16 @@ export default function SelectRoom() {
                                             <div className={styles["search_menu_name"]}>{item.roomAddress} {item.roomAddressDetail}</div>
                                             <div className={styles["search_status"]}>{item.status}</div>
                                         </div>
-                                        <button className={styles["result_btn"]} onClick={(e) => {
+                                        <div className={styles["result_map_btn"]}>
+                                            <button className={styles["result_btn"]} onClick={() => {
+                                            setActiveRoomId(prev => (prev === item.id ? null : item.id));
+                                            }}>지도</button>
+                                            <button className={styles["result_btn"]} onClick={(e) => {
                                             e.stopPropagation();
                                             roomClick(e, item.id)
-                                        }}>참여</button>
+                                            }}>참여</button>
+                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
