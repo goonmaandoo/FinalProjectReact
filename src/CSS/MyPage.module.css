@@ -745,7 +745,9 @@ input[readOnly] {
     width: 100%;
     margin-bottom: 5px;
   }
-  .infoRow .value, .editInput, .passwordEye {
+  .infoRow .value,
+  .editInput,
+  .passwordEye {
     width: 100%;
     margin-left: 0;
   }
@@ -753,7 +755,9 @@ input[readOnly] {
     width: 100%;
     margin-top: 10px;
   }
-  .myButtonEdit, .myButtonQuit, .editemailButton {
+  .myButtonEdit,
+  .myButtonQuit,
+  .editemailButton {
     width: 100%;
     margin: 5px 0;
   }
@@ -818,10 +822,14 @@ input[readOnly] {
   .infoRow .label {
     font-size: 16px;
   }
-  .infoRow .value, .editInput, .passwordEye {
+  .infoRow .value,
+  .editInput,
+  .passwordEye {
     font-size: 16px;
   }
-  .myButtonEdit, .myButtonQuit, .editemailButton {
+  .myButtonEdit,
+  .myButtonQuit,
+  .editemailButton {
     font-size: 16px;
     height: 40px;
   }
