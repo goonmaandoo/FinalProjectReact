@@ -24,6 +24,16 @@ function Login() {
 
             if (response.data) {
                 const {user, token} = response.data; // 구조분해
+
+                if(user.status === "unactive"){
+                    alert("비활성화된 계정입니다.");
+                    return;
+                }
+                if(user.status === "ban"){
+                    alert("정지된 계정입니다. 로그인할 수 없습니다.");
+                    return;
+                }
+
                 alert("로그인 성공! 메인화면으로 이동합니다.");
                 setUser(response.data);
                 localStorage.setItem("token", token);
