@@ -58,7 +58,16 @@ function parseJwt(token) {
 function App() {
   const location = useLocation();
   const isMainPage = location.pathname === "/mainpage";
-  const isOwnerPage = location.pathname === "/ownerdashboard";
+  const isOwnerPage = () => {
+    return[
+      "/ownerdashboard",
+      "/storeregister",
+      "/ownermenuedit",
+      "/deliverystate",
+      "/reviewmanagement",
+      "/orderyesno",
+    ].includes(location.pathname);
+  }
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -95,12 +104,15 @@ function App() {
 
   return (
     <div>
-      {isMainPage ? (
+      {!isOwnerPage() && (
+        isMainPage ? (
         <MainHeader toggleMenu={toggleMenu} />
       ) : (
         <Header toggleMenu={toggleMenu} />
 
+      )
       )}
+      
 
       <Routes>
         <Route path="/" element={<Navigate to="/mainpage" replace />} />
@@ -148,7 +160,7 @@ function App() {
         <Route path="/orderyesno" element={<OrderYesNo/>}/>
       </Routes>
       {isOpen && <Hamburger isOpen={isOpen} onClose={() => setIsOpen(false)} />}
-      <Footer />
+      {!isOwnerPage() && <Footer /> }
     </div>
   );
 }
