@@ -42,6 +42,8 @@ function Login() {
 
                 if(user.role === "owner"){
                     navigate("/ownerdashboard");
+                }else if(user.role === "admin") {
+                    navigate("/adminpage");
                 } else {
                     navigate("/mainpage");
                 }

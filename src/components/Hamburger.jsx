@@ -8,12 +8,12 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function Hamburger({ isOpen, onClose }) {
     const [isReady, setIsReady] = useState(false);
     const menuRef = useRef();
+    const smallMenuRef = useRef(null);
     const [userRoom, setUserRoom] = useState([]);
     const [menuHeight, setMenuHeight] = useState("auto");
     const [myRating, setMyRating] = useState(0);
     const [face, setFace] = useState("soso");
     const dispatch = useDispatch();
-    const [menuOpen, setMenuOpen] = useState(false);
     const navigate = useNavigate();
 
 
@@ -54,7 +54,9 @@ export default function Hamburger({ isOpen, onClose }) {
             if (isHamburgerButton) {
                 return;
             }
-            if (menuRef.current && !menuRef.current.contains(e.target)) {
+            const clickedInsideMain = menuRef.current && menuRef.current.contains(e.target);
+            const clickedInsideSmall = smallMenuRef.current && smallMenuRef.current.contains(e.target);
+            if (!clickedInsideMain && !clickedInsideSmall) {
                 onClose();
             }
         };
@@ -147,7 +149,7 @@ export default function Hamburger({ isOpen, onClose }) {
             </div>
             <div>
                 <AnimatePresence>
-                        <motion.nav key="mobile-nav" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.4 }} style={{ originY: 0 }} ref={menuRef} className={styles.small_menu} >
+                        <motion.nav key="mobile-nav" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.4 }} style={{ originY: 0 }} ref={smallMenuRef} className={styles.small_menu} >
                             <div className={styles["mypage"]}>
                                 <img
                                     className={styles["mypage_icon2"]}
