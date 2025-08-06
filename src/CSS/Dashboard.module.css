@@ -1,0 +1,57 @@
+.dash_box{
+    padding: 40px 0;
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+.dash_box hr {
+    width: 1px;
+    height: 100px;
+    border: none;
+    background-color: black;
+    margin: 0;
+}
+.total_first{
+    width: 275px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+}
+.total_second{
+    width: 551px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+}
+.total_title{
+    font-size: 24px;
+    text-align: center;
+    align-items: center;
+}
+.total_num{
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+}
+.dash_main_box{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.total_third{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+}
+.total_title span{
+    margin-right: 5px;
+}
+.total_title span img{
+    width: 40px;
+}

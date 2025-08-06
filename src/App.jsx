@@ -43,7 +43,8 @@ import DeliveryState from './pages/ownerPage/DeliveryState';
 import ReviewManagement from './pages/ownerPage/ReviewManagement';
 import OrderYesNo from './pages/ownerPage/OrderYesNo';
 import AdminPage from './pages/Admin/AdminPage';
-import DashBoard from "./pages/Admin/DashBoard";
+import Dashboard from "./pages/Admin/Dashboard";
+import StoreManagement from "./pages/Admin/StoreManagement";
 
 
 function parseJwt(token) {
@@ -164,7 +165,8 @@ function App() {
         <Route path="/orderyesno" element={<OrderYesNo />} />
 
         <Route path="/adminpage" element={<AdminPage />} />
-        <Route path="/dashboard" element={<DashBoard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/StoreManagement" element={<StoreManagement />} />
       </Routes>
       {isOpen && <Hamburger isOpen={isOpen} onClose={() => setIsOpen(false)} />}
       {showHeader && <Footer />}
