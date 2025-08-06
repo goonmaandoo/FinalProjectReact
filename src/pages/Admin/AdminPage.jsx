@@ -1,10 +1,13 @@
 import styles from '../../CSS/AdminPage.module.css';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 import { logout } from '../../redux/user';
 
 
 export default function AdminPage() {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const user = useSelector((state) => state.auth.user);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const [menu, setMenu] = useState("대시보드");
@@ -14,6 +17,12 @@ export default function AdminPage() {
         localStorage.removeItem("token");
         navigate("/mainpage");
     }
+    useEffect(() => {
+        console.log("현재 user 값:", user);
+        if (!user || user.role !== "admin") {
+            navigate("/mainpage");
+        }
+    }, [user, navigate]);
 
     const menus = [
         { id: "dashboard", label:"대시보드", component:<dashboard/>, content: "오늘의 현황을 확인하세요"},
