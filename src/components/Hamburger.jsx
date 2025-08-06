@@ -20,6 +20,8 @@ export default function Hamburger({ isOpen, onClose }) {
     const user = useSelector((state) => state.auth.user);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
+    console.log("현재 user 값:", user);
+    
     const handleLogout = () => {
         dispatch(logout());
         localStorage.removeItem("token");
