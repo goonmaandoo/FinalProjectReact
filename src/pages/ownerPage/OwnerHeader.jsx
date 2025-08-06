@@ -19,8 +19,7 @@ export default function OwnerHeader() {
     return (
         <>
             <div className={style["owner_header"]}>
-                <h2> 배달모아 - 사장님 페이지</h2>
-
+                <div className={style["title"]}> 배달모아 - 사장님 페이지</div>
                 <div className={style["userinfo"]}>
                     <div className={style["userName"]}>{user?.nickname}님</div>
                     <button className={style["userName_btn"]} onClick={handleLogout}>로그아웃</button>
