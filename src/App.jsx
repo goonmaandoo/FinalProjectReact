@@ -34,7 +34,7 @@ import SafetyGuide from './pages/footerPage/SafetyGuide';
 import Hamburger from './components/Hamburger';
 import PasswordCheck from './pages/myPage/PasswordCheck';
 import AuthQna from './pages/Auth/AuthQna';
-import OrderList from'./pages/myPage/OrderList';
+import OrderList from './pages/myPage/OrderList';
 import ForgotPassword from './pages/loginPage/ForgotPassword';
 import OwnerDashboard from './pages/ownerPage/OwnerDashboard';
 import StoreRegister from './pages/ownerPage/StoreRegister';
@@ -42,6 +42,7 @@ import OwnerMenuEdit from './pages/ownerPage/OwnerMenuEdit';
 import DeliveryState from './pages/ownerPage/DeliveryState';
 import ReviewManagement from './pages/ownerPage/ReviewManagement';
 import OrderYesNo from './pages/ownerPage/OrderYesNo';
+import AdminPage from './pages/Admin/AdminPage';
 
 
 function parseJwt(token) {
@@ -59,7 +60,7 @@ function App() {
   const location = useLocation();
   const isMainPage = location.pathname === "/mainpage";
   const isOwnerPage = () => {
-    return[
+    return [
       "/ownerdashboard",
       "/storeregister",
       "/ownermenuedit",
@@ -68,6 +69,7 @@ function App() {
       "/orderyesno",
     ].includes(location.pathname);
   }
+  const isAdminPage = location.pathname === "/adminpage";
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -102,17 +104,18 @@ function App() {
     setIsOpen(!isOpen);
   };
 
+  const showHeader = !isAdminPage && !isOwnerPage();
+
   return (
     <div>
-      {!isOwnerPage() && (
+      {showHeader && (
         isMainPage ? (
-        <MainHeader toggleMenu={toggleMenu} />
-      ) : (
-        <Header toggleMenu={toggleMenu} />
-
-      )
+          <MainHeader toggleMenu={toggleMenu} />
+        ) : (
+          <Header toggleMenu={toggleMenu} />
+        )
       )}
-      
+
 
       <Routes>
         <Route path="/" element={<Navigate to="/mainpage" replace />} />
@@ -152,15 +155,17 @@ function App() {
         <Route path="/safetyguide" element={<SafetyGuide />} />
         <Route path="*" element={<Error404Page />} />
 
-        <Route path="/ownerdashboard" element={<OwnerDashboard/>}/>
-        <Route path="/storeregister" element={<StoreRegister/> }/>
-        <Route path="/ownermenuedit" element={<OwnerMenuEdit/> }/>
-        <Route path="/deliverystate" element={<DeliveryState/>}/>
-        <Route path="/reviewmanagement" element={<ReviewManagement/>}/>
-        <Route path="/orderyesno" element={<OrderYesNo/>}/>
+        <Route path="/ownerdashboard" element={<OwnerDashboard />} />
+        <Route path="/storeregister" element={<StoreRegister />} />
+        <Route path="/ownermenuedit" element={<OwnerMenuEdit />} />
+        <Route path="/deliverystate" element={<DeliveryState />} />
+        <Route path="/reviewmanagement" element={<ReviewManagement />} />
+        <Route path="/orderyesno" element={<OrderYesNo />} />
+
+        <Route path="/adminpage" element={<AdminPage />} />
       </Routes>
       {isOpen && <Hamburger isOpen={isOpen} onClose={() => setIsOpen(false)} />}
-      {!isOwnerPage() && <Footer /> }
+      {showHeader && <Footer />}
     </div>
   );
 }
