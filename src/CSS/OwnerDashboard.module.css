@@ -154,3 +154,18 @@
     background-color: #d9d9d9;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
+
+/* 메뉴관리 */
+.menu_button button{
+    margin: 0;
+    margin-right: 20px;
+    background-color: #ff9d9d;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.menu_content{
+    border: 1px solid black;
+}
