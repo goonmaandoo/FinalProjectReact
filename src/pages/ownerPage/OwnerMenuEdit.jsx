@@ -1,5 +1,4 @@
 import style from "../../CSS/OwnerDashboard.module.css";
-import styles from '../../CSS/StoreListPage.module.css';
 import OwnerHeader from "./OwnerHeader";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -10,9 +9,11 @@ export default function OwnerMenuEdit() {
     const user = useSelector((state) => state.auth.user);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const [menuList, setMenuList] = useState([]);
+    const [storeId, setStoreId] = useState("");
 
 
-        if(!user || !user.id){
+    useEffect(() => {
+        if (!user || !user.id) {
             console.log("로그인된 사장님 정보가 없습니다.");
             return;
         }
@@ -32,6 +33,22 @@ export default function OwnerMenuEdit() {
             .catch(err => {
                 console.error("메뉴 불러오기 실패:", err);
             });
+    }, [user]);
+
+    useEffect(() => {
+        if (!user || !user.id) return;
+
+        const ownerId = user.id;
+        axios.get(`http://localhost:8080/menu/ownerWithImage/${ownerId}`)
+            .then(res => {
+                console.log("사장님 메뉴 목록:", res.data);
+                setMenuList(res.data);
+                if (res.data.length > 0) {
+                    setStoreId(res.data[0].storeId); // 여기서 storeId 설정!
+                }
+            })
+            .catch(console.error);
+    }, [user]);
 
 
     return (
@@ -64,17 +81,25 @@ export default function OwnerMenuEdit() {
                     <div className={style["menu_content"]}>
                         {menuList.length > 0 ? (
                             menuList.map(menu => (
-                                <div key={menu.id} className={styles["menu_card"]}>
+                                <div key={menu.id} className={style["menu_card"]}>
                                     <img
-                                        src={`http://localhost:8080/image/imgfile/menu/menu_${menu.image_id}.jpg`}
-                                        alt={menu.menu_name}
-                                        className={styles["menu_image"]}
+                                        src={`http://localhost:8080/image/imgfile/${menu.folder}/${menu.filename}`}
+                                        alt={`http://localhost:8080/image/imgfile/${menu.folder}/${menu.filename}`}
+                                        className={style["menu_image"]}
                                     />
-                                    <div className={styles["menu_info"]}>
-                                        <h4>{menu.menu_name}</h4>
-                                        <p>가격: {menu.menu_price}원</p>
-                                        <p>가게 ID: {menu.store_id}</p>
-                                        <p>카테고리 ID: {menu.menu_category_id}</p>
+                                    <div className={style["menu_info"]}>
+                                        <p> {menu.menuName} </p>
+                                        <div className={style["menu_status"]}>
+                                            <p> 판매중 </p>
+                                        </div>
+                                    </div>
+                                    <div className={style["menu_price"]}>
+                                        <p>{menu.menuPrice}원</p>
+                                    </div>
+                                    <div className={style["menuCRUD_button"]}>
+                                        <button className={style["menu_edit"]}> 수정 </button>
+                                        <button className={style["menu_soldout"]}> 품절 </button>
+                                        <button className={style["menu_delete"]}> 삭제 </button>
                                     </div>
                                 </div>
                             ))

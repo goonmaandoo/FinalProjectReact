@@ -128,7 +128,7 @@ export default function StoreRegister() {
                             value={tel} onChange={(e) => setTel(e.target.value)} />
                     </div>
                     <div className={style["button-wrapper"]}>
-                        <button onClick={handleSubmit}> 등록하기 </button>
+                        <button className={style["store_register_button"]} onClick={handleSubmit}> 등록하기 </button>
                     </div>
 
 

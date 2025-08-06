@@ -4,12 +4,16 @@
     background-color: #f5f5f5;
 }
 
+button{
+    cursor: pointer;
+}
 /* 사이드바 */
 .leftbox {
     width: 220px;
     background-color: white;
     padding: 20px;
     border-right: 1px solid #ccc;
+    flex-shrink: 0;
 }
 
 .leftbox ul {
@@ -122,7 +126,7 @@
     font-size: 20px;
 }
 
-.rightbox button {
+.store_register_button {
     background-color: #ff9d9d;
     color: white;
     border: none;
@@ -131,18 +135,12 @@
     font-size: 22px;
     cursor: pointer;
     margin-top: 40px;
-    transition: background-color 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 .button-wrapper {
     text-align: right;
     margin-top: 40px;
 }
 
-
-.rightbox button:hover {
-    background-color: #ff7c7c;
-}
 
 /* select,option 스타일 */
 .category_select select {
@@ -156,16 +154,63 @@
 }
 
 /* 메뉴관리 */
-.menu_button button{
-    margin: 0;
-    margin-right: 20px;
-    background-color: #ff9d9d;
-    color: white;
+.menu_content{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 1500px;
+    height: auto;
+    align-items: center;
+}
+.menu_card{
     border: none;
     border-radius: 10px;
-    font-size: 16px;
-    cursor: pointer;
+    background-color: white;
+    padding: 20px;
 }
-.menu_content{
-    border: 1px solid black;
+.menu_card img{
+    width: 100%;
+}
+.menu_info{
+    display: flex;
+    justify-content: space-between;
+}
+.menu_info p{
+    font-size: 20px;
+    font-weight: bold;
+}
+.menu_price p{
+    margin: 0;
+    padding: 0;
+}
+.menu_status{
+    background-color: #04b310;
+    height: 25px;
+    display: flex;               /* flex 적용 */
+    align-items: center;         /* 세로 중앙 */
+    justify-content: center;     /* 가로 중앙 */
+
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+}
+.menu_status p{
+    font-size: 14px;
+    color: white;
+}
+.menuCRUD_button button{
+    border: none;
+    border-radius: 10px;
+    width: 100px;
+    height: 30px;
+    margin: 20px 10px;
+}
+.menu_edit{
+    background-color: #ffb1b1;
+}
+.menu_soldout{
+    background-color: #d9d9d9;
+}
+.menu_delete{
+    background-color: red;
 }
