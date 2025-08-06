@@ -39,7 +39,13 @@ function Login() {
                 localStorage.setItem("token", token);
                 dispatch(loginSuccess(user, token)); // redux에 저장
                 setNickname(response.data.nickname);
-                navigate("/mainpage");
+
+                if(user.role === "owner"){
+                    navigate("/ownerdashboard");
+                } else {
+                    navigate("/mainpage");
+                }
+                
             }
         } catch (error) {
             if (error.response && error.response.status === 401) {

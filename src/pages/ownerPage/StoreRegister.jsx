@@ -24,43 +24,47 @@ export default function StoreRegister() {
                     <h2>가게등록</h2>
                     <h3>가게 등록을 신청하세요</h3>
 
-                    {/* 오늘 주문 */}
-                    <div className={style["today_order"]}>
-                        <div className={style["status_box"]}>
-                            <h3>오늘 주문</h3>
-                            <h4>153건</h4>
+                    {/* 카테고리 선택 + 가게대표이미지 선택 */}
+                    <div className={style["category_firstimg"]}>
+                        <div className={style["category_select"]}>
+                            <h3>카테고리</h3>
+                            <select>
+                                <option> 카테고리 선택 </option>
+                                <option> 피자 </option>
+                                <option> 한식 </option>
+                                <option> 분식 </option>
+                                <option> 중식 </option>
+                            </select>
+                        </div>
+                        <div className={style["store_firstimg"]}>
+                            <h3> 가게 대표 이미지 </h3>
                         </div>
                     </div>
 
-                    {/* 주문 건수, 총 주문 건수 */}
-                    <div className={style["status_box_wrapper"]}>
-                        <div className={style["status_box"]}>
-                            <h3>오늘 주문건수</h3>
-                            <h4>153건</h4>
-                        </div>
-                        <div className={style["status_box"]}>
-                            <h3>총 주문건수</h3>
-                            <h4>153건</h4>
-                        </div>
-                    </div>
+                    {/* 가게이름, 주소, 최소주문가격, 전화번호 */}
+                    <div className={style["store_info"]}>
 
-                    {/* 공구방 */}
-                    <div className={style["status_box_wrapper"]}>
-                        <div className={style["status_box"]}>
-                            <h3>진행 중인 공구방</h3>
-                            <h4>3건</h4>
-                        </div>
-                        <div className={style["status_box"]}>
-                            <h3>모집 중인 공구방</h3>
-                            <h4>5건</h4>
-                        </div>
-                    </div>
+                        <h3>가게이름</h3>
+                        <input type="text"
+                            placeholder="가게이름" />
 
-                    {/* 최근 주문 */}
-                    <div className={style["recent_order_box"]}>
-                        <h3>최근 주문</h3>
-                        {/* 주문 리스트*/}
+                        <h3>주소 </h3>
+                        <input type="text"
+                            placeholder="가게도로명주소" />
+
+                        <h3>최소주문가격 </h3>
+                        <input type="text"
+                            placeholder="최소주문가격" />
+
+                        <h3>전화번호 </h3>
+                        <input type="text"
+                            placeholder="전화번호" />
                     </div>
+                    <div className={style["button-wrapper"]}>
+                        <button> 신청하기 </button>
+                    </div>
+                    
+
                 </div>
             </div>
         </>
