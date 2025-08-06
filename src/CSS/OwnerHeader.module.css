@@ -1,16 +1,16 @@
 .owner_header{
     background-color: #ff6b6b;
-    height: 120px;
+    height: 100px;
     display: flex;
     align-items: center;
-    padding-bottom: 20px;
+    padding: 20px;
     justify-content: space-between;
+    color: white;
 }
 
-.owner_header h2{
-    color: white;
-    margin-left: 20px;
-    font-size: 40px;
+.title{
+    font-size: 32px;
+    font-weight: 600;
 }
 
 .userinfo{
@@ -20,10 +20,6 @@
     gap: 10px;
 }
 
-.userName{
-    color: white;
-    margin-top: 20px;
-}
 
 .userName_btn {
     padding: 8px 16px;
@@ -35,6 +31,4 @@
     cursor: pointer;
     font-weight: bold;
     transition: background-color 0.3s ease;
-    margin-right: 20px;
-    margin-top: 20px;
 }
