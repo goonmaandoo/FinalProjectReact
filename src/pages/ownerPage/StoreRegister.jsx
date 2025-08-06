@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 
 export default function StoreRegister() {
     const [menuCategoryId, setMenuCategoryId] = useState("");
@@ -16,7 +17,21 @@ export default function StoreRegister() {
     const user = useSelector((state) => state.auth.user);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
+    const navigate = useNavigate();
+
     const handleSubmit = async () => {
+
+        // 빈 항목 체크
+        if (
+            menuCategoryId.trim() === 0 ||
+            storeName.trim() === "" ||
+            storeAddress.trim() === "" ||
+            minPrice.trim() === "" ||
+            tel.trim() === ""
+        ) {
+            alert("모든 항목을 입력해주세요.");
+            return;
+        }
 
         // 숫자인지 검사 (빈 문자열도 걸러주기 위해 trim 사용)
         if (!minPrice.trim() || isNaN(minPrice)) {
@@ -36,11 +51,14 @@ export default function StoreRegister() {
 
             alert("가게 등록 성공!");
             console.log(response.data);
+            navigate("/ownerdashboard");
         } catch (error) {
             console.error(error);
             alert("등록 중 오류 발생");
         }
     }
+
+
     return (
         <>
             <OwnerHeader />
@@ -66,7 +84,7 @@ export default function StoreRegister() {
                     <div className={style["category_firstimg"]}>
                         <div className={style["category_select"]}>
                             <h3>카테고리</h3>
-                            <select value={menuCategoryId} onChange={(e) => setMenuCategoryId(e.target.selectedIndex)}>
+                            <select value={menuCategoryId} onChange={(e) => setMenuCategoryId(e.target.value)}>
                                 <option value="2">피자</option>
                                 <option value="3">한식</option>
                                 <option value="4">분식</option>
