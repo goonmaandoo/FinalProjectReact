@@ -1,5 +1,5 @@
 import styles from '../../CSS/MainHeader.module.css'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import KakaoMap from "../../components/Kakaomap";
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/user';
