@@ -1,5 +1,4 @@
 import style from "../../CSS/OwnerDashboard.module.css";
-import OwnerHeader from "./OwnerHeader";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from 'react-router-dom';
@@ -54,26 +53,10 @@ export default function OwnerMenuEdit() {
 
     return (
         <>
-            <OwnerHeader />
             <div className={style["outbox"]}>
-                {/* 사이드 메뉴 */}
-                <div className={style["leftbox"]}>
-                    <ul>
-                        <li><Link to="/ownerdashboard">대시보드</Link></li>
-                        <li><Link to="/storeregister">가게등록</Link></li>
-                        <li><Link to="/ownerstorelist">가게관리</Link></li>
-                        <li><Link to="/ownermenuedit">메뉴</Link></li>
-                        <li><Link to="/deliverystate">배달접수/현황</Link></li>
-                        <li><Link to="/reviewmanagement">리뷰관리</Link></li>
-                        <li><Link to="/orderyesno">주문접수/취소</Link></li>
-                        
-                    </ul>
-                </div>
 
                 {/* 메인 콘텐츠 */}
                 <div className={style["rightbox"]}>
-                    <h2>메뉴관리</h2>
-                    <h3>등록된 메뉴 목록</h3>
 
                     <div className={style["menu_button"]}>
                         <button onClick={() => setSelectedTab("전체메뉴")}> 전체메뉴 </button>
