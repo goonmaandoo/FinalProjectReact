@@ -1,12 +1,14 @@
+/* closeRoom.module.css */
+
+/* 기본 스타일 (1280px 이상) */
 .closeMap {
   border: solid 4px #ccc;
   border-radius: 10px;
   box-sizing: border-box;
-  width: 800px;
-  height: 600px;
-
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
 }
-
 .infowindowClose {
   position: absolute;
   right: 4px;
@@ -15,7 +17,6 @@
   font-weight: bold;
   cursor: pointer;
 }
-
 .infowindowImg {
   width: 100%;
   border-radius: 5px 5px 0 0;
@@ -25,13 +26,10 @@
   display: block;
   margin-bottom: 5px;
 }
-
 .infowindowImg:hover {
   transform: scale(1.03);
-  /* 5% 확대 */
   cursor: pointer;
 }
-
 .mapOverlay {
   position: relative;
   background: white;
@@ -41,28 +39,66 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   width: 260px;
 }
-
 .mapRoomName {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 8px;
-  margin-left: 7px
+  margin-left: 7px;
 }
-
 .mapRoomName:hover {
   transform: scale(1.03);
-  /* 5% 확대 */
   cursor: pointer;
 }
-
 .mapAddress {
   margin-top: 4px;
-  margin-left: 7px
+  margin-left: 7px;
 }
-
 .mapAddress:hover {
   transform: scale(1.03);
-  /* 5% 확대 */
   cursor: pointer;
+}
+
+/* 1280px 미만 (데스크탑) */
+@media (max-width: 1280px) {
+  .closeMap {
+    height: 400px;
+    margin-bottom: 20px;
+  }
+  .mapOverlay {
+    width: 240px;
+  }
+}
+
+/* 768px 미만 (태블릿) */
+@media (max-width: 768px) {
+  .closeMap {
+    height: 350px;
+  }
+  .mapOverlay {
+    width: 220px;
+  }
+  .infowindowImg {
+    height: 120px;
+  }
+}
+
+/* 480px 미만 (모바일) */
+@media (max-width: 480px) {
+  .closeMap {
+    height: 30vh;
+    min-height: 250px;
+    margin-bottom: 15px;
+  }
+  .mapOverlay {
+    width: 200px;
+    font-size: 14px;
+  }
+  .infowindowImg {
+    height: 100px;
+  }
+  .mapRoomName,
+  .mapAddress {
+    margin-left: 5px;
+  }
 }
