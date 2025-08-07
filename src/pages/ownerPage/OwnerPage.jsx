@@ -3,8 +3,13 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { logout } from '../../redux/user';
-import Dashboard from '../Admin/DashBoard';
-
+import OwnerDashboard from './OwnerDashboard';
+import StoreRegister from './StoreRegister';
+import OwnerMenuEdit from './OwnerMenuEdit';
+import DeliveryState from './DeliveryState';
+import ReviewManagement from './ReviewManagement';
+import OrderYesNo from './OrderYesNo';
+import OwnerStoreList from './OwnerStoreList';
 
 export default function OwnerPage() {
     const navigate = useNavigate();
@@ -26,12 +31,14 @@ export default function OwnerPage() {
     }, [user, navigate]);
 
     const menus = [
-        { id: "dashboard", label: "대시보드", component: <Dashboard/>, content: "실시간 주문과 매출을 확인하세요 " },
-        { id: "store", label: "가게등록", component: "", content: "가게 등록을 신청하세요" },
-        { id: "menu", label: "메뉴관리", component: "", content: "메뉴를 관리하세요" },
-        { id: "delivery", label: "배달접수/현황", component: "", content: "배달 접수와 현황을 관리하세요" },
-        { id: "review", label: "리뷰관리", component: "", content: "가게 리뷰를 관리하세요" },
-        { id: "order", label: "주문접수/취소", component: "", content: "실시간으로 들어오는 주문을 관리하세요" }
+        { id: "dashboard", label: "대시보드", component: <OwnerDashboard/>, content: "실시간 주문과 매출을 확인하세요 " },
+        { id: "store", label: "가게등록", component: <StoreRegister/>, content: "가게 등록을 신청하세요" },
+        {id: "store", label: "가게관리", component: <OwnerStoreList/>,
+        content: "가게를 관리하세요"},
+        { id: "menu", label: "메뉴관리", component: <OwnerMenuEdit/>, content: "메뉴를 관리하세요" },
+        { id: "delivery", label: "배달접수/현황", component: <DeliveryState/>, content: "배달을 접수하고 배달 현황을 관리하세요" },
+        { id: "review", label: "리뷰관리", component: <ReviewManagement/>, content: "가게 리뷰를 관리하세요" },
+        { id: "order", label: "주문접수/취소", component: <OrderYesNo/>, content: "실시간으로 들어오는 주문을 관리하세요" }
     ]
     
 
