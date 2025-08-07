@@ -32,8 +32,7 @@ import SafetyGuide from './pages/footerPage/SafetyGuide';
 import Hamburger from './components/Hamburger';
 import PasswordCheck from './pages/myPage/PasswordCheck';
 import AuthQna from './pages/Auth/AuthQna';
-
-
+import RoomTest from './pages/testRoom/RoomTest';
 
 function parseJwt(token) {
   try {
@@ -104,7 +103,7 @@ function App() {
           <Route path="passwordcheck" element={<PasswordCheck/>} />
           <Route path="myqna" element={<MyQna />} />
         </Route>
-
+        <Route path="/testRoom" element={<RoomTest />} />
         <Route path="/storelist/:categoryId" element={<StoreListPage />} />
         <Route path="/store/:storeId" element={<StoreDetail />} />
         <Route path="/selectroom/:storeId" element={<SelectRoom />} />

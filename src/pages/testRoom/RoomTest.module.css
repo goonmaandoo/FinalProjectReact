@@ -1,0 +1,355 @@
+/* 전체 채팅방 컨테이너 */
+.roomContainer {
+  display: flex;
+  justify-content: center;
+  align-items: stretch; /* auto 높이에서 위쪽 정렬 */
+  min-height: 600px; /* 최소 높이 지정 */
+  background-color: #f0f2f5;
+  padding: 30px 50px 50px 50px;
+  box-sizing: border-box;
+  height: auto; /* height auto 변경 */
+  width: 100%;
+}
+
+/* 좌우 컬럼 레이아웃 */
+.leftColumn {
+    display: flex;
+  flex-direction: column;
+  width: 60%;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-right: 20px;
+  overflow: hidden;
+}
+
+/* 오른쪽 메뉴 컬럼 */
+.menuWrapper {
+  width: 40%;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* 방 제목 */
+.titleWrapper {
+  flex-shrink: 0;
+  padding: 16px 24px 0px 24px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* --- 참여 유저 & 채팅창 공통 스타일 --- */
+.sectionTitle {
+  flex-shrink: 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: #555;
+  padding: 16px 24px 8px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.scrollContainer {
+  flex-grow: 1; /* 남은 공간을 모두 차지 */
+  overflow-y: auto;
+  padding: 16px 24px;
+  box-sizing: border-box;
+  min-height: 0;
+}
+
+/* 참여 유저 */
+.memberWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 40%;
+  border-bottom: 1px solid #e0e0e0;
+  min-height: 200px; /* 최소 높이 확보 */
+}
+
+.memberWrapper ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+/* 참여 유저 리스트 각 항목 */
+.memberWrapper li {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  border-bottom: 1px dashed #e0e0e0;
+  gap: 12px;
+  position: relative;
+}
+
+/* 프로필 이미지 동그랗게, 크기 44px */
+.memberWrapper li img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
+  flex-shrink: 0;
+}
+
+/* 닉네임 스타일, flex-grow로 옆 공간 차지 */
+.memberWrapper li p {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  flex-grow: 1;
+}
+
+/* 방장 표시 */
+.leaderTag {
+  margin-left: 8px;
+  color: #0055ff;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+/* 준비 상태 + 버튼 컨테이너 */
+.readyContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 120px; /* 버튼 포함 충분한 너비 확보 */
+}
+
+/* 준비완료 / 준비하기 텍스트 */
+.readyDone {
+  color: green;
+  font-weight: 600;
+  margin: 0;
+}
+
+.readyNotDone {
+  color: red;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* 준비 버튼 스타일 */
+.readyBtn {
+  background-color: #0066ff;
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.readyBtn:hover {
+  background-color: #004bb5;
+}
+
+/* 방장 최종주문 버튼 */
+.finalOrderBtn {
+  position: absolute;
+  right: 12px;
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: 6px 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.finalOrderBtn:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}
+
+/* 채팅 전체 영역 */
+.chatWrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* 이 부분 추가 */
+  flex-grow: 1; /* 남은 공간 모두 차지 */
+  max-height: calc(90vh - 200px); /* 전체 최대 높이에서 멤버Wrapper 높이 뺌 */
+  overflow: hidden;
+}
+
+/* 채팅 목록 스크롤 영역 */
+.chatBody {
+  flex-grow: 1; /* 채팅 목록이 남은 공간을 모두 채움 */
+  overflow-y: auto;
+  padding: 16px 24px;
+  box-sizing: border-box;
+  min-height: 0;
+}
+
+/* 채팅 메시지 */
+.chatMessage {
+  display: flex;
+  align-items: flex-start;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+  gap: 12px;
+}
+
+/* 프로필 이미지 */
+.chatMessage img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid #eee;
+}
+
+/* 닉네임과 메시지 묶음 */
+.chatContentLeft {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.nickname {
+  font-weight: bold;
+  color: #444;
+  margin-bottom: 4px;
+}
+
+.chatText {
+  color: #666;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* 오른쪽 고정 박스: 시간 + 신고 버튼 */
+.chatRightSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  flex-shrink: 0;
+  width: 60px;
+  font-size: 0.8rem;
+  color: #999;
+  text-align: center;
+}
+
+.reportButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #d00;
+  padding: 0;
+  transition: color 0.3s;
+}
+
+.reportButton:hover {
+  color: red;
+}
+
+/* 입력창 래퍼 */
+.chatInput {
+  display: flex;
+  padding: 16px 24px;
+  gap: 12px;
+  border-top: 1px solid #e0e0e0;
+  background-color: #f9f9f9;
+  flex-shrink: 0; /* 이 요소는 절대 줄어들지 않음 */
+}
+
+/* 입력 텍스트 박스 */
+.chatInput input {
+  flex-grow: 1;
+  padding: 12px 16px;
+  font-size: 1rem;
+  border-radius: 24px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  min-width: 0;
+  background-color: #fff;
+  transition: border-color 0.3s;
+}
+
+.chatInput input:focus {
+  outline: none;
+  border-color: #0066ff;
+}
+
+/* 입력 버튼 */
+.chatInput button {
+  padding: 12px 24px;
+  background-color: #0066ff;
+  color: white;
+  border: none;
+  border-radius: 24px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.chatInput button:hover {
+  background-color: #004bb5;
+}
+
+.menuList {
+  max-height: 450px; /* ✅ 원하는 높이로 조절 가능 */
+  overflow-y: auto;
+  padding-right: 8px; /* 스크롤 여유 공간 */
+  margin-bottom: 24px; /* 아래 요소와 간격 */
+  border-bottom: 1px solid black;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 메뉴 이름과 가격+버튼 간 공간 띄우기 */
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.menuItemName {
+  flex: 1; /* 왼쪽 메뉴 이름이 남은 공간 다 차지 */
+  font-weight: 600;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menuItemPrice {
+  width: 80px;
+  text-align: right;
+  color: #555;
+  font-size: 0.9rem;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.menuItemButton {
+  flex-shrink: 0;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  background-color: #0066ff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.menuItemButton:hover {
+  background-color: #004bb5;
+}
