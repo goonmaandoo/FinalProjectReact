@@ -45,6 +45,7 @@ import OrderYesNo from './pages/ownerPage/OrderYesNo';
 import AdminPage from './pages/Admin/AdminPage';
 import Dashboard from "./pages/Admin/Dashboard";
 import StoreManagement from "./pages/Admin/StoreManagement";
+import OwnerStoreList from "./pages/ownerPage/OwnerStoreList";
 
 
 function parseJwt(token) {
@@ -65,6 +66,7 @@ function App() {
     return [
       "/ownerdashboard",
       "/storeregister",
+      "/ownerstorelist",
       "/ownermenuedit",
       "/deliverystate",
       "/reviewmanagement",
@@ -160,6 +162,7 @@ useEffect(() => {
 
         <Route path="/ownerdashboard" element={<OwnerDashboard />} />
         <Route path="/storeregister" element={<StoreRegister />} />
+        <Route path="/ownerstorelist" element={<OwnerStoreList/>}/>
         <Route path="/ownermenuedit" element={<OwnerMenuEdit />} />
         <Route path="/deliverystate" element={<DeliveryState />} />
         <Route path="/reviewmanagement" element={<ReviewManagement />} />
