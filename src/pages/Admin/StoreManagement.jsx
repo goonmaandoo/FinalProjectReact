@@ -1,8 +1,7 @@
 import styles from '../../CSS/StoreManagement.module.css';
 import { useState, useEffect } from 'react';
-import { Listbox } from '@headlessui/react';
 
-export default function () {
+export default function StoreManagement() {
     const [storeCount, setStoreCount] = useState(0);
     const [store, setStore] = useState([]);
     const [selected, setSelected] = useState('all');
