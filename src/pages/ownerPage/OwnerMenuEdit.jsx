@@ -10,6 +10,7 @@ export default function OwnerMenuEdit() {
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const [menuList, setMenuList] = useState([]);
     const [storeId, setStoreId] = useState("");
+    const [selectedTab, setSelectedTab] = useState("전체메뉴");
 
 
     useEffect(() => {
@@ -44,7 +45,7 @@ export default function OwnerMenuEdit() {
                 console.log("사장님 메뉴 목록:", res.data);
                 setMenuList(res.data);
                 if (res.data.length > 0) {
-                    setStoreId(res.data[0].storeId); // 여기서 storeId 설정!
+                    setStoreId(res.data[0].storeId);
                 }
             })
             .catch(console.error);
@@ -60,10 +61,12 @@ export default function OwnerMenuEdit() {
                     <ul>
                         <li><Link to="/ownerdashboard">대시보드</Link></li>
                         <li><Link to="/storeregister">가게등록</Link></li>
+                        <li><Link to="/ownerstorelist">가게관리</Link></li>
                         <li><Link to="/ownermenuedit">메뉴</Link></li>
                         <li><Link to="/deliverystate">배달접수/현황</Link></li>
                         <li><Link to="/reviewmanagement">리뷰관리</Link></li>
                         <li><Link to="/orderyesno">주문접수/취소</Link></li>
+                        
                     </ul>
                 </div>
 
@@ -73,40 +76,65 @@ export default function OwnerMenuEdit() {
                     <h3>등록된 메뉴 목록</h3>
 
                     <div className={style["menu_button"]}>
-                        <button> 전체메뉴 </button>
-                        <button> 메뉴 추가 </button>
-                        <button> 메뉴 수정 </button>
+                        <button onClick={() => setSelectedTab("전체메뉴")}> 전체메뉴 </button>
+                        <button onClick={() => setSelectedTab("메뉴추가")}> 메뉴 추가 </button>
+                        <button onClick={() => setSelectedTab("메뉴수정")}> 메뉴 수정 </button>
                     </div>
-
-                    <div className={style["menu_content"]}>
-                        {menuList.length > 0 ? (
-                            menuList.map(menu => (
-                                <div key={menu.id} className={style["menu_card"]}>
-                                    <img
-                                        src={`http://localhost:8080/image/imgfile/${menu.folder}/${menu.filename}`}
-                                        alt={`http://localhost:8080/image/imgfile/${menu.folder}/${menu.filename}`}
-                                        className={style["menu_image"]}
-                                    />
-                                    <div className={style["menu_info"]}>
-                                        <p> {menu.menuName} </p>
-                                        <div className={style["menu_status"]}>
-                                            <p> 판매중 </p>
+                    <div className={style["right_content"]}>
+                        {selectedTab === "전체메뉴" && (
+                            <div className={style["all_menu"]}>
+                                {menuList.length > 0 ? (
+                                    menuList.map(menu => (
+                                        <div key={menu.id} className={style["menu_card"]}>
+                                            <img
+                                                src={`http://localhost:8080/image/imgfile/${menu.folder}/${menu.filename}`}
+                                                alt={`http://localhost:8080/image/imgfile/${menu.folder}/${menu.filename}`}
+                                                className={style["menu_image"]}
+                                            />
+                                            <div className={style["menu_info"]}>
+                                                <p> {menu.menuName} </p>
+                                                <div className={style["menu_status"]}>
+                                                    <p> 판매중 </p>
+                                                </div>
+                                            </div>
+                                            <div className={style["menu_price"]}>
+                                                <p>{menu.menuPrice}원</p>
+                                            </div>
+                                            <div className={style["menuCRUD_button"]}>
+                                                <button className={style["menu_edit"]}> 수정 </button>
+                                                <button className={style["menu_soldout"]}> 품절 </button>
+                                                <button className={style["menu_delete"]}> 삭제 </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className={style["menu_price"]}>
-                                        <p>{menu.menuPrice}원</p>
-                                    </div>
-                                    <div className={style["menuCRUD_button"]}>
-                                        <button className={style["menu_edit"]}> 수정 </button>
-                                        <button className={style["menu_soldout"]}> 품절 </button>
-                                        <button className={style["menu_delete"]}> 삭제 </button>
-                                    </div>
+                                    ))
+                                ) : (
+                                    <p>등록된 메뉴가 없습니다.</p>
+                                )}
+                            </div>
+                        )}
+
+                        {selectedTab === "메뉴추가" && (
+                            <div className={style["insert_menu"]}>
+                                <div className={style["image_insert"]}>
+                                    <p> 사진 추가하기 </p>
                                 </div>
-                            ))
-                        ) : (
-                            <p>등록된 메뉴가 없습니다.</p>
+                                <div className={style["insertmenu_info"]}>
+                                    <input type="text" placeholder="메뉴명" /><br></br>
+                                    <input type="text" placeholder="가격" /><br/>
+                                    <button className={style["insertmenu_button"]}> 추가하기 </button>
+                                </div>
+                                
+                            </div>
+                        )}
+
+                        {selectedTab === "메뉴수정" && (
+                            <div className={style["edit_menu"]}>
+                                메뉴수정
+                            </div>
                         )}
                     </div>
+
+
                 </div>
             </div>
         </>

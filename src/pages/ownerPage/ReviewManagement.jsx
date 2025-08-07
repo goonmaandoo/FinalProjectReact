@@ -12,6 +12,7 @@ export default function ReviewManagement() {
                     <ul>
                         <li><Link to="/ownerdashboard">대시보드</Link></li>
                         <li><Link to="/storeregister">가게등록</Link></li>
+                        <li><Link to="/ownerstorelist">가게관리</Link></li>
                         <li><Link to="/ownermenuedit">메뉴</Link></li>
                         <li><Link to="/deliverystate">배달접수/현황</Link></li>
                         <li><Link to="/reviewmanagement">리뷰관리</Link></li>
