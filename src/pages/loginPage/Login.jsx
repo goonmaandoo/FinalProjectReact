@@ -41,7 +41,7 @@ function Login() {
                 setNickname(response.data.nickname);
 
                 if(user.role === "owner"){
-                    navigate("/ownerdashboard");
+                    navigate("/ownerpage");
                 }else if(user.role === "admin") {
                     navigate("/adminpage");
                 } else {

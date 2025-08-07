@@ -49,6 +49,7 @@ import AdminPage from './pages/Admin/AdminPage';
 import Dashboard from "./pages/Admin/Dashboard";
 import StoreManagement from "./pages/Admin/StoreManagement";
 import OwnerStoreList from "./pages/ownerPage/OwnerStoreList";
+import OwnerPage from "./pages/ownerPage/OwnerPage";
 
 function parseJwt(token) {
   try {
@@ -68,17 +69,7 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
 
   const isMainPage = location.pathname === "/mainpage";
-  const isOwnerPage = () => {
-    return [
-      "/ownerdashboard",
-      "/storeregister",
-      "/ownerstorelist",
-      "/ownermenuedit",
-      "/deliverystate",
-      "/reviewmanagement",
-      "/orderyesno",
-    ].includes(location.pathname);
-  };
+  const isOwnerPage = location.pathname === "/ownerpage";
   const isAdminPage = location.pathname === "/adminpage";
   const showHeader = !isAdminPage && !isOwnerPage();
 
@@ -138,6 +129,8 @@ function App() {
     e?.stopPropagation();
     setIsOpen(!isOpen);
   };
+
+  const showHeader = !isAdminPage && !isOwnerPage;
 
   return (
     <div>
@@ -202,7 +195,9 @@ function App() {
         <Route path="/deliverystate" element={<DeliveryState />} />
         <Route path="/reviewmanagement" element={<ReviewManagement />} />
         <Route path="/orderyesno" element={<OrderYesNo />} />
+        
         <Route path="/adminpage" element={<AdminPage />} />
+        <Route path="/ownerpage" element={<OwnerPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/StoreManagement" element={<StoreManagement />} />
       </Routes>
