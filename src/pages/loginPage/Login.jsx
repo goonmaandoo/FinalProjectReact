@@ -24,12 +24,30 @@ function Login() {
 
             if (response.data) {
                 const {user, token} = response.data; // 구조분해
+
+                if(user.status === "unactive"){
+                    alert("비활성화된 계정입니다.");
+                    return;
+                }
+                if(user.status === "ban"){
+                    alert("정지된 계정입니다. 로그인할 수 없습니다.");
+                    return;
+                }
+
                 alert("로그인 성공! 메인화면으로 이동합니다.");
                 setUser(response.data);
                 localStorage.setItem("token", token);
                 dispatch(loginSuccess(user, token)); // redux에 저장
                 setNickname(response.data.nickname);
-                navigate("/mainpage");
+
+                if(user.role === "owner"){
+                    navigate("/ownerdashboard");
+                }else if(user.role === "admin") {
+                    navigate("/adminpage");
+                } else {
+                    navigate("/mainpage");
+                }
+                
             }
         } catch (error) {
             if (error.response && error.response.status === 401) {
@@ -50,7 +68,7 @@ function Login() {
     return (
         <div className={style["login-container"]}>
             {user && nickname ? (
-                <div id="user_login">{/* 이미 로그인 후면 이 부분은 필요 없어요 */}</div>
+                <div id="user_login"></div>
             ) : (
                 <div className={style["login-box"]}>
                     <div className={style["login-left"]}>

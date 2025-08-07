@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import MyPage from './pages/myPage/MyPage';
-import EditUser from './pages/myPage/EditUser';
-import MyQna from './pages/myPage/MyQna';
-import UserInfo from './pages/myPage/UserInfo';
-import MainPage from './pages/MainPage';
-import MainHeader from './components/header/MainHeader';
-import Header from './components/header/Header'
-import Footer from './components/footer/Footer'
+import MyPage from "./pages/myPage/MyPage";
+import EditUser from "./pages/myPage/EditUser";
+import MyQna from "./pages/myPage/MyQna";
+import UserInfo from "./pages/myPage/UserInfo";
+import MainPage from "./pages/MainPage";
+import MainHeader from "./components/header/MainHeader";
+import Header from "./components/header/Header";
+import Footer from "./components/footer/Footer";
 import Login from "./pages/loginPage/Login";
 import RegisterCheck from "./pages/loginPage/RegisterCheck";
 import OwnerRegister from "./pages/loginPage/OwnerRegister";
@@ -17,8 +17,10 @@ import StoreListPage from "./pages/storePage/StoreListPage";
 import StoreDetail from "./pages/storePage/StoreDetail";
 import SelectRoom from "./pages/storePage/SelectedRoom";
 import OrderComplete from './pages/orders/OrderComplete';
+import GonguComplete from './pages/roomPage/GonguComplete';
 import RoomCreate from './pages/roomPage/RoomCreate';
 import AllRoom from './pages/roomPage/AllRoom';
+import SearchPage from './pages/SearchPage';
 import Error404Page from './pages/Error404Page';
 import LoginCheck from './components/user/loginCheck';
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,15 +34,30 @@ import SafetyGuide from './pages/footerPage/SafetyGuide';
 import Hamburger from './components/Hamburger';
 import PasswordCheck from './pages/myPage/PasswordCheck';
 import AuthQna from './pages/Auth/AuthQna';
+
 import RoomTest from './pages/testRoom/RoomTest';
+
+import OrderList from './pages/myPage/OrderList';
+import ForgotPassword from './pages/loginPage/ForgotPassword';
+import OwnerDashboard from './pages/ownerPage/OwnerDashboard';
+import StoreRegister from './pages/ownerPage/StoreRegister';
+import OwnerMenuEdit from './pages/ownerPage/OwnerMenuEdit';
+import DeliveryState from './pages/ownerPage/DeliveryState';
+import ReviewManagement from './pages/ownerPage/ReviewManagement';
+import OrderYesNo from './pages/ownerPage/OrderYesNo';
+import AdminPage from './pages/Admin/AdminPage';
+import Dashboard from "./pages/Admin/Dashboard";
+import StoreManagement from "./pages/Admin/StoreManagement";
+import OwnerStoreList from "./pages/ownerPage/OwnerStoreList";
+
 
 function parseJwt(token) {
   try {
-    const base64Payload = token.split('.')[1];
+    const base64Payload = token.split(".")[1];
     const decodedPayload = atob(base64Payload); // Base64 디코딩
     return JSON.parse(decodedPayload);
   } catch (e) {
-    console.error('토큰 파싱 실패', e);
+    console.error("토큰 파싱 실패", e);
     return null;
   }
 }
@@ -48,34 +65,46 @@ function parseJwt(token) {
 function App() {
   const location = useLocation();
   const isMainPage = location.pathname === "/mainpage";
+  const isOwnerPage = () => {
+    return [
+      "/ownerdashboard",
+      "/storeregister",
+      "/ownerstorelist",
+      "/ownermenuedit",
+      "/deliverystate",
+      "/reviewmanagement",
+      "/orderyesno",
+    ].includes(location.pathname);
+  }
+  const isAdminPage = location.pathname === "/adminpage";
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
 
+useEffect(() => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    const decoded = parseJwt(token);
+    if (!decoded) return;
 
+    const email = decoded.sub;
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const decoded = parseJwt(token);
-      if (!decoded) return;
-
-      const email = decoded.sub;
-
-      axios.get("/api/users/me", {
+    axios
+      .get("/api/users/me", {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       })
-      .then(res => {
+      .then((res) => {
         const user = res.data;
         dispatch(loginSuccess(user, token));
       })
-      .catch(err => {
+      .catch((err) => {
         console.error("유저 정보 불러오기 실패", err);
-        localStorage.removeItem("token");
+        dispatch(logout());
       });
-    }
-  }, []);
+  }
+}, []);
+
 
   const toggleMenu = (e) => {
     e?.stopPropagation();
@@ -83,54 +112,71 @@ function App() {
     setIsOpen(!isOpen);
   };
 
+  const showHeader = !isAdminPage && !isOwnerPage();
+
   return (
     <div>
-      {isMainPage ? (
-        <MainHeader toggleMenu={toggleMenu}/>
-      ) : (
-        <Header toggleMenu={toggleMenu}/>
+      {showHeader && (
+        isMainPage ? (
+          <MainHeader toggleMenu={toggleMenu} />
+        ) : (
+          <Header toggleMenu={toggleMenu} />
+        )
       )}
+
 
       <Routes>
         <Route path="/" element={<Navigate to="/mainpage" replace />} />
         <Route path="/mainpage" element={<MainPage />} />
         <Route path="/roomPage/AllRoom" element={<AllRoom />} />
+        <Route path="/room/create/:storeId" element={<RoomCreate />} />
+
         <Route path="/ordercomplete/:orderId" element={<OrderComplete />} />
+        <Route path="/gongucomplete/:roomId" element={<GonguComplete />} />
         <Route path="/mypage" element={<MyPage />}>
           <Route index element={<UserInfo />} />
           <Route path="userinfo" element={<UserInfo />} />
           <Route path="edituser" element={<EditUser />} />
-          <Route path="passwordcheck" element={<PasswordCheck/>} />
+          <Route path="passwordcheck" element={<PasswordCheck />} />
           <Route path="myqna" element={<MyQna />} />
+          <Route path="orderlist" element={<OrderList />} />
         </Route>
         <Route path="/testRoom" element={<RoomTest />} />
         <Route path="/storelist/:categoryId" element={<StoreListPage />} />
         <Route path="/store/:storeId" element={<StoreDetail />} />
         <Route path="/selectroom/:storeId" element={<SelectRoom />} />
         <Route path="/store/:storeId" element={<StoreDetail />} />
-        <Route path="/roomcreate" element={<RoomCreate/>} />
+        <Route path="/roomcreate" element={<RoomCreate />} />
         <Route path="/login" element={<Login />} />
         <Route path="/ownerusercheck" element={<RegisterCheck />} />
         <Route path="/ownerregister" element={<OwnerRegister />} />
         <Route path="/userregister" element={<UserRegister />} />
+        <Route path="/forgotpw" element={<ForgotPassword />} />
 
+        <Route path="/search" element={<SearchPage />} />
         <Route path="/auth/qna" element={<AuthQna />} />
 
-        <Route path="/moapolicy1" element={<MoaPolicy1/>}/>
-        <Route path="/moapolicy2" element={<MoaPolicy2/>}/>
-        <Route path="/moapolicy3" element={<MoaPolicy3/>}/>
-        <Route path="/moapolicy4" element={<MoaPolicy4/>}/>
-        <Route path="/safetyguide" element={<SafetyGuide/>}/>
+        <Route path="/moapolicy1" element={<MoaPolicy1 />} />
+        <Route path="/moapolicy2" element={<MoaPolicy2 />} />
+        <Route path="/moapolicy3" element={<MoaPolicy3 />} />
+        <Route path="/moapolicy4" element={<MoaPolicy4 />} />
+        <Route path="/safetyguide" element={<SafetyGuide />} />
         <Route path="*" element={<Error404Page />} />
-      </Routes>
-      {isOpen && (
-        <Hamburger
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-        />
-      )}
-      <Footer />
 
+        <Route path="/ownerdashboard" element={<OwnerDashboard />} />
+        <Route path="/storeregister" element={<StoreRegister />} />
+        <Route path="/ownerstorelist" element={<OwnerStoreList/>}/>
+        <Route path="/ownermenuedit" element={<OwnerMenuEdit />} />
+        <Route path="/deliverystate" element={<DeliveryState />} />
+        <Route path="/reviewmanagement" element={<ReviewManagement />} />
+        <Route path="/orderyesno" element={<OrderYesNo />} />
+
+        <Route path="/adminpage" element={<AdminPage />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/StoreManagement" element={<StoreManagement />} />
+      </Routes>
+      {isOpen && <Hamburger isOpen={isOpen} onClose={() => setIsOpen(false)} />}
+      {showHeader && <Footer />}
     </div>
   );
 }

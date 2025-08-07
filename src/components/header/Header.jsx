@@ -1,6 +1,6 @@
 import styles from '../../CSS/Header.module.css'
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/user';
 
@@ -24,13 +24,16 @@ export default function Header({ toggleMenu }) {
             search();
         }
     }
+
+    //검색창
     const search = () => {
         if (!keyword.trim()) {
             alert("검색어를 입력하세요.");
             return;
         }
-        navigate(`/`);
+        navigate(`/search?keyword=${encodeURIComponent(keyword)}`);
     };
+
     //햄버거버튼
     const handleHamburgerClick = (e) => {
         e.stopPropagation();
@@ -43,6 +46,11 @@ export default function Header({ toggleMenu }) {
                 <div className={styles["hLogo_img"]}>
                     <Link to="/mainpage" className={styles["hLogo_link"]}>
                         <img src="http://localhost:8080/image/imgfile/main_img/header_logo.png" alt='로고' />
+                    </Link>
+                </div>
+                <div className={styles["hLogo_img2"]}>
+                    <Link to="/mainpage" className={styles["hLogo_link"]}>
+                        <img src="http://localhost:8080/image/imgfile/main_img/web_logo.png" alt='로고' />
                     </Link>
                 </div>
                 <div className={styles["search"]}>

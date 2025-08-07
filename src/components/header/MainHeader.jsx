@@ -1,5 +1,5 @@
 import styles from '../../CSS/MainHeader.module.css'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import KakaoMap from "../../components/Kakaomap";
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/user';
@@ -17,11 +17,6 @@ export default function MainHeader({ toggleMenu }) {
     const user = useSelector((state) => state.auth.user);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
-    const handleLogout = () => {
-        dispatch(logout());
-        localStorage.removeItem("token");
-        navigate("/mainpage");
-    }
     //햄버거버튼
     const handleHamburgerClick = (e) => {
         e.stopPropagation();

@@ -1,13 +1,17 @@
-.button-box{
+.button-box {
     width: 100%;
     height: 520px;
-    align-items: center;
-    justify-content: center;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+    text-align: center;
 }
 
-.owner-btn{
+.owner-btn,
+.user-btn {
     background-color: #ffb1b1;
     color: black;
     border: none;
@@ -15,22 +19,37 @@
     border-radius: 5px;
     font-size: 20px;
     cursor: pointer;
+    width: 100%;
+    max-width: 400px;
+    margin: 20px 0;
+    transition: background-color 0.3s;
 }
 
-.user-btn{
-    background-color: #ffb1b1;
-    color: black;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-.button-box button{
-    margin: 20px;
-    width: 400px;
-}
-.button-box button:hover{
+.owner-btn:hover,
+.user-btn:hover {
     background-color: #ffc3c3;
+}
+
+@media (max-width: 768px) {
+    .owner-btn,
+    .user-btn {
+        font-size: 18px;
+        padding: 10px;
+    }
+
+    .button-box h2 {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .owner-btn,
+    .user-btn {
+        font-size: 16px;
+        padding: 8px;
+    }
+
+    .button-box h2 {
+        font-size: 16px;
+    }
 }
