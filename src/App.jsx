@@ -155,7 +155,11 @@ function App() {
         <Route path="/room/create/:storeId" element={<RoomCreate />} />
         <Route path="/ordercomplete/:orderId" element={<OrderComplete />} />
         <Route path="/gongucomplete/:roomId" element={<GonguComplete />} />
-        <Route path="/mypage" element={<MyPage />}>
+        <Route path="/mypage" element={
+          <LoginCheck>
+            <MyPage />
+          </LoginCheck>
+        }>
           <Route index element={<UserInfo />} />
           <Route path="userinfo" element={<UserInfo />} />
           <Route path="edituser" element={<EditUser />} />
