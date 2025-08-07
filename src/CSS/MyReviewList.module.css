@@ -1,0 +1,74 @@
+.reviewWrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 32px 0;
+}
+.title {
+  margin-bottom: 24px;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #246c5f;
+}
+.reviewList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.noData {
+  text-align: center;
+  color: #bbb;
+  padding: 48px 0;
+}
+.reviewCard {
+  border: 1px solid #e3e3e3;
+  border-radius: 14px;
+  background: #fff;
+  padding: 24px;
+  margin-bottom: 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+.reviewDate {
+  color: #9bcfba;
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+.menuList {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #222;
+}
+.menuList ul {
+  margin: 0;
+  padding-left: 18px;
+}
+.scoreArea {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+.stars {
+  color: #fdce2a;
+  font-size: 17px;
+  margin-right: 2px;
+}
+.comment {
+  margin-bottom: 16px;
+  font-size: 15px;
+  color: #444;
+}
+.actionBtns {
+  display: flex;
+  gap: 12px;
+}
+.actionBtns button {
+  padding: 7px 22px;
+  border-radius: 6px;
+  border: 1px solid #bbb;
+  background: #fafafa;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 15px;
+  transition: background 0.15s;
+}
+.actionBtns button:hover {
+  background: #e9f6f1;
+}

@@ -1,8 +1,15 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux';
-import { loginSuccess, logout } from './redux/user';
-import axios from 'axios';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginSuccess, logout } from "./redux/user";
+import axios from "axios";
 
 import MyPage from "./pages/myPage/MyPage";
 import EditUser from "./pages/myPage/EditUser";
@@ -19,33 +26,33 @@ import UserRegister from "./pages/loginPage/UserRegister";
 import StoreListPage from "./pages/storePage/StoreListPage";
 import StoreDetail from "./pages/storePage/StoreDetail";
 import SelectRoom from "./pages/storePage/SelectedRoom";
-import OrderComplete from './pages/orders/OrderComplete';
-import GonguComplete from './pages/roomPage/GonguComplete';
-import RoomCreate from './pages/roomPage/RoomCreate';
-import AllRoom from './pages/roomPage/AllRoom';
-import SearchPage from './pages/SearchPage';
-import Error404Page from './pages/Error404Page';
-import LoginCheck from './components/user/loginCheck';
-import MoaPolicy1 from './pages/footerPage/MoaPolicy1';
-import MoaPolicy2 from './pages/footerPage/MoaPolicy2';
-import MoaPolicy3 from './pages/footerPage/MoaPolicy3';
-import MoaPolicy4 from './pages/footerPage/MoaPolicy4';
-import SafetyGuide from './pages/footerPage/SafetyGuide';
-import Hamburger from './components/Hamburger';
-import PasswordCheck from './pages/myPage/PasswordCheck';
-import AuthQna from './pages/Auth/AuthQna';
+import OrderComplete from "./pages/orders/OrderComplete";
+import GonguComplete from "./pages/roomPage/GonguComplete";
+import RoomCreate from "./pages/roomPage/RoomCreate";
+import AllRoom from "./pages/roomPage/AllRoom";
+import SearchPage from "./pages/SearchPage";
+import Error404Page from "./pages/Error404Page";
+import LoginCheck from "./components/user/loginCheck";
+import MoaPolicy1 from "./pages/footerPage/MoaPolicy1";
+import MoaPolicy2 from "./pages/footerPage/MoaPolicy2";
+import MoaPolicy3 from "./pages/footerPage/MoaPolicy3";
+import MoaPolicy4 from "./pages/footerPage/MoaPolicy4";
+import SafetyGuide from "./pages/footerPage/SafetyGuide";
+import Hamburger from "./components/Hamburger";
+import PasswordCheck from "./pages/myPage/PasswordCheck";
+import AuthQna from "./pages/Auth/AuthQna";
+import MyReview from "./pages/myPage/MyReview";
+import RoomTest from "./pages/testRoom/RoomTest";
 
-import RoomTest from './pages/testRoom/RoomTest';
-
-import OrderList from './pages/myPage/OrderList';
-import ForgotPassword from './pages/loginPage/ForgotPassword';
-import OwnerDashboard from './pages/ownerPage/OwnerDashboard';
-import StoreRegister from './pages/ownerPage/StoreRegister';
-import OwnerMenuEdit from './pages/ownerPage/OwnerMenuEdit';
-import DeliveryState from './pages/ownerPage/DeliveryState';
-import ReviewManagement from './pages/ownerPage/ReviewManagement';
-import OrderYesNo from './pages/ownerPage/OrderYesNo';
-import AdminPage from './pages/Admin/AdminPage';
+import OrderList from "./pages/myPage/OrderList";
+import ForgotPassword from "./pages/loginPage/ForgotPassword";
+import OwnerDashboard from "./pages/ownerPage/OwnerDashboard";
+import StoreRegister from "./pages/ownerPage/StoreRegister";
+import OwnerMenuEdit from "./pages/ownerPage/OwnerMenuEdit";
+import DeliveryState from "./pages/ownerPage/DeliveryState";
+import ReviewManagement from "./pages/ownerPage/ReviewManagement";
+import OrderYesNo from "./pages/ownerPage/OrderYesNo";
+import AdminPage from "./pages/Admin/AdminPage";
 import Dashboard from "./pages/Admin/Dashboard";
 import StoreManagement from "./pages/Admin/StoreManagement";
 import OwnerStoreList from "./pages/ownerPage/OwnerStoreList";
@@ -71,7 +78,7 @@ function App() {
   const isMainPage = location.pathname === "/mainpage";
   const isOwnerPage = location.pathname === "/ownerpage";
   const isAdminPage = location.pathname === "/adminpage";
-  const showHeader = !isAdminPage && !isOwnerPage();
+  const showHeader = !isAdminPage && !isOwnerPage;
 
   // 로그인 상태 유지 및 유저 정보 불러오기
   useEffect(() => {
@@ -101,7 +108,6 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    
     if (!token) return;
 
     const decoded = parseJwt(token);
@@ -145,24 +151,31 @@ function App() {
         <Route path="/" element={<Navigate to="/mainpage" replace />} />
         <Route path="/mainpage" element={<MainPage />} />
         <Route path="/roomPage/AllRoom" element={<AllRoom />} />
-        <Route path="/room/create/:storeId" element={
-          <LoginCheck>
-            <RoomCreate />
-          </LoginCheck>
-        } />
+        <Route
+          path="/room/create/:storeId"
+          element={
+            <LoginCheck>
+              <RoomCreate />
+            </LoginCheck>
+          }
+        />
         <Route path="/ordercomplete/:orderId" element={<OrderComplete />} />
         <Route path="/gongucomplete/:roomId" element={<GonguComplete />} />
-        <Route path="/mypage" element={
-          <LoginCheck>
-            <MyPage />
-          </LoginCheck>
-        }>
+        <Route
+          path="/mypage"
+          element={
+            <LoginCheck>
+              <MyPage />
+            </LoginCheck>
+          }
+        >
           <Route index element={<UserInfo />} />
           <Route path="userinfo" element={<UserInfo />} />
           <Route path="edituser" element={<EditUser />} />
           <Route path="passwordcheck" element={<PasswordCheck />} />
           <Route path="myqna" element={<MyQna />} />
           <Route path="orderlist" element={<OrderList />} />
+          <Route path="myreview" element={<MyReview />} />
         </Route>
 
         <Route path="/testRoom" element={<RoomTest />} />
@@ -170,11 +183,14 @@ function App() {
         <Route path="/storelist/:categoryId" element={<StoreListPage />} />
         <Route path="/store/:storeId" element={<StoreDetail />} />
         <Route path="/selectroom/:storeId" element={<SelectRoom />} />
-        <Route path="/roomcreate" element={
-          <LoginCheck>
-            <RoomCreate />
-          </LoginCheck>
-        } />
+        <Route
+          path="/roomcreate"
+          element={
+            <LoginCheck>
+              <RoomCreate />
+            </LoginCheck>
+          }
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/ownerusercheck" element={<RegisterCheck />} />
         <Route path="/ownerregister" element={<OwnerRegister />} />
@@ -195,7 +211,7 @@ function App() {
         <Route path="/deliverystate" element={<DeliveryState />} />
         <Route path="/reviewmanagement" element={<ReviewManagement />} />
         <Route path="/orderyesno" element={<OrderYesNo />} />
-        
+
         <Route path="/adminpage" element={<AdminPage />} />
         <Route path="/ownerpage" element={<OwnerPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
