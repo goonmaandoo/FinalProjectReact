@@ -75,30 +75,31 @@ function App() {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const decoded = parseJwt(token);
-      if (!decoded) return;
+useEffect(() => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    const decoded = parseJwt(token);
+    if (!decoded) return;
 
-      const email = decoded.sub;
+    const email = decoded.sub;
 
-      axios
-        .get("/api/users/me", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          const user = res.data;
-          dispatch(loginSuccess(user, token));
-        })
-        .catch((err) => {
-          console.error("유저 정보 불러오기 실패", err);
-          localStorage.removeItem("token");
-        });
-    }
-  }, []);
+    axios
+      .get("/api/users/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        const user = res.data;
+        dispatch(loginSuccess(user, token));
+      })
+      .catch((err) => {
+        console.error("유저 정보 불러오기 실패", err);
+        dispatch(logout());
+      });
+  }
+}, []);
+
 
   const toggleMenu = (e) => {
     e?.stopPropagation();

@@ -15,7 +15,6 @@ export const loginSuccess = (user, token) => {
     return {
         type: LOGIN_SUCCESS,
         payload: { user, token },
-        loading: false,
     };
 };
 
@@ -29,7 +28,6 @@ export const logout = () => {
 
     return {
         type: LOGOUT,
-        loading: false,
     };
 };
 
