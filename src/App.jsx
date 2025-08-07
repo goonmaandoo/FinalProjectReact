@@ -46,6 +46,7 @@ import AdminPage from './pages/Admin/AdminPage';
 import Dashboard from "./pages/Admin/Dashboard";
 import StoreManagement from "./pages/Admin/StoreManagement";
 import OwnerStoreList from "./pages/ownerPage/OwnerStoreList";
+import OwnerPage from "./pages/ownerPage/OwnerPage";
 
 
 function parseJwt(token) {
@@ -62,17 +63,7 @@ function parseJwt(token) {
 function App() {
   const location = useLocation();
   const isMainPage = location.pathname === "/mainpage";
-  const isOwnerPage = () => {
-    return [
-      "/ownerdashboard",
-      "/storeregister",
-      "/ownerstorelist",
-      "/ownermenuedit",
-      "/deliverystate",
-      "/reviewmanagement",
-      "/orderyesno",
-    ].includes(location.pathname);
-  }
+  const isOwnerPage = location.pathname === "/ownerpage";
   const isAdminPage = location.pathname === "/adminpage";
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
@@ -109,7 +100,7 @@ useEffect(() => {
     setIsOpen(!isOpen);
   };
 
-  const showHeader = !isAdminPage && !isOwnerPage();
+  const showHeader = !isAdminPage && !isOwnerPage;
 
   return (
     <div>
@@ -167,8 +158,9 @@ useEffect(() => {
         <Route path="/deliverystate" element={<DeliveryState />} />
         <Route path="/reviewmanagement" element={<ReviewManagement />} />
         <Route path="/orderyesno" element={<OrderYesNo />} />
-
+        
         <Route path="/adminpage" element={<AdminPage />} />
+        <Route path="/ownerpage" element={<OwnerPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/StoreManagement" element={<StoreManagement />} />
       </Routes>
