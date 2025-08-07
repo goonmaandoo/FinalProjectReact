@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { loginSuccess, logout } from './redux/user';
+import axios from 'axios';
+
 import MyPage from "./pages/myPage/MyPage";
 import EditUser from "./pages/myPage/EditUser";
 import MyQna from "./pages/myPage/MyQna";
@@ -23,9 +26,6 @@ import AllRoom from './pages/roomPage/AllRoom';
 import SearchPage from './pages/SearchPage';
 import Error404Page from './pages/Error404Page';
 import LoginCheck from './components/user/loginCheck';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginSuccess } from './redux/user';
-import axios from 'axios';
 import MoaPolicy1 from './pages/footerPage/MoaPolicy1';
 import MoaPolicy2 from './pages/footerPage/MoaPolicy2';
 import MoaPolicy3 from './pages/footerPage/MoaPolicy3';
@@ -34,6 +34,9 @@ import SafetyGuide from './pages/footerPage/SafetyGuide';
 import Hamburger from './components/Hamburger';
 import PasswordCheck from './pages/myPage/PasswordCheck';
 import AuthQna from './pages/Auth/AuthQna';
+
+import RoomTest from './pages/testRoom/RoomTest';
+
 import OrderList from './pages/myPage/OrderList';
 import ForgotPassword from './pages/loginPage/ForgotPassword';
 import OwnerDashboard from './pages/ownerPage/OwnerDashboard';
@@ -48,11 +51,10 @@ import StoreManagement from "./pages/Admin/StoreManagement";
 import OwnerStoreList from "./pages/ownerPage/OwnerStoreList";
 import OwnerPage from "./pages/ownerPage/OwnerPage";
 
-
 function parseJwt(token) {
   try {
     const base64Payload = token.split(".")[1];
-    const decodedPayload = atob(base64Payload); // Base64 디코딩
+    const decodedPayload = atob(base64Payload);
     return JSON.parse(decodedPayload);
   } catch (e) {
     console.error("토큰 파싱 실패", e);
@@ -62,41 +64,69 @@ function parseJwt(token) {
 
 function App() {
   const location = useLocation();
-  const isMainPage = location.pathname === "/mainpage";
-  const isOwnerPage = location.pathname === "/ownerpage";
-  const isAdminPage = location.pathname === "/adminpage";
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
 
-useEffect(() => {
-  const token = localStorage.getItem("token");
-  if (token) {
+  const isMainPage = location.pathname === "/mainpage";
+  const isOwnerPage = location.pathname === "/ownerpage";
+  const isAdminPage = location.pathname === "/adminpage";
+  const showHeader = !isAdminPage && !isOwnerPage();
+
+  // 로그인 상태 유지 및 유저 정보 불러오기
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decoded = parseJwt(token);
+      if (!decoded) return;
+
+      axios
+        .get("/api/users/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          const user = res.data;
+          dispatch(loginSuccess(user, token));
+        })
+        .catch((err) => {
+          console.error("유저 정보 불러오기 실패", err);
+          dispatch(logout());
+        });
+    }
+  }, [dispatch]);
+
+  // 1시간 후 자동 로그아웃 타이머 설정
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
     const decoded = parseJwt(token);
-    if (!decoded) return;
+    if (!decoded?.exp) return;
 
-    const email = decoded.sub;
+    const now = Date.now();
+    const expiry = decoded.exp * 1000;
+    const remainingTime = expiry - now;
 
-    axios
-      .get("/api/users/me", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        const user = res.data;
-        dispatch(loginSuccess(user, token));
-      })
-      .catch((err) => {
-        console.error("유저 정보 불러오기 실패", err);
-        dispatch(logout());
-      });
-  }
-}, []);
+    if (remainingTime <= 0) {
+      dispatch(logout());
+      alert("로그인 시간이 만료되어 자동으로 로그아웃되었습니다.");
+      navigate("/mainpage");
+      return;
+    }
 
+    const timeout = setTimeout(() => {
+      dispatch(logout());
+      alert("1시간이 지나 자동으로 로그아웃되었습니다.");
+      navigate("/mainpage");
+    }, remainingTime);
+
+    return () => clearTimeout(timeout);
+  }, [dispatch, navigate]);
 
   const toggleMenu = (e) => {
     e?.stopPropagation();
-    console.log("toggleMenu called");
     setIsOpen(!isOpen);
   };
 
@@ -104,24 +134,29 @@ useEffect(() => {
 
   return (
     <div>
-      {showHeader && (
-        isMainPage ? (
+      {showHeader &&
+        (isMainPage ? (
           <MainHeader toggleMenu={toggleMenu} />
         ) : (
           <Header toggleMenu={toggleMenu} />
-        )
-      )}
-
+        ))}
 
       <Routes>
         <Route path="/" element={<Navigate to="/mainpage" replace />} />
         <Route path="/mainpage" element={<MainPage />} />
         <Route path="/roomPage/AllRoom" element={<AllRoom />} />
-        <Route path="/room/create/:storeId" element={<RoomCreate />} />
-
+        <Route path="/room/create/:storeId" element={
+          <LoginCheck>
+            <RoomCreate />
+          </LoginCheck>
+        } />
         <Route path="/ordercomplete/:orderId" element={<OrderComplete />} />
         <Route path="/gongucomplete/:roomId" element={<GonguComplete />} />
-        <Route path="/mypage" element={<MyPage />}>
+        <Route path="/mypage" element={
+          <LoginCheck>
+            <MyPage />
+          </LoginCheck>
+        }>
           <Route index element={<UserInfo />} />
           <Route path="userinfo" element={<UserInfo />} />
           <Route path="edituser" element={<EditUser />} />
@@ -130,30 +165,32 @@ useEffect(() => {
           <Route path="orderlist" element={<OrderList />} />
         </Route>
 
+        <Route path="/testRoom" element={<RoomTest />} />
+
         <Route path="/storelist/:categoryId" element={<StoreListPage />} />
         <Route path="/store/:storeId" element={<StoreDetail />} />
         <Route path="/selectroom/:storeId" element={<SelectRoom />} />
-        <Route path="/store/:storeId" element={<StoreDetail />} />
-        <Route path="/roomcreate" element={<RoomCreate />} />
+        <Route path="/roomcreate" element={
+          <LoginCheck>
+            <RoomCreate />
+          </LoginCheck>
+        } />
         <Route path="/login" element={<Login />} />
         <Route path="/ownerusercheck" element={<RegisterCheck />} />
         <Route path="/ownerregister" element={<OwnerRegister />} />
         <Route path="/userregister" element={<UserRegister />} />
         <Route path="/forgotpw" element={<ForgotPassword />} />
-
         <Route path="/search" element={<SearchPage />} />
         <Route path="/auth/qna" element={<AuthQna />} />
-
         <Route path="/moapolicy1" element={<MoaPolicy1 />} />
         <Route path="/moapolicy2" element={<MoaPolicy2 />} />
         <Route path="/moapolicy3" element={<MoaPolicy3 />} />
         <Route path="/moapolicy4" element={<MoaPolicy4 />} />
         <Route path="/safetyguide" element={<SafetyGuide />} />
         <Route path="*" element={<Error404Page />} />
-
         <Route path="/ownerdashboard" element={<OwnerDashboard />} />
         <Route path="/storeregister" element={<StoreRegister />} />
-        <Route path="/ownerstorelist" element={<OwnerStoreList/>}/>
+        <Route path="/ownerstorelist" element={<OwnerStoreList />} />
         <Route path="/ownermenuedit" element={<OwnerMenuEdit />} />
         <Route path="/deliverystate" element={<DeliveryState />} />
         <Route path="/reviewmanagement" element={<ReviewManagement />} />
@@ -164,6 +201,7 @@ useEffect(() => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/StoreManagement" element={<StoreManagement />} />
       </Routes>
+
       {isOpen && <Hamburger isOpen={isOpen} onClose={() => setIsOpen(false)} />}
       {showHeader && <Footer />}
     </div>
