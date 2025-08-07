@@ -23,7 +23,7 @@ export default function StoreRegister() {
 
         // 빈 항목 체크
         if (
-            menuCategoryId.trim() === 0 ||
+            menuCategoryId.trim() === "" ||
             storeName.trim() === "" ||
             storeAddress.trim() === "" ||
             minPrice.trim() === "" ||
