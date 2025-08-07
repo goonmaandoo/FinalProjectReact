@@ -55,6 +55,7 @@ import OrderYesNo from "./pages/ownerPage/OrderYesNo";
 import AdminPage from "./pages/Admin/AdminPage";
 import Dashboard from "./pages/Admin/Dashboard";
 import StoreManagement from "./pages/Admin/StoreManagement";
+import UserManagement from "./pages/Admin/UserManagement";
 import OwnerStoreList from "./pages/ownerPage/OwnerStoreList";
 import OwnerPage from "./pages/ownerPage/OwnerPage";
 
@@ -215,7 +216,9 @@ function App() {
         <Route path="/adminpage" element={<AdminPage />} />
         <Route path="/ownerpage" element={<OwnerPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/StoreManagement" element={<StoreManagement />} />
+        <Route path="/storeManagement" element={<StoreManagement />} />
+        <Route path="/userManagement" element={<UserManagement />} />
+        
       </Routes>
 
       {isOpen && <Hamburger isOpen={isOpen} onClose={() => setIsOpen(false)} />}
