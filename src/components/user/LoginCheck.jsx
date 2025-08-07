@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 function LoginCheck({children}){
-    const {isAuthenticated, loading} = useSelector((state) => state.auth.isAuthenticated);
+    const {isAuthenticated, loading} = useSelector((state) => state.auth);
 
     if(loading){
         return <div> 로딩중... </div>;
