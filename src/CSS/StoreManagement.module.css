@@ -1,12 +1,13 @@
 .store_box{
     width: 100%;
-    height: 180px;
+    height: 150px;
     border-radius: 10px;
     background-color: white;
     padding: 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 40px;
 }
 .total_title{
     font-size: 24px;
@@ -17,4 +18,25 @@
     font-size: 28px;
     font-weight: 700;
     text-align: center;
+}
+.store_table{
+    border: 1px solid #b9b9b9;
+    background-color: white;
+    width: 100%;
+    border-collapse: collapse;
+}
+.store_table th{
+    background-color: #f0f0f0;
+    border: 1px solid #b9b9b9;
+    padding: 5px 0;
+}
+.store_table td{
+    border: 1px solid #b9b9b9;
+    padding: 5px;
+}
+.input_value{
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
