@@ -34,6 +34,9 @@ import SafetyGuide from './pages/footerPage/SafetyGuide';
 import Hamburger from './components/Hamburger';
 import PasswordCheck from './pages/myPage/PasswordCheck';
 import AuthQna from './pages/Auth/AuthQna';
+
+import RoomTest from './pages/testRoom/RoomTest';
+
 import OrderList from './pages/myPage/OrderList';
 import ForgotPassword from './pages/loginPage/ForgotPassword';
 import OwnerDashboard from './pages/ownerPage/OwnerDashboard';
@@ -138,7 +141,7 @@ useEffect(() => {
           <Route path="myqna" element={<MyQna />} />
           <Route path="orderlist" element={<OrderList />} />
         </Route>
-
+        <Route path="/testRoom" element={<RoomTest />} />
         <Route path="/storelist/:categoryId" element={<StoreListPage />} />
         <Route path="/store/:storeId" element={<StoreDetail />} />
         <Route path="/selectroom/:storeId" element={<SelectRoom />} />

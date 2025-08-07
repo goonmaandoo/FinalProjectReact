@@ -3,16 +3,24 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
+  define: {
+    global: {},
+  },
   server: {
-    port: 3000,  // React 개발서버 포트
+    port: 3000,
     proxy: {
-      // '/api'로 시작하는 요청은 Spring 서버(8080)로 프록시
       '/api': {
-        target: 'http://localhost:8080', // 백엔드 서버 주소
+        target: 'http://localhost:8080',
         changeOrigin: true,
         secure: false,
-      }
+      },
+      // ✅ 웹소켓 프록시 설정 추가
+      '/ws-chat': {
+        target: 'http://localhost:8080',
+        ws: true, // ✅ 웹소켓 프록시 활성화
+        changeOrigin: true,
+        secure: false,
+      },
     }
   }
 })
-
