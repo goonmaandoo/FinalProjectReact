@@ -1,0 +1,139 @@
+.bgArea {
+  background: #f7f8fa;
+  padding: 32px 0;
+}
+
+.reviewContainer {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 0 40px 0;
+}
+
+.card {
+  border: 1.5px solid #ebeef2;
+  border-radius: 18px;
+  background: #fff;
+  padding: 36px 32px 32px 32px;
+  margin-bottom: 28px;
+  box-shadow: 0 4px 20px rgba(120, 170, 140, 0.07);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: box-shadow 0.18s;
+}
+.card:hover {
+  box-shadow: 0 8px 28px rgba(30, 215, 96, 0.08);
+}
+
+.cardInfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mainTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: #212325;
+}
+.store {
+  font-size: 17px;
+  font-weight: 600;
+  color: #176b51;
+  margin-bottom: 6px;
+}
+
+.date {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 2px;
+}
+
+.menuTitle {
+  margin-top: 7px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #3d4c3e;
+}
+.menuList {
+  padding-left: 18px;
+  margin: 4px 0 0 0;
+  font-size: 15px;
+}
+.menuItem {
+  margin-bottom: 2px;
+  font-size: 15px;
+}
+
+.reviewBtn {
+  min-width: 105px;
+  padding: 13px 0;
+  border-radius: 9px;
+  background: #19ce60;
+  color: #fff;
+  border: none;
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 1px 8px rgba(25, 206, 96, 0.1);
+  transition: background 0.13s;
+}
+.reviewBtn:hover {
+  background: #13ba57;
+}
+
+.reviewPages {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+.reviewPages button {
+  font-size: medium;
+  border: none;
+  cursor: pointer;
+  opacity: 0.5;
+  /* 기본 연하게 */
+  font-weight: normal;
+  margin: 0 5px;
+  padding: 5px 10px;
+  background: none;
+  color: rgb(66, 64, 64);
+  /* 기본 글자색 연한 회색 */
+  transition: opacity 0.3s, font-weight 0.3s, color 0.3s;
+}
+
+.reviewPages button:hover:not(:disabled) {
+  opacity: 0.8;
+  /* 호버 시 살짝 강조 */
+  color: #333;
+  /* 호버 시 글자색 조금 진하게 */
+}
+
+.reviewPages button.activePage {
+  font-weight: bold;
+  opacity: 1;
+  color: black;
+  cursor: default;
+}
+
+@media (max-width: 640px) {
+  .reviewContainer {
+    max-width: 100%;
+    padding: 0 0 24px 0;
+  }
+  .card {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 18px 12px;
+  }
+  .reviewBtn {
+    width: 100%;
+    margin-top: 16px;
+  }
+}
