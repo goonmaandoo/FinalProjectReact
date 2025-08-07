@@ -152,7 +152,11 @@ function App() {
         <Route path="/" element={<Navigate to="/mainpage" replace />} />
         <Route path="/mainpage" element={<MainPage />} />
         <Route path="/roomPage/AllRoom" element={<AllRoom />} />
-        <Route path="/room/create/:storeId" element={<RoomCreate />} />
+        <Route path="/room/create/:storeId" element={
+          <LoginCheck>
+            <RoomCreate />
+          </LoginCheck>
+        } />
         <Route path="/ordercomplete/:orderId" element={<OrderComplete />} />
         <Route path="/gongucomplete/:roomId" element={<GonguComplete />} />
         <Route path="/mypage" element={
@@ -173,7 +177,11 @@ function App() {
         <Route path="/storelist/:categoryId" element={<StoreListPage />} />
         <Route path="/store/:storeId" element={<StoreDetail />} />
         <Route path="/selectroom/:storeId" element={<SelectRoom />} />
-        <Route path="/roomcreate" element={<RoomCreate />} />
+        <Route path="/roomcreate" element={
+          <LoginCheck>
+            <RoomCreate />
+          </LoginCheck>
+        } />
         <Route path="/login" element={<Login />} />
         <Route path="/ownerusercheck" element={<RegisterCheck />} />
         <Route path="/ownerregister" element={<OwnerRegister />} />
