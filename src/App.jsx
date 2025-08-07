@@ -100,6 +100,8 @@ function App() {
   // 1시간 후 자동 로그아웃 타이머 설정
   useEffect(() => {
     const token = localStorage.getItem("token");
+
+    
     if (!token) return;
 
     const decoded = parseJwt(token);
@@ -129,8 +131,6 @@ function App() {
     e?.stopPropagation();
     setIsOpen(!isOpen);
   };
-
-  const showHeader = !isAdminPage && !isOwnerPage;
 
   return (
     <div>
