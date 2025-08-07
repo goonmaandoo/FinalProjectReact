@@ -102,56 +102,88 @@ export default function StoreManagement() {
                             storeList.map((store) => (
                                 <div key={store.id} className={style["store_card"]}>
                                     <h4>{store.storeName}</h4>
-                                    <p> 최소주문금액: {store.minPrice}</p>
+                                    <p>최소주문금액: {store.minPrice}</p>
                                     <p>주소: {store.storeAddress}</p>
                                     <p>전화번호: {store.tel}</p>
-                                    {/* 필요하면 이미지, 수정 버튼, 메뉴관리 버튼 등 추가 */}
-                                    <button className={style["store_edit_button"]}
-                                        onClick={() => setSelectedStore(store)}> 수정 </button>
-                                    <button className={style["store_delete_button"]}
-                                        onClick={() => deletebutton(store.id)}> 삭제 </button>
-                                </div>
+                                    <button
+                                        className={style["store_edit_button"]}
+                                        onClick={() => {
+                                            setSelectedStore(store);
+                                            setEditForm({
+                                                storeName: "",
+                                                storeAddress: "",
+                                                minPrice: "",
+                                                tel: ""
+                                            }); // 초기화
+                                        }}
+                                    >
+                                        수정
+                                    </button>
+                                    <button
+                                        className={style["store_delete_button"]}
+                                        onClick={() => deletebutton(store.id)}
+                                    >
+                                        삭제
+                                    </button>
 
+                                    {/* 수정 폼은 선택된 가게와 같을 때만 표시 */}
+                                    {selectedStore && selectedStore.id === store.id && (
+                                        <div className={style["store_edit_section"]}>
+                                            <h3>가게 수정하기</h3>
+                                            <p>
+                                                가게 이름
+                                                <input
+                                                    type="text"
+                                                    placeholder={store.storeName}
+                                                    value={editForm.storeName}
+                                                    onChange={(e) =>
+                                                        setEditForm({ ...editForm, storeName: e.target.value })
+                                                    }
+                                                />
+                                            </p>
+                                            <p>
+                                                최소주문금액
+                                                <input
+                                                    type="text"
+                                                    placeholder={store.minPrice}
+                                                    value={editForm.minPrice}
+                                                    onChange={(e) =>
+                                                        setEditForm({ ...editForm, minPrice: e.target.value })
+                                                    }
+                                                />
+                                            </p>
+                                            <p>
+                                                주소
+                                                <input
+                                                    type="text"
+                                                    placeholder={store.storeAddress}
+                                                    value={editForm.storeAddress}
+                                                    onChange={(e) =>
+                                                        setEditForm({ ...editForm, storeAddress: e.target.value })
+                                                    }
+                                                />
+                                            </p>
+                                            <p>
+                                                전화번호
+                                                <input
+                                                    type="text"
+                                                    placeholder={store.tel}
+                                                    value={editForm.tel}
+                                                    onChange={(e) =>
+                                                        setEditForm({ ...editForm, tel: e.target.value })
+                                                    }
+                                                />
+                                            </p>
+                                            <button className={style["update-btn"]} onClick={handleUpdate}>수정 완료</button>
+                                            <button className={style["cancel-btn"]} onClick={() => setSelectedStore(null)}>닫기</button>
+                                        </div>
+                                    )}
+                                </div>
                             ))
                         ) : (
                             <p>등록된 가게가 없습니다.</p>
                         )}
                     </div>
-                    {selectedStore && (
-                        <div className={style["store_edit_section"]}>
-                            <h3>가게 수정하기</h3>
-                            <p>가게 이름
-                                <input
-                                    type="text"
-                                    value={editForm.storeName}
-                                    onChange={(e) => setEditForm({ ...editForm, storeName: e.target.value })}
-                                />
-                            </p>
-                            <p>최소주문금액
-                                <input
-                                    type="text"
-                                    value={editForm.minPrice}
-                                    onChange={(e) => setEditForm({ ...editForm, minPrice: e.target.value })}
-                                />
-                            </p>
-                            <p>주소
-                                <input
-                                    type="text"
-                                    value={editForm.storeAddress}
-                                    onChange={(e) => setEditForm({ ...editForm, storeAddress: e.target.value })}
-                                />
-                            </p>
-                            <p>전화번호
-                                <input
-                                    type="text"
-                                    value={editForm.tel}
-                                    onChange={(e) => setEditForm({ ...editForm, tel: e.target.value })}
-                                />
-                            </p>
-                            <button onClick={handleUpdate}>수정 완료</button>
-                            <button onClick={() => setSelectedStore(null)}>닫기</button>
-                        </div>
-                    )}
 
                 </div>
             </div>
