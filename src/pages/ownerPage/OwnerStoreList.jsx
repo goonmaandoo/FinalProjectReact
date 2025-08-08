@@ -94,6 +94,7 @@ export default function StoreManagement() {
                         {currentStoreList.length > 0 ? (
                             currentStoreList.map((store) => (
                                 <div key={store.id} className={style["store_card"]}>
+                                    <h5>가게번호: {store.id}</h5>
                                     <h4>{store.storeName}</h4>
                                     <p>최소주문금액: {store.minPrice}</p>
                                     <p>주소: {store.storeAddress}</p>
