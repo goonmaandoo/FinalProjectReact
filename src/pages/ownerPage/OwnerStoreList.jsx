@@ -1,4 +1,4 @@
-import style from "../../CSS/OwnerDashboard.module.css"
+import style from "../../CSS/OwnerDashboard.module.css";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -15,12 +15,28 @@ export default function StoreManagement() {
         tel: ""
     });
 
+    // 페이지네이션 상태
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 3;
+
+    // 현재 페이지에 해당하는 store 리스트 잘라내기
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentStoreList = storeList.slice(indexOfFirstItem, indexOfLastItem);
+
+    // 전체 페이지 수 계산
+    const totalPages = Math.ceil(storeList.length / itemsPerPage);
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+    }
 
     useEffect(() => {
         if (!user || !user.id) {
             console.log("로그인된 사장님 정보 없음");
             return;
         }
+
         const ownerId = user.id;
         axios.get(`http://localhost:8080/store/storeByOwnerId/${ownerId}`)
             .then(res => {
@@ -34,15 +50,15 @@ export default function StoreManagement() {
 
     const deletebutton = async (storeId) => {
         const confirmed = window.confirm("정말 삭제하시겠습니까?");
-        if (!confirmed) return;  // 취소하면 그냥 함수 종료
+        if (!confirmed) return;
 
         try {
-            await axios.get(`http://localhost:8080/store/storeDelete/${storeId}`)
+            await axios.get(`http://localhost:8080/store/storeDelete/${storeId}`);
             setStoreList(prevList => prevList.filter(store => store.id !== storeId));
         } catch (err) {
             console.error("가게 삭제 실패:", err);
         }
-    }
+    };
 
     const handleUpdate = async () => {
         if (!selectedStore) return;
@@ -58,14 +74,11 @@ export default function StoreManagement() {
         try {
             await axios.put("http://localhost:8080/store/storeUpdate", updatedStore);
             alert("수정 완료!");
-
-            // 리스트 갱신
             setStoreList(prev =>
                 prev.map(store =>
                     store.id === updatedStore.id ? { ...store, ...updatedStore } : store
                 )
             );
-
             setSelectedStore(null);
         } catch (err) {
             console.error("수정 실패:", err);
@@ -73,17 +86,13 @@ export default function StoreManagement() {
         }
     };
 
-
     return (
         <>
             <div className={style["outbox"]}>
-
-                {/* 메인 콘텐츠 */}
                 <div className={style["rightbox"]}>
-
                     <div className={style["storelist"]}>
-                        {storeList.length > 0 ? (
-                            storeList.map((store) => (
+                        {currentStoreList.length > 0 ? (
+                            currentStoreList.map((store) => (
                                 <div key={store.id} className={style["store_card"]}>
                                     <h4>{store.storeName}</h4>
                                     <p>최소주문금액: {store.minPrice}</p>
@@ -98,7 +107,7 @@ export default function StoreManagement() {
                                                 storeAddress: "",
                                                 minPrice: "",
                                                 tel: ""
-                                            }); // 초기화
+                                            });
                                         }}
                                     >
                                         수정
@@ -110,7 +119,6 @@ export default function StoreManagement() {
                                         삭제
                                     </button>
 
-                                    {/* 수정 폼은 선택된 가게와 같을 때만 표시 */}
                                     {selectedStore && selectedStore.id === store.id && (
                                         <div className={style["store_edit_section"]}>
                                             <h3>가게 수정하기</h3>
@@ -169,6 +177,20 @@ export default function StoreManagement() {
                         )}
                     </div>
 
+                    {/* 페이지네이션 버튼 */}
+                    {totalPages > 1 && (
+                        <div className={style["pagination"]}>
+                            {pageNumbers.map((number) => (
+                                <button
+                                    key={number}
+                                    onClick={() => setCurrentPage(number)}
+                                    className={currentPage === number ? style["active"] : ""}
+                                >
+                                    {number}
+                                </button>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
         </>

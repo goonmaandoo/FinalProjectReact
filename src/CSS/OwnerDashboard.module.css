@@ -76,13 +76,37 @@ button{
 .leftbox li a:focus {
     background-color: #ffe5e5;
 }
+/* 페이지네이션 */
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.pagination button {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+}
+
+.pagination button:hover {
+    background-color: #f0f0f0;
+}
+
+.pagination .active {
+    background-color: #ff6b6b;
+    color: white;
+    font-weight: bold;
+}
 
 /* 메인 콘텐츠 */
 .rightbox {
     flex: 1;
-    padding: 30px 40px;
     width: 1454px;
     background-color: #ebebeb;
+    margin: 0;
 }
 
 .rightbox h2 {
@@ -256,115 +280,4 @@ button{
 .cancel-btn:hover {
     background-color: #ff6b6b;
     color: white;
-}
-
-
-/* 메뉴관리 */
-.menu_button{
-    margin: 0;
-    margin-bottom: 20px;
-}
-.menu_button button{
-    margin-right: 10px;
-    border: none;
-    cursor: pointer;
-    background-color: #ff6b6b;
-    color: white;
-    border-radius: 10px;
-    font-size: 16px;
-    padding: 10px;
-}
-.all_menu{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    width: 1200px;
-    height: auto;
-    align-items: center;
-}
-.menu_card{
-    border: none;
-    border-radius: 10px;
-    background-color: white;
-    padding: 20px;
-}
-.menu_card img{
-    width: 100%;
-    height: 300px;
-}
-.menu_info{
-    display: flex;
-    justify-content: space-between;
-}
-.menu_info p{
-    font-size: 20px;
-    font-weight: bold;
-}
-.menu_price p{
-    margin: 0;
-    padding: 0;
-}
-.menu_status{
-    background-color: #04b310;
-    height: 25px;
-    display: flex;               /* flex 적용 */
-    align-items: center;         /* 세로 중앙 */
-    justify-content: center;     /* 가로 중앙 */
-
-    border-radius: 10px;
-    padding: 10px;
-    margin-top: 10px;
-}
-.menu_status p{
-    font-size: 14px;
-    color: white;
-}
-.menuCRUD_button button{
-    border: none;
-    border-radius: 10px;
-    width: 80px;
-    height: 30px;
-    margin: 20px 10px;
-}
-.menu_edit{
-    background-color: #ffb1b1;
-}
-.menu_soldout{
-    background-color: #d9d9d9;
-}
-.menu_delete{
-    background-color: red;
-    color: white;
-}
-.image_insert{
-    width: 100%;
-    height: 400px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #d9d9d9;
-}
-.image_insert p{
-    text-align: center;
-
-}
-.insertmenu_info{
-    background-color: white;
-    height: 200px;
-}
-.insertmenu_info input{
-    border: none;
-    font-size: 20px;
-    margin: 20px 10px 10px;
-}
-.insertmenu_button{
-    margin-left: 10px;
-    margin-top: 40px;
-    background-color: #ff9d9d;
-    color: white;
-    height: 40px;
-    border: none;
-    border-radius: 10px;
-    font-size: 20px;
-    cursor: pointer;
 }
