@@ -32,7 +32,7 @@ export default function OwnerPage() {
 
     const menus = [
         { id: "dashboard", label: "대시보드", component: <OwnerDashboard/>, content: "실시간 주문과 매출을 확인하세요 " },
-        { id: "store", label: "가게등록", component: <StoreRegister/>, content: "가게 등록을 신청하세요" },
+        { id: "storeregister", label: "가게등록", component: <StoreRegister/>, content: "가게 등록을 신청하세요" },
         {id: "store", label: "가게관리", component: <OwnerStoreList/>,
         content: "가게를 관리하세요"},
         { id: "menu", label: "메뉴관리", component: <OwnerMenuEdit/>, content: "메뉴를 관리하세요" },

@@ -1,5 +1,25 @@
-.error_404box{
+.error_404box {
     justify-content: center;
     text-align: center;
-    margin: 200px;
+    margin: 200px auto;
+    padding: 0 20px; 
+    height: 400px;
+    display: flex;
+        justify-content: center;
+    align-items: center;
+}
+@media (max-width: 768px) {
+    .error_404box {
+        margin: 100px auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .error_404box {
+        margin: 50px auto;
+    }
+
+    .error_404box h2 {
+        font-size: 1.2rem;
+    }
 }
