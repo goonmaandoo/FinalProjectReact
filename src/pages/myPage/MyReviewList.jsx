@@ -95,11 +95,28 @@ export default function MyReviewList() {
       });
   };
 
+  //로딩 스켈레톤
+  function ReviewListSkeleton({ count = 5 }) {
+    return (
+      <ul style={{ listStyle: "none", padding: 0 }}>
+        {Array.from({ length: count }).map((_, i) => (
+          <li key={i} className={styles.skeletonCard}>
+            <div className={`${styles.skeletonBox} ${styles.skeletonLong}`} />
+            <div className={`${styles.skeletonBox} ${styles.skeletonMedium}`} />
+            <div className={`${styles.skeletonBox} ${styles.skeletonShort}`} />
+            <div className={`${styles.skeletonBox} ${styles.skeletonMedium}`} />
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
   return (
     <div className={styles.reviewWrap}>
-      <h2 className={styles.title}>내가 쓴 리뷰</h2>
       <ul className={styles.reviewList}>
-        {reviews.length === 0 ? (
+        {loading ? (
+          <ReviewListSkeleton count={5} />
+        ) : reviews.length === 0 ? (
           <li className={styles.noData}>작성한 리뷰가 없습니다.</li>
         ) : (
           reviews.map((review) => (
@@ -143,7 +160,7 @@ export default function MyReviewList() {
       </ul>
       {/* 페이지네이션 */}
       {totalPages > 1 && (
-        <div style={{ textAlign: "center", marginTop: 16 }}>
+        <div className={styles.reviewPages}>
           <button
             onClick={() => setCurrentPage((p) => Math.max(p - 1, 0))}
             disabled={currentPage === 0}
@@ -166,7 +183,7 @@ export default function MyReviewList() {
             onClick={() =>
               setCurrentPage((p) => Math.min(p + 1, totalPages - 1))
             }
-            disabled={currentPage === totalPages - 1}
+            disabled={currentPage >= totalPages - 1}
           >
             다음
           </button>

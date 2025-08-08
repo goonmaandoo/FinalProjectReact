@@ -1,4 +1,3 @@
-import { StoreMallDirectory } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ReviewModal from "./ReviewModal";
@@ -31,9 +30,11 @@ export default function CanWriteReviewList() {
       })
       .then((response) => {
         console.log("응답: ", response.data);
-        setOrders(response.data.content || []);
-        setTotalCount(response.data.totalElements || 0);
-        setLoading(false);
+        setTimeout(() => {
+          setOrders(response.data.content || []);
+          setTotalCount(response.data.totalElements || 0);
+          setLoading(false);
+        }, 2000); //강제 로딩 2초
       })
       .catch((err) => {
         setOrders([]);
@@ -41,7 +42,7 @@ export default function CanWriteReviewList() {
         setLoading(false);
         console.error("예기치 못한 오류로 목록을 불러오지 못했습니다.", err);
       });
-  }, [userId, currentPage, modalOpen]);
+  }, [userId, currentPage]);
 
   //리뷰쓰기 버튼
   const handleReviewWrite = (order) => {
@@ -58,14 +59,53 @@ export default function CanWriteReviewList() {
         storeId: selectedOrder.storeId,
         ...reviewData,
       })
-      .then(() => {
+      .then((res) => {
+        console.log(res);
         alert("리뷰가 등록됐습니다.");
         setModalOpen(false);
+        fetchOrders();
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error);
+        console.log(selectedOrder);
         alert("예기치 못한 오류로 등록하지 못했습니다.");
       });
   };
+
+  //모달 등록 후 새로고침
+  const fetchOrders = () => {
+    setLoading(true);
+    axios
+      .get("/api/review/canWrite", {
+        params: { userId, page: currentPage, size: itemsPerPage },
+      })
+      .then((response) => {
+        setOrders(response.data.content || []);
+        setTotalCount(response.data.totalElements || 0);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setOrders([]);
+        setTotalCount(0);
+        setLoading(false);
+      });
+  };
+
+  //로딩 스켈레톤
+  function ReviewListSkeleton({ count = 5 }) {
+    return (
+      <ul style={{ listStyle: "none", padding: 0 }}>
+        {Array.from({ length: count }).map((_, i) => (
+          <li key={i} className={styles.skeletonCard}>
+            <div className={`${styles.skeletonBox} ${styles.skeletonMedium}`} />
+            <div className={`${styles.skeletonBox} ${styles.skeletonMedium}`} />
+            <div className={`${styles.skeletonBox} ${styles.skeletonMedium}`} />
+            <div className={`${styles.skeletonBox} ${styles.skeletonShort}`} />
+          </li>
+        ))}
+      </ul>
+    );
+  }
 
   const totalPages = Math.ceil(totalCount / itemsPerPage);
 
@@ -73,7 +113,7 @@ export default function CanWriteReviewList() {
     <div className={styles.bgArea}>
       <div className={styles.reviewContainer}>
         {loading ? (
-          <div style={{ textAlign: "center", color: "#999" }}>로딩중...</div>
+          <ReviewListSkeleton count={5} />
         ) : orders.length === 0 ? (
           <div style={{ textAlign: "center", color: "#999", padding: 40 }}>
             작성 가능한 리뷰가 없습니다.
