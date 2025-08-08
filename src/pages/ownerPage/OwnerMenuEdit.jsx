@@ -12,6 +12,10 @@ export default function OwnerMenuEdit() {
     const [editedMenuName, setEditedMenuName] = useState("");
     const [editedMenuPrice, setEditedMenuPrice] = useState("");
     const [editedMenuStatus, setEditedMenuStatus] = useState("판매중");
+    const [newStoreId, setNewStoreId] = useState("");
+    const [newMenuName, setNewMenuName] = useState("");
+    const [newMenuPrice, setNewMenuPrice] = useState("");
+
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
@@ -79,6 +83,62 @@ export default function OwnerMenuEdit() {
                 alert("메뉴 수정에 실패했습니다.");
             });
     };
+    const handleMenuInsert = () => {
+        if (!newStoreId || !newMenuName || !newMenuPrice) {
+            alert("모든 항목을 입력해주세요.");
+            return;
+        }
+
+        const newMenu = {
+            storeId: newStoreId,
+            menuName: newMenuName,
+            menuPrice: newMenuPrice
+        };
+
+        axios.post("http://localhost:8080/menu/menuInsertByOwner", newMenu)
+            .then(() => {
+                alert("메뉴가 추가되었습니다.");
+                setSelectedTab("전체메뉴");
+                // 메뉴 리스트 다시 불러오기
+                return axios.get(`http://localhost:8080/menu/ownerWithImage/${user.id}`);
+            })
+            .then((res) => {
+                setMenuList(res.data);
+                // 입력 필드 초기화
+                setNewStoreId("");
+                setNewMenuName("");
+                setNewMenuPrice("");
+            })
+            .catch((err) => {
+                console.error("메뉴 추가 실패:", err);
+                alert("메뉴 추가에 실패했습니다.");
+            });
+    };
+
+    const handleMenuDelete = (menuId) => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+        axios.get(`http://localhost:8080/menu/menuDeleteByOwner/${menuId}`)
+            .then((res) => {
+                if (res.data > 0) {
+                    alert("메뉴가 삭제되었습니다.");
+                    return axios.get(`http://localhost:8080/menu/ownerWithImage/${user.id}`);
+                } else {
+                    alert("삭제에 실패했습니다.");
+                }
+            })
+            .then((res) => {
+                if (res) {
+                    setMenuList(res.data);
+                }
+            })
+            .catch((err) => {
+                console.error("메뉴 삭제 실패:", err);
+                alert("메뉴 삭제에 실패했습니다.");
+            });
+    }
+};
+
+
 
     return (
         <div className={style["outbox"]}>
@@ -123,7 +183,8 @@ export default function OwnerMenuEdit() {
                                                     }}>
                                                     수정
                                                 </button>
-                                                <button className={style["menu_delete"]}>삭제</button>
+                                                <button className={style["menu_delete"]}
+                                                onClick={() => handleMenuDelete(menu.id)}>삭제</button>
                                             </div>
                                         </div>
                                     ))
@@ -154,9 +215,29 @@ export default function OwnerMenuEdit() {
                                 <p>사진 추가하기</p>
                             </div>
                             <div className={style["insertmenu_info"]}>
-                                <input type="text" placeholder="메뉴명" /><br />
-                                <input type="text" placeholder="가격" /><br />
-                                <button className={style["insertmenu_button"]}>추가하기</button>
+                                <input
+                                    type="text"
+                                    placeholder="가게번호를 입력해주세요"
+                                    value={newStoreId}
+                                    onChange={(e) => setNewStoreId(e.target.value)}
+                                /><br />
+
+                                <input
+                                    type="text"
+                                    placeholder="메뉴명"
+                                    value={newMenuName}
+                                    onChange={(e) => setNewMenuName(e.target.value)}
+                                /><br />
+
+                                <input
+                                    type="text"
+                                    placeholder="가격"
+                                    value={newMenuPrice}
+                                    onChange={(e) => setNewMenuPrice(e.target.value)}
+                                /><br />
+
+                                <button className={style["insertmenu_button"]}
+                                    onClick={handleMenuInsert}>추가하기</button>
                             </div>
                         </div>
                     )}
