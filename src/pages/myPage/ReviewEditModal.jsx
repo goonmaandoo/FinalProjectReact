@@ -23,14 +23,14 @@ export default function ReviewEditModal({ open, onClose, review, onSubmit }) {
     setScore(review?.score || 5);
     setComments(review?.comments || "");
     setRoomOrder(review?.roomOrder || "");
-  }, [review]);
+  }, [review, open]);
 
   useEffect(() => {
     if (open) {
-      setComments(""); //내용 초기값
-      setScore(5); //평점 초기값
+      setComments(review?.comments); //내용 기존 내용
+      setScore(review?.score); //평점 초기값
     }
-  }, [open]);
+  }, [review, open]);
 
   const orderSummary = (
     <div>
@@ -110,7 +110,9 @@ export default function ReviewEditModal({ open, onClose, review, onSubmit }) {
             </button>
             <button
               className={styles.submitBtn}
-              onClick={onSubmit}
+              onClick={() => {
+                onSubmit({ score, comments });
+              }}
               disabled={!canSubmit}
             >
               등록

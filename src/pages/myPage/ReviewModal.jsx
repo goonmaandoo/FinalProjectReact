@@ -93,7 +93,9 @@ export default function ReviewModal({ open, onClose, order, onSubmit }) {
             </button>
             <button
               className={styles.submitBtn}
-              onClick={onSubmit}
+              onClick={() => {
+                onSubmit({ score, comments });
+              }}
               disabled={!canSubmit}
             >
               등록
