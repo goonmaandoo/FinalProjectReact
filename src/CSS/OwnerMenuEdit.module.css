@@ -187,6 +187,9 @@ button {
 }
 
 /* 메뉴수정 */
+.menu_image{
+    object-fit: cover;
+}
 .edit_menu_image img {
     width: 1080px;
     margin-bottom: 20px;
