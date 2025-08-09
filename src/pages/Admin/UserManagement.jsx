@@ -1,12 +1,12 @@
 import styles from '../../CSS/StoreManagement.module.css';
 import { useState, useEffect } from 'react';
 
-export default function UserManagement({ subUserBtn }) {
+export default function UserManagement({ roleFilter }) {
     // const [storeCount, setStoreCount] = useState(0);
     const [totalCount, setTotalCount] = useState(0);
     const [unactiveCount, setUnactiveCount] = useState(0);
     const [banCount, setBanCount] = useState(0);
-    // const [store, setStore] = useState([]);
+    const [userData,setUserData] = useState([]);
     // const [selected, setSelected] = useState('all');
     // const [keyword, setKeyword] = useState("");
 
@@ -51,6 +51,22 @@ export default function UserManagement({ subUserBtn }) {
             .then(count => setBanCount(count))
             .catch(console.error);
     }, [])
+    //role별로 데이터 불러오기
+    useEffect(() => {
+        let url = 'http://localhost:8080/api/users/'
+        if(roleFilter !== 'all'){
+            url += `userBtnCount/${roleFilter}`;
+        }else{
+            url +=  'selectAllAdmin';
+        }
+        fetch(url)
+        .then(res => {
+            if (!res.ok) throw new Error('서버 에러');
+            return res.json();
+        })
+        .then(data => setUserData(data))
+        .catch(console.error);
+    }, [roleFilter])
 
     return (
         <>
@@ -76,29 +92,26 @@ export default function UserManagement({ subUserBtn }) {
                 <img src={`http://localhost:8080/image/imgfile/admin/ban_user.png`} />
             </div>
             {/* <div className={styles["input_value"]}>
-                        <select id="table_th" value={selected} onChange={handleChange}>
-                            <option value="all">전체</option>
-                            <option value="user">사용자</option>
-                            <option value="storeName">가게이름</option>
-                            <option value="storeAddress">가게주소</option>
-                            <option value="tel">전화번호</option>
-                        </select>
-                        <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} />
-                        <button onClick={handleSearch}>검색</button>
-                    </div>
-         */}
+                <select id="table_th" value={selected} onChange={handleChange}>
+                    <option value="nickname">닉네임</option>
+                    <option value="storeName">가게이름</option>
+                    <option value="tel">전화번호</option>
+                </select>
+                <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+                <button onClick={handleSearch}>검색</button>
+            </div> */}
             <table className={styles["store_table"]}>
                 <thead>
                     <tr>
-                        <th>닉네임</th><th>핸드폰번호</th><th>이메일</th><th>주소</th><th>상세주소</th><th>회원상태</th><th>모아머니</th><th>상태변경</th>
+                    <th>구분</th><th>닉네임</th><th>핸드폰번호</th><th>이메일</th><th>주소</th><th>상세주소</th><th>회원상태</th><th>모아머니</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {/* {store.map((item) => (
-                                <tr key={item.id}>
-                                    <td>{item.id}</td><td>{item.nickName}</td><td>{item.storeName}</td><td>{item.storeAddress}</td><td>{item.minPrice}</td><td>{item.tel}</td>
-                                </tr>
-                            ))} */}
+                    {userData.map((item) => (
+                        <tr key={item.id}>
+                            <td>{item.id}</td><td>{item.nickname}</td><td>{item.phoneNum}</td><td>{item.email}</td><td>{item.address}</td><td>{item.addressDetail}</td><td>{item.status}</td><td>{item.cash}</td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
         </>
