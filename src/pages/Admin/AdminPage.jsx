@@ -17,7 +17,7 @@ export default function AdminPage() {
     const [menu, setMenu] = useState("대시보드");
     const [subOrderBtn, setSubOrderBtn] = useState("배달주문");
     const [subUserBtn, setSubUserBtn] = useState("all");
-    const [subBanBtn, setSubBanBtn] = useState("전체");
+    const [subBanBtn, setSubBanBtn] = useState("all");
     const [ orderComponent, setOrderComponent ] = useState("</deliveryorder>")
 
     const handleLogout = () => {
@@ -37,7 +37,7 @@ export default function AdminPage() {
         { id: "order", label: "주문관리", component: orderComponent, content: "전체 주문과 배송 상태를 관리하세요" },
         { id: "user", label: "회원관리", component: <UserManagement roleFilter={subUserBtn}/>, content: "사용자 정보와 활동을 관리하세요" },
         { id: "store", label: "가게관리", component: <StoreManagement />, content: "파트너 음식점을 관리하고 새로운 음식점을 등록하세요" },
-        { id: "active", label: "탈퇴/정지 회원 관리", component: <Active />, content: "탈퇴회원과 정지회원을 관리하세요" },
+        { id: "active", label: "탈퇴/정지 회원 관리", component: <Active roleFilter={subBanBtn}/>, content: "탈퇴회원과 정지회원을 관리하세요" },
         { id: "qna", label: "문의내역", component: <qna />, content: "문의 내역을 확인하고 처리하세요" },
         { id: "room", label: "공구방관리", component: <room />, content: "진행중이거나 완료된 공구방을 관리하세요" },
         { id: "ban", label: "신고관리", component: <ban />, content: "사용자 신고와 문의사항을 처리하세요" },
@@ -96,9 +96,9 @@ export default function AdminPage() {
                                 )}
                                 {menu === "탈퇴/정지 회원 관리" && (
                                     <div className={styles["side_btn"]}>
-                                        <button className={subBanBtn === "전체" ? styles["active_btn"] : styles["unactive_btn"]} onClick={() => { setSubBanBtn("전체"); }}>전체</button>
-                                        <button className={subBanBtn === "탈퇴" ? styles["active_btn"] : styles["unactive_btn"]} onClick={() => { setSubBanBtn("탈퇴"); }}>탈퇴</button>
-                                        <button className={subBanBtn === "정지" ? styles["active_btn"] : styles["unactive_btn"]} onClick={() => { setSubBanBtn("정지"); }}>정지</button>
+                                        <button className={subBanBtn === "all" ? styles["active_btn"] : styles["unactive_btn"]} onClick={() => { setSubBanBtn("all"); }}>전체</button>
+                                        <button className={subBanBtn === "unactive" ? styles["active_btn"] : styles["unactive_btn"]} onClick={() => { setSubBanBtn("unactive"); }}>탈퇴</button>
+                                        <button className={subBanBtn === "ban" ? styles["active_btn"] : styles["unactive_btn"]} onClick={() => { setSubBanBtn("ban"); }}>정지</button>
                                     </div>
                                 )}
                             </div>
