@@ -54,6 +54,10 @@
     height: 100%;
     padding: 30px;
 }
+.side_menu_box{
+    display: flex;
+    justify-content: space-between;
+}
 .side_menu{
     list-style: none;
     padding-inline-start: 0;
@@ -94,14 +98,34 @@
     height: 100%;
     padding: 50px 30px;
 }
-.side_menu{
-    font-size: 32px;
+.side_title{
+    font-size: 2rem;
     font-weight: 500;
 }
 .side_detail{
-    font-size: 24px;
+    font-size: 1.5rem;
     margin-bottom: 40px;
 }
 .side_component{
     width: 1140px;
+}
+.side_btn{
+    display: flex;
+    gap: 10px;
+    font-size: 1.5rem;
+}
+.side_btn button {
+    border-radius: 10px;
+    height: 48px;
+    border: none;
+    width: 100px;
+    font-size: 1.25rem;
+}
+.active_btn{
+    background-color: #FFB1B1;
+}
+
+.unactive_btn{
+    border-radius: 10px;
+    background-color: #D9D9D9;
 }

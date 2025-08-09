@@ -15,7 +15,7 @@
     align-items: center;
 }
 .total_num{
-    font-size: 28px;
+    font-size: 1.75rem;
     font-weight: 700;
     text-align: center;
 }
@@ -35,8 +35,25 @@
     padding: 5px;
 }
 .input_value{
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     display: flex;
     align-items: center;
     gap: 5px;
+}
+.input_value button{
+    background-color: #7B7A7A;
+    color: white;
+    border: none;
+    height: 30px;
+    font-size: 1rem;
+    padding: 0 10px;
+}
+.input_value select{
+    height: 30px;
+    font-size: 1rem;
+}
+.input_value input{
+    height: 31px;
+    font-size: 1rem;
+    padding: 0;
 }

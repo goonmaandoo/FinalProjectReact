@@ -14,6 +14,10 @@ export default function AdminPage() {
     const user = useSelector((state) => state.auth.user);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const [menu, setMenu] = useState("대시보드");
+    const [subOrderBtn, setSubOrderBtn] = useState("배달주문");
+    const [subUserBtn, setSubUserBtn] = useState("all");
+    const [subBanBtn, setSubBanBtn] = useState("전체");
+    const [ orderComponent, setOrderComponent ] = useState("</deliveryorder>")
 
     const handleLogout = () => {
         dispatch(logout());
@@ -29,8 +33,8 @@ export default function AdminPage() {
 
     const menus = [
         { id: "dashboard", label: "대시보드", component: <Dashboard />, content: "오늘의 현황을 확인하세요" },
-        { id: "order", label: "주문관리", component: <order />, content: "전체 주문과 배송 상태를 관리하세요" },
-        { id: "user", label: "회원관리", component: <UserManagement />, content: "사용자 정보와 활동을 관리하세요" },
+        { id: "order", label: "주문관리", component: orderComponent, content: "전체 주문과 배송 상태를 관리하세요" },
+        { id: "user", label: "회원관리", component: <UserManagement roleFilter={subUserBtn}/>, content: "사용자 정보와 활동을 관리하세요" },
         { id: "store", label: "가게관리", component: <StoreManagement />, content: "파트너 음식점을 관리하고 새로운 음식점을 등록하세요" },
         { id: "active", label: "탈퇴/정지 회원 관리", component: <active />, content: "탈퇴회원과 정지회원을 관리하세요" },
         { id: "qna", label: "문의내역", component: <qna />, content: "문의 내역을 확인하고 처리하세요" },
@@ -70,7 +74,31 @@ export default function AdminPage() {
                         </div>
                     </div>
                     <div className={styles["side_main"]}>
-                        <div className={styles["side_menu"]}>{menu}</div>
+                        <div className={styles["side_menu_box"]}>
+                            <div className={styles["side_title"]}>{menu}{(menu === "회원관리") && (subUserBtn === "user") ? " - 사용자" : ""}{(menu === "회원관리") && (subUserBtn === "admin") ? " - 사장님" : ""}</div>
+                            <div>
+                                {menu === "주문관리" && (
+                                    <div className={styles["side_btn"]}>
+                                        <button className={subOrderBtn === "배달주문" ? styles["active_btn"] : styles["unactive_btn"]} onClick={() => { setSubOrderBtn("배달주문"); setOrderComponent("</deliveryorder>"); }}>배달주문</button>
+                                        <button className={subOrderBtn === "캐시주문" ? styles["active_btn"] : styles["unactive_btn"]} onClick={() => { setSubOrderBtn("캐시주문"); setOrderComponent("</cashorder>");}}>캐시주문</button>
+                                    </div>
+                                )}
+                                {menu === "회원관리" && (
+                                    <div className={styles["side_btn"]}>
+                                        <button className={subUserBtn === "all" ? styles["active_btn"] : styles["unactive_btn"]} onClick={() => { setSubUserBtn("all");}}>전체</button>
+                                        <button className={subUserBtn === "user" ? styles["active_btn"] : styles["unactive_btn"]} onClick={() => { setSubUserBtn("user");}}>사용자</button>
+                                        <button className={subUserBtn === "admin" ? styles["active_btn"] : styles["unactive_btn"]} onClick={() => { setSubUserBtn("admin");}}>사장님</button>
+                                    </div>
+                                )}
+                                {menu === "탈퇴/정지 회원 관리" && (
+                                    <div className={styles["side_btn"]}>
+                                        <button className={subBanBtn === "전체" ? styles["active_btn"] : styles["unactive_btn"]} onClick={() => { setSubBanBtn("전체"); }}>전체</button>
+                                        <button className={subBanBtn === "탈퇴" ? styles["active_btn"] : styles["unactive_btn"]} onClick={() => { setSubBanBtn("탈퇴"); }}>탈퇴</button>
+                                        <button className={subBanBtn === "정지" ? styles["active_btn"] : styles["unactive_btn"]} onClick={() => { setSubBanBtn("정지"); }}>정지</button>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                         <div className={styles["side_detail"]}>
                             {menus.find((tab) => tab.label === menu)?.content}
                         </div>

@@ -1,8 +1,11 @@
 import styles from '../../CSS/StoreManagement.module.css';
 import { useState, useEffect } from 'react';
 
-export default function UserManagement() {
+export default function UserManagement({ subUserBtn }) {
     // const [storeCount, setStoreCount] = useState(0);
+    const [totalCount, setTotalCount] = useState(0);
+    const [unactiveCount, setUnactiveCount] = useState(0);
+    const [banCount, setBanCount] = useState(0);
     // const [store, setStore] = useState([]);
     // const [selected, setSelected] = useState('all');
     // const [keyword, setKeyword] = useState("");
@@ -24,48 +27,55 @@ export default function UserManagement() {
     //         .then(data => setStore(data))
     //         .catch(console.error);
     // };
-    // //데이터 불러오기
-    // useEffect(() => {
-    //     fetch('http://localhost:8080/store/storeCount')
-    //         .then(res => {
-    //             if (!res.ok) throw new Error('서버 에러');
-    //             return res.json();
-    //         })
-    //         .then(count => setStoreCount(count))
-    //         .catch(console.error);
-    //     fetch('http://localhost:8080/store/userAll')
-    //         .then(res => {
-    //             if (!res.ok) throw new Error('서버 에러');
-    //             return res.json();
-    //         })
-    //         .then(data => setStore(data))
-    //         .catch(console.error);
-    // }, [])
+    //데이터 불러오기
+    useEffect(() => {
+        fetch('http://localhost:8080/api/users/totalCount')
+            .then(res => {
+                if (!res.ok) throw new Error('서버 에러');
+                return res.json();
+            })
+            .then(count => setTotalCount(count))
+            .catch(console.error);
+        fetch('http://localhost:8080/api/users/unactiveCount')
+            .then(res => {
+                if (!res.ok) throw new Error('서버 에러');
+                return res.json();
+            })
+            .then(count => setUnactiveCount(count))
+            .catch(console.error);
+        fetch('http://localhost:8080/api/users/banCount')
+            .then(res => {
+                if (!res.ok) throw new Error('서버 에러');
+                return res.json();
+            })
+            .then(count => setBanCount(count))
+            .catch(console.error);
+    }, [])
 
-    return(
+    return (
         <>
-                    <div className={styles["store_box"]}>
-                        <div className={styles["total_third"]}>
-                            <div className={styles["total_title"]}>총 회원수</div>
-                            <div className={styles["total_num"]}>?</div>
-                        </div>
-                        <img src={`http://localhost:8080/image/imgfile/admin/total_user.png`} />
-                    </div>
-                    <div className={styles["store_box"]}>
-                        <div className={styles["total_third"]}>
-                            <div className={styles["total_title"]}>탈퇴 회원</div>
-                            <div className={styles["total_num"]}>?</div>
-                        </div>
-                        <img src={`http://localhost:8080/image/imgfile/admin/unactive_user.png`} />
-                    </div>
-                    <div className={styles["store_box"]}>
-                        <div className={styles["total_third"]}>
-                            <div className={styles["total_title"]}>정지 회원</div>
-                            <div className={styles["total_num"]}>?</div>
-                        </div>
-                        <img src={`http://localhost:8080/image/imgfile/admin/ban_user.png`} />
-                    </div>
-                    {/* <div className={styles["input_value"]}>
+            <div className={styles["store_box"]}>
+                <div className={styles["total_third"]}>
+                    <div className={styles["total_title"]}>총 회원수</div>
+                    <div className={styles["total_num"]}>{totalCount}</div>
+                </div>
+                <img src={`http://localhost:8080/image/imgfile/admin/total_user.png`} />
+            </div>
+            <div className={styles["store_box"]}>
+                <div className={styles["total_third"]}>
+                    <div className={styles["total_title"]}>탈퇴 회원</div>
+                    <div className={styles["total_num"]}>{unactiveCount}</div>
+                </div>
+                <img src={`http://localhost:8080/image/imgfile/admin/unactive_user.png`} />
+            </div>
+            <div className={styles["store_box"]}>
+                <div className={styles["total_third"]}>
+                    <div className={styles["total_title"]}>정지 회원</div>
+                    <div className={styles["total_num"]}>{banCount}</div>
+                </div>
+                <img src={`http://localhost:8080/image/imgfile/admin/ban_user.png`} />
+            </div>
+            {/* <div className={styles["input_value"]}>
                         <select id="table_th" value={selected} onChange={handleChange}>
                             <option value="all">전체</option>
                             <option value="user">사용자</option>
@@ -77,20 +87,20 @@ export default function UserManagement() {
                         <button onClick={handleSearch}>검색</button>
                     </div>
          */}
-                    <table className={styles["store_table"]}>
-                        <thead>
-                            <tr>
-                                <th>닉네임</th><th>핸드폰번호</th><th>이메일</th><th>주소</th><th>상세주소</th><th>회원상태</th><th>모아머니</th><th>상태변경</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {/* {store.map((item) => (
+            <table className={styles["store_table"]}>
+                <thead>
+                    <tr>
+                        <th>닉네임</th><th>핸드폰번호</th><th>이메일</th><th>주소</th><th>상세주소</th><th>회원상태</th><th>모아머니</th><th>상태변경</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {/* {store.map((item) => (
                                 <tr key={item.id}>
                                     <td>{item.id}</td><td>{item.nickName}</td><td>{item.storeName}</td><td>{item.storeAddress}</td><td>{item.minPrice}</td><td>{item.tel}</td>
                                 </tr>
                             ))} */}
-                        </tbody>
-                    </table>
-                </>
+                </tbody>
+            </table>
+        </>
     )
 }

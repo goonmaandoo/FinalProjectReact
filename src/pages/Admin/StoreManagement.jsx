@@ -58,7 +58,7 @@ export default function StoreManagement() {
                     <option value="storeAddress">가게주소</option>
                     <option value="tel">전화번호</option>
                 </select>
-                <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+                <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} disabled={selected === 'all'} placeholder={selected === 'all' ? '검색 불가' : '검색어 입력'}/>
                 <button onClick={handleSearch}>검색</button>
             </div>
 
