@@ -1,7 +1,7 @@
 import styles from '../../CSS/AdminPage.module.css';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { logout } from '../../redux/user';
 import Dashboard from "./Dashboard";
 import StoreManagement from './StoreManagement';
@@ -71,6 +71,9 @@ export default function AdminPage() {
                                     </li>
                                 ))}
                             </ul>
+                        </div>
+                        <div>
+                            <Link to="/mainpage" className={styles["go_to_mainpage"]}>← 메인페이지</Link>
                         </div>
                     </div>
                     <div className={styles["side_main"]}>

@@ -39,20 +39,24 @@
 }
 .container{
     width: 1500px;
-    height: 1500px;
     display: flex;
     justify-content: center;
+    min-height: 1500px;
 }
 .admin_main{
     background-color: #EBEBEB;
     display: flex;
     justify-content: center;
+    
 }
 .side_bar{
     flex: 0 0 360px;
     background-color: #F9F9F9;
     height: 100%;
     padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .side_menu_box{
     display: flex;
@@ -65,7 +69,6 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    height: 60px;
     font-weight: bold;
 }
 .side_menu li{
@@ -105,6 +108,10 @@
 .side_detail{
     font-size: 1.5rem;
     margin-bottom: 40px;
+}
+.go_to_mainpage{
+    font-size: 1.25rem;
+    font-weight: 700;
 }
 .side_component{
     width: 1140px;
