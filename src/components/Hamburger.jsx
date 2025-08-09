@@ -21,7 +21,7 @@ export default function Hamburger({ isOpen, onClose }) {
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
     console.log("현재 user 값:", user);
-    
+
     const handleLogout = () => {
         dispatch(logout());
         localStorage.removeItem("token");
@@ -85,13 +85,29 @@ export default function Hamburger({ isOpen, onClose }) {
             <div className={styles["main"]} ref={menuRef}>
                 <div className={styles["hamburger_nav"]} style={{ height: `${menuHeight - 60}px` }}>
                     <div className={styles["mypage"]}>
-                        <img
-                            className={styles["mypage_icon"]}
-                            src="http://localhost:8080/image/imgfile/main_img/home-black.png"
-                            alt="마이페이지"
-                        />
-                        <div className={styles["mypage_text"]}>
-                            {user ? <Link to="/mypage/userinfo" onClick={onClose} >마이페이지</Link> : <Link to="/mainpage">마이페이지</Link>}
+                        <div className={styles["mypage"]}>
+                            <img
+                                className={styles["mypage_icon"]}
+                                src="http://localhost:8080/image/imgfile/main_img/home-black.png"
+                                alt="마이페이지"
+                            />
+                            <div className={styles["mypage_text"]}>
+                                {user ? <Link to="/mypage/userinfo" onClick={onClose} >마이페이지</Link> : <Link to="/mainpage">마이페이지</Link>}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                {user ? user.role === "owner"
+                                        ? <div>
+                                        <Link to="/ownerpage" onClick={() => onclose()}>사장님 페이지 →</Link>
+                                    </div>
+                                        : user.role === "admin"
+                                            ? <div>
+                                            <Link to="/adminpage" onClick={() => onclose()}>관리자 페이지 →</Link>
+                                        </div>
+                                            : ""
+                                    : ""}
+                            </div>
                         </div>
                     </div>
                     {user ? (
@@ -126,7 +142,7 @@ export default function Hamburger({ isOpen, onClose }) {
                         </>
                     ) : (
                         <div id={styles["user_notlogin"]}>
-                            <Link to="/login">로그인이 필요합니다</Link>
+                            <Link to="/login" onClick={() => onclose()}>로그인이 필요합니다</Link>
                         </div>
                     )}
                     <div className={styles["event_banner"]}>
@@ -151,59 +167,59 @@ export default function Hamburger({ isOpen, onClose }) {
             </div>
             <div>
                 <AnimatePresence>
-                        <motion.nav key="mobile-nav" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.4 }} style={{ originY: 0 }} ref={smallMenuRef} className={styles.small_menu} >
-                            <div className={styles["mypage"]}>
-                                <img
-                                    className={styles["mypage_icon2"]}
-                                    src="http://localhost:8080/image/imgfile/main_img/home-black.png"
-                                    alt="마이페이지"
-                                />
-                                <div className={styles["mypage_text2"]}>
-                                    {user ? <Link to="/mypage/userinfo" onClick={onClose} >마이페이지</Link> : <Link to="/mainpage">마이페이지</Link>}
-                                </div>
+                    <motion.nav key="mobile-nav" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.4 }} style={{ originY: 0 }} ref={smallMenuRef} className={styles.small_menu} >
+                        <div className={styles["mypage"]}>
+                            <img
+                                className={styles["mypage_icon2"]}
+                                src="http://localhost:8080/image/imgfile/main_img/home-black.png"
+                                alt="마이페이지"
+                            />
+                            <div className={styles["mypage_text2"]}>
+                                {user ? <Link to="/mypage/userinfo" onClick={onClose} >마이페이지</Link> : <Link to="/mainpage">마이페이지</Link>}
                             </div>
-                            {user ? (
-                                <>
-                                    <div className={styles["user_coin"]}>
-                                        <div className={styles["user_box"]}>
-                                            <div>
-                                                <img
-                                                    className={styles["user_profile_image"]}
-                                                    src={user?.profileUrl || "http://localhost:8080/image/profileimg/mypagePerson.png"}
-                                                    onError={(e) => (e.currentTarget.src = "http://localhost:8080/image/profileimg/mypagePerson.png")} />
-                                            </div>
-                                            <div className={styles["userName"]}>{user?.nickname}님</div>
-                                            <button className={styles["userName_btn"]} onClick={handleLogout}>로그아웃</button>
-                                        </div>
-                                        <div className={styles["coin_box"]}>
+                        </div>
+                        {user ? (
+                            <>
+                                <div className={styles["user_coin"]}>
+                                    <div className={styles["user_box"]}>
+                                        <div>
                                             <img
-                                                className={styles["coin_imo"]}
-                                                src="http://localhost:8080/image/imgfile/main_img/coin.png"
-                                                alt="코인"
-                                            />
-                                            <div className={styles["coin_confirm"]}>
-                                                {user.cash !== null ? user.cash.toLocaleString() : "0"}
-                                            </div>
+                                                className={styles["user_profile_image"]}
+                                                src={user?.profileUrl || "http://localhost:8080/image/profileimg/mypagePerson.png"}
+                                                onError={(e) => (e.currentTarget.src = "http://localhost:8080/image/profileimg/mypagePerson.png")} />
+                                        </div>
+                                        <div className={styles["userName"]}>{user?.nickname}님</div>
+                                        <button className={styles["userName_btn"]} onClick={handleLogout}>로그아웃</button>
+                                    </div>
+                                    <div className={styles["coin_box"]}>
+                                        <img
+                                            className={styles["coin_imo"]}
+                                            src="http://localhost:8080/image/imgfile/main_img/coin.png"
+                                            alt="코인"
+                                        />
+                                        <div className={styles["coin_confirm"]}>
+                                            {user.cash !== null ? user.cash.toLocaleString() : "0"}
                                         </div>
                                     </div>
-                                    <div className={styles["score_box"]}>
-                                        <div className={styles["score_text"]}>{user.userRating}%</div>
-                                        <img className={styles["score_img"]} src={`http://localhost:8080/image/imgfile/main_img/${face}.png`} />
-                                    </div>
-                                    <progress className={styles["gongu_progress"]} value={user.userRating} max={100}></progress>
-                                </>
-                            ) : (
-                                <div id={styles["user_notlogin2"]}>
-                                    <Link to="/login">로그인이 필요합니다</Link>
                                 </div>
-                            )}
-                            {user && (
-                                <div className={styles["chat_list"]}>
-                                    <div className={styles["chat_list_title"]}>참여중인 채팅방 목록</div>
+                                <div className={styles["score_box"]}>
+                                    <div className={styles["score_text"]}>{user.userRating}%</div>
+                                    <img className={styles["score_img"]} src={`http://localhost:8080/image/imgfile/main_img/${face}.png`} />
+                                </div>
+                                <progress className={styles["gongu_progress"]} value={user.userRating} max={100}></progress>
+                            </>
+                        ) : (
+                            <div id={styles["user_notlogin2"]}>
+                                <Link to="/login">로그인이 필요합니다</Link>
+                            </div>
+                        )}
+                        {user && (
+                            <div className={styles["chat_list"]}>
+                                <div className={styles["chat_list_title"]}>참여중인 채팅방 목록</div>
 
-                                </div>
-                            )}
-                        </motion.nav>
+                            </div>
+                        )}
+                    </motion.nav>
                 </AnimatePresence>
             </div>
         </>
