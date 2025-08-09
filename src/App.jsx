@@ -56,6 +56,7 @@ import AdminPage from "./pages/Admin/AdminPage";
 import Dashboard from "./pages/Admin/Dashboard";
 import StoreManagement from "./pages/Admin/StoreManagement";
 import UserManagement from "./pages/Admin/UserManagement";
+import Active from "./pages/Admin/ActiveManagement";
 import OwnerStoreList from "./pages/ownerPage/OwnerStoreList";
 import OwnerPage from "./pages/ownerPage/OwnerPage";
 
@@ -218,6 +219,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/storeManagement" element={<StoreManagement />} />
         <Route path="/userManagement" element={<UserManagement />} />
+        <Route path="/active" element={<Active />} />
         
       </Routes>
 
