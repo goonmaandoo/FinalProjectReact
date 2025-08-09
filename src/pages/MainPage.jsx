@@ -1,7 +1,7 @@
 import styles from '../CSS/MainPage.module.css';
 import { Link, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 // import { logout } from '../redux/user';
 // import LoginCheck from '../components/user/LoginCheck';
 
@@ -11,6 +11,7 @@ export default function MainPage() {
     const [category, setCategory] = useState([]);
     const [popular, setPopular] = useState([]);
     const navigate = useNavigate();
+    const user = useSelector((state) => state.auth.user);
 
     //검색창
     const onKeyDown = (e) => {
@@ -18,7 +19,7 @@ export default function MainPage() {
             search();
         }
     }
-    
+
     //검색창
     const search = () => {
         if (!keyword.trim()) {
@@ -33,38 +34,46 @@ export default function MainPage() {
     useEffect(() => {
         //공구방 조회
         fetch('http://localhost:8080/api/room/allWithCount')
-        .then(res => {
-            if (!res.ok) throw new Error('서버 에러');
-            return res.json();
-        })
-        .then(data => setRooms(data))
-        .catch(console.error);
+            .then(res => {
+                if (!res.ok) throw new Error('서버 에러');
+                return res.json();
+            })
+            .then(data => setRooms(data))
+            .catch(console.error);
 
         //카테고리 조회
         fetch('http://localhost:8080/category/all')
-        .then(res => {
-            if (!res.ok) throw new Error('서버 에러');
-            return res.json();
-        })
-        .then(data => setCategory(data))
-        .catch(console.error);
+            .then(res => {
+                if (!res.ok) throw new Error('서버 에러');
+                return res.json();
+            })
+            .then(data => setCategory(data))
+            .catch(console.error);
 
         //인기메뉴 조회
         fetch('http://localhost:8080/popular/all')
-        .then(res => {
-            if (!res.ok) throw new Error('서버 에러');
-            return res.json();
-        })
-        .then(data => setPopular(data))
-        .catch(console.error);
-    },[]);
+            .then(res => {
+                if (!res.ok) throw new Error('서버 에러');
+                return res.json();
+            })
+            .then(data => setPopular(data))
+            .catch(console.error);
+    }, []);
 
     return (
         <>
             <main>
                 <div className={styles["search_header"]}>
                     <div className={styles["search_box"]}>
-                        <div className={styles["search_text"]}>오늘은 무엇을 함께 먹을까요?</div>
+                        <div className={styles["search_text"]}>
+                            {user
+                                ? user.role === "owner"
+                                    ? "사장님 환영합니다."
+                                    : user.role === "admin"
+                                        ? "관리자님 환영합니다."
+                                        : "오늘은 무엇을 함께 먹을까요?"
+                                : "오늘은 무엇을 함께 먹을까요?"}
+                        </div>
                         <div className={styles["search"]}>
                             <input
                                 type="text"
@@ -89,8 +98,8 @@ export default function MainPage() {
                         </div>
                         <div className={styles["circle_category_wrap"]}>
                             {category.map((item) => (
-                                <Link key={item.id} to={`/storelist/${item.id}`} 
-                                onClick={() => onCategoryClick(item.id)}>
+                                <Link key={item.id} to={`/storelist/${item.id}`}
+                                    onClick={() => onCategoryClick(item.id)}>
                                     <div className={styles["circle_with_text"]}>
                                         <div className={styles["circle"]}>
                                             <img
