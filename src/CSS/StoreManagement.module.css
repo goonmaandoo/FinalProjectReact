@@ -10,7 +10,7 @@
     margin-bottom: 40px;
 }
 .total_title{
-    font-size: 24px;
+    font-size: 1.5rem;
     text-align: center;
     align-items: center;
 }
@@ -24,14 +24,18 @@
     background-color: white;
     width: 100%;
     border-collapse: collapse;
+    padding: 0;
+    margin: 0;
+}
+.store_table th,
+.store_table td {
+    border: 1px solid #b9b9b9;
 }
 .store_table th{
     background-color: #f0f0f0;
-    border: 1px solid #b9b9b9;
     padding: 5px 0;
 }
 .store_table td{
-    border: 1px solid #b9b9b9;
     padding: 5px;
 }
 .input_value{
@@ -56,4 +60,37 @@
     height: 31px;
     font-size: 1rem;
     padding: 0;
+}
+.status_update{
+    width: 85px;
+}
+.status_button {
+    width: 40px;
+}
+.store_table button{
+    width: 100%;
+    font-size: 1rem;
+    border: none;
+    background-color: #b9b9b9;
+    color: white;
+    border-radius: 5px;
+}
+.store_table button:hover{
+    background-color: #ffb1b1;
+}
+.status_ban{
+    width: 50px;
+    background-color: #FF8000;
+    color: white;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.status_unactive{
+    width: 50px;
+    background-color: #FF0000;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
 }
