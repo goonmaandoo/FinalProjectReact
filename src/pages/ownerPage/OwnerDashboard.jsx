@@ -1,9 +1,10 @@
 import style from "../../CSS/OwnerDashboard.module.css"
+import styles from '../../CSS/Dashboard.module.css';
 import { Link } from "react-router-dom";
 
 export default function OwnerDashboard() {
     return (
-        <> 
+        <>
             <div className={style["outbox"]}>
 
                 {/* 메인 콘텐츠 */}
@@ -48,6 +49,42 @@ export default function OwnerDashboard() {
                     </div>
                 </div>
             </div>
+            <div className={styles["dash_main_box"]}>
+            <div className={styles["dash_box"]}>
+                    <div className={styles["total_third"]}>
+                    <div className={styles["total_title"]}>
+                        <span><img src={`http://localhost:8080/image/imgfile/owner/today_finish.png`} />
+                        </span>
+                        <span className={styles["total_title"]}>진행 중인 주문</span>
+                    </div>
+                        <div className={styles["total_num"]}>?명</div>
+                    </div>
+                </div>
+                <div className={styles["dash_box"]}>
+                    <div className={styles["total_second"]}>
+                        <div className={styles["total_title"]}>
+                            <span><img src={`http://localhost:8080/image/imgfile/owner/today_order.png`} /></span>오늘 주문 건수</div>
+                        <div className={styles["total_num"]}>?건</div>
+                    </div>
+                    <hr />
+                    <div className={styles["total_second"]}>
+                        <div className={styles["total_title"]}><span><img src={`http://localhost:8080/image/imgfile/owner/today_order.png`} /></span>총 주문 건수</div>
+                        <div className={styles["total_num"]}>?건</div>
+                    </div>
+                </div>
+                <div className={styles["dash_box"]}>
+                    <div className={styles["total_second"]}>
+                        <div className={styles["total_title"]}>
+                            <span><img src={`http://localhost:8080/image/imgfile/owner/room_ing.png`} /></span>진행 중인 공구방</div>
+                        <div className={styles["total_num"]}>?건</div>
+                    </div>
+                    <hr />
+                    <div className={styles["total_second"]}>
+                        <div className={styles["total_title"]}><span><img src={`http://localhost:8080/image/imgfile/owner/room_ing.png`} /></span>모집 중인 공구방</div>
+                        <div className={styles["total_num"]}>?건</div>
+                    </div>
+                </div>
+        </div>
         </>
     );
 }
