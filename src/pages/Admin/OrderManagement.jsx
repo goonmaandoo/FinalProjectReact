@@ -43,13 +43,6 @@ export default function OrderManagement() {
     }, [])
     return (
         <>
-            <div className={styles["store_box"]}>
-                <div className={styles["total_third"]}>
-                    <div className={styles["total_title"]}>가게</div>
-                    <div className={styles["total_num"]}>{storeCount}</div>
-                </div>
-                <img src={`http://localhost:8080/image/imgfile/admin/storemanage.png`} />
-            </div>
             <div className={styles["input_value"]}>
                 <select id="table_th" value={selected} onChange={handleChange}>
                     <option value="all">전체</option>
@@ -65,15 +58,15 @@ export default function OrderManagement() {
             <table className={styles["store_table"]}>
                 <thead>
                     <tr>
-                        <th>구분번호</th><th>사장님</th><th>가게이름</th><th>가게주소</th><th>최소주문금액</th><th>전화번호</th>
+                        <th>주문번호</th><th>채팅방</th><th>사용자ID</th><th>가게이름</th><th>가게주문</th><th>총주문금액</th><th>주문일시시</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {store.map((item) => (
+                    {/* {store.map((item) => (
                         <tr key={item.id}>
                             <td>{item.id}</td><td>{item.nickName}</td><td>{item.storeName}</td><td>{item.storeAddress}</td><td>{item.minPrice}</td><td>{item.tel}</td>
                         </tr>
-                    ))}
+                    ))} */}
                 </tbody>
 
             </table>
