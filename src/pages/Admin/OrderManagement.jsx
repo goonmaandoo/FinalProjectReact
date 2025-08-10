@@ -13,7 +13,7 @@ export default function OrderManagement() {
     const handleSearch = () => {
         let url = 'http://localhost:8080/api/orders/orderSearch';
         console.log(orders.map(o => o.orderId))
-        if (selected !== 'all' && keyword.trim() !== '') {
+        if (keyword.trim() !== '') {
             url += `?type=${selected}&keyword=${encodeURIComponent(keyword)}`;
         }
         fetch(url)
