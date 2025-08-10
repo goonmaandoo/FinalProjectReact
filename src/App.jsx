@@ -59,6 +59,7 @@ import UserManagement from "./pages/Admin/UserManagement";
 import Active from "./pages/Admin/ActiveManagement";
 import OwnerStoreList from "./pages/ownerPage/OwnerStoreList";
 import OwnerPage from "./pages/ownerPage/OwnerPage";
+import OrderManagement from "./pages/Admin/OrderManagement";
 
 function parseJwt(token) {
   try {
@@ -220,6 +221,7 @@ function App() {
         <Route path="/storeManagement" element={<StoreManagement />} />
         <Route path="/userManagement" element={<UserManagement />} />
         <Route path="/active" element={<Active />} />
+        <Route path="/ordermanagement" element={<OrderManagement />} />
         
       </Routes>
 
