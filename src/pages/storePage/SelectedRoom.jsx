@@ -86,37 +86,6 @@ export default function SelectRoom() {
                         <div className={styles["search_noResult"]}>개설된 방이 없습니다.</div>
                     )}
                 </div>
-                {/* <div className={styles["main_box"]}>
-                    {room.filter(room => room.status == "모집중").length > 0 ? (
-                            room.filter(room => room.status == "모집중").map((item) => (
-                                <div>
-                                    {activeRoomId === item.id && (
-                                        <div ref={mapRef} className={styles["address_map"]}></div>
-                                        )}
-                                    <div key={item.id} className={styles["search_result"]} onClick={() => {
-                                        setActiveRoomId(item.id);
-                                        showMap(item.room_address);
-                                    }}>
-                                        <img className={styles["search_store_img"]}
-                                            src={`${storeImgUrl}${item.store_id}.jpg`} alt={`${item.store_id}`}></img>
-                                        <div className={styles["search_store_detail"]}>
-                                            <div>
-                                                <div className={styles["search_store_name"]}>{item.room_name}</div>
-                                                <div className={styles["search_menu_name"]}>{item.room_address} {item.room_address_detail}</div>
-                                                <div className={styles["search_status"]}>{item.status}</div>
-                                            </div>
-                                            <button className={styles["result_btn"]} onClick={(e) => {
-                                                e.stopPropagation();
-                                                roomClick(e, item.id)
-                                            }}>참여</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))
-                        ) : (
-                            <div className={styles["search_noResult"]}>개설된 방이 없습니다.</div>
-                        )}
-                </div> */}
             </div>
         </main>
     )
