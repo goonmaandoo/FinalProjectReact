@@ -7,6 +7,7 @@ import Dashboard from "./Dashboard";
 import StoreManagement from './StoreManagement';
 import UserManagement from './UserManagement';
 import Active from './ActiveManagement';
+import OrderManagement from './OrderManagement';
 
 
 export default function AdminPage() {
@@ -18,7 +19,7 @@ export default function AdminPage() {
     const [subOrderBtn, setSubOrderBtn] = useState("배달주문");
     const [subUserBtn, setSubUserBtn] = useState("all");
     const [subBanBtn, setSubBanBtn] = useState("all");
-    const [ orderComponent, setOrderComponent ] = useState("</deliveryorder>")
+    const [ orderComponent, setOrderComponent ] = useState(<OrderManagement/>);
 
     const handleLogout = () => {
         dispatch(logout());
@@ -83,7 +84,7 @@ export default function AdminPage() {
                             <div>
                                 {menu === "주문관리" && (
                                     <div className={styles["side_btn"]}>
-                                        <button className={subOrderBtn === "배달주문" ? styles["active_btn"] : styles["unactive_btn"]} onClick={() => { setSubOrderBtn("배달주문"); setOrderComponent("</deliveryorder>"); }}>배달주문</button>
+                                        <button className={subOrderBtn === "배달주문" ? styles["active_btn"] : styles["unactive_btn"]} onClick={() => { setSubOrderBtn("배달주문"); setOrderComponent(<OrderManagement/>); }}>배달주문</button>
                                         <button className={subOrderBtn === "캐시주문" ? styles["active_btn"] : styles["unactive_btn"]} onClick={() => { setSubOrderBtn("캐시주문"); setOrderComponent("</cashorder>");}}>캐시주문</button>
                                     </div>
                                 )}

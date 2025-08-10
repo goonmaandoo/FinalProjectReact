@@ -217,7 +217,7 @@
         height: 40px;
     }
     .circle_category_outer {
-        margin-bottom: 30px;
+        margin-bottom: 20px;
         padding: 10px;
     }
     .storelist_body {
@@ -241,7 +241,7 @@
         gap: 10px;
     }
     .score_name{
-        font-size: 0.875rem;
+        font-size: 0.8rem;
     }
     .score{
         font-size:0.75rem;
@@ -254,6 +254,9 @@
     }
     .storeexplain {
         padding: 20px;
+        gap: 10px;
+    }
+    .img_explain_wrap {
         gap: 10px;
     }
 }
@@ -276,5 +279,18 @@
     .storeexplain {
         padding: 15px;
         gap: 7px;
+    }
+    .storelist_wrap {
+        padding: 20px;
+        gap: 15px;
+    }
+}
+@media (max-width:450px){
+    .storelist_wrap img {
+        width: 110px;
+    }
+    .storeexplain {
+        padding: 15px;
+        gap: 2px;
     }
 }

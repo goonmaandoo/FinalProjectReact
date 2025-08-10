@@ -34,7 +34,11 @@
 
 .mypage_text {
     margin-left: 10px;
-    font-size: 16px;
+    font-size: 14px;
+}
+.mypage_text1 {
+    margin-left: 10px;
+    font-size: 14px;
 }
 .mypage_text2 {
     margin-left: 10px;
@@ -245,6 +249,7 @@
     font-family: "DM Sans", sans-serif;
     font-weight: 600;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
 }
 @media (max-width:800px){
     .hamburger_nav {

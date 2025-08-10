@@ -92,7 +92,7 @@ export default function Hamburger({ isOpen, onClose }) {
                                 alt="마이페이지"
                             />
                             <div className={styles["mypage_text"]}>
-                                {user ? <Link to="/mypage/userinfo" onClick={onClose} >마이페이지</Link> : <Link to="/mainpage">마이페이지</Link>}
+                                {user ? <Link to="/mypage/userinfo" onClick={() => onclose()} >마이페이지</Link> : <Link to="/mainpage" >마이페이지</Link>}
                             </div>
                         </div>
                         <div>
@@ -142,7 +142,7 @@ export default function Hamburger({ isOpen, onClose }) {
                         </>
                     ) : (
                         <div id={styles["user_notlogin"]}>
-                            <Link to="/login" onClick={() => onclose()}>로그인이 필요합니다</Link>
+                            <Link to="/login" onClick={() => onclose()} >로그인이 필요합니다</Link>
                         </div>
                     )}
                     <div className={styles["event_banner"]}>
@@ -168,6 +168,7 @@ export default function Hamburger({ isOpen, onClose }) {
             <div>
                 <AnimatePresence>
                     <motion.nav key="mobile-nav" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.4 }} style={{ originY: 0 }} ref={smallMenuRef} className={styles.small_menu} >
+                    <div className={styles["mypage"]}>
                         <div className={styles["mypage"]}>
                             <img
                                 className={styles["mypage_icon2"]}
@@ -175,8 +176,23 @@ export default function Hamburger({ isOpen, onClose }) {
                                 alt="마이페이지"
                             />
                             <div className={styles["mypage_text2"]}>
-                                {user ? <Link to="/mypage/userinfo" onClick={onClose} >마이페이지</Link> : <Link to="/mainpage">마이페이지</Link>}
+                                {user ? <Link to="/mypage/userinfo" onClick={() => onclose()} >마이페이지</Link> : <Link to="/mainpage">마이페이지</Link>}
                             </div>
+                        </div>
+                        <div>
+                            <div>
+                                {user ? user.role === "owner"
+                                        ? <div className={styles["mypage_text1"]}>
+                                        <Link to="/ownerpage" onClick={() => onclose()}>사장님 페이지 →</Link>
+                                    </div>
+                                        : user.role === "admin"
+                                            ? <div className={styles["mypage_text1"]}>
+                                            <Link to="/adminpage" onClick={() => onclose()}>관리자 페이지 →</Link>
+                                        </div>
+                                            : ""
+                                    : ""}
+                            </div>
+                        </div>
                         </div>
                         {user ? (
                             <>
@@ -210,7 +226,7 @@ export default function Hamburger({ isOpen, onClose }) {
                             </>
                         ) : (
                             <div id={styles["user_notlogin2"]}>
-                                <Link to="/login">로그인이 필요합니다</Link>
+                                <Link to="/login" onClick={() => onclose()}>로그인이 필요합니다</Link>
                             </div>
                         )}
                         {user && (

@@ -218,6 +218,7 @@
 @media (max-width: 768px) {
   .main_container {
     padding: 40px 10px;
+    margin: 40px 20px;
   }
   .AllRoomhead {
     font-size: 20px;
@@ -272,6 +273,7 @@
 @media (max-width: 480px) {
   .main_container {
     padding: 20px 5px;
+    margin: 20px 20px;
   }
   .AllRoomhead {
     font-size: 16px;
