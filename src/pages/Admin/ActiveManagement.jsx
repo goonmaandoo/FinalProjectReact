@@ -6,21 +6,26 @@ export default function Active({ roleFilter }) {
     // const [totalCount, setTotalCount] = useState(0);
     const [unactiveCount, setUnactiveCount] = useState(0);
     const [banCount, setBanCount] = useState(0);
-    const [userData,setUserData] = useState([]);
+    const [userData, setUserData] = useState([]);
     const [selected, setSelected] = useState('nickname');
     const [keyword, setKeyword] = useState("");
+    const [sendUserId, setSendUserId] = useState("");
 
     const handleChange = (e) => {
         setSelected(e.target.value);
     };
 
+    const handleStatusClick = (id) => {
+        window.open("/updatestatus?id=${id}", "_blank", "width=500,height=300");
+    };
+
     const handleSearch = () => {
         let url = 'http://localhost:8080/api/users/';
-        if (roleFilter === 'all' ) {
+        if (roleFilter === 'all') {
             url += `userSearchActive?type=${selected}&keyword=${encodeURIComponent(keyword)}`;
-        }else if(roleFilter === 'unactive'){
+        } else if (roleFilter === 'unactive') {
             url += `userUnactiveSearch?type=${selected}&keyword=${encodeURIComponent(keyword)}`;
-        }else if(roleFilter === 'ban'){
+        } else if (roleFilter === 'ban') {
             url += `userBanSearch?type=${selected}&keyword=${encodeURIComponent(keyword)}`;
         }
         fetch(url)
@@ -51,18 +56,18 @@ export default function Active({ roleFilter }) {
     // role별로 데이터 불러오기
     useEffect(() => {
         let url = 'http://localhost:8080/api/users/'
-        if(roleFilter !== 'all'){
+        if (roleFilter !== 'all') {
             url += `unactiveBan/${roleFilter}`;
-        }else{
-            url +=  'selectAllActive';
+        } else {
+            url += 'selectAllActive';
         }
         fetch(url)
-        .then(res => {
-            if (!res.ok) throw new Error('서버 에러');
-            return res.json();
-        })
-        .then(data => setUserData(data))
-        .catch(console.error);
+            .then(res => {
+                if (!res.ok) throw new Error('서버 에러');
+                return res.json();
+            })
+            .then(data => setUserData(data))
+            .catch(console.error);
     }, [roleFilter])
 
     return (
@@ -71,7 +76,7 @@ export default function Active({ roleFilter }) {
                 <div className={styles["store_box"]}>
                     <div className={styles["total_third"]}>
                         <div className={styles["total_title"]}>{roleFilter === "unactive" ? "탈퇴 회원" : "정지 회원"}</div>
-                        <div className={styles["total_num"]}>{roleFilter === "unactive" ? unactiveCount : banCount }</div>
+                        <div className={styles["total_num"]}>{roleFilter === "unactive" ? unactiveCount : banCount}</div>
                     </div>
                     <img src={`http://localhost:8080/image/imgfile/admin/${roleFilter}_user.png`} />
                 </div>
@@ -110,7 +115,10 @@ export default function Active({ roleFilter }) {
                 <tbody>
                     {userData.map((item) => (
                         <tr key={item.id}>
-                            <td>{item.id}</td><td>{item.nickname}</td><td>{item.phoneNum}</td><td>{item.email}</td><td>{item.address}</td><td>{item.addressDetail}</td><td className={styles['status_button']}>{item.status === 'ban' ? <div className={styles['status_ban']}>정지</div> : <div className={styles['status_unactive']}>탈퇴</div>}</td><td className={styles['status_update']}>{item.status === 'ban' ? <button type='submit'>상태변경</button> : ""}</td>
+                            <td>{item.id}</td><td>{item.nickname}</td><td>{item.phoneNum}</td><td>{item.email}</td><td>{item.address}</td><td>{item.addressDetail}</td><td className={styles['status_button']}>{item.status === 'ban' ? <div className={styles['status_ban']}>정지</div> : <div className={styles['status_unactive']}>탈퇴</div>}</td>
+                            <td className={styles['status_update']}>
+                                {item.status === 'ban' ? <button type='submit' onClick={ handleStatusClick(item.id)}>상태변경</button> : ""}
+                            </td>
                         </tr>
                     ))}
                 </tbody>

@@ -78,7 +78,9 @@ export default function Dashboard() {
             <div className={styles["dash_box"]}>
                 <div className={styles["total_second"]}>
                     <div className={styles["total_title"]}>
-                        <span><img src={`http://localhost:8080/image/imgfile/main_img/today_order.png`} /></span>오늘 주문 건수</div>
+                        <span><img src={`http://localhost:8080/image/imgfile/main_img/today_order.png`} /></span>
+                        오늘 주문 건수
+                    </div>
                     <div className={styles["total_num"]}>?건</div>
                 </div>
                 <hr />

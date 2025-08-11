@@ -64,6 +64,7 @@ import OrderManagement from "./pages/Admin/OrderManagement";
 import ReviewAdmin from "./pages/Admin/ReviewAdmin";
 import ReportManagement from "./pages/Admin/ReportManagement";
 import RoomManagement from "./pages/Admin/RoomManagement";
+import UpdateStatus from "./pages/Admin/UpdateStatus";
 
 function parseJwt(token) {
   try {
@@ -85,7 +86,8 @@ function App() {
   const isMainPage = location.pathname === "/mainpage";
   const isOwnerPage = location.pathname === "/ownerpage";
   const isAdminPage = location.pathname === "/adminpage";
-  const showHeader = !isAdminPage && !isOwnerPage;
+  const isUpdatePage = location.pathname === "/updatestatus";
+  const showHeader = !isAdminPage && !isOwnerPage &&!isUpdatePage;
 
   // 로그인 상태 유지 및 유저 정보 불러오기
   useEffect(() => {
@@ -230,6 +232,7 @@ function App() {
         <Route path="/reviewadmin" element={<ReviewAdmin />} />
         <Route path="/reportmanagement" element={<ReportManagement />} />
         <Route path="/roommanagement" element={<RoomManagement />} />
+        <Route path="/updatestatus" element={<UpdateStatus/>} />
       </Routes>
 
       {isOpen && <Hamburger isOpen={isOpen} onClose={() => setIsOpen(false)} />}

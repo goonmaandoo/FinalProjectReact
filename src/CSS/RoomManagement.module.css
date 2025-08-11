@@ -1,13 +1,49 @@
 .store_box{
-    width: 100%;
+    width: 1080px;
     height: 130px;
     border-radius: 10px;
     background-color: white;
-    padding: 40px;
+    padding: 30px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 40px;
+}
+.store_box_active{
+    width: 1080px;
+    height: 130px;
+    border-radius: 10px 10px 0 0;
+    background-color: white;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.user_list{
+    width: 1080px;
+    background-color: white;
+    padding: 0 30px 20px 30px;
+    border-radius: 0 0 10px 10px;
+    margin-bottom: 40px;
+}
+.user_map{
+    display:flex;
+    margin-bottom: 10px;
+    align-items: center;
+    justify-content: space-between;
+}
+.user_item{
+    font-size: 1.25rem;
+}
+.report_btn{
+    width: 70px;
+    text-align: center;
+}
+.user_status{
+    background-color: #04B310;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
 }
 .total{
     display: flex;

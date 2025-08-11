@@ -1,6 +1,6 @@
 .dash_box{
     padding: 40px 0;
-    width: 100%;
+    width: 1080px;
     background-color: white;
     border-radius: 10px;
     display: flex;
@@ -14,14 +14,14 @@
     margin: 0;
 }
 .total_first{
-    width: 275px;
+    width: 269.25px;
     display: flex;
     flex-direction: column;
     gap: 10px;
     justify-content: center;
 }
 .total_second{
-    width: 551px;
+    width: 539.5px;
     display: flex;
     flex-direction: column;
     gap: 10px;

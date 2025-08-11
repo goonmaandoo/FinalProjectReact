@@ -1,5 +1,5 @@
 .store_box{
-    width: 100%;
+    width: 1080px;
     height: 150px;
     border-radius: 10px;
     background-color: white;
@@ -26,7 +26,7 @@
 .store_table{
     border: 1px solid #b9b9b9;
     background-color: white;
-    width: 100%;
+    width: 1080px;
     border-collapse: collapse;
     padding: 0;
     margin: 0;

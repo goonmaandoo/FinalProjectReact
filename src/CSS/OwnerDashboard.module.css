@@ -43,39 +43,7 @@
 button{
     cursor: pointer;
 }
-/* 사이드바 */
-.leftbox {
-    width: 220px;
-    background-color: white;
-    padding: 20px;
-    border-right: 1px solid #ccc;
-    flex-shrink: 0;
-}
 
-.leftbox ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.leftbox li {
-    margin-bottom: 20px;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-.leftbox li a {
-    text-decoration: none;
-    color: black;
-    display: block;
-    padding: 10px;
-    border-radius: 5px;
-}
-
-.leftbox li a:hover,
-.leftbox li a:focus {
-    background-color: #ffe5e5;
-}
 /* 페이지네이션 */
 .pagination {
     margin-top: 20px;
@@ -147,10 +115,14 @@ button{
     text-align: center;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
-
-.status_box h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
+.status_box img{
+    width: 40px;
+    margin-top: 5px;
+}
+.status_box span{
+    font-size: 24px;
+    text-align: center;
+    align-items: center;
 }
 
 .status_box h4 {

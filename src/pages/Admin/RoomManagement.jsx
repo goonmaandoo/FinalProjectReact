@@ -21,7 +21,9 @@ export default function RoomManagement() {
     return (
         <div>
             {roomData.map((item) => (
-                <div key={item.id} className={styles["store_box"]}>
+                <>
+                <div key={item.id} className={activeRoomId === item.id ? styles["store_box_active"] : styles["store_box"]}>
+                {/* <div key={item.id} className={styles["store_box"]}> */}
                     <div className={styles["total"]}>
                         <div className={styles["total_title"]}>
                             <div className={styles["room_name"]}>{item.roomName}</div>
@@ -35,26 +37,38 @@ export default function RoomManagement() {
                         <div>
                             <div className={styles["room_count"]}>공구방 인원 : {item.usersInfo ? item.usersInfo.length : 0}/{item.maxPeople}</div>
                         </div>
-                        <div className={styles["report_box"]}><div className={styles["report_status"]}>{item.status}</div></div>
-                        <button onClick={() => { setActiveRoomId(prev => (prev === item.id ? null : item.id)); }}>
+                        <div className={styles["report_box"]}>
+                            <div className={styles["report_status"]}>{item.status}</div>
+                        </div>
+                        <div className={styles["report_btn"]}>
+                            <button onClick={() => { setActiveRoomId(prev => (prev === item.id ? null : item.id)); }}>
                             {activeRoomId === item.id ? "접기" : "펼치기"}
                         </button>
+                        </div>
+                        
                     </div>
-                    {activeRoomId === item.id && (
+                </div>
+                {activeRoomId === item.id && (
                         <div className={styles["user_list"]}>
                             {item.usersInfo.length > 0 ? (
                                 item.usersInfo.map(user => (
-                                    <div key={user.roomJoinId} className={styles["user_item"]}>
-                                        {user.nickname} ({user.joinStatus})
+                                    <>
+                                    <div className={styles["user_map"]}>
+                                        <div key={user.roomJoinId} className={styles["user_item"]}>
+                                            {user.nickname}
+                                        </div>
+                                        <div key={user.roomJoinId} className={styles["user_status"]}>
+                                            {user.joinStatus}
+                                        </div>
                                     </div>
+                                    </>
                                 ))
                             ) : (
                                 <div>참여자가 없습니다.</div>
                             )}
                         </div>
                     )}
-
-                </div>
+                </>
             ))}
         </div>
     )
