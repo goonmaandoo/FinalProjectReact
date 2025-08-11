@@ -36,7 +36,7 @@ export default function OwnerPage() {
         {id: "store", label: "가게관리", component: <OwnerStoreList/>,
         content: "가게를 관리하세요"},
         { id: "menu", label: "메뉴관리", component: <OwnerMenuEdit/>, content: "메뉴를 관리하세요" },
-        // { id: "delivery", label: "배달접수/현황", component: <DeliveryState/>, content: "배달을 접수하고 배달 현황을 관리하세요" },
+        { id: "delivery", label: "배달접수/현황", component: <DeliveryState/>, content: "배달을 접수하고 배달 현황을 관리하세요" },
         { id: "review", label: "리뷰관리", component: <ReviewManagement/>, content: "가게 리뷰를 관리하세요" },
         { id: "order", label: "주문접수", component: <OrderYesNo/>, content: "주문을 관리하세요" }
     ]
