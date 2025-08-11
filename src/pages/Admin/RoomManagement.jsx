@@ -6,23 +6,17 @@ export default function RoomManagement() {
     const [activeRoomId, setActiveRoomId] = useState(null);
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/room/adminSelectRoom')
+        fetch('http://localhost:8080/api/room/getAllRoomsWithUsers')
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
             })
-            .then(data => setRoomData(data))
+            .then(data => {
+                setRoomData(data);
+            })
             .catch(console.error);
     }, []);
-    // useEffect(() => {
-    //     fetch('http://localhost:8080/api/room/adminSelectRoomUser/{id}')
-    //         .then(res => {
-    //             if (!res.ok) throw new Error('서버 에러');
-    //             return res.json();
-    //         })
-    //         .then(data => setRoomData(data))
-    //         .catch(console.error);
-    // }, [])
+
 
     return (
         <div>
@@ -39,15 +33,29 @@ export default function RoomManagement() {
                     </div>
                     <div className={styles["total1"]}>
                         <div>
-                            <div className={styles["room_count"]}>공구방 인원 : ?/{item.maxPeople}</div>
+                            <div className={styles["room_count"]}>공구방 인원 : {item.usersInfo ? item.usersInfo.length : 0}/{item.maxPeople}</div>
                         </div>
                         <div className={styles["report_box"]}><div className={styles["report_status"]}>{item.status}</div></div>
-                        <button onClick={() => { setActiveRoomId(prev => (prev === item.id ? null : item.id)); }}>펼치기</button>
+                        <button onClick={() => { setActiveRoomId(prev => (prev === item.id ? null : item.id)); }}>
+                            {activeRoomId === item.id ? "접기" : "펼치기"}
+                        </button>
                     </div>
-                    
+                    {activeRoomId === item.id && (
+                        <div className={styles["user_list"]}>
+                            {item.usersInfo.length > 0 ? (
+                                item.usersInfo.map(user => (
+                                    <div key={user.roomJoinId} className={styles["user_item"]}>
+                                        {user.nickname} ({user.joinStatus})
+                                    </div>
+                                ))
+                            ) : (
+                                <div>참여자가 없습니다.</div>
+                            )}
+                        </div>
+                    )}
+
                 </div>
-            ))
-            }
+            ))}
         </div>
     )
 }
