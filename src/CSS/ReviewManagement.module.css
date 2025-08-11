@@ -31,13 +31,40 @@
     margin-top: 20px;
     width: 1100px;
     height: 800px;
-    border: 1px solid gold;
+    background-color: #d9d9d9;
+    padding: 20px;
 }
 .review_list h2{
     font-size: 40px;
     color: black;
+    margin: 0;
 }
+
 .review_content{
-    width: 100%;
-    border: 1px solid red;
+    width: 90%;
+    margin: 20px;
+    background-color: white;
+    padding: 20px;
+}
+
+.nickname{
+    font-size: 28px;
+    margin: 0;
+}
+.review_date{
+    margin-top: 0;
+    font-size: 14px;
+}
+
+.review_hidebtn{
+    background-color: #d9d9d9;
+    border: none;
+    width: 80px;
+}
+.review_reportbtn{
+    background-color: red;
+    border: none;
+    width: 80px;
+    color: white;
+    margin-left: 20px;
 }
