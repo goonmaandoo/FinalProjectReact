@@ -5,18 +5,19 @@
     padding-top: 50px;
     padding-bottom: 50px;
     width: 100vw;
-    box-sizing: border-box;
 }
 
 .room_create_page_box {
     width: 600px;
     height: 600px;
+    font-weight: 700;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: white;
     border-radius: 15px;
+    box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.2);
 }
 
 .input_label_box {
@@ -26,7 +27,7 @@
 
 .label_box {
     font-size: 20px;
-    color: #999;
+    color: black;
 }
 
 .input_box {
@@ -38,22 +39,68 @@
     padding: 12px;
     border-radius: 5px;
     border: #999 solid 1px;
-    box-sizing: border-box;
+    
 }
 
 .input_button_box {
-    background-color: white;
     background-color: #ffc3c3;
     border: none;
-    box-sizing: border-box;
+    
     padding: 10px;
     margin-top: 10px;
+    cursor: pointer;
 }
 .input_button_box:hover {
     background-color: white;
     background-color: #FF6B6B;
     border: none;
-    box-sizing: border-box;
+    
     padding: 10px;
     margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .room_create_page_box {
+    width: 90%;
+    height: auto;
+    padding: 30px 20px;
+    border-radius: 12px;
+  }
+
+  .input_box {
+    width: 100%;
+    font-size: 16px;
+    height: 45px;
+  }
+
+  .label_box {
+    font-size: 16px;
+    text-align: left;
+  }
+
+  .input_button_box {
+    width: 100%;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 400px) {
+  .input_box {
+    font-size: 14px;
+    height: 40px;
+  }
+
+  .label_box {
+    font-size: 14px;
+  }
+
+  .input_button_box {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .container {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
 }

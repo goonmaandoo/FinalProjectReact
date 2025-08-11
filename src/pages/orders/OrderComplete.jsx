@@ -16,7 +16,7 @@ const OrderComplete = () => {
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const response = await axios.get(`/api/order/getTheOrder/${orderId}`);
+        const response = await axios.get(`/api/orders/getTheOrder/${orderId}`);
 
         setOrderData(response.data);
       } catch (error) {
@@ -93,12 +93,12 @@ const OrderComplete = () => {
           메인으로 돌아가기
         </button>
         <button className={`${styles.btn} ${styles.btnSecondary}`} onClick={() => navigate(-1)}>
-          뒤로가기
+          공구방 바로가기
         </button>
       </div>
 
       <div className={styles.notice}>
-        주문이 완료되었습니다. 감사합니다!
+        © 주문이 완료되었습니다. 감사합니다!
       </div>
     </div>
   );
