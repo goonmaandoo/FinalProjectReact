@@ -28,6 +28,7 @@ import StoreDetail from "./pages/storePage/StoreDetail";
 import SelectRoom from "./pages/storePage/SelectedRoom";
 import OrderComplete from "./pages/orders/OrderComplete";
 import GonguComplete from "./pages/roomPage/GonguComplete";
+import StarRating from './pages/roomPage/StarRating';
 import RoomCreate from "./pages/roomPage/RoomCreate";
 import AllRoom from "./pages/roomPage/AllRoom";
 import SearchPage from "./pages/SearchPage";
@@ -167,6 +168,7 @@ function App() {
         />
         <Route path="/ordercomplete/:orderId" element={<OrderComplete />} />
         <Route path="/gongucomplete/:roomId" element={<GonguComplete />} />
+        <Route path="/rating/:room_id" element={<StarRating />} />
         <Route
           path="/mypage"
           element={
