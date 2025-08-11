@@ -46,7 +46,7 @@ export default function RoomCreate() {
       leaderId: authUser.id,
       storeId: parseInt(storeId),
       status: '모집중',
-      users: authUser.id,
+      users: JSON.stringify([authUser.id]),
     };
 
     try {

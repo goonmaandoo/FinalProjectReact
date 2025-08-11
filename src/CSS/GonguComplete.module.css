@@ -1,131 +1,224 @@
-body {
-    font-family: 'Noto Sans KR', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f5f5f5;
-}
-
 .container {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 30px;
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    margin-top: 50px;
-    margin-bottom: 50px;
+  max-width: 390px;
+  margin: 30px auto 50px auto;
+  background: #fff;
+  border-radius: 20px;
+  padding: 15px 20px 30px 20px;
+  box-sizing: border-box;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.2);
+  font-family: 'Noto Sans KR', sans-serif;
+  color: #333;
 }
 
-.header {
-    text-align: center;
-    margin-bottom: 30px;
+.checkIcon {
+  font-size: 60px;
+  color: #ff6464;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
-.header i {
-    font-size: 60px;
-    color: #FF6B6B;
-    margin-bottom: 15px;
+.mainTitle {
+  text-align: center;
+  font-weight: 700;
+  font-size: 22px;
+  margin: 0 0 8px 0;
+  color: #222;
 }
 
-.header h1 {
-    margin: 0;
-    color: #333;
+.subText {
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+  margin: 0 0 25px 0;
 }
 
-.orderInfo {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
+.roomInfo {
+  font-size: 13px;
+  margin-bottom: 25px;
+  font-weight: 500;
 }
 
-.orderInfo h2 {
-    margin-top: 0;
-    color: #555;
-    font-size: 18px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
+.roomInfo h3 {
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #222;
+  
 }
 
-.infoRow {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
+.roomInfo p {
+  margin: 2px 0;
 }
 
-.infoLabel {
-    font-weight: bold;
-    color: #666;
+.participantOrder {
+  margin-bottom: 25px;
+  font-size: 14px;
 }
 
-.infoValue {
-    color: #333;
+.participantOrder > h3 {
+  font-weight: 700;
+  margin-bottom: 15px;
+  border-left: 6px solid #ffb67b;
+  padding-left: 10px;
+  color: #444;
+
 }
 
-.orderItems {
-    margin-top: 20px;
+.orderBlock {
+  background-color: #ffe9c3;
+  border-radius: 6px;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  font-size: 13px;
 }
 
-.orderItem {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    border-bottom: #aaa solid 1px;
+.orderInfoRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #444;
 }
 
-.total {
-    font-weight: bold;
-    font-size: 18px;
-    text-align: right;
-    margin-top: 15px;
-    color: #333;
+.itemsHeader {
+  font-weight: 700;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 8px;
+  margin-top: 10px;
+  margin-bottom: 8px;
 }
 
-.buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 30px;
+.itemRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  font-size: 13px;
+  color: #333;
+  gap: 10px;
 }
 
-.btn {
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    flex: 1;
-    text-align: center;
-    transition: background-color 0.3s;
+.itemRow span:nth-child(1) {
+  flex: 1;
+  text-align: left;
+}
+
+.itemRow span:nth-child(2) {
+  flex: 1;
+  text-align: center;
+}
+
+.itemRow span:nth-child(3) {
+  flex: 1;
+  text-align: right;
+}
+
+.footerNotice {
+  background: #fff5db;
+  border-radius: 6px;
+  font-size: 12px ;
+  color: #a07f39;
+  text-align: center;
+  padding: 12px 10px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.btnPrimary,
+.btnSecondary {
+  flex: 1;
+  padding: 12px 0;
+  font-size: 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
 }
 
 .btnPrimary {
-    background-color: #FFB1B1;
-    color: black;
-    margin-right: 10px;
+  background-color: #FFB1B1;
+  color: #555;
 }
 
 .btnPrimary:hover {
-    background-color: #FF6B6B;
+  background-color: #FF6B6B;
 }
 
 .btnSecondary {
-    background-color: #f1f1f1;
-    color: #333;
-    margin-right: 10px;
+  background-color: #f0f0f0;
+  color: #555;
 }
 
 .btnSecondary:hover {
-    background-color: #e1e1e1;
+  background-color: #e5e5e5;
 }
 
-.notice {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #fff8e1;
-    border-radius: 8px;
+/* 데스크탑 또는 태블릿 대응 (화면 너비가 768px 이상일 때) */
+@media (min-width: 768px) {
+  .container {
+    max-width: 600px;
+    padding: 30px 40px;
+    margin: 50px auto;
+  }
+
+  .mainTitle {
+    font-size: 26px;
+  }
+
+  .subText {
+    font-size: 16px;
+  }
+
+  .roomInfo {
+    font-size: 15px;
+  }
+
+  .participantOrder {
+    font-size: 15px;
+  }
+
+  .orderBlock {
     font-size: 14px;
-    color: #666;
+    padding: 15px 20px;
+  }
+
+  .orderInfoRow,
+  .itemRow {
+    font-size: 14px;
+  }
+
+  .footerNotice {
+    font-size: 13px;
+    padding: 14px 12px;
+  }
+
+  .btnPrimary,
+  .btnSecondary {
+    font-size: 18px;
+    padding: 14px 0;
+  }
 }
 
-.menu_quantity {
-    float: right;
+/* 아주 작은 모바일 대응 (화면 너비가 360px 이하일 때) */
+@media (max-width: 360px) {
+  .mainTitle {
+    font-size: 20px;
+  }
+
+  .subText {
+    font-size: 13px;
+  }
+
+  .btnPrimary,
+  .btnSecondary {
+    font-size: 14px;
+    padding: 10px 0;
+  }
 }

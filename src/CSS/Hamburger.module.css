@@ -1,5 +1,5 @@
 .main {
-    width: 1280px;
+    width: 80rem;
     display: flex;
     justify-content: center;
 }
@@ -21,16 +21,29 @@
     width: 21px;
     height: auto;
 }
+.mypage_icon2 {
+    width: 15px;
+    height: 15px;
+}
 
 .mypage {
     margin-top: 5px;
     display: flex;
+    justify-content: space-between;
 }
 
 .mypage_text {
     margin-left: 10px;
-    font-size: 16px;
-
+    font-size: 14px;
+}
+.mypage_text1 {
+    margin-left: 10px;
+    font-size: 14px;
+}
+.mypage_text2 {
+    margin-left: 10px;
+    font-size: 14px;
+    margin-top: -2px;
 }
 .user_profile_image{
     width: 59px;
@@ -58,11 +71,15 @@
     height: 32px;
     cursor: pointer;
 }
-
 #user_notlogin {
     font-size: 24px;
     text-align: left;
     margin-top: 40px;
+}
+#user_notlogin2 {
+    font-size: 16px;
+    text-align: left;
+    margin-top: 25px;
 }
 
 .user_box {
@@ -217,4 +234,33 @@
 .score_img {
     width: 30px;
     height: auto;
+}
+.small_menu{
+    overflow: hidden;   
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    top: 70px;
+    min-height: 120px;
+    padding: 20px;
+    box-sizing: border-box;
+    display: none;
+    border-radius: 0 0 16px 16px;
+    font-family: "DM Sans", sans-serif;
+    font-weight: 600;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+@media (max-width:800px){
+    .hamburger_nav {
+        top: 83px;
+    }
+}
+@media (max-width:700px){
+    .hamburger_nav {
+        display: none;
+    }
+    .small_menu{
+        display:inline;
+    }
 }

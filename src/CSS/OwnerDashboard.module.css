@@ -1,0 +1,283 @@
+/* 헤더 */
+.owner_header{
+    background-color: #ff6b6b;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    justify-content: space-between;
+    color: white;
+}
+
+.title{
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.userinfo{
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.userName_btn {
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: white;
+    color: #ff6b6b;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+/* 내용물 */
+.outbox {
+    display: flex;
+    height: 100%;
+    background-color: #f5f5f5;
+}
+
+button{
+    cursor: pointer;
+}
+/* 사이드바 */
+.leftbox {
+    width: 220px;
+    background-color: white;
+    padding: 20px;
+    border-right: 1px solid #ccc;
+    flex-shrink: 0;
+}
+
+.leftbox ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.leftbox li {
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.leftbox li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.leftbox li a:hover,
+.leftbox li a:focus {
+    background-color: #ffe5e5;
+}
+/* 페이지네이션 */
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.pagination button {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+}
+
+.pagination button:hover {
+    background-color: #f0f0f0;
+}
+
+.pagination .active {
+    background-color: #ff6b6b;
+    color: white;
+    font-weight: bold;
+}
+
+/* 메인 콘텐츠 */
+.rightbox {
+    flex: 1;
+    width: 1454px;
+    background-color: #ebebeb;
+    margin: 0;
+}
+
+.rightbox h2 {
+    font-size: 36px;
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+
+.rightbox h3 {
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+/* 상단 오늘 주문 */
+.today_order {
+    border: 1px solid #ddd;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* 하단 두 개 박스 */
+.status_box_wrapper {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.status_box {
+    flex: 1;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.status_box h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.status_box h4 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* 최근 주문 박스 */
+.recent_order_box {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* storeregister */
+.category_firstimg{
+    display: flex;
+}
+.category_select{
+    margin-right: 50px;
+}
+.category_firstimg h3{
+    font-size: 28px;
+}
+.store_info h3{
+    font-size: 28px;
+}
+.store_info input{
+    width: 100%;
+    height: 90px;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+.store_register_button {
+    background-color: #ff9d9d;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-size: 22px;
+    cursor: pointer;
+    margin-top: 40px;
+}
+.button-wrapper {
+    text-align: right;
+    margin-top: 40px;
+}
+
+
+/* select,option 스타일 */
+.category_select select {
+    width: 250px;
+    height: 60px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #d9d9d9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* 가게관리 */
+.store_card{
+    background-color: white;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    padding: 10px;
+}
+.store_card h4{
+    font-size: 20px;
+}
+.store_card button{
+    margin-right: 10px;
+    width: 60px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    background-color: #ffb1b1;
+    color: white;
+    border-radius: 10px;
+    font-size: 16px;
+}
+.store_edit_section {
+    margin-top: 30px;
+    border-radius: 12px;
+    background-color: white;
+    width: 100%;
+}
+
+.store_edit_section h3 {
+    margin-bottom: 15px;
+    font-size: 22px;
+}
+
+.store_edit_section p {
+    margin-bottom: 12px;
+    font-size: 16px;
+}
+
+.store_edit_section input {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.store_edit_section button {
+    margin-top: 10px;
+    margin-right: 10px;
+    padding: 10px 20px;
+    font-size: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #fff;
+    color: black;
+    width: auto;
+    height: auto;
+    border: 1px solid #ccc;
+}
+.update-btn:hover {
+    background-color: #ff6b6b;
+    color: white;
+}
+.cancel-btn:hover {
+    background-color: #ff6b6b;
+    color: white;
+}

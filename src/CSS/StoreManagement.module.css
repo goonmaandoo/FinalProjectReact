@@ -1,0 +1,105 @@
+.store_box{
+    width: 100%;
+    height: 150px;
+    border-radius: 10px;
+    background-color: white;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+.store_box img{
+    width: 65px;
+    height: auto;
+}
+.total_title{
+    font-size: 1.5rem;
+    text-align: center;
+    align-items: center;
+}
+.total_num{
+    font-size: 1.75rem;
+    font-weight: 700;
+    text-align: center;
+}
+.store_table{
+    border: 1px solid #b9b9b9;
+    background-color: white;
+    width: 100%;
+    border-collapse: collapse;
+    padding: 0;
+    margin: 0;
+}
+.store_table th,
+.store_table td {
+    border: 1px solid #b9b9b9;
+}
+.store_table th{
+    background-color: #f0f0f0;
+    padding: 5px 0;
+}
+.store_table td{
+    padding: 5px;
+}
+.input_value{
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.input_value button{
+    background-color: #7B7A7A;
+    color: white;
+    border: none;
+    height: 30px;
+    font-size: 1rem;
+    padding: 0 10px;
+}
+.input_value select{
+    height: 30px;
+    font-size: 1rem;
+}
+.input_value input{
+    height: 31px;
+    font-size: 1rem;
+    padding: 0;
+}
+.status_update{
+    width: 85px;
+}
+.status_button {
+    width: 55px;
+}
+.store_table button{
+    width: 100%;
+    font-size: 1rem;
+    border: none;
+    background-color: #b9b9b9;
+    color: white;
+    border-radius: 5px;
+}
+.store_table button:hover{
+    background-color: #ffb1b1;
+}
+.status_ban{
+    width: 55px;
+    background-color: #FF8000;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+}
+.status_unactive{
+    width: 55px;
+    background-color: #FF0000;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+}
+.status_active{
+    width: 55px;
+    background-color: #04B310;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+}

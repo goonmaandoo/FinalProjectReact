@@ -1,0 +1,61 @@
+.store_box{
+    width: 100%;
+    height: 130px;
+    border-radius: 10px;
+    background-color: white;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+.total{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.total_title{
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.total_num{
+    font-size: 1.125rem;
+}
+.room_name{
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+.room_store{
+    color: rgb(53, 53, 53);
+}
+.total_num_box{
+    width: 150px;
+}
+.room_count{
+    font-size: 1.25rem;
+}
+.total1{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.report_box{
+    width: 100px;
+    text-align: center;
+}
+.report_status{
+    background-color: #ff7272;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+.total1 button{
+    border: 1px solid #ff7272;
+    color: #ff7272;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: white;
+    font-size: 1rem;
+}

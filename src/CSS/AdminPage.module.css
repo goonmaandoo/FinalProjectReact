@@ -1,0 +1,138 @@
+.container_header{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    height: 100px;
+    background-color: #666666;
+}
+.admin_header{
+    min-width: 1500px;
+    display: flex;
+    align-items: center;
+    color: white;
+    justify-content: space-between;
+    padding: 20px;
+}
+.title{
+    font-size: 32px;
+    font-weight: 600;
+}
+.userinfo{
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.userName_btn {
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.userName_btn:hover {
+    background-color: #acacac;
+    color: white;
+}
+.container{
+    width: 1500px;
+    display: flex;
+    justify-content: center;
+    min-height: 1500px;
+}
+.admin_main{
+    background-color: #EBEBEB;
+    display: flex;
+    justify-content: center;
+    
+}
+.side_bar{
+    flex: 0 0 360px;
+    background-color: #F9F9F9;
+    height: 100%;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.side_menu_box{
+    display: flex;
+    justify-content: space-between;
+}
+.side_menu{
+    list-style: none;
+    padding-inline-start: 0;
+    font-size: 1.35rem;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-weight: bold;
+}
+.side_menu li{
+    white-space: nowrap;
+    background-color: white;
+    transition: box-shadow 0.2s ease;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    height: 60px;
+    flex: 0 0 60px;
+    display: flex;
+    align-items: center;
+}
+.side_menu li:hover{
+    background-color: #FFE9E9;
+}
+.side_menu li.active_tab {
+    background-color: #FFE9E9;
+}
+.side_imo{
+    margin-right: 15px;
+    width: 25px;
+    height: auto;
+    margin-top: 2px;
+}
+.side_main{
+    width: 100%;
+    height: 100%;
+    padding: 50px 30px;
+}
+.side_title{
+    font-size: 2rem;
+    font-weight: 500;
+}
+.side_detail{
+    font-size: 1.5rem;
+    margin-bottom: 40px;
+}
+.go_to_mainpage{
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+.side_component{
+    width: 1140px;
+}
+.side_btn{
+    display: flex;
+    gap: 10px;
+    font-size: 1.5rem;
+}
+.side_btn button {
+    border-radius: 10px;
+    height: 48px;
+    border: none;
+    width: 100px;
+    font-size: 1.25rem;
+}
+.active_btn{
+    background-color: #FFB1B1;
+}
+
+.unactive_btn{
+    border-radius: 10px;
+    background-color: #D9D9D9;
+}

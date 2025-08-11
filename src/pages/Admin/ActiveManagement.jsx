@@ -1,0 +1,120 @@
+import styles from '../../CSS/StoreManagement.module.css';
+import { useState, useEffect } from 'react';
+
+export default function Active({ roleFilter }) {
+    // const [userCount, setUserCount] = useState(0);
+    // const [totalCount, setTotalCount] = useState(0);
+    const [unactiveCount, setUnactiveCount] = useState(0);
+    const [banCount, setBanCount] = useState(0);
+    const [userData,setUserData] = useState([]);
+    const [selected, setSelected] = useState('nickname');
+    const [keyword, setKeyword] = useState("");
+
+    const handleChange = (e) => {
+        setSelected(e.target.value);
+    };
+
+    const handleSearch = () => {
+        let url = 'http://localhost:8080/api/users/';
+        if (roleFilter === 'all' ) {
+            url += `userSearchActive?type=${selected}&keyword=${encodeURIComponent(keyword)}`;
+        }else if(roleFilter === 'unactive'){
+            url += `userUnactiveSearch?type=${selected}&keyword=${encodeURIComponent(keyword)}`;
+        }else if(roleFilter === 'ban'){
+            url += `userBanSearch?type=${selected}&keyword=${encodeURIComponent(keyword)}`;
+        }
+        fetch(url)
+            .then(res => {
+                if (!res.ok) throw new Error('서버 에러');
+                return res.json();
+            })
+            .then(data => setUserData(data))
+            .catch(console.error);
+    };
+    //데이터 불러오기
+    useEffect(() => {
+        fetch('http://localhost:8080/api/users/unactiveCount')
+            .then(res => {
+                if (!res.ok) throw new Error('서버 에러');
+                return res.json();
+            })
+            .then(count => setUnactiveCount(count))
+            .catch(console.error);
+        fetch('http://localhost:8080/api/users/banCount')
+            .then(res => {
+                if (!res.ok) throw new Error('서버 에러');
+                return res.json();
+            })
+            .then(count => setBanCount(count))
+            .catch(console.error);
+    }, [])
+    // role별로 데이터 불러오기
+    useEffect(() => {
+        let url = 'http://localhost:8080/api/users/'
+        if(roleFilter !== 'all'){
+            url += `unactiveBan/${roleFilter}`;
+        }else{
+            url +=  'selectAllActive';
+        }
+        fetch(url)
+        .then(res => {
+            if (!res.ok) throw new Error('서버 에러');
+            return res.json();
+        })
+        .then(data => setUserData(data))
+        .catch(console.error);
+    }, [roleFilter])
+
+    return (
+        <>
+            {roleFilter !== "all" ?
+                <div className={styles["store_box"]}>
+                    <div className={styles["total_third"]}>
+                        <div className={styles["total_title"]}>{roleFilter === "unactive" ? "탈퇴 회원" : "정지 회원"}</div>
+                        <div className={styles["total_num"]}>{roleFilter === "unactive" ? unactiveCount : banCount }</div>
+                    </div>
+                    <img src={`http://localhost:8080/image/imgfile/admin/${roleFilter}_user.png`} />
+                </div>
+                :
+                <>
+                    <div className={styles["store_box"]}>
+                        <div className={styles["total_third"]}>
+                            <div className={styles["total_title"]}>탈퇴 회원</div>
+                            <div className={styles["total_num"]}>{unactiveCount}</div>
+                        </div>
+                        <img src={`http://localhost:8080/image/imgfile/admin/unactive_user.png`} />
+                    </div>
+                    <div className={styles["store_box"]}>
+                        <div className={styles["total_third"]}>
+                            <div className={styles["total_title"]}>정지 회원</div>
+                            <div className={styles["total_num"]}>{banCount}</div>
+                        </div>
+                        <img src={`http://localhost:8080/image/imgfile/admin/ban_user.png`} />
+                    </div>
+                </>}
+
+            <div className={styles["input_value"]}>
+                <select id="table_th" value={selected} onChange={handleChange}>
+                    <option value="nickname">닉네임</option>
+                    <option value="tel">전화번호</option>
+                </select>
+                <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+                <button onClick={handleSearch}>검색</button>
+            </div>
+            <table className={styles["store_table"]}>
+                <thead>
+                    <tr>
+                        <th>구분</th><th>닉네임</th><th>핸드폰번호</th><th>이메일</th><th>주소</th><th>상세주소</th><th>상태</th><th>상태변경</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {userData.map((item) => (
+                        <tr key={item.id}>
+                            <td>{item.id}</td><td>{item.nickname}</td><td>{item.phoneNum}</td><td>{item.email}</td><td>{item.address}</td><td>{item.addressDetail}</td><td className={styles['status_button']}>{item.status === 'ban' ? <div className={styles['status_ban']}>정지</div> : <div className={styles['status_unactive']}>탈퇴</div>}</td><td className={styles['status_update']}>{item.status === 'ban' ? <button type='submit'>상태변경</button> : ""}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </>
+    )
+}

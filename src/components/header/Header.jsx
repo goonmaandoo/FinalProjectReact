@@ -1,10 +1,10 @@
 import styles from '../../CSS/Header.module.css'
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/user';
 
-export default function Header() {
+export default function Header({ toggleMenu }) {
     const [keyword, setKeyword] = useState('');
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -24,7 +24,7 @@ export default function Header() {
             search();
         }
     }
-    
+
     //검색창
     const search = () => {
         if (!keyword.trim()) {
