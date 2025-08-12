@@ -12,6 +12,7 @@ import { loginSuccess, logout } from "./redux/user";
 import axios from "axios";
 
 import MyPage from "./pages/myPage/MyPage";
+import CashCharge from "./pages/cash/CashCharge";
 import EditUser from "./pages/myPage/EditUser";
 import MyQna from "./pages/myPage/MyQna";
 import UserInfo from "./pages/myPage/UserInfo";
@@ -28,7 +29,7 @@ import StoreDetail from "./pages/storePage/StoreDetail";
 import SelectRoom from "./pages/storePage/SelectedRoom";
 import OrderComplete from "./pages/orders/OrderComplete";
 import GonguComplete from "./pages/roomPage/GonguComplete";
-import StarRating from './pages/roomPage/StarRating';
+import StarRating from "./pages/roomPage/StarRating";
 import RoomCreate from "./pages/roomPage/RoomCreate";
 import AllRoom from "./pages/roomPage/AllRoom";
 import SearchPage from "./pages/SearchPage";
@@ -87,7 +88,7 @@ function App() {
   const isOwnerPage = location.pathname === "/ownerpage";
   const isAdminPage = location.pathname === "/adminpage";
   const isUpdatePage = location.pathname === "/updatestatus";
-  const showHeader = !isAdminPage && !isOwnerPage &&!isUpdatePage;
+  const showHeader = !isAdminPage && !isOwnerPage && !isUpdatePage;
 
   // 로그인 상태 유지 및 유저 정보 불러오기
   useEffect(() => {
@@ -188,6 +189,7 @@ function App() {
           <Route path="myreview" element={<MyReview />} />
         </Route>
 
+        <Route path="/cash/cashcharge" element={<CashCharge />} />
         <Route path="/testRoom" element={<RoomTest />} />
 
         <Route path="/storelist/:categoryId" element={<StoreListPage />} />
@@ -232,7 +234,7 @@ function App() {
         <Route path="/reviewadmin" element={<ReviewAdmin />} />
         <Route path="/reportmanagement" element={<ReportManagement />} />
         <Route path="/roommanagement" element={<RoomManagement />} />
-        <Route path="/updatestatus" element={<UpdateStatus/>} />
+        <Route path="/updatestatus" element={<UpdateStatus />} />
       </Routes>
 
       {isOpen && <Hamburger isOpen={isOpen} onClose={() => setIsOpen(false)} />}

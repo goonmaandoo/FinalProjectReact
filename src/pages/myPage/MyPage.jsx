@@ -1,18 +1,78 @@
 import styles from "../../CSS/MyPage.module.css";
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import MyHeader from "./MyHeader";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import GaugeBar from "../../component/funtion/common/gaugeBar";
 import axios from "axios";
 export default function MyPage() {
   const location = useLocation();
   const currentMenu = location.pathname.split("/").pop();
   const [profileUrl, setProfileUrl] = useState("");
+
+  const [error, setError] = useState(null);
+  const [cash, setCash] = useState(null);
+  const popupRef = useRef(null);
+  const [loading, setLoading] = useState(false);
+
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.auth.user);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const token = useSelector((s) => s.auth?.token);
+
+  const fetchCash = async () => {
+    if (!token) return;
+    // setLoading(true);
+    setError(null);
+    try {
+      const res = await axios.get("/api/users/cash", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setCash(Number(res.data) || 0);
+    } catch (e) {
+      setError(e.response?.data || "캐쉬 조회 실패");
+    } finally {
+      // setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCash();
+  }, [token]);
+
+  // 팝업에서 충전 완료 postMessage 받으면 갱신
+  useEffect(() => {
+    const onMessage = (event) => {
+      if (event.origin !== window.location.origin) return; // 보안
+      if (event.data?.type === "CASH_CHARGED") {
+        fetchCash();
+      }
+    };
+
+    //이벤트 리스너
+    window.addEventListener("message", onMessage);
+    return () => {
+      window.removeEventListener("message", onMessage);
+    };
+  }, [token]); // token 바뀌면 리바인딩
+
+  const openChargePopup = () => {
+    if (!token) {
+      alert("로그인 후 이용해주세요.");
+      return;
+    }
+    //캐쉬 충전창 중복 오픈 방지
+    if (popupRef.current && !popupRef.current.closed) {
+      popupRef.current.focus();
+      return;
+    }
+    popupRef.current = window.open(
+      "/cash/cashcharge",
+      "_blank",
+      "width=480,height=680"
+    );
+  };
 
   const menuList = [
     { name: "회원정보", path: "userinfo" },
@@ -115,9 +175,12 @@ export default function MyPage() {
               alt="코인"
             />
             <div className={styles["coin_confirm"]}>
-              {"" /* thousands(myCash) */}원
+              {"" /* thousands(myCash) */}{" "}
+              {loading || cash === null
+                ? "로딩중..."
+                : `${cash.toLocaleString()} 원`}
             </div>
-            <button className={styles.charge_Button} onClick={() => {}}>
+            <button className={styles.charge_Button} onClick={openChargePopup}>
               충전
             </button>
           </div>
