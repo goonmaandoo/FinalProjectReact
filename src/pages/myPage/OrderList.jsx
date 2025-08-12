@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import styles from "../../CSS/OrderList.module.CSS";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 export default function OrderList() {
   const [openOrderIds, setOpenOrderIds] = useState([]);
@@ -12,8 +13,8 @@ export default function OrderList() {
 
   const itemsPerPage = 5;
 
-  const userId = 1;
-  //테스트용 userId. 나중에 로그인 id 연동 예정.
+  const user = useSelector((state) => state.auth.user);
+  const userId = user?.id;
 
   //주문 목록 불러오기.
   useEffect(() => {
@@ -24,8 +25,8 @@ export default function OrderList() {
       })
       .then((response) => {
         console.log(response.data);
-        setOrderList(response.data.content); //페이지 내용
-        setTotalCount(response.data.totalElements); //총 개수
+        setOrderList(response.data.content || []); //페이지 내용
+        setTotalCount(response.data.totalElements || 0); //총 개수
         setLoading(false);
       })
       .catch((err) => {
