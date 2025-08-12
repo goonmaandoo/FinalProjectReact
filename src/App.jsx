@@ -84,11 +84,14 @@ function App() {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
 
+  //헤더푸터 제외
+  const isCashCharge = location.pathname === "/cash/cashcharge";
   const isMainPage = location.pathname === "/mainpage";
   const isOwnerPage = location.pathname === "/ownerpage";
   const isAdminPage = location.pathname === "/adminpage";
   const isUpdatePage = location.pathname === "/updatestatus";
-  const showHeader = !isAdminPage && !isOwnerPage && !isUpdatePage;
+  const showHeader =
+    !isAdminPage && !isOwnerPage && !isUpdatePage && !isCashCharge;
 
   // 로그인 상태 유지 및 유저 정보 불러오기
   useEffect(() => {
