@@ -21,8 +21,8 @@ export default function RoomManagement() {
     return (
         <div>
             {roomData.map((item) => (
-                <>
-                <div key={item.id} className={activeRoomId === item.id ? styles["store_box_active"] : styles["store_box"]}>
+                <div key={item.id}>
+                <div className={activeRoomId === item.id ? styles["store_box_active"] : styles["store_box"]}>
                 {/* <div key={item.id} className={styles["store_box"]}> */}
                     <div className={styles["total"]}>
                         <div className={styles["total_title"]}>
@@ -50,25 +50,19 @@ export default function RoomManagement() {
                 </div>
                 {activeRoomId === item.id && (
                         <div className={styles["user_list"]}>
-                            {item.usersInfo.length > 0 ? (
-                                item.usersInfo.map(user => (
-                                    <>
-                                    <div className={styles["user_map"]}>
-                                        <div key={user.roomJoinId} className={styles["user_item"]}>
+                            {item.usersInfo.map(user => (
+                                    <div key={user.roomJoinId} className={styles["user_map"]}>
+                                        <div className={styles["user_item"]}>
                                             {user.nickname}
                                         </div>
-                                        <div key={user.roomJoinId} className={styles["user_status"]}>
+                                        <div className={styles["user_status"]}>
                                             {user.joinStatus}
                                         </div>
                                     </div>
-                                    </>
-                                ))
-                            ) : (
-                                <div>참여자가 없습니다.</div>
-                            )}
+                                ))}
                         </div>
                     )}
-                </>
+                </div>
             ))}
         </div>
     )

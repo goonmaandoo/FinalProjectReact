@@ -67,6 +67,17 @@ import ReportManagement from "./pages/Admin/ReportManagement";
 import RoomManagement from "./pages/Admin/RoomManagement";
 import UpdateStatus from "./pages/Admin/UpdateStatus";
 
+import AdminPage1 from "./pages/Admin/AdminPage1";
+import Dashboard1 from "./pages/Admin/Dashboard1";
+import OrderManagement1 from "./pages/Admin/OrderManagement1";
+import ReviewAdmin1 from "./pages/Admin/ReviewAdmin1";
+import ReportManagement1 from "./pages/Admin/ReportManagement1";
+import RoomManagement1 from "./pages/Admin/RoomManagement1";
+import StoreManagement1 from "./pages/Admin/StoreManagement1";
+import UserManagement1 from "./pages/Admin/UserManagement1";
+import UpdateStatus1 from "./pages/Admin/UpdateStatus1";
+import Active1 from "./pages/Admin/ActiveManagement1";
+
 function parseJwt(token) {
   try {
     const base64Payload = token.split(".")[1];
@@ -90,8 +101,9 @@ function App() {
   const isOwnerPage = location.pathname === "/ownerpage";
   const isAdminPage = location.pathname === "/adminpage";
   const isUpdatePage = location.pathname === "/updatestatus";
+  const isAdmin1Page = location.pathname.startsWith("/admin");
   const showHeader =
-    !isAdminPage && !isOwnerPage && !isUpdatePage && !isCashCharge;
+    !isAdminPage && !isOwnerPage && !isUpdatePage && !isCashCharge && !isAdmin1Page;
 
   // 로그인 상태 유지 및 유저 정보 불러오기
   useEffect(() => {
@@ -238,6 +250,20 @@ function App() {
         <Route path="/reportmanagement" element={<ReportManagement />} />
         <Route path="/roommanagement" element={<RoomManagement />} />
         <Route path="/updatestatus" element={<UpdateStatus />} />
+
+        <Route path="/admin" element={<AdminPage1/>}>
+          <Route index element={<Dashboard1 />} /> 
+          <Route path="dashboard1"element={<Dashboard1 />} /> 
+          <Route path="storeManagement1" element={<StoreManagement1 />} /> 
+          <Route path="userManagement1" element={<UserManagement1 />} /> 
+          <Route path="active1" element={<Active1 />} /> 
+          <Route path="ordermanagement1" element={<OrderManagement1 />} /> 
+          <Route path="reviewadmin1" element={<ReviewAdmin1 />} /> 
+          <Route path="reportmanagement1" element={<ReportManagement1 />} /> 
+          <Route path="roommanagement1" element={<RoomManagement1 />} /> 
+          <Route path="updatestatus1" element={<UpdateStatus1 />} /> 
+        </Route>
+
       </Routes>
 
       {isOpen && <Hamburger isOpen={isOpen} onClose={() => setIsOpen(false)} />}

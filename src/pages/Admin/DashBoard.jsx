@@ -1,4 +1,5 @@
-import { useState, useEffect  } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate, Link } from "react-router-dom";
 import styles from '../../CSS/Dashboard.module.css';
 
 
@@ -8,6 +9,9 @@ export default function Dashboard() {
     const [ end, setEnd] = useState(0);
     const [ total, setTotal] = useState(0);
     const [ users, setUsers] = useState(0);
+    const [totalOrders, setTotalOrders] = useState(0);
+    const [todayOrders, setTodayOrders] = useState(0);
+    const navigate = useNavigate();
 
     useEffect(() => {
             //전체 공구방
@@ -50,6 +54,22 @@ export default function Dashboard() {
             })
             .then(count => setUsers(count))
             .catch(console.error);
+            //총주문수
+            fetch('http://localhost:8080/api/orders/orderTodayCount')
+            .then(res => {
+                if (!res.ok) throw new Error('서버 에러');
+                return res.json();
+            })
+            .then(count => setTodayOrders(count))
+            .catch(console.error);
+            //총주문수
+            fetch('http://localhost:8080/api/orders/ordersCount')
+            .then(res => {
+                if (!res.ok) throw new Error('서버 에러');
+                return res.json();
+            })
+            .then(count => setTotalOrders(count))
+            .catch(console.error);
         },[]);
 
     return (
@@ -81,12 +101,13 @@ export default function Dashboard() {
                         <span><img src={`http://localhost:8080/image/imgfile/main_img/today_order.png`} /></span>
                         오늘 주문 건수
                     </div>
-                    <div className={styles["total_num"]}>?건</div>
+                    <div className={styles["total_num"]}>{todayOrders}건</div>
                 </div>
                 <hr />
                 <div className={styles["total_second"]}>
                     <div className={styles["total_title"]}><span><img src={`http://localhost:8080/image/imgfile/main_img/today_order.png`} /></span>총 주문 건수</div>
-                    <div className={styles["total_num"]}>?건</div>
+                    <div className={styles["total_num"]}>
+                    <Link to="/admin/ordermanagement">{totalOrders}건</Link></div>
                 </div>
             </div>
             <div className={styles["dash_box"]}>
