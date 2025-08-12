@@ -3,12 +3,6 @@
   margin: 0 auto;
   padding: 32px 0;
 }
-.title {
-  margin-bottom: 24px;
-  font-size: 1.6rem;
-  font-weight: bold;
-  color: #246c5f;
-}
 .reviewList {
   list-style: none;
   margin: 0;
@@ -23,12 +17,16 @@
   border: 1px solid #e3e3e3;
   border-radius: 14px;
   background: #fff;
+  box-shadow: 0 4px 20px #ffdbdb2d;
   padding: 24px;
   margin-bottom: 32px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
+.reviewCard:hover {
+  box-shadow: 0 8px 28px #ffdbdbb4;
+}
 .reviewDate {
-  color: #9bcfba;
+  color: #ffb1b1;
   font-size: 15px;
   margin-bottom: 8px;
 }
@@ -46,7 +44,7 @@
   margin-bottom: 10px;
 }
 .stars {
-  color: #19ce60;
+  color: #ff6b6b;
   font-size: 17px;
   margin-right: 2px;
 }
@@ -70,7 +68,7 @@
   transition: background 0.15s;
 }
 .actionBtns button:hover {
-  background: #e9f6f1;
+  background: #ffdbdb;
 }
 .reviewPages {
   text-align: center;

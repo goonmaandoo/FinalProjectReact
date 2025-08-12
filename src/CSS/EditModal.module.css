@@ -98,3 +98,80 @@
   font-weight: 700;
   font-size: 20px;
 }
+/* 태블릿: 1024px 이하 */
+@media (max-width: 1024px) {
+  .modal {
+    width: 95vw;
+    max-width: 90vw;
+    min-width: 0;
+    padding: 16px;
+  }
+  .titleInput,
+  .contentsInput {
+    width: 85vw;
+    min-width: 0;
+    font-size: 1rem;
+  }
+}
+
+/* 모바일: 600px 이하 */
+@media (max-width: 600px) {
+  .modal {
+    width: 95vw;
+    max-width: 90vw;
+    min-width: 0;
+    height: auto;
+    max-height: 90vh;
+    padding: 12px;
+    border-radius: 6px;
+  }
+  .titleInput,
+  .contentsInput {
+    width: 85vw;
+    min-width: 0;
+    font-size: 0.95rem;
+    border-radius: 4px;
+  }
+  .contentsInput {
+    height: 120px;
+  }
+  .saveButton,
+  .cansleButton {
+    width: 60px;
+    height: 28px;
+    font-size: 0.9rem;
+    margin-left: 2px;
+    margin-right: 4px;
+    border-radius: 4px;
+  }
+  .closeBtn {
+    top: 7px;
+    right: 9px;
+    font-size: 15px;
+    border-radius: 3px;
+    padding: 2px 6px;
+  }
+}
+
+/* ultra-narrow: 400px 이하 */
+@media (max-width: 400px) {
+  .modal {
+    padding: 6px;
+    border-radius: 3px;
+  }
+  .titleInput,
+  .contentsInput {
+    font-size: 0.85rem;
+    border-radius: 2px;
+    padding: 3px;
+  }
+  .contentsInput {
+    height: 80px;
+  }
+  .saveButton,
+  .cansleButton {
+    width: 36px;
+    height: 22px;
+    font-size: 0.8rem;
+  }
+}

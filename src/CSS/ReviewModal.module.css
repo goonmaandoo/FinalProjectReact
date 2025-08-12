@@ -58,8 +58,8 @@
   padding: 2px;
 }
 .starSelected {
-  color: #19ce60;
-  text-shadow: 0 2px 10px #d5f7e2;
+  color: #ff6b6b;
+  text-shadow: 0 2px 10px #ffdbdb;
 }
 
 .textArea {
@@ -86,7 +86,7 @@
 .submitBtn {
   padding: 10px 30px;
   border-radius: 7px;
-  background: #19ce60;
+  background: #ff6b6b;
   color: #fff;
   border: none;
   font-size: 17px;
@@ -96,7 +96,7 @@
   transition: background 0.13s;
 }
 .submitBtn:disabled {
-  background: #c8eeda;
+  background: #ffdbdb;
   cursor: default;
 }
 .cancelBtn {
