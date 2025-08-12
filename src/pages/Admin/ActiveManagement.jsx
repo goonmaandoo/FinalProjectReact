@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 
 export default function Active({ roleFilter }) {
     // const [userCount, setUserCount] = useState(0);
-    // const [totalCount, setTotalCount] = useState(0);
+    const [totalCount, setTotalCount] = useState(0);
     const [unactiveCount, setUnactiveCount] = useState(0);
     const [banCount, setBanCount] = useState(0);
     const [userData, setUserData] = useState([]);
@@ -16,7 +16,7 @@ export default function Active({ roleFilter }) {
     };
 
     const handleStatusClick = (id) => {
-        window.open("/updatestatus?id=${id}", "_blank", "width=500,height=300");
+        window.open(`/updatestatus?id=${id}`, "_blank", "width=500,height=300");
     };
 
     const handleSearch = () => {
@@ -59,7 +59,7 @@ export default function Active({ roleFilter }) {
         if (roleFilter !== 'all') {
             url += `unactiveBan/${roleFilter}`;
         } else {
-            url += 'selectAllActive';
+            url += 'selectAllAdmin';
         }
         fetch(url)
             .then(res => {
@@ -115,9 +115,14 @@ export default function Active({ roleFilter }) {
                 <tbody>
                     {userData.map((item) => (
                         <tr key={item.id}>
-                            <td>{item.id}</td><td>{item.nickname}</td><td>{item.phoneNum}</td><td>{item.email}</td><td>{item.address}</td><td>{item.addressDetail}</td><td className={styles['status_button']}>{item.status === 'ban' ? <div className={styles['status_ban']}>정지</div> : <div className={styles['status_unactive']}>탈퇴</div>}</td>
+                            <td>{item.id}</td><td>{item.nickname}</td><td>{item.phoneNum}</td><td>{item.email}</td><td>{item.address}</td><td>{item.addressDetail}</td>
+                            <td className={styles['status_button']}>
+                                {item.status === 'ban' && <div className={styles['status_ban']}>정지</div>}
+                                {item.status === 'unactive' && <div className={styles['status_unactive']}>탈퇴</div>}
+                                {item.status === 'active' && <div className={styles['status_active']}>활성화</div>}
+                            </td>
                             <td className={styles['status_update']}>
-                                {item.status === 'ban' ? <button type='submit' onClick={ handleStatusClick(item.id)}>상태변경</button> : ""}
+                                <button type='submit' onClick={() => handleStatusClick(item.id)}>상태변경</button>
                             </td>
                         </tr>
                     ))}
