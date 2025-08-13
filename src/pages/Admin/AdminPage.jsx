@@ -36,6 +36,7 @@ export default function AdminPage() {
         }
     }, [user, navigate]);
 
+
     const menus = [
         { id: "dashboard", label: "대시보드", path: "dashboard", content: "오늘의 현황을 확인하세요"  },
         { id: "order", label: "주문관리", path: "ordermanagement", content: "전체 주문과 배송 상태를 관리하세요" },
@@ -46,6 +47,7 @@ export default function AdminPage() {
         { id: "room", label: "공구방관리", path: "roommanagement", content: "진행중이거나 완료된 공구방을 관리하세요" },
         { id: "report", label: "신고관리", path: "reportmanagement", content: "사용자 신고와 문의사항을 처리하세요" },
         { id: "refund", label: "환불관리", path: "", content: "환불내역을 확인하고 관리하세요" },
+        { id: "orderdetail", label: "주문상세", path: "orderdetail", content: "주문의 상세 정보를 확인하고 관리하세요" },
         { id: "review", label: "댓글관리", path: "reviewadmin", content: "공구방과 음식점 리뷰 댓글을 관리하세요"  }
     ];
 
@@ -66,7 +68,7 @@ export default function AdminPage() {
                     <div className={styles["side_bar"]}>
                         <div>
                             <ul className={styles["side_menu"]}>
-                                {menus.map((tab) => {
+                                {menus.filter(tab => tab.id !== "orderdetail").map((tab) => {
                                     const currentPath = location.pathname.split("/").pop();
                                     const isActive = currentPath === tab.path;
                                     return(
