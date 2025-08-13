@@ -55,7 +55,7 @@ export default function SelectRoom() {
                 <div className={styles["main_box"]}>
                     {room.length > 0 ? (
                         room.map((item) => (
-                            <div key={item.id}>
+                            <div key={item.id} className={styles["search_box"]}>
                                 {activeRoomId === item.id && (
                                     <KakaoMap address={item.roomAddress} className={styles["address_map"]}></KakaoMap>
                                 )}

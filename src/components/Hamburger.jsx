@@ -48,11 +48,17 @@ export default function Hamburger({ isOpen, onClose }) {
         };
     }, []);
     useEffect(() => {
+        if (!user?.id) return;
         //진행중인 공구방
-        axios.get(`http://localhost:8080/api/room/roomsbyId/${user?.id}`)
-            .then(res => setUserRoom(res.data))
+        axios.get(`http://localhost:8080/api/room/roomsbyId/${user.id}`)
+            .then(res => {
+                console.log("RoomsbyId response:", res.data);
+                setUserRoom(res.data);
+            })
             .catch(err => console.error("RoomsbyId error:", err));
-    },[user?.id])
+    }, [user?.id])
+
+    console.log("현재 user 값:", userRoom);
 
     useEffect(() => {
         const handleClickOutside = (e) => {
@@ -104,14 +110,14 @@ export default function Hamburger({ isOpen, onClose }) {
                         <div>
                             <div>
                                 {user ? user.role === "owner"
-                                        ? <div>
+                                    ? <div>
                                         <Link to="/ownerpage" onClick={() => onclose()}>사장님 페이지 →</Link>
                                     </div>
-                                        : user.role === "admin"
-                                            ? <div>
+                                    : user.role === "admin"
+                                        ? <div>
                                             <Link to="/admin" onClick={() => onclose()}>관리자 페이지 →</Link>
                                         </div>
-                                            : ""
+                                        : ""
                                     : ""}
                             </div>
                         </div>
@@ -123,7 +129,7 @@ export default function Hamburger({ isOpen, onClose }) {
                                     <div>
                                         <img
                                             className={styles["user_profile_image"]}
-                                            src={user?.profileUrl ? `http://localhost:8080${user?.profileUrl}`: "http://localhost:8080/image/profileimg/mypagePerson.png"}
+                                            src={user?.profileUrl ? `http://localhost:8080${user?.profileUrl}` : "http://localhost:8080/image/profileimg/mypagePerson.png"}
                                             onError={(e) => (e.currentTarget.src = "http://localhost:8080/image/mypagePerson.png")} />
                                     </div>
                                     <div className={styles["userName"]}>{user?.nickname}님</div>
@@ -166,7 +172,29 @@ export default function Hamburger({ isOpen, onClose }) {
                     {user && (
                         <div className={styles["chat_list"]}>
                             <div className={styles["chat_list_title"]}>참여중인 채팅방 목록</div>
-
+                            {userRoom.length > 0 ? (
+                                userRoom.map((room) => (
+                                    <div key={room.id} className={styles["chat_list_room"]} onClick={() => window.location.href = `/room/${room.id}`}>
+                                        <img className={styles["chat_list_circle"]}
+                                            src={`http://localhost:8080/image/imgfile/store/store_${room.storeId}.jpg`} />
+                                        <div className={styles["chat_room"]}>
+                                            <div className={styles["chat_title_time"]}>
+                                                <div className={styles["chat_title"]}>{room.roomName}</div>
+                                                <div className={styles["chat_time"]}></div>
+                                            </div>
+                                            <div className={styles["chat_room_detail"]}>
+                                                <img src="http://localhost:8080/image/imgfile/main_img/octicon_people-24.png" />
+                                                <div className={styles["chat_people"]}>
+                                                    {room.joinCount}/{room.maxPeople} 참여중
+                                                </div>
+                                                <div className={styles["chat_state"]}>{room.status}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <div>참여중인 채팅방이 없습니다.</div>
+                            )}
                         </div>
                     )}
                 </div>
@@ -174,31 +202,31 @@ export default function Hamburger({ isOpen, onClose }) {
             <div>
                 <AnimatePresence>
                     <motion.nav key="mobile-nav" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.4 }} style={{ originY: 0 }} ref={smallMenuRef} className={styles.small_menu} >
-                    <div className={styles["mypage"]}>
                         <div className={styles["mypage"]}>
-                            <img
-                                className={styles["mypage_icon2"]}
-                                src="http://localhost:8080/image/imgfile/main_img/home-black.png"
-                                alt="마이페이지"
-                            />
-                            <div className={styles["mypage_text2"]}>
-                                {user ? <Link to="/mypage/userinfo" onClick={() => onclose()} >마이페이지</Link> : <Link to="/mainpage">마이페이지</Link>}
+                            <div className={styles["mypage"]}>
+                                <img
+                                    className={styles["mypage_icon2"]}
+                                    src="http://localhost:8080/image/imgfile/main_img/home-black.png"
+                                    alt="마이페이지"
+                                />
+                                <div className={styles["mypage_text2"]}>
+                                    {user ? <Link to="/mypage/userinfo" onClick={() => onclose()} >마이페이지</Link> : <Link to="/mainpage">마이페이지</Link>}
+                                </div>
                             </div>
-                        </div>
-                        <div>
                             <div>
-                                {user ? user.role === "owner"
+                                <div>
+                                    {user ? user.role === "owner"
                                         ? <div className={styles["mypage_text1"]}>
-                                        <Link to="/ownerpage" onClick={() => onclose()}>사장님 페이지 →</Link>
-                                    </div>
+                                            <Link to="/ownerpage" onClick={() => onclose()}>사장님 페이지 →</Link>
+                                        </div>
                                         : user.role === "admin"
                                             ? <div className={styles["mypage_text1"]}>
-                                            <Link to="/adminpage" onClick={() => onclose()}>관리자 페이지 →</Link>
-                                        </div>
+                                                <Link to="/adminpage" onClick={() => onclose()}>관리자 페이지 →</Link>
+                                            </div>
                                             : ""
-                                    : ""}
+                                        : ""}
+                                </div>
                             </div>
-                        </div>
                         </div>
                         {user ? (
                             <>
@@ -236,11 +264,13 @@ export default function Hamburger({ isOpen, onClose }) {
                             </div>
                         )}
                         {user && (
-                            <div className={styles["chat_list"]}>
-                                <div className={styles["chat_list_title"]}>참여중인 채팅방 목록</div>
-                                {userRoom.map((room) => (
-                                    <div key={room.id} className={styles["chat_list_room"]}>
-                                        <img className={styles["chat_list_circle"]} src={`http://localhost:8080/image/imgfile/store/store_${room.storeId}.jpg`} />
+                        <div className={styles["chat_list"]}>
+                            <div className={styles["chat_list_title"]}>참여중인 채팅방 목록</div>
+                            {userRoom.length > 0 ? (
+                                userRoom.map((room) => (
+                                    <div key={room.id} className={styles["chat_list_room"]} onClick={() => window.location.href = `/room/${room.id}`}> 
+                                        <img className={styles["chat_list_circle"]}
+                                            src={`http://localhost:8080/image/imgfile/store/store_${room.storeId}.jpg`} />
                                         <div className={styles["chat_room"]}>
                                             <div className={styles["chat_title_time"]}>
                                                 <div className={styles["chat_title"]}>{room.roomName}</div>
@@ -248,14 +278,19 @@ export default function Hamburger({ isOpen, onClose }) {
                                             </div>
                                             <div className={styles["chat_room_detail"]}>
                                                 <img src="http://localhost:8080/image/imgfile/main_img/octicon_people-24.png" />
-                                                <div className={styles["chat_people"]}>{room.joinCount}/{room.maxPeople} 참여중</div>
+                                                <div className={styles["chat_people"]}>
+                                                    {room.joinCount}/{room.maxPeople} 참여중
+                                                </div>
                                                 <div className={styles["chat_state"]}>{room.status}</div>
                                             </div>
                                         </div>
                                     </div>
-                                ))}
-                            </div>
-                        )}
+                                ))
+                            ) : (
+                                <div>참여중인 채팅방이 없습니다.</div>
+                            )}
+                        </div>
+                    )}
                     </motion.nav>
                 </AnimatePresence>
             </div>

@@ -122,9 +122,9 @@ export default function MainPage() {
                             {rooms.length === 0 ? (
                                 <div className={styles["no_room_message"]}>참여 가능한 공구가 없습니다.</div>
                             ) : (
-                                rooms.slice(0, 6).map((items) => (
+                                rooms.filter((items) => items.joinCount < items.maxPeople).slice(0, 6).map((items) => (
                                     // <LoginCheck>
-                                    <Link key={items.id} to={`/room/${items.id}`} style={{ cursor: "pointer" }}>
+                                    <Link key={items.id} to={`/room/${items.id}`}>
                                         <div className={styles["gongu_with_text"]}>
                                             <img className={styles["square_img"]}
                                                 src={`http://localhost:8080/image/imgfile/store/store_${items.storeId}.jpg`}
