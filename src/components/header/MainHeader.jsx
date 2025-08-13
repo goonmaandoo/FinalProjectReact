@@ -12,6 +12,7 @@ export default function MainHeader({ toggleMenu }) {
     const [address, setAddress] = useState("");
     const [addressDetail, setAddressDetail] = useState("");
     const [showMapModal, setShowMapModal] = useState(false);
+    const [users, setUsers] = useState({});
     const closeMapModal = () => setShowMapModal(false);
 
     const user = useSelector((state) => state.auth.user);
@@ -27,7 +28,6 @@ export default function MainHeader({ toggleMenu }) {
         new window.daum.Postcode({
             oncomplete: function (data) {
                 setAddress(data.address);
-                // updateAddress(data.address);
                 setShowMapModal(true);
             },
         }).open();
@@ -57,6 +57,15 @@ export default function MainHeader({ toggleMenu }) {
         })
             .then(() => {
                 console.log("주소 저장 성공")
+            })
+            .catch(console.error);
+        fetch(`http://localhost:8080/api/users/UserInfo/${user.id}`)
+            .then(res => {
+                if (!res.ok) throw new Error('서버 에러');
+                return res.json();
+            })
+            .then(data => {
+                setUsers(data);
             })
             .catch(console.error);
     }
@@ -94,7 +103,7 @@ export default function MainHeader({ toggleMenu }) {
                                 <button className={styles["location_btn"]} onClick={handleClick}>
                                     <img className={styles["location_icon"]} src="http://localhost:8080/image/imgfile/main_img/location_icon_red.png" />
                                 </button>
-                                <div onClick={handleClick}>{address || "주소를 입력하세요"}</div>
+                                <div onClick={handleClick}>{user.address || "주소를 입력하세요"}</div>
                             </>
                         ) : (
                             <>
@@ -106,11 +115,12 @@ export default function MainHeader({ toggleMenu }) {
                             <div className={styles["modalStyle"]}>
                                 <div className={styles["popupStyle"]} onClick={(e) => e.stopPropagation()}>
                                     <KakaoMap address={address} className={styles["modal_map"]} />
-                                    <div className={styles["label_box"]}>주소</div>
-                                    <input className={styles["address_not"]} type="text" placeholder="주소" value={address} readOnly />
-                                    <div className={styles["label_box_detail"]}>상세주소</div>
-                                    <input className={styles["address_not"]} type="text" value={addressDetail} onChange={(e) => setAddressDetail(e.target.value)} placeholder="상세주소" />
-                                    <div style={{ textAlign: "center", marginTop: "15px" }}>
+                                    <div className={styles["modal_address"]}>
+                                        <div className={styles["label_box"]}>주소</div>
+                                        <input className={styles["address_not"]} type="text" placeholder="주소" value={address} readOnly />
+                                    <div className={styles["label_box"]}>상세주소</div>
+                                        <input className={styles["address_not"]} type="text" value={addressDetail} onChange={(e) => setAddressDetail(e.target.value)} placeholder="상세주소" />
+                                        <div className={styles["modal_btns"]}>
                                         <button
                                             onClick={saveAddress} className={styles["modal_btn"]}>
                                             확인
@@ -119,6 +129,7 @@ export default function MainHeader({ toggleMenu }) {
                                             onClick={closeMapModal} className={styles["modal_btn"]}>
                                             닫기
                                         </button>
+                                    </div>
                                     </div>
                                 </div>
                             </div>

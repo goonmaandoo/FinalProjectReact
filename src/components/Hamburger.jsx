@@ -3,6 +3,7 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/user';
+import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Hamburger({ isOpen, onClose }) {
@@ -45,8 +46,13 @@ export default function Hamburger({ isOpen, onClose }) {
         return () => {
             window.removeEventListener("resize", updateHeight);
         };
-
     }, []);
+    useEffect(() => {
+        //진행중인 공구방
+        axios.get(`http://localhost:8080/api/room/roomsbyId/${user?.id}`)
+            .then(res => setUserRoom(res.data))
+            .catch(err => console.error("RoomsbyId error:", err));
+    },[user?.id])
 
     useEffect(() => {
         const handleClickOutside = (e) => {
@@ -117,8 +123,8 @@ export default function Hamburger({ isOpen, onClose }) {
                                     <div>
                                         <img
                                             className={styles["user_profile_image"]}
-                                            src={user?.profileUrl || "http://localhost:8080/image/profileimg/mypagePerson.png"}
-                                            onError={(e) => (e.currentTarget.src = "http://localhost:8080/image/profileimg/mypagePerson.png")} />
+                                            src={user?.profileUrl ? `http://localhost:8080${user?.profileUrl}`: "http://localhost:8080/image/profileimg/mypagePerson.png"}
+                                            onError={(e) => (e.currentTarget.src = "http://localhost:8080/image/mypagePerson.png")} />
                                     </div>
                                     <div className={styles["userName"]}>{user?.nickname}님</div>
                                     <button className={styles["userName_btn"]} onClick={handleLogout}>로그아웃</button>
@@ -232,7 +238,22 @@ export default function Hamburger({ isOpen, onClose }) {
                         {user && (
                             <div className={styles["chat_list"]}>
                                 <div className={styles["chat_list_title"]}>참여중인 채팅방 목록</div>
-
+                                {userRoom.map((room) => (
+                                    <div key={room.id} className={styles["chat_list_room"]}>
+                                        <img className={styles["chat_list_circle"]} src={`http://localhost:8080/image/imgfile/store/store_${room.storeId}.jpg`} />
+                                        <div className={styles["chat_room"]}>
+                                            <div className={styles["chat_title_time"]}>
+                                                <div className={styles["chat_title"]}>{room.roomName}</div>
+                                                <div className={styles["chat_time"]}></div>
+                                            </div>
+                                            <div className={styles["chat_room_detail"]}>
+                                                <img src="http://localhost:8080/image/imgfile/main_img/octicon_people-24.png" />
+                                                <div className={styles["chat_people"]}>{room.joinCount}/{room.maxPeople} 참여중</div>
+                                                <div className={styles["chat_state"]}>{room.status}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                         )}
                     </motion.nav>

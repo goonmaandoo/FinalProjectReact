@@ -70,6 +70,8 @@
     margin: 3px 10px;
     height: 32px;
     cursor: pointer;
+    padding: 0 12px;
+    
 }
 #user_notlogin {
     font-size: 24px;
