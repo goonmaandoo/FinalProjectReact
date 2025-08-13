@@ -66,6 +66,7 @@ import ReviewAdmin from "./pages/Admin/ReviewAdmin";
 import ReportManagement from "./pages/Admin/ReportManagement";
 import RoomManagement from "./pages/Admin/RoomManagement";
 import UpdateStatus from "./pages/Admin/UpdateStatus";
+import OrderDetailManagement from "./pages/Admin/OrderDetailManagement";
 
 
 function parseJwt(token) {
@@ -228,7 +229,8 @@ function App() {
         <Route path="/reviewmanagement" element={<ReviewManagement />} />
         <Route path="/orderyesno" element={<OrderYesNo />} />
         <Route path="/ownerpage" element={<OwnerPage />} />
-        <Route path="updatestatus" element={<UpdateStatus />} /> 
+        <Route path="/updatestatus" element={<UpdateStatus />} /> 
+        
         <Route path="/admin" element={<AdminPage/>}>
           <Route index element={<Dashboard />} /> 
           <Route path="dashboard"element={<Dashboard />} /> 
@@ -240,7 +242,9 @@ function App() {
           <Route path="reportmanagement" element={<ReportManagement />} /> 
           <Route path="roommanagement" element={<RoomManagement />} /> 
           <Route path="qnamanagement" element={<AuthQna />} />
+          <Route path="orderdetail/:orderId" element={<OrderDetailManagement/>} />
         </Route>
+        
 
       </Routes>
 
