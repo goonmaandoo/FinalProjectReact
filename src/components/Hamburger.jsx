@@ -103,7 +103,7 @@ export default function Hamburger({ isOpen, onClose }) {
                                     </div>
                                         : user.role === "admin"
                                             ? <div>
-                                            <Link to="/adminpage" onClick={() => onclose()}>관리자 페이지 →</Link>
+                                            <Link to="/admin" onClick={() => onclose()}>관리자 페이지 →</Link>
                                         </div>
                                             : ""
                                     : ""}
