@@ -57,6 +57,7 @@ export default function MainHeader({ toggleMenu }) {
         })
             .then(() => {
                 console.log("주소 저장 성공")
+                window.location.reload();
             })
             .catch(console.error);
         fetch(`http://localhost:8080/api/users/UserInfo/${user.id}`)
