@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './OrderConfirmModal.module.css';
 import axios from 'axios';
 import { makeOrder } from './roomFunction/makeOrder';
+import { useSelector } from 'react-redux';
 
 export default function OrderConfirmModal({
   user,
@@ -15,12 +16,62 @@ export default function OrderConfirmModal({
   onRefreshRoomUsers,
   onClose,
 }) {
+  const [cash, setCash] = useState(user?.cash);
+  const token = useSelector((s) => s.auth?.token);
+
+  // 캐쉬 불러오기.
+  const fetchCash = async () => {
+    if (!token) return;
+    try {
+      const res = await axios.get("/api/users/cash", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setCash(Number(res.data) || 0);
+    } catch (error) {
+      console.error("캐쉬 조회 실패", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCash();
+  }, [token]);
+
+  useEffect(() => {
+    const onMessage = (event) => {
+      if (event.origin !== window.location.origin) return; // 보안
+      if (event.data?.type === "CASH_CHARGED") {
+        fetchCash();
+      }
+    };
+
+    window.addEventListener("message", onMessage);
+    return () => {
+      window.removeEventListener("message", onMessage);
+    };
+  }, [token]);
+
   if (!visible) return null;
 
   const handleOrderConfirm = async () => {
+    console.log('totalPrice:', totalPrice, 'type:', typeof totalPrice);
     if (!room || !room.users) return;
     if (cart.length === 0) {
       alert('메뉴를 먼저 선택해주세요.');
+      return;
+    }
+
+    if (cash == null) {
+      alert("캐시 정보를 불러오는 중입니다. 잠시 후 시도해주세요.");
+      return;
+    }
+
+    if (cash < totalPrice) {
+      alert('캐쉬 잔액이 부족합니다.');
+      window.open(
+        "/cash/cashcharge",
+        "_blank",
+        "width=420,height=500"
+      );
       return;
     }
 
@@ -51,27 +102,42 @@ export default function OrderConfirmModal({
       totalPrice,
     };
 
-    if (user?.cash < totalPrice) {
-      alert('돈이 부족합니다.');
-      return;
-    }
-    // 캐쉬 컬럼 update 해야함.
     try {
+      // 1. 주문 먼저 생성
       const newOrderId = await makeOrder(myOrder);
       onSetOrderId(newOrderId); // 부모 상태 변경
+      const amount = totalPrice;
+      // 3. 캐시 차감 (서비스 쪽에서 amount 음수 체크함)
+      await axios.post(
+        '/api/users/cash/pay',
+        { cash: amount },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
+      alert("결제가 완료되었습니다.");
+
+      // 4. ready 상태 업데이트 및 리프레시
       await axios.put('/api/room/updateReady', {
         id: roomId,
         users: JSON.stringify(updatedUsers),
+        kickId: room.kickId
       });
 
       await axios.put(`/api/room/${roomId}/readyCount`, null, {
         params: { delta },
       });
 
-      await onRefreshRoomUsers(); // 부모에서 fetch
-      onClose(); // 모달 닫기
+      await onRefreshRoomUsers();
+      onClose();
+
     } catch (error) {
+      if (error.response) {
+        alert("결제 실패: " + error.response.data);
+      } else {
+        alert("서버 연결 실패");
+      }
       console.error('주문 처리 실패:', error);
     }
   };
@@ -80,7 +146,7 @@ export default function OrderConfirmModal({
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
         <h2>주문 확인</h2>
-        <div>보유 금액: {(user?.cash ?? 0).toLocaleString()}원</div>
+        <div>보유 금액: {cash.toLocaleString()}원</div>
         <div className={styles.orderList}>
           {cart.map(item => (
             <div key={item.id} className={styles.orderItem}>

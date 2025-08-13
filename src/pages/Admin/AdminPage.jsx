@@ -11,6 +11,7 @@ import OrderManagement from './OrderManagement';
 import ReviewAdmin from './ReviewAdmin';
 import ReportManagement from './ReportManagement';
 import RoomManagement from './RoomManagement';
+import AuthQna from '../Auth/AuthQna';
 
 
 export default function AdminPage() {
@@ -43,7 +44,7 @@ export default function AdminPage() {
         { id: "user", label: "회원관리", component: <UserManagement roleFilter={subUserBtn}/>, content: "사용자 정보와 활동을 관리하세요" },
         { id: "store", label: "가게관리", component: <StoreManagement />, content: "파트너 음식점을 관리하고 새로운 음식점을 등록하세요" },
         { id: "active", label: "탈퇴/정지 회원 관리", component: <Active roleFilter={subBanBtn}/>, content: "탈퇴회원과 정지회원을 관리하세요" },
-        { id: "qna", label: "문의내역", component: <qna />, content: "문의 내역을 확인하고 처리하세요" },
+        { id: "qna", label: "문의내역", component: <AuthQna />, content: "문의 내역을 확인하고 처리하세요" },
         { id: "room", label: "공구방관리", component: <RoomManagement />, content: "진행중이거나 완료된 공구방을 관리하세요" },
         { id: "ban", label: "신고관리", component: <ReportManagement />, content: "사용자 신고와 문의사항을 처리하세요" },
         { id: "refund", label: "환불관리", component: <refund />, content: "환불내역을 확인하고 관리하세요" },

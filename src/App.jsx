@@ -190,7 +190,7 @@ function App() {
         </Route>
 
         <Route path="/cash/cashcharge" element={<CashCharge />} />
-        <Route path="/testRoom" element={<RoomTest />} />
+        <Route path="/room/:room_id" element={<RoomTest />} />
 
         <Route path="/storelist/:categoryId" element={<StoreListPage />} />
         <Route path="/store/:storeId" element={<StoreDetail />} />

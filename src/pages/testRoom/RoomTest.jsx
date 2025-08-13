@@ -14,7 +14,7 @@ import axios from "axios";
 import { getInRoom } from './roomFunction/getInRoom';
 import { changeRoomStatus } from './roomFunction/changeRoomStatus';
 import { countingJoin } from './roomFunction/countingJoin';
-
+import { useParams } from 'react-router-dom';
 export default function RoomTest() {
     const [room, setRoom] = useState(null);
     const [allReady, setAllReady] = useState(false);
@@ -34,7 +34,8 @@ export default function RoomTest() {
     const totalPrice = cart.reduce((sum, item) => sum + (item.menuPrice * item.quantity), 0);
     const navigate = useNavigate();
     const user = useSelector((state) => state.auth.user);
-    const roomId = 5;
+    const { room_id: roomId } = useParams();
+    console.log(roomId);
     // 룸 신규 or 참여중 check
     useEffect(() => {
         if (!user) {
@@ -43,62 +44,64 @@ export default function RoomTest() {
             return;
         }
         const fetchRoomJoin = async () => {
-            console.log("유저아이디", user.id);
             try {
-                const data = await selectRoomJoin(roomId, user.id);
-                const maxed = await countingJoin(roomId);
-                console.log("꽉찬방", maxed);
-                // 첫 번째 조건: 이미 참여중인 경우
-                if (data.length > 0) {
-                    console.log("이미 참여중:", data);
+                // 1. 방 정보와 강퇴 여부를 먼저 확인
+                const roomData = await selectAllRoom(roomId);
+                if (typeof roomData.users === 'string') {
+                    roomData.users = JSON.parse(roomData.users);
+                }
+
+                // 🚨 강퇴된 유저인지 즉시 확인
+                if (roomData.kickId && Number(roomData.kickId) === Number(user.id)) {
+                    alert("강퇴되었던 방입니다. 입장할 수 없습니다.");
+                    navigate("/mainpage");
                     return;
                 }
 
-                // 두 번째 조건: 방이 꽉 찬 경우
-                else if (maxed) {
+                // 2. 현재 유저가 이미 참여 중인지 확인
+                const data = await selectRoomJoin(roomId, user.id);
+                const isAlreadyJoined = data.some(item => item.usersId === user.id);
+
+                // 이미 참여중인 경우, 신규 입장 로직을 건너뜁니다.
+                if (isAlreadyJoined) {
+                    console.log("이미 참여중입니다.");
+                    return;
+                }
+
+                // 3. 방이 꽉 찼는지 확인
+                const maxed = await countingJoin(roomId);
+                if (maxed) {
                     alert("방이 꽉 찼습니다.");
                     navigate("/mainpage");
                     return;
                 }
-                else {
-                    console.log("신규 유저 방 입장");
 
-                    try {
-                        const roomData = await selectAllRoom(roomId);
-                        let currentUsers = roomData.users;
-                        if (typeof currentUsers === 'string') {
-                            currentUsers = JSON.parse(currentUsers);
-                        }
+                // 4. 위의 모든 조건을 통과하면 신규 유저로 입장 처리
+                console.log("신규 유저 방 입장");
+                const newUser = {
+                    nickname: user?.nickname,
+                    pickup: false,
+                    profileurl: user?.profileurl,
+                    rating: user?.userRating,
+                    ready: false,
+                    userId: user?.id
+                };
+                const updatedUsers = [...roomData.users, newUser];
+                await insertRoomJoin(roomId, user.id);
+                await getInRoom(roomId, updatedUsers, user.id, navigate);
+                
+                console.log("신규 방 입장 완료");
+                setRoom(prev => ({ ...prev, users: updatedUsers }));
 
-                        const newUser = {
-                            nickname: user?.nickname,
-                            pickup: false,
-                            profileurl: user?.profileurl,
-                            rating: user?.userRating,
-                            ready: false,
-                            userId: user?.id
-                        };
-
-                        const updatedUsers = [...currentUsers, newUser];
-                        await insertRoomJoin(roomId, user.id);
-                        await getInRoom(roomId, updatedUsers, navigate);
-                        console.log("신규 방 입장 완료");
-                        // 상태 갱신
-                        setRoom(prev => ({
-                            ...prev,
-                            users: updatedUsers
-                        }));
-                    } catch (insertError) {
-                        console.error("방 입장 등록 실패:", insertError);
-                    }
-                }
             } catch (error) {
-                console.error("데이터 가져오기 실패:", error);
+                console.error("방 입장 처리 중 오류 발생:", error);
+                alert("방 입장 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+                navigate("/mainpage");
             }
         };
 
         fetchRoomJoin();
-    }, [user, roomId]);
+    }, [user, roomId, navigate]);
 
     const fetchRoomUsers = async () => {
         try {
@@ -106,27 +109,28 @@ export default function RoomTest() {
             if (typeof updatedRoom.users === 'string') {
                 updatedRoom.users = JSON.parse(updatedRoom.users);
             }
-
             const userStillInRoom = updatedRoom.users.some(u => Number(u.userId) === Number(user.id));
-        if (!userStillInRoom) {
-            alert("강퇴되었습니다.");
-            navigate("/mainpage");
-            return;
-        }
-        
+            if (!userStillInRoom) {
+                navigate("/mainpage");
+                return;
+            }
+
             const everyoneReady = updatedRoom.users.every(user => user.ready === true);
             setRoom(prev => ({
                 ...prev,
                 users: updatedRoom.users,
-                ready_people: updatedRoom.ready_people
+                ready_people: updatedRoom.ready_people,
+                kickId: updatedRoom.kickId // kickId를 상태에 저장
             }));
             setStatus(updatedRoom.status);
             setAllReady(everyoneReady);
+            if (updatedRoom.status === '주문 완료') {
+                navigate(`/rating/${roomId}`);
+            }
         } catch (error) {
             console.error("room 정보 갱신 실패:", error);
         }
     };
-
     // ✅ 채팅 메시지 폴링
     useEffect(() => {
         if (!user) return;
@@ -195,7 +199,7 @@ export default function RoomTest() {
                 } else {
                     console.log("나는 일반")
                 }
-                setKickId(roomData.kickId);
+                //setKickId(roomData.kickId);
                 setRoom(roomData);
                 if (roomData.storeId) {
                     console.log("스토어아이디2", roomData.storeId);
@@ -334,8 +338,8 @@ export default function RoomTest() {
             return;
         }
         try {
-            alert(`방 상태를 "${room.status}"에서 변경합니다.`);
-            await changeRoomStatus(room.id, room.status);
+            alert(`방 상태를 "${status}"에서 변경합니다.`);
+            await changeRoomStatus(room.id, status);
 
             // API 호출 후 방 정보를 다시 불러와서 UI를 갱신
             await fetchRoomUsers();
@@ -352,15 +356,23 @@ export default function RoomTest() {
     const kickButton = async (targetUserId) => {
         if (!room || !room.users) return;
         try {
+            console.log("강퇴 발생 방", roomId);
             console.log("강퇴할 유저 id", targetUserId);
             const updatedUsers = room.users.filter(u => Number(u.userId) !== Number(targetUserId));
-            console.log("강퇴할객체",updatedUsers);
-            await axios.put('/api/room/updateReady', {
+            console.log("강퇴할객체", updatedUsers);
+            await axios.put('/api/room/updateKick', {
                 id: roomId,
                 users: JSON.stringify(updatedUsers),
                 kickId: targetUserId,
             });
-
+            console.log("강퇴진행중");
+            await axios.delete('/api/roomJoin/deleteRoomJoin', {
+                data: {
+                    roomId: roomId,
+                    usersId: targetUserId,
+                }
+            });
+            setKickId(targetUserId);
             alert("강퇴 완료");
             await fetchRoomUsers(); // 상태 갱신
 
@@ -368,31 +380,50 @@ export default function RoomTest() {
             console.error("강퇴 처리 중 오류:", error);
         }
     };
+    useEffect(() => {
+        if (!user || !room) {
+            return;
+        }
+
+        if (room.kickId && Number(room.kickId) === Number(user.id)) {
+            alert("강퇴되었습니다.");
+            navigate("/mainpage");
+        }
+
+    }, [room, user, navigate]);
 
     return (
         <div className={styles.roomContainer}>
             {/* 왼쪽 영역 */}
             <div className={styles.leftColumn}>
                 <div className={styles.titleWrapper}>
+                    {/* ← 버튼 */}
                     <button
                         className={styles.leaveButton}
                         onClick={() => handleLeaveRoom({ room, user, roomId, navigate })}
                     >
                         <img
-                            className={styles.circle_pencil}
+                            className={styles.backIcon}
                             src="http://localhost:8080/image/imgfile/main_img/backbtn.png"
+                            alt="뒤로가기"
                         />
                     </button>
-                    <p>{room?.roomName}</p>
-                    <p className={status === "모집중" ? styles.recruitingText : ""}>
-                        {status}
-                    </p>
-                    <p>{room?.roomAddress}</p>
+
+                    {/* 가운데 텍스트: 방 제목 + 상태 */}
+                    <div className={styles.centerText}>
+                        <span className={styles.roomName}>{room?.roomName}</span>
+                        <span className={status === "모집중" ? styles.recruitingText : styles.statusText}>
+                            {status}
+                        </span>
+                    </div>
+
+                    {/* 주소 */}
+                    <div className={styles.address}>{room?.roomAddress}</div>
                 </div>
 
                 {/* 참여 유저 */}
                 <div className={styles.memberWrapper}>
-                    <p className={styles.sectionTitle}>참여 유저</p>
+                    <div className={styles.sectionTitle}>참여 유저</div>
                     <div className={styles.scrollContainer}>
                         <ul className={styles.memberList}>
                             {room?.users?.length > 0 ? (
@@ -439,13 +470,13 @@ export default function RoomTest() {
                                                     >
                                                         최종주문
                                                     </button>
-                                                    <button onClick={changeStatus}>
+                                                    <button className={styles.statusButton} onClick={changeStatus}>
                                                         {status === "모집중" ? "모집마감" : "모집중"}
                                                     </button>
                                                 </div>
                                             )}
                                             {!isLeader && leader && (
-                                                <button onClick={() => kickButton(member.userId)}>강퇴</button>
+                                                <button className={styles.kickButton} onClick={() => kickButton(member.userId)}>강퇴</button>
                                             )}
                                         </li>
                                     );
@@ -459,7 +490,13 @@ export default function RoomTest() {
 
                 {/* 채팅창 */}
                 <div className={styles.chatWrapper}>
-                    <p className={styles.sectionTitle}>채팅창</p>
+                    <div className={styles.chatHeader}>
+                        <p className={styles.sectionTitle}>채팅</p>
+                        <img
+                            className={styles.chatIcon}
+                            src="http://localhost:8080/image/imgfile/main_img/chatemoji.png"
+                        />
+                    </div>
                     <div className={styles.chatBody} ref={chatBodyRef}>
                         {chatLog.map((chat, idx) => (
                             <div key={idx} className={styles.chatMessage}>
@@ -488,7 +525,7 @@ export default function RoomTest() {
                                 if (e.key === 'Enter') handleSendMessage();
                             }}
                         />
-                        <button onClick={handleSendMessage}>입력</button>
+                        <button className={styles.chatInputButton} onClick={handleSendMessage}>입력</button>
                     </div>
                 </div>
             </div>
@@ -515,18 +552,18 @@ export default function RoomTest() {
                     )}
                 </div>
                 <div className={styles.cartWrapper}>
-                    <div>
+                    <div className={styles.cartTitle}>
                         담은메뉴
                     </div>
                     {cart.length > 0 ? (
                         cart.map(item => (
                             <div key={item.id} className={styles.cartItem}>
-                                <span>{item.menuName}</span>
+                                <span className={styles.itemName}>{item.menuName}</span>
                                 <span>{item.menuPrice.toLocaleString()}원</span>
                                 <div className={styles.quantityControls}>
-                                    <button onClick={() => decreaseQuantity(item.id)}>-</button>
+                                    <button className={styles.quantityButtons} onClick={() => decreaseQuantity(item.id)}>-</button>
                                     <span>{item.quantity}</span>
-                                    <button onClick={() => increaseQuantity(item.id)}>+</button>
+                                    <button className={styles.quantityButtons} onClick={() => increaseQuantity(item.id)}>+</button>
                                 </div>
                             </div>
                         ))
@@ -538,14 +575,14 @@ export default function RoomTest() {
                 <div>
                     <p>총 금액: {totalPrice.toLocaleString()}원</p>
                 </div>
-                <div>
+                <div className={styles.fixedButtonWrapper}>
                     {status !== "모집중" ? (
                         <button onClick={pickedUp}>픽업완료</button>
                     ) : (
                         room?.users?.find(u => Number(u.userId) === Number(user.id))?.ready ? (
                             <button className={styles.readyButton} onClick={cancelOrder}>준비취소</button>
                         ) : (
-                            <button onClick={() => handleReadyToggle(user.id)}>준비완료</button>
+                            <button className={styles.readyButton} onClick={() => handleReadyToggle(user.id)}>준비완료</button>
                         )
                     )}
                 </div>
