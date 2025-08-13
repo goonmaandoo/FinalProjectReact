@@ -85,22 +85,22 @@ export default function Dashboard() {
                 <div className={styles["dash_box"]}>
                     <div className={styles["total_first"]}>
                         <div className={styles["total_title"]}>총 공구방</div>
-                        <div className={styles["total_num"]}>{total}</div>
+                        <div className={styles["total_num"]}><Link to="/admin/roommanagement">{total}</Link></div>
                     </div>
                     <hr />
                     <div className={styles["total_first"]}>
                         <div className={styles["total_title"]}>모집중</div>
-                        <div className={styles["total_num"]}>{join}</div>
+                        <div className={styles["total_num"]}><Link to="/admin/roommanagement">{join}</Link></div>
                     </div>
                     <hr />
                     <div className={styles["total_first"]}>
                         <div className={styles["total_title"]}>진행중</div>
-                        <div className={styles["total_num"]}>{ing}</div>
+                        <div className={styles["total_num"]}><Link to="/admin/roommanagement">{ing}</Link></div>
                     </div>
                     <hr />
                     <div className={styles["total_first"]}>
                         <div className={styles["total_title"]}>진행 마감</div>
-                        <div className={styles["total_num"]}>{end}</div>
+                        <div className={styles["total_num"]}><Link to="/admin/roommanagement">{end}</Link></div>
                     </div>
                 </div>
                 <div className={styles["dash_box"]}>
@@ -110,19 +110,19 @@ export default function Dashboard() {
                             오늘 주문 건수
                         </div>
                         <div className={styles["total_num"]}>
-                            <Link to="/admin/ordermanagement1">{todayOrders}건</Link></div>
+                            <Link to="/admin/ordermanagement">{todayOrders}건</Link></div>
                     </div>
                     <hr />
                     <div className={styles["total_second"]}>
                         <div className={styles["total_title"]}><span><img src={`http://localhost:8080/image/imgfile/main_img/today_order.png`} /></span>총 주문 건수</div>
                         <div className={styles["total_num"]}>
-                            <Link to="/admin/ordermanagement1">{totalOrders}건</Link></div>
+                            <Link to="/admin/ordermanagement">{totalOrders}건</Link></div>
                     </div>
                 </div>
                 <div className={styles["dash_box"]}>
                     <div className={styles["total_third"]}>
                         <div className={styles["total_title"]}>회원수</div>
-                        <div className={styles["total_num"]}>{users}명</div>
+                        <div className={styles["total_num"]}><Link to="/admin/roommanagement">{users}명</Link></div>
                     </div>
                 </div>
                 <div className={styles["dash_box"]}>
