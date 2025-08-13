@@ -52,7 +52,11 @@ export default function OrderList() {
               typeof order.roomOrder === "string"
                 ? JSON.parse(order.roomOrder)
                 : order.roomOrder;
-            items = roomOrderData.menu || [];
+
+            // 배열이면 그대로, 객체면 menu로 접근
+            items = Array.isArray(roomOrderData)
+              ? roomOrderData
+              : roomOrderData.menu || [];
           } catch (e) {
             items = [];
           }
@@ -146,8 +150,8 @@ export default function OrderList() {
                       {order.items.length > 0 ? (
                         order.items.map((item, idx) => (
                           <div key={idx} className={style.menu_item_row}>
-                            <span>{item.name}</span>
-                            <span>{item.count}개</span>
+                            <span>{item.menu_name}</span>
+                            <span>{item.quantity}개</span>
                           </div>
                         ))
                       ) : (

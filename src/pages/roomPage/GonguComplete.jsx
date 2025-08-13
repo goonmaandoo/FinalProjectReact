@@ -33,8 +33,20 @@ export default function GonguComplete() {
         // 3. 주문 내역 파싱 및 사용자 ID 수집
         const userIdSet = new Set();
         orders.forEach((order) => {
-          // roomOrder가 이미 객체 상태이므로 바로 접근
-          const parsedItems = order.roomOrder?.menu || [];
+          let parsedItems = [];
+          try {
+            const roomOrderData =
+              typeof order.roomOrder === "string"
+                ? JSON.parse(order.roomOrder)
+                : order.roomOrder;
+
+            parsedItems = Array.isArray(roomOrderData)
+              ? roomOrderData
+              : roomOrderData?.menu || [];
+          } catch (e) {
+            parsedItems = [];
+          }
+
           order.parsedItems = parsedItems;
           userIdSet.add(order.userId);
         });
@@ -44,50 +56,48 @@ export default function GonguComplete() {
         if (room.storeId) {
           const menuRes = await axios.get(`/menu/storeMenu/${room.storeId}`);
           menus = menuRes.data;
-          console.log("menus:", menus);
         }
 
-        // 5. 사용자 닉네임 조회 (POST 방식)
+        // 5. 사용자 닉네임 조회
         const userIds = Array.from(userIdSet);
         let userProfiles = [];
         if (userIds.length > 0) {
           try {
             const userRes = await axios.post("/api/users/findUsersByIds", userIds);
             userProfiles = userRes.data.filter(
-              (data) =>
-                data && data.id !== null && data.nickname !== null
+              (data) => data && data.id != null && data.nickname != null
             );
           } catch (e) {
             console.error("유저 닉네임 조회 실패:", e);
             userProfiles = [];
           }
         }
-        console.log("userProfiles:", userProfiles);
 
         const getUserName = (userId) => {
           const user = userProfiles.find((u) => String(u.id) === String(userId));
           return user?.nickname || `이름 없음 (ID: ${userId})`;
         };
 
-        // 6. 주문 내역 매핑 (menus가 배열인지 꼭 체크)
+        // 6. 주문 내역 매핑
         orders.forEach((order) => {
           order.items = order.parsedItems.map((item) => {
             const matched =
               Array.isArray(menus) &&
               menus.find(
                 (m) =>
-                  m.menuName.trim().toLowerCase() === item.name.trim().toLowerCase()
+                  m.menuName?.trim().toLowerCase() === item.menu_name?.trim().toLowerCase() ||
+                  m.menuName?.trim().toLowerCase() === item.name?.trim().toLowerCase()
               );
             return {
-              menu_name: item.name,
-              menu_price: item.price || 0,
-              quantity: item.count || 0,
+              menu_name: item.menu_name || item.name || "이름 없음",
+              menu_price: item.menu_price || item.price || (matched ? matched.menuPrice || 0 : 0),
+              quantity: item.quantity || item.count || 0,
               ...(matched ? { menuId: matched.id } : {}),
             };
           });
         });
 
-        // 7. 유저별로 주문 그룹화
+        // 7. 유저별 주문 그룹화
         const grouped = new Map();
         orders.forEach((order) => {
           const userId = order.userId;
@@ -135,79 +145,82 @@ export default function GonguComplete() {
   if (loading) return <div className={styles.orderInfo}>주문 정보를 불러오는 중...</div>;
   if (error) return <div className={styles.orderInfo}>오류 발생: {error}</div>;
 
- return (
-  <div className={styles.container}>
-    <div className={styles.checkIcon}>
-      <i className="fas fa-check-circle"></i>
-    </div>
+  return (
+    <div className={styles.container}>
+      <div className={styles.checkIcon}>
+        <i className="fas fa-check-circle"></i>
+      </div>
 
-    <h2 className={styles.mainTitle}>공구가 완료되었습니다!</h2>
-    <p className={styles.subText}>
-      공구방 배달이 완료되었습니다. 전체 주문 내역을 확인하세요.
-    </p>
+      <h2 className={styles.mainTitle}>공구가 완료되었습니다!</h2>
+      <p className={styles.subText}>
+        공구방 배달이 완료되었습니다. 전체 주문 내역을 확인하세요.
+      </p>
 
-<section className={styles.roomInfo}>
-  <h3 className={styles.sectionTitle}>공구방 정보</h3>
-  <div className={styles.roomDetails}>
-    <div className={styles.detailItem}>
-      <span className={styles.label}>공구방 ID: </span>
-      <span className={styles.value}>{roomInfo?.id || "-"}</span>
-    </div>
-    <div className={styles.detailItem}>
-      <span className={styles.label}>공구방 이름: </span>
-      <span className={styles.value}>{roomInfo?.roomName || "-"}</span>
-    </div>
-    <div className={styles.detailItem}>
-      <span className={styles.label}>참여 인원: </span>
-      <span className={styles.value}>{participants.length}명</span>
-    </div>
-  </div>
-</section>
-
-
-    {participants.map((part) => (
-      <section key={part.user_id} className={styles.participantOrder}>
-        <h3>{part.nickname} 님의 주문</h3>
-        {part.orders.map((order) => (
-          <div key={order.orderId} className={styles.orderBlock}>
-            <div className={styles.orderInfoRow}>
-              <span>주문번호</span>
-              <span>{order.orderId}</span>
-            </div>
-            <div className={styles.orderInfoRow}>
-              <span>주문 일자</span>
-              <span>{new Date(order.createdAt).toLocaleString()}</span>
-            </div>
-            <div className={styles.orderInfoRow}>
-              <span>총 금액</span>
-              <span>{thousands(order.totalPrice || 0)}원</span>
-            </div>
-
-            <div className={styles.itemsHeader}>상품 내역</div>
-            {order.items?.map((item, i) => (
-              <div key={i} className={styles.itemRow}>
-                <span>{item.menu_name}</span>
-                <span>{item.quantity}개</span>
-                <span>{thousands(item.menu_price)}원</span>
-              </div>
-            ))}
+      <section className={styles.roomInfo}>
+        <h3 className={styles.sectionTitle}>공구방 정보</h3>
+        <div className={styles.roomDetails}>
+          <div className={styles.detailItem}>
+            <span className={styles.label}>공구방 ID: </span>
+            <span className={styles.value}>{roomInfo?.id || "-"}</span>
           </div>
-        ))}
+          <div className={styles.detailItem}>
+            <span className={styles.label}>공구방 이름: </span>
+            <span className={styles.value}>{roomInfo?.roomName || "-"}</span>
+          </div>
+          <div className={styles.detailItem}>
+            <span className={styles.label}>참여 인원: </span>
+            <span className={styles.value}>{participants.length}명</span>
+          </div>
+        </div>
       </section>
-    ))}
 
-    <div className={styles.footerNotice}>
-      © 주문이 만족스러웠다면 리뷰를 작성해 주세요!
-    </div>
+      {participants.map((part) => (
+        <section key={part.user_id} className={styles.participantOrder}>
+          <h3>{part.nickname} 님의 주문</h3>
+          {part.orders.map((order) => (
+            <div key={order.orderId} className={styles.orderBlock}>
+              <div className={styles.orderInfoRow}>
+                <span>주문번호</span>
+                <span>{order.orderId}</span>
+              </div>
+              <div className={styles.orderInfoRow}>
+                <span>주문 일자</span>
+                <span>{new Date(order.createdAt).toLocaleString()}</span>
+              </div>
+              <div className={styles.orderInfoRow}>
+                <span>총 금액</span>
+                <span>{thousands(order.totalPrice || 0)}원</span>
+              </div>
 
-    <div className={styles.buttonGroup}>
-      <button className={styles.btnPrimary} onClick={goToReview}>
-        리뷰 작성하기
-      </button>
-      <button className={styles.btnSecondary} onClick={goToGroupPurchase}>
-        공구방 바로가기
-      </button>
+              <div className={styles.itemsHeader}>상품 내역</div>
+              {order.items && order.items.length > 0 ? (
+                order.items.map((item, i) => (
+                  <div key={i} className={styles.itemRow}>
+                    <span>{item.menu_name}</span>
+                    <span>{item.quantity}개</span>
+                    <span>{thousands(item.menu_price)}원</span>
+                  </div>
+                ))
+              ) : (
+                <div>상품 내역이 없습니다.</div>
+              )}
+            </div>
+          ))}
+        </section>
+      ))}
+
+      <div className={styles.footerNotice}>
+        © 주문이 만족스러웠다면 리뷰를 작성해 주세요!
+      </div>
+
+      <div className={styles.buttonGroup}>
+        <button className={styles.btnPrimary} onClick={goToReview}>
+          리뷰 작성하기
+        </button>
+        <button className={styles.btnSecondary} onClick={goToGroupPurchase}>
+          공구방 바로가기
+        </button>
+      </div>
     </div>
-  </div>
-);
+  );
 }
