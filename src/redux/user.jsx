@@ -1,6 +1,8 @@
 // 액션 타입
 const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 const LOGOUT = "LOGOUT";
+const UPDATE_USER_INFO = "UPDATE_USER_INFO";
+
 
 // 액션 생성자
 export const loginSuccess = (user, token) => {
@@ -31,6 +33,20 @@ export const logout = () => {
     };
 };
 
+// 사용자 업데이트
+export const updateUserInfo = (user) => {
+    // localStorage도 함께 업데이트
+    try {
+        localStorage.setItem("user", JSON.stringify(user));
+    } catch (e) {
+        console.warn("localStorage 업데이트 실패", e);
+    }
+
+    return {
+        type: UPDATE_USER_INFO,
+        payload: { user },
+    };
+};
 
 // 초기 상태
 const initialState = {
@@ -61,6 +77,11 @@ const authReducer = (state = initialState, action) => {
         case LOGOUT:
             return {
                 ...clearedState
+            };
+        case UPDATE_USER_INFO: // 추가
+            return {
+                ...state,
+                user: action.payload.user,
             };
         default:
             return state;
