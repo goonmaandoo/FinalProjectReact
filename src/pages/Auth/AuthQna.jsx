@@ -73,7 +73,7 @@ export default function AuthQna() {
 
     return (
         <>
-                <div className={styles.authQnaContainer}>
+                {/* <div className={styles.authQnaContainer}> */}
                     <div className={styles.AuthHeadContainer}>
                         <div className={styles.headMain}>문의 내역</div>
                         <div className={styles.headSub}>QnA문의 내역입니다.</div>
@@ -122,12 +122,12 @@ export default function AuthQna() {
                                     >
                                         {qna.qanswer ? "답변완료" : "미답변"}
                                     </span>
-                                    <button
+                                    <span
                                         className={styles.addAnswerBtn}
                                         onClick={() => writeAnswer(qna.id)}
                                     >
                                         {qna.qanswer ? "답변수정" : "답변등록"}
-                                    </button>
+                                    </span>
                                     {viewId === qna.id ? (
                                         <ArrowDropUpIcon className={styles.arrowIcon} onClick={() => openAnswer(qna.id)} />
                                     ) : (
@@ -160,7 +160,7 @@ export default function AuthQna() {
                             )}
                         </div>
                     ))}
-                </div>
+                {/* </div> */}
         </>
     );
 }

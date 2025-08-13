@@ -59,7 +59,8 @@
 }
 
 .submitButton {
-    background-color: #ff4d4f; /* 빨간색 계열 */
+    background-color: #ff4d4f;
+    /* 빨간색 계열 */
     color: white;
 }
 
@@ -67,3 +68,4 @@
     background-color: #f0f2f5;
     color: #333;
 }
+

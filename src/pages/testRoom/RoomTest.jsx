@@ -89,7 +89,7 @@ export default function RoomTest() {
                 const updatedUsers = [...roomData.users, newUser];
                 await insertRoomJoin(roomId, user.id);
                 await getInRoom(roomId, updatedUsers, user.id, navigate);
-                
+
                 console.log("신규 방 입장 완료");
                 setRoom(prev => ({ ...prev, users: updatedUsers }));
 
@@ -429,9 +429,6 @@ export default function RoomTest() {
                             {room?.users?.length > 0 ? (
                                 room.users.map((member, idx) => {
                                     const isLeader = room?.leaderId && member.userId.toString() === room.leaderId.toString();
-                                    // console.log('리더 비교',room?.leaderId);
-                                    // console.log('유저 비교',member.userId);
-                                    // 준비/픽업 상태 메시지 계산
                                     let statusMessage = "";
                                     if (member.ready && member.pickup) {
                                         statusMessage = "픽업완료";
@@ -439,19 +436,30 @@ export default function RoomTest() {
                                         statusMessage = "준비완료";
                                     }
                                     return (
-                                        <li key={idx} className={styles.memberItem}>
+                                        <div key={idx} className={styles.memberItem}>
                                             <img
                                                 src={member.profileurl}
                                                 alt={member.nickname}
                                                 className={styles.memberProfile}
                                             />
-                                            <p className={styles.memberNickname}>
-                                                {member.nickname}
-                                                {isLeader && (
-                                                    <span className={styles.leaderTag}>방장</span>
-                                                )}
-                                            </p>
-                                            <p>{member.rating}</p>
+                                            <div className={styles.userInfoWrapper}>
+                                                <p className={styles.memberNickname}>{member.nickname}</p>
+                                                <img
+                                                    className={styles.bearImage}
+                                                    src={
+                                                        member.rating >= 80
+                                                            ? "http://localhost:8080/image/imgfile/main_img/good.png"
+                                                            : member.rating < 30
+                                                                ? "http://localhost:8080/image/imgfile/main_img/bad.png"
+                                                                : "http://localhost:8080/image/imgfile/main_img/soso.png"
+                                                    }
+                                                    alt="곰등급"
+                                                />
+                                                 {isLeader && (
+                                                <span className={styles.leaderTag}>방장</span>
+                                            )}
+                                            </div>
+                                            {/* <p>{member.rating}</p> */}
                                             <div className={styles.readyContainer}>
                                                 <p className={statusMessage ? styles.readyDone : styles.readyNotDone}>
                                                     {statusMessage}
@@ -478,7 +486,7 @@ export default function RoomTest() {
                                             {!isLeader && leader && (
                                                 <button className={styles.kickButton} onClick={() => kickButton(member.userId)}>강퇴</button>
                                             )}
-                                        </li>
+                                        </div>
                                     );
                                 })
                             ) : (

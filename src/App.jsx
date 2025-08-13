@@ -214,7 +214,6 @@ function App() {
         <Route path="/userregister" element={<UserRegister />} />
         <Route path="/forgotpw" element={<ForgotPassword />} />
         <Route path="/search" element={<SearchPage />} />
-        <Route path="/auth/qna" element={<AuthQna />} />
         <Route path="/moapolicy1" element={<MoaPolicy1 />} />
         <Route path="/moapolicy2" element={<MoaPolicy2 />} />
         <Route path="/moapolicy3" element={<MoaPolicy3 />} />
@@ -240,6 +239,7 @@ function App() {
           <Route path="reviewadmin" element={<ReviewAdmin />} /> 
           <Route path="reportmanagement" element={<ReportManagement />} /> 
           <Route path="roommanagement" element={<RoomManagement />} /> 
+          <Route path="qnamanagement" element={<AuthQna />} />
         </Route>
 
       </Routes>

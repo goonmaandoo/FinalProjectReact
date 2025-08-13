@@ -42,7 +42,7 @@ export default function AdminPage() {
         { id: "user", label: "회원관리", path: "usermanagement", content: "사용자 정보와 활동을 관리하세요" },
         { id: "store", label: "가게관리", path: "storemanagement", content: "파트너 음식점을 관리하고 새로운 음식점을 등록하세요" },
         { id: "active", label: "탈퇴/정지 회원 관리", path: "active", content: "탈퇴회원과 정지회원을 관리하세요" },
-        { id: "qna", label: "문의내역", path: "", content: "문의 내역을 확인하고 처리하세요" },
+        { id: "qna", label: "문의내역", path: "qnamanagement", content: "문의 내역을 확인하고 처리하세요" },
         { id: "room", label: "공구방관리", path: "roommanagement", content: "진행중이거나 완료된 공구방을 관리하세요" },
         { id: "report", label: "신고관리", path: "reportmanagement", content: "사용자 신고와 문의사항을 처리하세요" },
         { id: "refund", label: "환불관리", path: "", content: "환불내역을 확인하고 관리하세요" },

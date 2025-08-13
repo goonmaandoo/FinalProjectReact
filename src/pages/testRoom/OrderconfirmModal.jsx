@@ -145,8 +145,14 @@ export default function OrderConfirmModal({
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
-        <h2>주문 확인</h2>
-        <div>보유 금액: {cash.toLocaleString()}원</div>
+        <div className={styles.confirmOrder}>
+          <p className={styles.confrimTitle}>주문 확인</p>
+        </div>
+
+        <div className={styles.myCash}>내 캐쉬: {cash.toLocaleString()}원</div>
+        <div className={styles.myMenu}>
+          Menu
+        </div>
         <div className={styles.orderList}>
           {cart.map(item => (
             <div key={item.id} className={styles.orderItem}>
@@ -158,8 +164,8 @@ export default function OrderConfirmModal({
         </div>
         <p><strong>총 금액: {totalPrice.toLocaleString()}원</strong></p>
         <div className={styles.buttonGroup}>
-          <button onClick={handleOrderConfirm}>확인</button>
-          <button onClick={onClose}>취소</button>
+          <button className={styles.modalButton} onClick={handleOrderConfirm}>확인</button>
+          <button className={styles.modalButton} onClick={onClose}>취소</button>
         </div>
       </div>
     </div>
