@@ -14,13 +14,14 @@ const StartRating = () => {
   const [roomInfo, setRoomInfo] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // ✅ loading 상태들
   const [loadingUser, setLoadingUser] = useState(true);
   const [loadingRoom, setLoadingRoom] = useState(true);
   const [loadingParticipants, setLoadingParticipants] = useState(true);
 
   const basic_profile =
     "https://epfwvrafnhdgvyfcrhbo.supabase.co/storage/v1/object/public/profile-image/mypagePerson.png";
+
+  const SERVER_BASE = "http://localhost:8080"; // 오라클 서버 기준
 
   // ✅ 현재 로그인 유저 조회
   useEffect(() => {
@@ -66,7 +67,16 @@ const StartRating = () => {
       try {
         const res = await axios.get(`/api/roomJoin/participants?roomId=${room_id}`);
         const otherUsers = res.data.filter((user) => user.id !== currentUserId);
-        setParticipants(otherUsers);
+
+        // MyPage 방식: DB 경로를 서버 URL과 결합
+        const usersWithProfile = otherUsers.map((user) => ({
+          ...user,
+          profileUrl: user.profileUrl
+            ? `${SERVER_BASE}${user.profileUrl}?t=${new Date().getTime()}`
+            : null,
+        }));
+
+        setParticipants(usersWithProfile);
       } catch (err) {
         console.error("참여자 정보 조회 실패:", err);
       } finally {
@@ -102,9 +112,7 @@ const StartRating = () => {
               score: score,
             },
             {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
+              headers: { Authorization: `Bearer ${token}` },
             }
           )
         )
@@ -120,7 +128,6 @@ const StartRating = () => {
     }
   };
 
-  // ✅ 전체 로딩 중 여부
   const isLoading = loadingUser || loadingRoom || loadingParticipants;
 
   return (
@@ -140,7 +147,7 @@ const StartRating = () => {
               {participants.map((user) => (
                 <div key={user.id} className={styles.userBox}>
                   <img
-                    src={user.profile_url || basic_profile}
+                    src={user.profileUrl || basic_profile}
                     alt="프로필"
                     className={styles.profileImage}
                     onError={(e) => (e.target.src = basic_profile)}

@@ -17,8 +17,25 @@ const OrderComplete = () => {
     const fetchOrder = async () => {
       try {
         const response = await axios.get(`/api/orders/getTheOrder/${orderId}`);
+        const data = response.data;
 
-        setOrderData(response.data);
+        // roomOrder 파싱 및 배열/객체 처리
+        let items = [];
+        try {
+          const roomOrderData =
+            typeof data.roomOrder === "string"
+              ? JSON.parse(data.roomOrder)
+              : data.roomOrder;
+
+          // 배열이면 그대로, 객체면 menu로 접근
+          items = Array.isArray(roomOrderData)
+            ? roomOrderData
+            : roomOrderData.menu || [];
+        } catch (e) {
+          items = [];
+        }
+
+        setOrderData({ ...data, items });
       } catch (error) {
         console.error("주문 정보 불러오기 실패:", error);
         alert("주문 정보를 불러오지 못했습니다.");
@@ -73,15 +90,19 @@ const OrderComplete = () => {
       </div>
 
       <div className={styles.orderItems}>
-        {orderData.roomOrder?.menu?.map((item, idx) => (
-          <div className={styles.orderItem} key={idx}>
-            <div>
-              <span>{item.name}</span>
-              <span className={styles.menu_quantity}>{item.count}개</span>
+        {orderData.items.length > 0 ? (
+          orderData.items.map((item, idx) => (
+            <div className={styles.orderItem} key={idx}>
+              <div>
+                <span>{item.menu_name || item.name}</span>
+                <span className={styles.menu_quantity}>{item.quantity || item.count}개</span>
+              </div>
+              <div>{((item.price || item.menu_price) * (item.quantity || item.count)).toLocaleString()}원</div>
             </div>
-            <div>{(item.price * item.count).toLocaleString()}원</div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <div>주문 항목이 없습니다.</div>
+        )}
       </div>
 
       <div className={styles.total}>
@@ -89,10 +110,16 @@ const OrderComplete = () => {
       </div>
 
       <div className={styles.buttons}>
-        <button className={`${styles.btn} ${styles.btnPrimary}`} onClick={() => navigate("/mainpage")}>
+        <button
+          className={`${styles.btn} ${styles.btnPrimary}`}
+          onClick={() => navigate("/mainpage")}
+        >
           메인으로 돌아가기
         </button>
-        <button className={`${styles.btn} ${styles.btnSecondary}`} onClick={() => navigate(-1)}>
+        <button
+          className={`${styles.btn} ${styles.btnSecondary}`}
+          onClick={() => navigate(-1)}
+        >
           공구방 바로가기
         </button>
       </div>
