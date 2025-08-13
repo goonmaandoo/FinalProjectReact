@@ -1,11 +1,18 @@
 import styles from '../../CSS/ReportManagement.module.css';
+import style from '../../CSS/AdminPage.module.css';
 import { useState, useEffect } from 'react';
 
 export default function ReportManagement() {
     const [roomData, setRoomData] = useState([]);
 
     return (
-        <>  
+        <>
+            <div>
+                <div className={style["side_menu_box"]}>
+                    <div className={style["side_title"]}>신고관리</div>
+                </div>
+                <div className={style["side_detail"]}>사용자 신고와 문의사항을 처리하세요</div>
+            </div>
             <div className={styles["store_box"]}>
                 <div className={styles["total"]}>
                     <div className={styles["total_third"]}>

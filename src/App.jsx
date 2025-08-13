@@ -67,16 +67,6 @@ import ReportManagement from "./pages/Admin/ReportManagement";
 import RoomManagement from "./pages/Admin/RoomManagement";
 import UpdateStatus from "./pages/Admin/UpdateStatus";
 
-import AdminPage1 from "./pages/Admin/AdminPage1";
-import Dashboard1 from "./pages/Admin/Dashboard1";
-import OrderManagement1 from "./pages/Admin/OrderManagement1";
-import ReviewAdmin1 from "./pages/Admin/ReviewAdmin1";
-import ReportManagement1 from "./pages/Admin/ReportManagement1";
-import RoomManagement1 from "./pages/Admin/RoomManagement1";
-import StoreManagement1 from "./pages/Admin/StoreManagement1";
-import UserManagement1 from "./pages/Admin/UserManagement1";
-import UpdateStatus1 from "./pages/Admin/UpdateStatus1";
-import Active1 from "./pages/Admin/ActiveManagement1";
 
 function parseJwt(token) {
   try {
@@ -238,30 +228,18 @@ function App() {
         <Route path="/deliverystate" element={<DeliveryState />} />
         <Route path="/reviewmanagement" element={<ReviewManagement />} />
         <Route path="/orderyesno" element={<OrderYesNo />} />
-
-        <Route path="/adminpage" element={<AdminPage />} />
         <Route path="/ownerpage" element={<OwnerPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/storeManagement" element={<StoreManagement />} />
-        <Route path="/userManagement" element={<UserManagement />} />
-        <Route path="/active" element={<Active />} />
-        <Route path="/ordermanagement" element={<OrderManagement />} />
-        <Route path="/reviewadmin" element={<ReviewAdmin />} />
-        <Route path="/reportmanagement" element={<ReportManagement />} />
-        <Route path="/roommanagement" element={<RoomManagement />} />
-        <Route path="/updatestatus" element={<UpdateStatus />} />
-
-        <Route path="/admin" element={<AdminPage1/>}>
-          <Route index element={<Dashboard1 />} /> 
-          <Route path="dashboard1"element={<Dashboard1 />} /> 
-          <Route path="storeManagement1" element={<StoreManagement1 />} /> 
-          <Route path="userManagement1" element={<UserManagement1 />} /> 
-          <Route path="active1" element={<Active1 />} /> 
-          <Route path="ordermanagement1" element={<OrderManagement1 />} /> 
-          <Route path="reviewadmin1" element={<ReviewAdmin1 />} /> 
-          <Route path="reportmanagement1" element={<ReportManagement1 />} /> 
-          <Route path="roommanagement1" element={<RoomManagement1 />} /> 
-          <Route path="updatestatus1" element={<UpdateStatus1 />} /> 
+        <Route path="updatestatus" element={<UpdateStatus />} /> 
+        <Route path="/admin" element={<AdminPage/>}>
+          <Route index element={<Dashboard />} /> 
+          <Route path="dashboard"element={<Dashboard />} /> 
+          <Route path="storeManagement" element={<StoreManagement />} /> 
+          <Route path="userManagement" element={<UserManagement />} /> 
+          <Route path="active" element={<Active />} /> 
+          <Route path="ordermanagement" element={<OrderManagement />} /> 
+          <Route path="reviewadmin" element={<ReviewAdmin />} /> 
+          <Route path="reportmanagement" element={<ReportManagement />} /> 
+          <Route path="roommanagement" element={<RoomManagement />} /> 
         </Route>
 
       </Routes>
