@@ -130,7 +130,7 @@
   float: right;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 450px) {
   .container {
     padding: 20px;
     margin-top: 30px;
