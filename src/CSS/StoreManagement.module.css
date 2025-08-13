@@ -78,6 +78,7 @@
     background-color: #b9b9b9;
     color: white;
     border-radius: 5px;
+    padding: 0;
 }
 .store_table button:hover{
     background-color: #ffb1b1;

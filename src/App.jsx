@@ -67,6 +67,7 @@ import ReportManagement from "./pages/Admin/ReportManagement";
 import RoomManagement from "./pages/Admin/RoomManagement";
 import UpdateStatus from "./pages/Admin/UpdateStatus";
 
+
 function parseJwt(token) {
   try {
     const base64Payload = token.split(".")[1];
@@ -84,11 +85,15 @@ function App() {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
 
+  //헤더푸터 제외
+  const isCashCharge = location.pathname === "/cash/cashcharge";
   const isMainPage = location.pathname === "/mainpage";
   const isOwnerPage = location.pathname === "/ownerpage";
   const isAdminPage = location.pathname === "/adminpage";
   const isUpdatePage = location.pathname === "/updatestatus";
-  const showHeader = !isAdminPage && !isOwnerPage && !isUpdatePage;
+  const isAdmin1Page = location.pathname.startsWith("/admin");
+  const showHeader =
+    !isAdminPage && !isOwnerPage && !isUpdatePage && !isCashCharge && !isAdmin1Page;
 
   // 로그인 상태 유지 및 유저 정보 불러오기
   useEffect(() => {
@@ -223,18 +228,20 @@ function App() {
         <Route path="/deliverystate" element={<DeliveryState />} />
         <Route path="/reviewmanagement" element={<ReviewManagement />} />
         <Route path="/orderyesno" element={<OrderYesNo />} />
-
-        <Route path="/adminpage" element={<AdminPage />} />
         <Route path="/ownerpage" element={<OwnerPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/storeManagement" element={<StoreManagement />} />
-        <Route path="/userManagement" element={<UserManagement />} />
-        <Route path="/active" element={<Active />} />
-        <Route path="/ordermanagement" element={<OrderManagement />} />
-        <Route path="/reviewadmin" element={<ReviewAdmin />} />
-        <Route path="/reportmanagement" element={<ReportManagement />} />
-        <Route path="/roommanagement" element={<RoomManagement />} />
-        <Route path="/updatestatus" element={<UpdateStatus />} />
+        <Route path="updatestatus" element={<UpdateStatus />} /> 
+        <Route path="/admin" element={<AdminPage/>}>
+          <Route index element={<Dashboard />} /> 
+          <Route path="dashboard"element={<Dashboard />} /> 
+          <Route path="storeManagement" element={<StoreManagement />} /> 
+          <Route path="userManagement" element={<UserManagement />} /> 
+          <Route path="active" element={<Active />} /> 
+          <Route path="ordermanagement" element={<OrderManagement />} /> 
+          <Route path="reviewadmin" element={<ReviewAdmin />} /> 
+          <Route path="reportmanagement" element={<ReportManagement />} /> 
+          <Route path="roommanagement" element={<RoomManagement />} /> 
+        </Route>
+
       </Routes>
 
       {isOpen && <Hamburger isOpen={isOpen} onClose={() => setIsOpen(false)} />}

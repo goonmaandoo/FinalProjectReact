@@ -2,7 +2,7 @@ import styles from '../../CSS/StoreManagement.module.css';
 import style from '../../CSS/AdminPage.module.css';
 import { useState, useEffect } from 'react';
 
-export default function Active() {
+export default function Active1() {
     // const [userCount, setUserCount] = useState(0);
     const [totalCount, setTotalCount] = useState(0);
     const [unactiveCount, setUnactiveCount] = useState(0);

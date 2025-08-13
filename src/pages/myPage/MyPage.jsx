@@ -21,6 +21,7 @@ export default function MyPage() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const token = useSelector((s) => s.auth?.token);
 
+  //마이페이지 캐쉬 조회
   const fetchCash = async () => {
     if (!token) return;
     // setLoading(true);
@@ -57,6 +58,7 @@ export default function MyPage() {
     };
   }, [token]); // token 바뀌면 리바인딩
 
+  //결제창 open
   const openChargePopup = () => {
     if (!token) {
       alert("로그인 후 이용해주세요.");
@@ -70,7 +72,7 @@ export default function MyPage() {
     popupRef.current = window.open(
       "/cash/cashcharge",
       "_blank",
-      "width=480,height=680"
+      "width=420,height=500"
     );
   };
 

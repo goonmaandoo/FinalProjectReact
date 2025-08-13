@@ -1,3 +1,50 @@
 .main_container{
     padding: 40px;
+    height: 100vw;
+    background-color: antiquewhite;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.unactive_btn{
+    border-radius: 10px;
+    font-size: 1rem;
+    background-color: #FF6B6B;
+    border: 1px solid #FF6B6B;
+    color: white;
+    width: 100px;
+}
+.update_button{
+    display: flex;
+    gap: 20px;
+}
+.active_btn{
+    border-radius: 10px;
+    font-size: 1rem;
+    background-color: white;
+    border: 1px solid #FF6B6B;
+    color: #FF6B6B;
+    width: 100px;
+}
+.update_button button:hover{
+    background-color: #FF6B6B;
+    color: white;
+}
+.update_button1 button{
+    border-radius: 10px;
+    font-size: 1rem;
+    background-color: white;
+    border: 1px solid rgb(117, 117, 117);
+    color: rgb(117, 117, 117);
+    width: 60px;
+    
+}
+.update_button1{
+    display: flex;
+    gap: 20px;
+    justify-content: flex-end;
+}
+.update_button1 button:hover{
+    background-color: rgb(117, 117, 117);
+    color: white;
 }

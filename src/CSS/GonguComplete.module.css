@@ -206,8 +206,8 @@
   }
 }
 
-/* 아주 작은 모바일 대응 (화면 너비가 360px 이하일 때) */
-@media (max-width: 360px) {
+/* 아주 작은 모바일 대응 */
+@media (max-width: 450px) {
   .mainTitle {
     font-size: 20px;
   }
