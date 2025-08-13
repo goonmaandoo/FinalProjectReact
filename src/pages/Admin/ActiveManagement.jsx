@@ -1,7 +1,8 @@
 import styles from '../../CSS/StoreManagement.module.css';
+import style from '../../CSS/AdminPage.module.css';
 import { useState, useEffect } from 'react';
 
-export default function Active({ roleFilter }) {
+export default function Active() {
     // const [userCount, setUserCount] = useState(0);
     const [totalCount, setTotalCount] = useState(0);
     const [unactiveCount, setUnactiveCount] = useState(0);
@@ -10,6 +11,7 @@ export default function Active({ roleFilter }) {
     const [selected, setSelected] = useState('nickname');
     const [keyword, setKeyword] = useState("");
     const [sendUserId, setSendUserId] = useState("");
+    const [subBanBtn, setSubBanBtn] = useState("all");
 
     const handleChange = (e) => {
         setSelected(e.target.value);
@@ -21,11 +23,11 @@ export default function Active({ roleFilter }) {
 
     const handleSearch = () => {
         let url = 'http://localhost:8080/api/users/';
-        if (roleFilter === 'all') {
+        if (subBanBtn === 'all') {
             url += `userSearchActive?type=${selected}&keyword=${encodeURIComponent(keyword)}`;
-        } else if (roleFilter === 'unactive') {
+        } else if (subBanBtn === 'unactive') {
             url += `userUnactiveSearch?type=${selected}&keyword=${encodeURIComponent(keyword)}`;
-        } else if (roleFilter === 'ban') {
+        } else if (subBanBtn === 'ban') {
             url += `userBanSearch?type=${selected}&keyword=${encodeURIComponent(keyword)}`;
         }
         fetch(url)
@@ -56,8 +58,8 @@ export default function Active({ roleFilter }) {
     // role별로 데이터 불러오기
     useEffect(() => {
         let url = 'http://localhost:8080/api/users/'
-        if (roleFilter !== 'all') {
-            url += `unactiveBan/${roleFilter}`;
+        if (subBanBtn !== 'all') {
+            url += `unactiveBan/${subBanBtn}`;
         } else {
             url += 'selectAllAdmin';
         }
@@ -68,17 +70,28 @@ export default function Active({ roleFilter }) {
             })
             .then(data => setUserData(data))
             .catch(console.error);
-    }, [roleFilter])
+    }, [subBanBtn])
 
     return (
         <>
-            {roleFilter !== "all" ?
+            <div>
+                <div className={style["side_menu_box"]}>
+                    <div className={style["side_title"]}>탈퇴/정지 회원 관리</div>
+                    <div className={style["side_btn"]}>
+                        <button className={subBanBtn === "all" ? style["active_btn"] : style["unactive_btn"]} onClick={() => { setSubBanBtn("all"); }}>전체</button>
+                        <button className={subBanBtn === "unactive" ? style["active_btn"] : style["unactive_btn"]} onClick={() => { setSubBanBtn("unactive"); }}>탈퇴</button>
+                        <button className={subBanBtn === "ban" ? style["active_btn"] : style["unactive_btn"]} onClick={() => { setSubBanBtn("ban"); }}>정지</button>
+                    </div>
+                </div>
+                <div className={style["side_detail"]}>탈퇴회원과 정지회원을 관리하세요</div>
+            </div>
+            {subBanBtn !== "all" ?
                 <div className={styles["store_box"]}>
                     <div className={styles["total_third"]}>
-                        <div className={styles["total_title"]}>{roleFilter === "unactive" ? "탈퇴 회원" : "정지 회원"}</div>
-                        <div className={styles["total_num"]}>{roleFilter === "unactive" ? unactiveCount : banCount}</div>
+                        <div className={styles["total_title"]}>{subBanBtn === "unactive" ? "탈퇴 회원" : "정지 회원"}</div>
+                        <div className={styles["total_num"]}>{subBanBtn === "unactive" ? unactiveCount : banCount}</div>
                     </div>
-                    <img src={`http://localhost:8080/image/imgfile/admin/${roleFilter}_user.png`} />
+                    <img src={`http://localhost:8080/image/imgfile/admin/${subBanBtn}_user.png`} />
                 </div>
                 :
                 <>

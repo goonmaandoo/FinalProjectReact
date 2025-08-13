@@ -1,4 +1,5 @@
 import styles from '../../CSS/StoreManagement.module.css';
+import style from '../../CSS/AdminPage.module.css';
 import { useState, useEffect } from 'react';
 
 export default function StoreManagement() {
@@ -43,6 +44,12 @@ export default function StoreManagement() {
     }, [])
     return (
         <>
+            <div>
+                <div className={style["side_menu_box"]}>
+                    <div className={style["side_title"]}>가게관리</div>
+                </div>
+                <div className={style["side_detail"]}>파트너 음식점을 관리하고 새로운 음식점을 등록하세요</div>
+            </div>
             <div className={styles["store_box"]}>
                 <div className={styles["total_third"]}>
                     <div className={styles["total_title"]}>가게</div>
@@ -58,7 +65,7 @@ export default function StoreManagement() {
                     <option value="storeAddress">가게주소</option>
                     <option value="tel">전화번호</option>
                 </select>
-                <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} disabled={selected === 'all'} placeholder={selected === 'all' ? '검색 불가' : '검색어 입력'}/>
+                <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} disabled={selected === 'all'} placeholder={selected === 'all' ? '검색 불가' : '검색어 입력'} />
                 <button onClick={handleSearch}>검색</button>
             </div>
 
