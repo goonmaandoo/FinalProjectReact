@@ -58,6 +58,7 @@ export default function MainPage() {
             })
             .then(data => setPopular(data))
             .catch(console.error);
+        
     }, []);
 
     return (
