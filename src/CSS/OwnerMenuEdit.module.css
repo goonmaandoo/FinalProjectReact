@@ -146,20 +146,13 @@ button {
     color: white;
 }
 
-.image_insert {
-    width: 100%;
-    height: 400px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #d9d9d9;
+/* 메뉴추가*/
+.insert_menu{
+    background-color: white;
 }
-
-.image_insert p {
-    text-align: center;
-
+.image_insert{
+    margin-left: 20px;
 }
-
 .insertmenu_info {
     background-color: white;
     height: 200px;
@@ -168,11 +161,10 @@ button {
 .insertmenu_info input {
     border: none;
     font-size: 20px;
-    margin: 20px 10px 10px;
+    margin: 20px 20px 10px;
 }
 
 .insertmenu_button {
-    margin-left: 10px;
     margin-top: 40px;
     background-color: #ff9d9d;
     color: white;
@@ -183,12 +175,20 @@ button {
     cursor: pointer;
 }
 
+.storeNum {
+    border: none;
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
 /* 메뉴수정 */
 .menu_image{
     object-fit: cover;
 }
 .edit_menu_image img {
     width: 1080px;
+    height: 800px;
     margin-bottom: 20px;
 }
 

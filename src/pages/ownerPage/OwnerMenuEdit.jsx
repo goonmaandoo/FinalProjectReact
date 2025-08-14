@@ -7,14 +7,17 @@ export default function OwnerMenuEdit() {
     const user = useSelector((state) => state.auth.user);
     const [menuList, setMenuList] = useState([]);
     const [storeId, setStoreId] = useState("");
+    const [imageId, setImageId] = useState("");
     const [selectedTab, setSelectedTab] = useState("전체메뉴");
     const [selectedMenu, setSelectedMenu] = useState(null);
     const [editedMenuName, setEditedMenuName] = useState("");
     const [editedMenuPrice, setEditedMenuPrice] = useState("");
     const [editedMenuStatus, setEditedMenuStatus] = useState("판매중");
     const [newStoreId, setNewStoreId] = useState("");
+    const [newImageId, setNewImageId] = useState("");
     const [newMenuName, setNewMenuName] = useState("");
     const [newMenuPrice, setNewMenuPrice] = useState("");
+    const [selectedFile, setSelectedFile] = useState(null);
 
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -91,9 +94,11 @@ export default function OwnerMenuEdit() {
 
         const newMenu = {
             storeId: newStoreId,
+            imageId: newImageId,
             menuName: newMenuName,
             menuPrice: newMenuPrice
         };
+
 
         axios.post("http://localhost:8080/menu/menuInsertByOwner", newMenu)
             .then(() => {
@@ -106,6 +111,7 @@ export default function OwnerMenuEdit() {
                 setMenuList(res.data);
                 // 입력 필드 초기화
                 setNewStoreId("");
+                setNewImageId("");
                 setNewMenuName("");
                 setNewMenuPrice("");
             })
@@ -115,28 +121,51 @@ export default function OwnerMenuEdit() {
             });
     };
 
-    const handleMenuDelete = (menuId) => {
-    if (window.confirm("정말 삭제하시겠습니까?")) {
-        axios.get(`http://localhost:8080/menu/menuDeleteByOwner/${menuId}`)
-            .then((res) => {
-                if (res.data > 0) {
-                    alert("메뉴가 삭제되었습니다.");
-                    return axios.get(`http://localhost:8080/menu/ownerWithImage/${user.id}`);
-                } else {
-                    alert("삭제에 실패했습니다.");
-                }
+    const handleImageUpload = () => {
+        if (!selectedFile || !newStoreId) {
+            alert("가게번호와 이미지를 모두 선택해주세요.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("folder", "store"+newStoreId);
+        formData.append("filename", selectedFile);
+
+        axios.post("http://localhost:8080/menuImageInsertByOwner", formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+        })
+            .then(() => {
+                alert("이미지 업로드 완료!");
             })
-            .then((res) => {
-                if (res) {
-                    setMenuList(res.data);
-                }
-            })
-            .catch((err) => {
-                console.error("메뉴 삭제 실패:", err);
-                alert("메뉴 삭제에 실패했습니다.");
+            .catch(err => {
+                console.error(err);
+                alert("이미지 업로드 실패");
             });
-    }
-};
+    };
+
+
+    const handleMenuDelete = (menuId) => {
+        if (window.confirm("정말 삭제하시겠습니까?")) {
+            axios.get(`http://localhost:8080/menu/menuDeleteByOwner/${menuId}`)
+                .then((res) => {
+                    if (res.data > 0) {
+                        alert("메뉴가 삭제되었습니다.");
+                        return axios.get(`http://localhost:8080/menu/ownerWithImage/${user.id}`);
+                    } else {
+                        alert("삭제에 실패했습니다.");
+                    }
+                })
+                .then((res) => {
+                    if (res) {
+                        setMenuList(res.data);
+                    }
+                })
+                .catch((err) => {
+                    console.error("메뉴 삭제 실패:", err);
+                    alert("메뉴 삭제에 실패했습니다.");
+                });
+        }
+    };
 
 
 
@@ -184,7 +213,7 @@ export default function OwnerMenuEdit() {
                                                     수정
                                                 </button>
                                                 <button className={style["menu_delete"]}
-                                                onClick={() => handleMenuDelete(menu.id)}>삭제</button>
+                                                    onClick={() => handleMenuDelete(menu.id)}>삭제</button>
                                             </div>
                                         </div>
                                     ))
@@ -212,15 +241,24 @@ export default function OwnerMenuEdit() {
                     {selectedTab === "메뉴추가" && (
                         <div className={style["insert_menu"]}>
                             <div className={style["image_insert"]}>
-                                <p>사진 추가하기</p>
-                            </div>
-                            <div className={style["insertmenu_info"]}>
-                                <input
+                                <input className={style["storeNum"]}
                                     type="text"
                                     placeholder="가게번호를 입력해주세요"
                                     value={newStoreId}
                                     onChange={(e) => setNewStoreId(e.target.value)}
                                 /><br />
+                                <p> 메뉴 사진 추가하기</p>
+                                <label>
+                                    <input
+                                        type="file"
+                                        onChange={(e) => setSelectedFile(e.target.files[0])}
+                                    />
+                                </label>
+                                <button onClick={handleImageUpload}> 이미지 등록하기 </button>
+                            </div>
+                            <div className={style["insertmenu_info"]}>
+
+
 
                                 <input
                                     type="text"
