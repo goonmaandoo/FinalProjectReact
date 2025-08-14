@@ -5,7 +5,7 @@ import style from "../../CSS/RoomCreate.module.css";
 
 export default function RoomCreate() {
   const navigate = useNavigate();
-  const { storeId } = useParams(); // store_id → storeId로 수정
+  const { storeId } = useParams();
 
   const [roomName, setRoomName] = useState('');
   const [authUser, setAuthUser] = useState(null);
@@ -38,15 +38,25 @@ export default function RoomCreate() {
       return;
     }
 
+    // 리더 본인 정보로 초기 users 배열 구성
+    const initialUser = {
+      userId: String(authUser.id),
+      nickname: authUser.nickname,
+      profileurl: authUser.profileUrl,
+      rating: String(authUser.userRating || 0),
+      ready: false,
+      pickup: false
+    };
+
     const roomData = {
       roomName,
       roomAddress,
-      roomAddressDetail: roomDetailAddress,  // 여기 수정됨
+      roomAddressDetail: roomDetailAddress,
       maxPeople,
       leaderId: authUser.id,
       storeId: parseInt(storeId),
       status: '모집중',
-      users: JSON.stringify([authUser.id]),
+      users: JSON.stringify([initialUser]) // 객체 배열을 JSON 문자열로 저장
     };
 
     try {
