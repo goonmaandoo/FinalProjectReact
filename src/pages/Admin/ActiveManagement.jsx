@@ -4,13 +4,11 @@ import { useState, useEffect } from 'react';
 
 export default function Active() {
     // const [userCount, setUserCount] = useState(0);
-    const [totalCount, setTotalCount] = useState(0);
     const [unactiveCount, setUnactiveCount] = useState(0);
     const [banCount, setBanCount] = useState(0);
     const [userData, setUserData] = useState([]);
     const [selected, setSelected] = useState('nickname');
     const [keyword, setKeyword] = useState("");
-    const [sendUserId, setSendUserId] = useState("");
     const [subBanBtn, setSubBanBtn] = useState("all");
 
     const handleChange = (e) => {

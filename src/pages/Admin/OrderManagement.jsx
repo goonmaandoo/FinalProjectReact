@@ -35,7 +35,6 @@ export default function OrderManagement() {
                 return res.json();
             })
             .then(data => { console.log(data); setOrders(data) })
-
             .catch(console.error);
     }, [])
     return (
@@ -50,7 +49,6 @@ export default function OrderManagement() {
                 </div>
                 <div className={style["side_detail"]}>전체 주문과 배송 상태를 관리하세요</div>
             </div>
-            {subOrderBtn === "배달주문" &&
                 <div>
                     <div className={styles["input_value"]}>
                         <select id="table_th" value={selected} onChange={handleChange}>
@@ -62,7 +60,7 @@ export default function OrderManagement() {
                         <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} />
                         <button onClick={handleSearch}>검색</button>
                     </div>
-
+                    {subOrderBtn === "배달주문" &&
                     <table className={styles["store_table"]}>
                         <thead>
                             <tr>
@@ -77,8 +75,24 @@ export default function OrderManagement() {
                             ))}
                         </tbody>
                     </table>
+                    }
+                    {subOrderBtn === "캐시주문" &&
+                    <table className={styles["store_table"]}>
+                        <thead>
+                            <tr>
+                                <th>구분</th><th>사용자ID</th><th>충전/환불</th><th>주문금액</th><th>주문일시</th><th>환불버튼</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {orders.map((item) => (
+                                <tr key={item.orderId}>
+                                    <td><Link to={`/admin/orderdetail/${item.orderId}`}>{item.orderId}</Link></td><td>{item.roomId}</td><td>{item.nickname}</td><td>{item.storeName}</td><td>{item.totalPrice}</td><td>{item.createdAt}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    }
                 </div>
-            }
         </>
     )
 }

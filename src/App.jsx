@@ -67,6 +67,7 @@ import ReportManagement from "./pages/Admin/ReportManagement";
 import RoomManagement from "./pages/Admin/RoomManagement";
 import UpdateStatus from "./pages/Admin/UpdateStatus";
 import OrderDetailManagement from "./pages/Admin/OrderDetailManagement";
+import RefundManagement from "./pages/Admin/RefundManagement";
 
 
 function parseJwt(token) {
@@ -243,6 +244,7 @@ function App() {
           <Route path="roommanagement" element={<RoomManagement />} /> 
           <Route path="qnamanagement" element={<AuthQna />} />
           <Route path="orderdetail/:orderId" element={<OrderDetailManagement/>} />
+          <Route path="refund" element={<RefundManagement/>} />
         </Route>
         
 
