@@ -67,6 +67,7 @@ import ReportManagement from "./pages/Admin/ReportManagement";
 import RoomManagement from "./pages/Admin/RoomManagement";
 import UpdateStatus from "./pages/Admin/UpdateStatus";
 import OrderDetailManagement from "./pages/Admin/OrderDetailManagement";
+import RoomGatekeeper from "./pages/testRoom/RoomGateKeeper";
 
 
 function parseJwt(token) {
@@ -196,7 +197,7 @@ function App() {
         </Route>
 
         <Route path="/cash/cashcharge" element={<CashCharge />} />
-        <Route path="/room/:room_id" element={<RoomTest />} />
+        <Route path="/room/:room_id" element={<RoomGatekeeper />} />
 
         <Route path="/storelist/:categoryId" element={<StoreListPage />} />
         <Route path="/store/:storeId" element={<StoreDetail />} />
