@@ -1,0 +1,140 @@
+/* storeregister */
+.category_firstimg{
+    display: flex;
+}
+.category_select{
+    margin-right: 50px;
+}
+.category_firstimg h3{
+    font-size: 28px;
+}
+.store_info h3{
+    font-size: 28px;
+}
+.store_info input{
+    width: 100%;
+    height: 90px;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+.store_register_button {
+    background-color: #ff9d9d;
+    color: white;
+    border: none;
+    padding: 20px 30px;
+    border-radius: 10px;
+    font-size: 22px;
+    cursor: pointer;
+    margin-top: 40px;
+}
+.button-wrapper {
+    text-align: right;
+    margin-top: 40px;
+}
+
+/* 페이지네이션 */
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.pagination button {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+}
+
+.pagination .active {
+    background-color: #ff6b6b;
+    color: white;
+    font-weight: bold;
+}
+
+/* 가게관리 */
+.store_card{
+    background-color: white;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    padding: 20px;
+}
+.store_card h4{
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+.store_card h5{
+    margin: 0;
+}
+.store_card button{
+    margin-right: 10px;
+    width: 60px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    background-color: #ffb1b1;
+    color: white;
+    border-radius: 10px;
+    font-size: 16px;
+}
+.store_edit_section {
+    margin-top: 30px;
+    border-radius: 12px;
+    background-color: white;
+    width: 100%;
+}
+
+.store_edit_section h3 {
+    margin-bottom: 15px;
+    font-size: 22px;
+}
+
+.store_edit_section p {
+    margin-bottom: 12px;
+    font-size: 16px;
+}
+
+.store_edit_section input {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.store_edit_section button {
+    margin-top: 10px;
+    margin-right: 10px;
+    padding: 10px 20px;
+    font-size: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #fff;
+    color: black;
+    width: auto;
+    height: auto;
+    border: 1px solid #ccc;
+}
+.update-btn:hover {
+    background-color: #ff6b6b;
+    color: white;
+}
+.cancel-btn:hover {
+    background-color: #ff6b6b;
+    color: white;
+}
+
+.store_name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.store_info {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
