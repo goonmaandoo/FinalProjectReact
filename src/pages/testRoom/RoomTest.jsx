@@ -35,7 +35,7 @@ export default function RoomTest() {
     const navigate = useNavigate();
     const user = useSelector((state) => state.auth.user);
     const { room_id: roomId } = useParams();
-    console.log(roomId);
+    const basic_profile = "http://localhost:8080/image/profileImg/mypagePerson.png";
     // 룸 신규 or 참여중 check
     useEffect(() => {
         if (!user) {
@@ -438,7 +438,8 @@ export default function RoomTest() {
                                     return (
                                         <div key={idx} className={styles.memberItem}>
                                             <img
-                                                src={member.profileurl}
+                                                // src={member.profileurl}
+                                                src={basic_profile}
                                                 alt={member.nickname}
                                                 className={styles.memberProfile}
                                             />
@@ -508,7 +509,8 @@ export default function RoomTest() {
                     <div className={styles.chatBody} ref={chatBodyRef}>
                         {chatLog.map((chat, idx) => (
                             <div key={idx} className={styles.chatMessage}>
-                                <img src={chat.profileurl} alt={chat.nickname} />
+                                {/* <img src={chat.profileurl} alt={chat.nickname} /> */}
+                                <img src={basic_profile} alt={chat.nickname} />
                                 <div className={styles.chatContentLeft}>
                                     <div className={styles.nickname}>{chat.nickname}</div>
                                     <div className={styles.chatText}>{chat.chat}</div>
