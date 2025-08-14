@@ -15,8 +15,8 @@ import { getInRoom } from './roomFunction/getInRoom';
 import { changeRoomStatus } from './roomFunction/changeRoomStatus';
 import { countingJoin } from './roomFunction/countingJoin';
 import { useParams } from 'react-router-dom';
-export default function RoomTest() {
-    const [room, setRoom] = useState(null);
+export default function RoomTest({ initialRoom, roomId }) {
+    const [room, setRoom] = useState(initialRoom);
     const [allReady, setAllReady] = useState(false);
     const [pollingReady, setPollingReady] = useState(true);
     const [status, setStatus] = useState(null);
@@ -31,77 +31,12 @@ export default function RoomTest() {
     const [selectedChat, setSelectedChat] = useState(null);
     const [leader, setLeader] = useState(false);
     const [kickId, setKickId] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isValidating, setIsValidating] = useState(true);
     const totalPrice = cart.reduce((sum, item) => sum + (item.menuPrice * item.quantity), 0);
     const navigate = useNavigate();
     const user = useSelector((state) => state.auth.user);
-    const { room_id: roomId } = useParams();
-    console.log(roomId);
-    // 룸 신규 or 참여중 check
-    useEffect(() => {
-        if (!user) {
-            alert('로그인이 필요합니다.');
-            navigate("/login");
-            return;
-        }
-        const fetchRoomJoin = async () => {
-            try {
-                // 1. 방 정보와 강퇴 여부를 먼저 확인
-                const roomData = await selectAllRoom(roomId);
-                if (typeof roomData.users === 'string') {
-                    roomData.users = JSON.parse(roomData.users);
-                }
-
-                // 🚨 강퇴된 유저인지 즉시 확인
-                if (roomData.kickId && Number(roomData.kickId) === Number(user.id)) {
-                    alert("강퇴되었던 방입니다. 입장할 수 없습니다.");
-                    navigate("/mainpage");
-                    return;
-                }
-
-                // 2. 현재 유저가 이미 참여 중인지 확인
-                const data = await selectRoomJoin(roomId, user.id);
-                const isAlreadyJoined = data.some(item => item.usersId === user.id);
-
-                // 이미 참여중인 경우, 신규 입장 로직을 건너뜁니다.
-                if (isAlreadyJoined) {
-                    console.log("이미 참여중입니다.");
-                    return;
-                }
-
-                // 3. 방이 꽉 찼는지 확인
-                const maxed = await countingJoin(roomId);
-                if (maxed) {
-                    alert("방이 꽉 찼습니다.");
-                    navigate("/mainpage");
-                    return;
-                }
-
-                // 4. 위의 모든 조건을 통과하면 신규 유저로 입장 처리
-                console.log("신규 유저 방 입장");
-                const newUser = {
-                    nickname: user?.nickname,
-                    pickup: false,
-                    profileurl: user?.profileurl,
-                    rating: user?.userRating,
-                    ready: false,
-                    userId: user?.id
-                };
-                const updatedUsers = [...roomData.users, newUser];
-                await insertRoomJoin(roomId, user.id);
-                await getInRoom(roomId, updatedUsers, user.id, navigate);
-
-                console.log("신규 방 입장 완료");
-                setRoom(prev => ({ ...prev, users: updatedUsers }));
-
-            } catch (error) {
-                console.error("방 입장 처리 중 오류 발생:", error);
-                alert("방 입장 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
-                navigate("/mainpage");
-            }
-        };
-
-        fetchRoomJoin();
-    }, [user, roomId, navigate]);
+    const basic_profile = "http://localhost:8080/image/profileImg/mypagePerson.png";
 
     const fetchRoomUsers = async () => {
         try {
@@ -391,8 +326,8 @@ export default function RoomTest() {
         }
 
     }, [room, user, navigate]);
-
     return (
+
         <div className={styles.roomContainer}>
             {/* 왼쪽 영역 */}
             <div className={styles.leftColumn}>
@@ -438,7 +373,9 @@ export default function RoomTest() {
                                     return (
                                         <div key={idx} className={styles.memberItem}>
                                             <img
-                                                src={member.profileurl}
+
+                                                src={member.profileurl ? `http://localhost:8080${member.profileurl}` : basic_profile}
+                                                //src={basic_profile}
                                                 alt={member.nickname}
                                                 className={styles.memberProfile}
                                             />
@@ -455,9 +392,9 @@ export default function RoomTest() {
                                                     }
                                                     alt="곰등급"
                                                 />
-                                                 {isLeader && (
-                                                <span className={styles.leaderTag}>방장</span>
-                                            )}
+                                                {isLeader && (
+                                                    <span className={styles.leaderTag}>방장</span>
+                                                )}
                                             </div>
                                             {/* <p>{member.rating}</p> */}
                                             <div className={styles.readyContainer}>
@@ -508,7 +445,8 @@ export default function RoomTest() {
                     <div className={styles.chatBody} ref={chatBodyRef}>
                         {chatLog.map((chat, idx) => (
                             <div key={idx} className={styles.chatMessage}>
-                                <img src={chat.profileurl} alt={chat.nickname} />
+                                {/* <img src={chat.profileurl} alt={chat.nickname} /> */}
+                                <img src={chat.profileUrl ? `http://localhost:8080${chat.profileUrl}` : basic_profile} alt={chat.nickname} />
                                 <div className={styles.chatContentLeft}>
                                     <div className={styles.nickname}>{chat.nickname}</div>
                                     <div className={styles.chatText}>{chat.chat}</div>
@@ -585,7 +523,7 @@ export default function RoomTest() {
                 </div>
                 <div className={styles.fixedButtonWrapper}>
                     {status !== "모집중" ? (
-                        <button onClick={pickedUp}>픽업완료</button>
+                        <button className={styles.readyButton} onClick={pickedUp}>픽업완료</button>
                     ) : (
                         room?.users?.find(u => Number(u.userId) === Number(user.id))?.ready ? (
                             <button className={styles.readyButton} onClick={cancelOrder}>준비취소</button>

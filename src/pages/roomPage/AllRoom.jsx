@@ -116,7 +116,7 @@ export default function AllRoom() {
             });
 
             const joinData = response.data;
-
+            console.log("조인데이터",joinData);
             if (joinData) {
                 // 데이터가 있으면 참여중
                 const move = window.confirm("이미 참여중인 방입니다. 이동하시겠습니까?");

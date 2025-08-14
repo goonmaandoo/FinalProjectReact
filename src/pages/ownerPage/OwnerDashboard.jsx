@@ -11,8 +11,8 @@ export default function OwnerDashboard() {
                     {/* 오늘 주문 */}
                     <div className={style["today_order"]}>
                         <div className={style["status_box"]}>
-                            <h3>진행중인 주문</h3>
-                            <h4>?건</h4>
+                            <h3>오늘 매출액</h3>
+                            <h4>?원</h4>
                         </div>
                     </div>
 

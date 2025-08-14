@@ -1,4 +1,4 @@
-import style from "../../CSS/OwnerDashboard.module.css";
+import style from "../../CSS/OwnerStoreList.module.css";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";

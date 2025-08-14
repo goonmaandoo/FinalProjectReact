@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export async function getInRoom( roomId, updatedUsers, userId, navigate ) {
+    console.log("추가할 유저",updatedUsers);
     try {
         await axios.put('/api/room/updateReady', {
             id: roomId,
@@ -13,7 +14,7 @@ export async function getInRoom( roomId, updatedUsers, userId, navigate ) {
             joinedAt,
             status: "준비중",
         });
-        navigate(`/room/${roomId}`);
+        //navigate(`/room/${roomId}`);
         alert("방에 입장했습니다.");
 
     } catch (error) {

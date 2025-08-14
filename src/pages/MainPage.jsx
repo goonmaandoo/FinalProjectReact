@@ -60,7 +60,6 @@ export default function MainPage() {
             .catch(console.error);
         
     }, []);
-
     return (
         <>
             <main>

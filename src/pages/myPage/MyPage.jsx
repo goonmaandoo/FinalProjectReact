@@ -101,9 +101,7 @@ export default function MyPage() {
     }
   }, [user]);
 
-  const basic_profile =
-    "https://epfwvrafnhdgvyfcrhbo.supabase.co/storage/v1/object/public/profile-image/mypagePerson.png";
-
+  const basic_profile = "http://localhost:8080/image/profileImg/mypagePerson.png";
   const updateProfile = async (file) => {
     try {
       const formData = new FormData();

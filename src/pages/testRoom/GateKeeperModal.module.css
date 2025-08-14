@@ -1,0 +1,14 @@
+.gateKeeping {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: stretch;
+    min-height: 600px;
+    background-color: #f0f2f5;
+    padding: 30px 50px 50px 50px;
+    box-sizing: border-box;
+    height: auto;
+    width: 100%;
+    font-size: larger;
+    font-weight: 700;
+}
