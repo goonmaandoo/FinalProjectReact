@@ -1,6 +1,7 @@
 import styles from '../../CSS/StoreManagement.module.css';
 import style from '../../CSS/AdminPage.module.css';
 import { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
 
 export default function OrderManagement() {
     const [orders, setOrders] = useState([]);
@@ -71,7 +72,7 @@ export default function OrderManagement() {
                         <tbody>
                             {orders.map((item) => (
                                 <tr key={item.orderId}>
-                                    <td>{item.orderId}</td><td>{item.roomId}</td><td>{item.nickname}</td><td>{item.storeName}</td><td>{item.totalPrice}</td><td>{item.createdAt}</td>
+                                    <td><Link to={`/admin/orderdetail/${item.orderId}`}>{item.orderId}</Link></td><td>{item.roomId}</td><td>{item.nickname}</td><td>{item.storeName}</td><td>{item.totalPrice}</td><td>{item.createdAt}</td>
                                 </tr>
                             ))}
                         </tbody>
