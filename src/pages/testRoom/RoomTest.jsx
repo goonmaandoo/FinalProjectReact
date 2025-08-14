@@ -81,7 +81,7 @@ export default function RoomTest() {
                 const newUser = {
                     nickname: user?.nickname,
                     pickup: false,
-                    profileurl: user?.profileurl,
+                    profileurl: user?.profileUrl,
                     rating: user?.userRating,
                     ready: false,
                     userId: user?.id
@@ -438,8 +438,9 @@ export default function RoomTest() {
                                     return (
                                         <div key={idx} className={styles.memberItem}>
                                             <img
-                                                // src={member.profileurl}
-                                                src={basic_profile}
+                                                
+                                                src={member.profileurl ? `http://localhost:8080${member.profileurl}` : basic_profile}
+                                                //src={basic_profile}
                                                 alt={member.nickname}
                                                 className={styles.memberProfile}
                                             />
@@ -510,7 +511,7 @@ export default function RoomTest() {
                         {chatLog.map((chat, idx) => (
                             <div key={idx} className={styles.chatMessage}>
                                 {/* <img src={chat.profileurl} alt={chat.nickname} /> */}
-                                <img src={basic_profile} alt={chat.nickname} />
+                                <img src={chat.profileUrl ? `http://localhost:8080${chat.profileUrl}` : basic_profile} alt={chat.nickname} />
                                 <div className={styles.chatContentLeft}>
                                     <div className={styles.nickname}>{chat.nickname}</div>
                                     <div className={styles.chatText}>{chat.chat}</div>

@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export async function getInRoom( roomId, updatedUsers, userId, navigate ) {
+    console.log("추가할 유저",updatedUsers);
     try {
         await axios.put('/api/room/updateReady', {
             id: roomId,
