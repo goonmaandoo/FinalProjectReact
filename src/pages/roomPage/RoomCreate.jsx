@@ -56,7 +56,8 @@ export default function RoomCreate() {
       leaderId: authUser.id,
       storeId: parseInt(storeId),
       status: '모집중',
-      users: JSON.stringify([initialUser]) // 객체 배열을 JSON 문자열로 저장
+      // users: JSON.stringify([initialUser]) // 객체 배열을 JSON 문자열로 저장
+      users: JSON.stringify([])
     };
 
     try {

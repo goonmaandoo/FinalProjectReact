@@ -87,7 +87,7 @@ export default function RoomTest() {
                     userId: user?.id
                 };
                 const updatedUsers = [...roomData.users, newUser];
-                await insertRoomJoin(roomId, user.id);
+                //await insertRoomJoin(roomId, user.id);
                 await getInRoom(roomId, updatedUsers, user.id, navigate);
 
                 console.log("신규 방 입장 완료");
@@ -588,7 +588,7 @@ export default function RoomTest() {
                 </div>
                 <div className={styles.fixedButtonWrapper}>
                     {status !== "모집중" ? (
-                        <button onClick={pickedUp}>픽업완료</button>
+                        <button className={styles.readyButton} onClick={pickedUp}>픽업완료</button>
                     ) : (
                         room?.users?.find(u => Number(u.userId) === Number(user.id))?.ready ? (
                             <button className={styles.readyButton} onClick={cancelOrder}>준비취소</button>
