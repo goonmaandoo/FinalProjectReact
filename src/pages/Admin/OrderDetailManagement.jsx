@@ -1,10 +1,21 @@
 import style from '../../CSS/AdminPage.module.css';
 import styles from '../../CSS/Admin/OrderDetailManagement.module.css';
+import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 
 export default function OrderDetailManagement() {
     const { orderId } = useParams();
+    const [orders, setOrders] = useState([]);
+
+    useEffect(() => {
+        axios.get(`http://localhost:8080/api/orders/getTheOrder/${orderId}`)
+            .then(res => {
+                setOrders(res.data);
+            })
+            .catch(err => console.error("RoomsbyId error:", err));
+    })
 
     return (
         <>
@@ -20,7 +31,7 @@ export default function OrderDetailManagement() {
                     <div className={styles["main_first_box"]}>
                         <div className={styles["main_second_box"]}>
                             <div>주문번호</div>
-                            <div>{orderId}</div>
+                            <div>{orders.orderId}</div>
                         </div>
                         <div className={styles["main_second_box"]}>
                             <div>주문시간</div>
