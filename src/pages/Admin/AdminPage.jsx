@@ -1,4 +1,4 @@
-import styles from '../../CSS/AdminPage.module.css';
+import styles from '../../CSS/Admin/AdminPage.module.css';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, Link, Outlet } from "react-router-dom";

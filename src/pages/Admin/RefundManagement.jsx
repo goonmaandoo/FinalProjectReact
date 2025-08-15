@@ -1,26 +1,18 @@
-import style from '../../CSS/AdminPage.module.css';
-import styles from '../../CSS/StoreManagement.module.css';
+import style from '../../CSS/Admin/AdminPage.module.css';
+import styles from '../../CSS/Admin/StoreManagement.module.css';
 import { useEffect, useState } from "react";
 
 export default function RefundManagement() {
-    const [subRefundBtn, setSubRefundBtn] = useState("캐시주문")
+    const [subRefundBtn, setSubRefundBtn] = useState("all")
     const [paymentData, setPaymentData] = useState([]);
-    const [paymentCash, setPaymentCash] = useState([]);
 
     useEffect(() => {
-        // fetch("http://localhost:8080/api/payment/refund")
-        //     .then(res => {
-        //         if (!res.ok) throw new Error('서버 에러');
-        //         return res.json();
-        //     })
-        //     .then(data => { console.log(data); setPaymentData(data) })
-            // .catch(console.error);
-        fetch("http://localhost:8080/api/payment/allPaymentCash")
+        fetch(`http://localhost:8080/api/payment/allPayment?comments=${subRefundBtn}`)
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
             })
-            .then(data => { setPaymentCash(data) })
+            .then(data => { setPaymentData(data) })
             .catch(console.error);
     })
     const handleStatusClick = (id) =>{
@@ -32,12 +24,12 @@ export default function RefundManagement() {
             <div className={style["side_menu_box"]}>
                 <div className={style["side_title"]}>환불관리</div>
                 <div className={style["side_btn"]}>
-                    <button className={subRefundBtn === "배달주문" ? style["active_btn"] : style["unactive_btn"]} onClick={() => { setSubRefundBtn("배달주문") }}>배달주문</button>
-                    <button className={subRefundBtn === "캐시주문" ? style["active_btn"] : style["unactive_btn"]} onClick={() => { setSubRefundBtn("캐시주문") }}>캐시주문</button>
+                    <button className={subRefundBtn === "all" ? style["active_btn"] : style["unactive_btn"]} onClick={() => { setSubRefundBtn("all") }}>전체</button>
+                    <button className={subRefundBtn === "order" ? style["active_btn"] : style["unactive_btn"]} onClick={() => { setSubRefundBtn("order") }}>배달주문</button>
+                    <button className={subRefundBtn === "cash" ? style["active_btn"] : style["unactive_btn"]} onClick={() => { setSubRefundBtn("cash") }}>캐시주문</button>
                 </div>
             </div>
             <div className={style["side_detail"]}>전체 환불을 관리하세요</div>
-            {subRefundBtn === "캐시주문" && (
                 <div>
                     {/* <div className={styles["input_value"]}>
                         <select id="table_th" value={selected} onChange={handleChange}>
@@ -52,16 +44,18 @@ export default function RefundManagement() {
                     <table className={styles["store_table"]}>
                         <thead>
                             <tr>
-                                <th>주문번호</th><th>채팅방</th><th>사용자ID</th><th>가게이름</th><th>총주문금액</th><th>주문일시</th><th>상태</th><th>환불선택</th>
+                                <th>구분</th><th>사용자ID</th><th>닉네임</th><th>주문/캐시</th><th>충전/환불</th><th>주문금액</th><th>주문일시</th><th>환불버튼</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {paymentCash.map((item) => (
+                            {paymentData.map((item) => (
                                 <tr key={item.id}>
-                                    <td>{item.id}</td><td>{item.userId}</td><td>{item.comments}</td><td className={styles['status_button']}>
-                                        {item.inout === 'out' && <div className={styles['status_out']}>환불</div>}
-                                        {item.inout === 'in' && <div className={styles['status_in']}>충전</div>}
-                                    </td><td>{item.amount}</td>
+                                    <td>{item.id}</td><td>{item.email}</td><td>{item.nickName}</td><td className={styles['status_td']}>{item.comments === "cash" && "캐시"}{item.comments === "order" && "주문"}</td><td className={styles['status_td']}>
+                                        {(item.inout === 'out' && item.comments === "cash") && <div className={styles['status_out']}>환불</div>}
+                                        {(item.inout === 'in' && item.comments === "cash") && <div className={styles['status_in']}>충전</div>}
+                                        {(item.inout === 'out' && item.comments === "order") && <div className={styles['status_out']}>환불</div>}
+                                        {(item.inout === 'in' && item.comments === "order") && <div className={styles['status_in']}>주문</div>}
+                                    </td><td>{item.amount}</td><td>{item.createdAt}</td>
                                     <td className={styles['status_update']}>
                                         <button type='submit' onClick={() => handleStatusClick(item.id)}>환불</button>
                                     </td>
@@ -70,7 +64,6 @@ export default function RefundManagement() {
                         </tbody>
                     </table>
                 </div>
-            )}
         </div>
     )
 }
