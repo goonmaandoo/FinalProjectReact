@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 export default function OrderManagement() {
     const [orders, setOrders] = useState([]);
+    const [cash, setCash] = useState([]);
     const [selected, setSelected] = useState('orderId');
     const [keyword, setKeyword] = useState("");
     const [subOrderBtn, setSubOrderBtn] = useState("배달주문");
@@ -36,6 +37,13 @@ export default function OrderManagement() {
             })
             .then(data => { console.log(data); setOrders(data) })
             .catch(console.error);
+        fetch(`http://localhost:8080/api/payment/allPaymentInOnly`)
+            .then(res => {
+                if (!res.ok) throw new Error('서버 에러');
+                return res.json();
+            })
+            .then(data => { console.log(data); setCash(data) })
+            .catch(console.error);
     }, [])
     return (
         <>
@@ -49,18 +57,18 @@ export default function OrderManagement() {
                 </div>
                 <div className={style["side_detail"]}>전체 주문과 배송 상태를 관리하세요</div>
             </div>
-                <div>
-                    <div className={styles["input_value"]}>
-                        <select id="table_th" value={selected} onChange={handleChange}>
-                            <option value="orderId">주문번호</option>
-                            <option value="roomId">채팅방</option>
-                            <option value="nickname">사용자</option>
-                            <option value="storeName">가게이름</option>
-                        </select>
-                        <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} />
-                        <button onClick={handleSearch}>검색</button>
-                    </div>
-                    {subOrderBtn === "배달주문" &&
+            <div>
+                <div className={styles["input_value"]}>
+                    <select id="table_th" value={selected} onChange={handleChange}>
+                        <option value="orderId">주문번호</option>
+                        <option value="roomId">채팅방</option>
+                        <option value="nickname">사용자</option>
+                        <option value="storeName">가게이름</option>
+                    </select>
+                    <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+                    <button onClick={handleSearch}>검색</button>
+                </div>
+                {subOrderBtn === "배달주문" &&
                     <table className={styles["store_table"]}>
                         <thead>
                             <tr>
@@ -75,24 +83,29 @@ export default function OrderManagement() {
                             ))}
                         </tbody>
                     </table>
-                    }
-                    {subOrderBtn === "캐시주문" &&
+                }
+                {subOrderBtn === "캐시주문" &&
                     <table className={styles["store_table"]}>
                         <thead>
                             <tr>
-                                <th>구분</th><th>사용자ID</th><th>충전/환불</th><th>주문금액</th><th>주문일시</th><th>환불버튼</th>
+                                <th>구분</th><th>사용자ID</th><th>닉네임</th><th>주문/캐시</th><th>충전/환불</th><th>주문금액</th><th>캐시</th><th>주문일시</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {orders.map((item) => (
-                                <tr key={item.orderId}>
-                                    <td><Link to={`/admin/orderdetail/${item.orderId}`}>{item.orderId}</Link></td><td>{item.roomId}</td><td>{item.nickname}</td><td>{item.storeName}</td><td>{item.totalPrice}</td><td>{item.createdAt}</td>
+                            {cash.map((item) => (
+                                <tr key={item.id}>
+                                    <td>{item.id}</td><td>{item.email}</td><td>{item.nickName}</td><td className={styles['status_td']}>{item.comments === "cash" && "캐시"}{item.comments === "order" && "주문"}</td><td className={styles['status_td']}>
+                                        {(item.inout === 'out' && item.comments === "cash") && <div className={styles['status_out']}>환불</div>}
+                                        {(item.inout === 'in' && item.comments === "cash") && <div className={styles['status_in']}>충전</div>}
+                                        {(item.inout === 'out' && item.comments === "order") && <div className={styles['status_in']}>주문</div>}
+                                        {(item.inout === 'in' && item.comments === "order") && <div className={styles['status_out']}>주문취소소</div>}
+                                    </td><td>{item.amount}</td><td>{item.cash}</td><td>{item.createdAt}</td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
-                    }
-                </div>
+                }
+            </div>
         </>
     )
 }

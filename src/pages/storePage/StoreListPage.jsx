@@ -1,4 +1,4 @@
-import styles from '../../CSS/StoreListPage.module.css'
+import styles from '../../CSS/Store/StoreListPage.module.css'
 import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from "axios";

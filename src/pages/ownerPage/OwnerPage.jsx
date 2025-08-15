@@ -1,4 +1,4 @@
-import styles from '../../CSS/OwnerPage.module.css';
+import styles from '../../CSS/Owner/OwnerPage.module.css';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from "react-router-dom";

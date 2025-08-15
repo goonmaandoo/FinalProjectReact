@@ -1,4 +1,4 @@
-import styles from '../../CSS/SelectedRoom.module.css'
+import styles from '../../CSS/Store/SelectedRoom.module.css'
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import KakaoMap from "../../components/Kakaomap";
