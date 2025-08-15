@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import style from '../../CSS/DeliveryState.module.css';
+import style from '../../CSS/Owner/DeliveryState.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function DeliveryState() {

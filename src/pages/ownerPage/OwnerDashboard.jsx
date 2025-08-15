@@ -1,4 +1,4 @@
-import style from "../../CSS/OwnerDashboard.module.css"
+import style from "../../CSS/Owner/OwnerDashboard.module.css"
 
 export default function OwnerDashboard() {
     return (

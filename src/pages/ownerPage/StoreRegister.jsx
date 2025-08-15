@@ -1,4 +1,4 @@
-import style from "../../CSS/OwnerDashboard.module.css"
+import style from "../../CSS/Owner/OwnerDashboard.module.css"
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";

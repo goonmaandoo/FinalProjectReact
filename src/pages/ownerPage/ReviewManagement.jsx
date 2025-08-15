@@ -1,4 +1,4 @@
-import style from "../../CSS/ReviewManagement.module.css";
+import style from "../../CSS/Owner/ReviewManagement.module.css";
 import { useEffect, useState } from "react";
 import FormattedDate from "../../component/funtion/common/FormattedDate";
 import { useSelector } from 'react-redux';
