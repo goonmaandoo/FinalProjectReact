@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from "react-router-dom";
-import styles from '../../CSS/Dashboard.module.css';
-import style from '../../CSS/AdminPage.module.css';
+import styles from '../../CSS/Admin/Dashboard.module.css';
+import style from '../../CSS/Admin/AdminPage.module.css';
 
 
 export default function Dashboard() {

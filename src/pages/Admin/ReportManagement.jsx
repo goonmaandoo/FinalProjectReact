@@ -1,5 +1,5 @@
-import styles from '../../CSS/ReportManagement.module.css';
-import style from '../../CSS/AdminPage.module.css';
+import styles from '../../CSS/Admin/ReportManagement.module.css';
+import style from '../../CSS/Admin/AdminPage.module.css';
 import { useState, useEffect } from 'react';
 
 export default function ReportManagement() {

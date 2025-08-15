@@ -1,4 +1,4 @@
-import styles from "../../CSS/UpdateStatus.module.css"
+import styles from "../../CSS/Admin/UpdateStatus.module.css"
 import { useSearchParams } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import axios from "axios";

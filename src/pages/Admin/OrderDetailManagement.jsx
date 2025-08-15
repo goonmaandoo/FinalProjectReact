@@ -1,4 +1,4 @@
-import style from '../../CSS/AdminPage.module.css';
+import style from '../../CSS/Admin/AdminPage.module.css';
 import styles from '../../CSS/Admin/OrderDetailManagement.module.css';
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
