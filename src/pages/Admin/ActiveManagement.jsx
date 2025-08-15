@@ -112,7 +112,7 @@ export default function Active() {
             <div className={styles["input_value"]}>
                 <select id="table_th" value={selected} onChange={handleChange}>
                     <option value="nickname">닉네임</option>
-                    <option value="tel">전화번호</option>
+                    <option value="phoneNum">전화번호</option>
                 </select>
                 <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} />
                 <button onClick={handleSearch}>검색</button>
