@@ -3,9 +3,9 @@
   display: flex;
   justify-content: center;
   align-items: stretch;
-  min-height: 600px;
+  min-height: 1000px;
   background-color: #f0f2f5;
-  padding: 30px 50px 50px 50px;
+  padding: 60px 50px 50px 50px;
   box-sizing: border-box;
   height: auto;
   width: 100%;
@@ -323,7 +323,7 @@
 }
 
 .menuList {
-  max-height: 235px;
+  max-height: 365px;
   overflow-y: auto;
   padding: 8px;
   margin-bottom: 24px;

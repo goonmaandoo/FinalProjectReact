@@ -35,18 +35,18 @@ export default function RefundManagement() {
     }
 
     const handleOrderClick = async (amount, id) =>{
-        const confirmed = window.confirm("환불 처리하시겠습니까?");
+        const confirmed = window.confirm("주문 취소하시겠습니까?");
         if (!confirmed) return;
 
         try {
             await axios.post(
-                `http://localhost:8080/api/payment/insertCashRefund?userId=${id}&amount=${amount}`
+                `http://localhost:8080/api/payment/insertOrderCancel?userId=${id}&amount=${amount}`
             );
-            alert("환불 처리 완료");
+            alert("주문 취소 완료");
             window.location.reload();
         } catch (err) {
             console.error(err);
-            alert("환불 처리 실패");
+            alert("주문 취소 실패");
         }
     }
 
