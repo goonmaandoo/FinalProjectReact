@@ -17,6 +17,7 @@ export default function RefundManagement() {
             .then(data => { console.log(data); setPaymentData(data) })
             .catch(console.error);
     }, [subRefundBtn])
+
     const handleStatusClick = async (amount, id) =>{
         const confirmed = window.confirm("환불 처리하시겠습니까?");
         if (!confirmed) return;
@@ -25,14 +26,28 @@ export default function RefundManagement() {
             await axios.post(
                 `http://localhost:8080/api/payment/insertCashRefund?userId=${id}&amount=${amount}`
             );
-
             alert("환불 처리 완료");
             window.location.reload();
         } catch (err) {
             console.error(err);
             alert("환불 처리 실패");
         }
+    }
 
+    const handleOrderClick = async (amount, id) =>{
+        const confirmed = window.confirm("환불 처리하시겠습니까?");
+        if (!confirmed) return;
+
+        try {
+            await axios.post(
+                `http://localhost:8080/api/payment/insertCashRefund?userId=${id}&amount=${amount}`
+            );
+            alert("환불 처리 완료");
+            window.location.reload();
+        } catch (err) {
+            console.error(err);
+            alert("환불 처리 실패");
+        }
     }
 
     return (
@@ -73,7 +88,8 @@ export default function RefundManagement() {
                                         {(item.inout === 'in' && item.comments === "order") && <div className={styles['status_in']}>주문취소</div>}
                                     </td><td>{item.amount}</td><td>{item.cash}</td><td>{item.createdAt}</td>
                                     <td className={styles['status_update']}>
-                                        {item.inout === "in" && <button type='submit' onClick={() => handleStatusClick(item.amount, item.userId)}>환불</button>}
+                                        {(item.inout === "in" && item.comments === "cash") && <button type='submit' onClick={() => handleStatusClick(item.amount, item.userId)}>환불</button>}
+                                        {(item.inout === "out" && item.comments === "order") && <button type='submit' onClick={() => handleOrderClick(item.amount, item.userId)}>주문취소</button>}
                                     </td>
                                 </tr>
                             ))}
