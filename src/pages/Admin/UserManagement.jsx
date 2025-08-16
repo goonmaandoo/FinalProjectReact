@@ -125,7 +125,7 @@ export default function UserManagement() {
             <table className={styles["store_table"]}>
                 <thead>
                     <tr>
-                        <th>구분</th><th>닉네임</th><th>핸드폰번호</th><th>이메일</th><th>주소</th><th>상세주소</th><th>상태</th><th>모아머니</th>
+                        <th>구분번호</th><th>닉네임</th><th>핸드폰번호</th><th>이메일</th><th>주소</th><th>상세주소</th><th>상태</th><th>모아머니</th>
                     </tr>
                 </thead>
                 <tbody>
