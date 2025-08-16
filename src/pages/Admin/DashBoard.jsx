@@ -137,7 +137,7 @@ export default function Dashboard() {
                 <div className={styles["dash_box"]}>
                     <div className={styles["total_third"]}>
                         <div className={styles["total_title"]}>총 매출</div>
-                        <div className={styles["total_num"]}>${totalSales}</div>
+                        <div className={styles["total_num"]}>₩{totalSales}</div>
                     </div>
                 </div>
             </main>

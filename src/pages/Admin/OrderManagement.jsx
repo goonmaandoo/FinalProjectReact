@@ -14,6 +14,13 @@ export default function OrderManagement() {
         setSelected(e.target.value);
     };
 
+    const onKeyDown = (e) => {
+        if (e.key === "Enter") {
+            handleSearch();
+            handleCashSearch();
+        }
+    }
+
     const handleSearch = () => {
         let url = 'http://localhost:8080/api/orders/orderSearch';
         if (keyword.trim() !== '') {
@@ -81,9 +88,10 @@ export default function OrderManagement() {
                                 <option value="nickname">사용자</option>
                                 <option value="storeName">가게이름</option>
                             </select>
-                            <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+                            <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} onKeyDown={onKeyDown}/>
                             <button onClick={handleSearch}>검색</button>
                         </div>
+                        <div>&darr; 주문상세페이지 </div>
                         <table className={styles["store_table"]}>
                             <thead>
                                 <tr>
@@ -108,7 +116,7 @@ export default function OrderManagement() {
                                 <option value="email">사용자ID</option>
                                 <option value="nickname">사용자</option>
                             </select>
-                            <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+                            <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} onKeyDown={onKeyDown}/>
                             <button onClick={handleCashSearch}>검색</button>
                         </div>
                         <table className={styles["store_table"]}>
