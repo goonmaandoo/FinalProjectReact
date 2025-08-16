@@ -79,7 +79,7 @@ export default function RefundManagement() {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
             })
-            .then(data => setPaymentData(data))
+            .then(data => { console.log(data); setPaymentData(data)})
             .catch(console.error);
     };
 

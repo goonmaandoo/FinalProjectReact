@@ -11,6 +11,12 @@ export default function StoreManagement() {
     const handleChange = (e) => {
         setSelected(e.target.value);
     };
+    
+    const onKeyDown = (e) => {
+        if (e.key === "Enter") {
+            handleSearch();
+        }
+    }
 
     const handleSearch = () => {
         let url = 'http://localhost:8080/store/search';
@@ -64,7 +70,7 @@ export default function StoreManagement() {
                     <option value="storeAddress">가게주소</option>
                     <option value="tel">전화번호</option>
                 </select>
-                <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+                <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} onKeyDown={onKeyDown}/>
                 <button onClick={handleSearch}>검색</button>
             </div>
 

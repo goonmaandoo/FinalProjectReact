@@ -16,6 +16,12 @@ export default function UserManagement() {
         setSelected(e.target.value);
     };
 
+    const onKeyDown = (e) => {
+        if (e.key === "Enter") {
+            handleSearch();
+        }
+    }
+
     const handleSearch = () => {
         let url = 'http://localhost:8080/api/users/';
         if (subUserBtn === 'all') {
@@ -119,7 +125,7 @@ export default function UserManagement() {
                     <option value="phoneNum">핸드폰번호</option>
                     <option value="email">이메일</option>
                 </select>
-                <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+                <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} onKeyDown={onKeyDown}/>
                 <button onClick={handleSearch}>검색</button>
             </div>
             <table className={styles["store_table"]}>
