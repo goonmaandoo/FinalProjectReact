@@ -28,7 +28,7 @@ export default function OwnerMenuEdit() {
     // 메뉴 리스트 새로고침 함수
     const refreshMenuList = () => {
         if (!user || !user.id) return;
-        
+
         axios.get(`http://localhost:8080/menu/ownerWithImage/${user.id}`)
             .then(res => {
                 setMenuList(res.data);
@@ -93,7 +93,6 @@ export default function OwnerMenuEdit() {
                             <div className={style["menu_button"]}>
                                 <button onClick={() => handleTabChange("전체메뉴")} className={style["active"]}> 전체메뉴 </button>
                                 <button onClick={() => handleTabChange("메뉴추가")}> 메뉴 추가 </button>
-                                {/* <button onClick={() => handleTabChange("메뉴수정")}> 메뉴 수정 </button> */}
                             </div>
                             <div className={style["all_menu"]}>
                                 {currentMenuList.length > 0 ? (
@@ -106,6 +105,12 @@ export default function OwnerMenuEdit() {
                                             />
                                             <div className={style["menu_info"]}>
                                                 <p>{menu.menuName}</p>
+                                                <div className={style.menu_status}
+                                                    style={{
+                                                        backgroundColor: menu.status === '품절' ? '#808080' : '#04b310'
+                                                    }}>
+                                                    <p>{menu.status}</p>
+                                                </div>
                                             </div>
                                             <div className={style["menu_price"]}>
                                                 <p>{menu.menuPrice}원</p>
@@ -146,7 +151,7 @@ export default function OwnerMenuEdit() {
                     )}
 
                     {selectedTab === "메뉴추가" && (
-                        <MenuAdd 
+                        <MenuAdd
                             user={user}
                             storeId={storeId}
                             onComplete={handleMenuAddComplete}
@@ -155,7 +160,7 @@ export default function OwnerMenuEdit() {
                     )}
 
                     {selectedTab === "메뉴수정" && (
-                        <MenuEdit 
+                        <MenuEdit
                             selectedMenu={selectedMenu}
                             user={user}
                             onComplete={handleMenuEditComplete}
