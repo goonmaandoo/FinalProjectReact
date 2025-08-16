@@ -1,4 +1,4 @@
-import styles from '../CSS/Hamburger.module.css'
+import styles from '../CSS/Components/Hamburger.module.css'
 import { useEffect, useState, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';

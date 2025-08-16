@@ -7,6 +7,12 @@ import axios from "axios";
 export default function RefundManagement() {
     const [subRefundBtn, setSubRefundBtn] = useState("all")
     const [paymentData, setPaymentData] = useState([]);
+    const [selected, setSelected] = useState('user');
+    const [keyword, setKeyword] = useState("");
+
+    const handleChange = (e) => {
+        setSelected(e.target.value);
+    };
 
     useEffect(() => {
         fetch(`http://localhost:8080/api/payment/allPayment?comments=${subRefundBtn}`)
@@ -18,15 +24,20 @@ export default function RefundManagement() {
             .catch(console.error);
     }, [subRefundBtn])
 
-    const handleStatusClick = async (amount, id) =>{
+    const handleStatusClick = async (id, amount, userId) =>{
         const confirmed = window.confirm("환불 처리하시겠습니까?");
         if (!confirmed) return;
 
         try {
             await axios.post(
-                `http://localhost:8080/api/payment/insertCashRefund?userId=${id}&amount=${amount}`
+                `http://localhost:8080/api/payment/insertCashRefund?userId=${userId}&amount=${amount}`
             );
             alert("환불 처리 완료");
+
+            await axios.post(
+                `http://localhost:8080/api/payment/updateStatus?id=${id}`
+            )
+            
             window.location.reload();
         } catch (err) {
             console.error(err);
@@ -34,21 +45,43 @@ export default function RefundManagement() {
         }
     }
 
-    const handleOrderClick = async (amount, id) =>{
+    const handleOrderClick = async (id, amount, userId) =>{
         const confirmed = window.confirm("주문 취소하시겠습니까?");
         if (!confirmed) return;
 
         try {
             await axios.post(
-                `http://localhost:8080/api/payment/insertOrderCancel?userId=${id}&amount=${amount}`
+                `http://localhost:8080/api/payment/insertOrderCancel?userId=${userId}&amount=${amount}`
             );
             alert("주문 취소 완료");
+
+            await axios.post(
+                `http://localhost:8080/api/payment/updateStatus?id=${id}`
+            )
+
             window.location.reload();
         } catch (err) {
             console.error(err);
             alert("주문 취소 실패");
         }
     }
+    const handleSearch = () => {
+        let url = 'http://localhost:8080/api/payment/';
+        if (subRefundBtn === 'all') {
+            url += `refundSearchAll?type=${selected}&keyword=${encodeURIComponent(keyword)}`;
+        } else if (subRefundBtn === 'cash') {
+            url += `refundSearchCash?type=${selected}&keyword=${encodeURIComponent(keyword)}`;
+        } else if (subRefundBtn === 'order') {
+            url += `refundSearchOrder?type=${selected}&keyword=${encodeURIComponent(keyword)}`;
+        }
+        fetch(url)
+            .then(res => {
+                if (!res.ok) throw new Error('서버 에러');
+                return res.json();
+            })
+            .then(data => setPaymentData(data))
+            .catch(console.error);
+    };
 
     return (
         <div>
@@ -62,16 +95,16 @@ export default function RefundManagement() {
             </div>
             <div className={style["side_detail"]}>전체 환불을 관리하세요</div>
                 <div>
-                    {/* <div className={styles["input_value"]}>
+                    <div className={styles["input_value"]}>
                         <select id="table_th" value={selected} onChange={handleChange}>
-                            <option value="orderId">주문번호</option>
-                            <option value="roomId">채팅방</option>
+                            <option value="email">사용자ID</option>
                             <option value="nickname">사용자</option>
-                            <option value="storeName">가게이름</option>
+                            {subRefundBtn === "order" ? "" : <option value="outCash">환불</option>}
+                            {subRefundBtn === "cash" ? "" : <option value="InOrder">주문취소</option>}
                         </select>
-                        <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+                        <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} disabled={selected === 'outCash' || selected === 'InOrder'} placeholder={selected === 'outCash' ? '환불' : selected === 'InOrder' ? '주문취소' : '검색어 입력'} />
                         <button onClick={handleSearch}>검색</button>
-                    </div> */}
+                    </div>
                     <table className={styles["store_table"]}>
                         <thead>
                             <tr>
@@ -81,15 +114,15 @@ export default function RefundManagement() {
                         <tbody>
                             {paymentData.map((item) => (
                                 <tr key={item.id}>
-                                    <td>{item.id}</td><td>{item.email}</td><td>{item.nickName}</td><td className={styles['status_td']}>{item.comments === "cash" && "캐시"}{item.comments === "order" && "주문"}</td><td className={styles['status_td']}>
+                                    <td>{item.id}</td><td>{item.email}</td><td>{item.nickname}</td><td className={styles['status_td']}>{item.comments === "cash" && "캐시"}{item.comments === "order" && "주문"}</td><td className={styles['status_td']}>
                                         {(item.inout === 'out' && item.comments === "cash") && <div className={styles['status_out']}>환불</div>}
                                         {(item.inout === 'in' && item.comments === "cash") && <div className={styles['status_in']}>충전</div>}
                                         {(item.inout === 'out' && item.comments === "order") && <div className={styles['status_in']}>주문</div>}
-                                        {(item.inout === 'in' && item.comments === "order") && <div className={styles['status_in']}>주문취소</div>}
+                                        {(item.inout === 'in' && item.comments === "order") && <div className={styles['status_out']}>주문취소</div>}
                                     </td><td>{item.amount}</td><td>{item.cash}</td><td>{item.createdAt}</td>
                                     <td className={styles['status_update']}>
-                                        {(item.inout === "in" && item.comments === "cash") && <button type='submit' onClick={() => handleStatusClick(item.amount, item.userId)}>환불</button>}
-                                        {(item.inout === "out" && item.comments === "order") && <button type='submit' onClick={() => handleOrderClick(item.amount, item.userId)}>주문취소</button>}
+                                        {(item.inout === "in" && item.comments === "cash" && item.status !== "refund") && <button type='submit' onClick={() => handleStatusClick(item.id, item.amount, item.userId)}>환불</button>}
+                                        {(item.inout === "out" && item.comments === "order" && item.status !== "refund") && <button type='submit' onClick={() => handleOrderClick(item.id, item.amount, item.userId)}>주문취소</button>}
                                     </td>
                                 </tr>
                             ))}

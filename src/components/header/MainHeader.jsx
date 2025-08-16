@@ -1,4 +1,4 @@
-import styles from '../../CSS/MainHeader.module.css'
+import styles from '../../CSS/Components/MainHeader.module.css'
 import React, { useState, useEffect,useRef } from 'react';
 import KakaoMap from "../../components/Kakaomap";
 import { useDispatch, useSelector } from 'react-redux';
