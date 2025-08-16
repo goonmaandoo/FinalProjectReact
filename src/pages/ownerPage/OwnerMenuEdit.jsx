@@ -1,4 +1,4 @@
-import style from "../../CSS/OwnerMenuEdit.module.css";
+import style from "../../CSS/Owner/OwnerMenuEdit.module.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
