@@ -16,33 +16,41 @@ export default function MenuEdit({ selectedMenu, user, onComplete, onTabChange }
         }
     }, [selectedMenu]);
 
-    const handleMenuUpdate = () => {
-        if (!editedMenuName || !editedMenuPrice) {
-            alert("메뉴명과 가격을 모두 입력해주세요.");
-            return;
+const handleMenuUpdate = () => {
+    const formData = new FormData();
+    formData.append("id", selectedMenu.id);
+    formData.append("storeId", selectedMenu.storeId); // 이 값이 있는지 확인!
+    formData.append("menuName", editedMenuName);
+    formData.append("menuPrice", editedMenuPrice);
+    formData.append("status", editedMenuStatus);
+    
+    if (file) {
+        formData.append("file", file);
+    }
+
+    // FormData 내용 로그 확인
+    console.log("=== 전송할 데이터 ===");
+    for (let [key, value] of formData.entries()) {
+        console.log(key, ":", value);
+    }
+
+    axios.put(`http://localhost:8080/menu/menuUpdateByOwner`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
         }
-
-        const updatedMenu = {
-            id: selectedMenu.id,
-            menuName: editedMenuName,
-            menuPrice: editedMenuPrice,
-            status: editedMenuStatus
-        };
-
-        axios.put(`http://localhost:8080/menu/menuUpdateByOwner`, updatedMenu)
-            .then(() => {
-                alert("메뉴가 수정되었습니다.");
-                
-                // 부모 컴포넌트에 완료 알림
-                if (onComplete) {
-                    onComplete();
-                }
-            })
-            .catch((err) => {
-                console.error("메뉴 수정 실패:", err);
-                alert("메뉴 수정에 실패했습니다.");
-            });
-    };
+    })
+    .then(() => {
+        alert("메뉴가 수정되었습니다.");
+        setFile(null);
+        if (onComplete) {
+            onComplete();
+        }
+    })
+    .catch((err) => {
+        console.error("상세 오류:", err.response); // 더 자세한 오류 확인
+        alert("메뉴 수정에 실패했습니다.");
+    });
+};
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
@@ -81,8 +89,10 @@ export default function MenuEdit({ selectedMenu, user, onComplete, onTabChange }
                     <label> 메뉴 이미지 수정하기 </label>
                     <input 
                         type="file"
+                        accept="image/*"
                         onChange={handleFileChange}
                     />
+                    {file && <p>선택된 파일: {file.name}</p>}
                     
                     <label>메뉴명</label><br />
                     <input

@@ -4,82 +4,97 @@ import axios from "axios";
 
 export default function MenuAdd({ user, storeId, onComplete, onTabChange }) {
     const [newStoreId, setNewStoreId] = useState(storeId || "");
-    const [newImageId, setNewImageId] = useState("");
     const [newMenuName, setNewMenuName] = useState("");
     const [newMenuPrice, setNewMenuPrice] = useState("");
     const [file, setFile] = useState(null);
-    const [folder, setFolder] = useState("");
+    const [isUploading, setIsUploading] = useState(false);
 
-    const handleMenuInsert = () => {
+    const handleMenuInsert = async () => {
         if (!newStoreId || !newMenuName || !newMenuPrice) {
             alert("모든 항목을 입력해주세요.");
             return;
         }
 
-        const newMenu = {
-            storeId: newStoreId,
-            // imageId: newImageId,
-            menuName: newMenuName,
-            menuPrice: newMenuPrice
-        };
+        setIsUploading(true);
 
-        axios.post("http://localhost:8080/menu/menuInsertByOwner", newMenu)
-            .then(() => {
-                alert("메뉴가 추가되었습니다.");
-                // 입력 필드 초기화
-                setNewStoreId(storeId || "");
-                // setNewImageId("");
-                setNewMenuName("");
-                setNewMenuPrice("");
-                setFile(null);
-                setFolder("");
+        try {
+            // 1. 먼저 메뉴를 등록 (이미지 없이)
+            const newMenu = {
+                storeId: parseInt(newStoreId),
+                menuName: newMenuName,
+                menuPrice: parseInt(newMenuPrice)
+            };
+
+            console.log("메뉴 등록 데이터:", newMenu);
+            const menuResponse = await axios.post("http://localhost:8080/menu/menuInsertByOwner", newMenu);
+
+            // 2. 이미지가 있으면 메뉴 수정으로 이미지 추가
+            if (file) {
+                // 새로 등록된 메뉴 목록을 가져와서 방금 추가된 메뉴 찾기
+                const menuListResponse = await axios.get(`http://localhost:8080/menu/owner/${user.id}`);
+                const menuList = menuListResponse.data;
                 
-                // 부모 컴포넌트에 완료 알림 (전체메뉴로 이동)
-                if (onTabChange) {
-                    onTabChange("전체메뉴");
+                // 방금 등록한 메뉴 찾기 (같은 이름과 가격을 가진 메뉴 중 가장 최근 것)
+                const newlyAddedMenu = menuList
+                    .filter(menu => menu.menuName === newMenuName && menu.menuPrice === parseInt(newMenuPrice))
+                    .sort((a, b) => b.id - a.id)[0]; // ID 기준 내림차순 정렬 후 첫번째
+
+                if (newlyAddedMenu) {
+                    const formData = new FormData();
+                    formData.append("id", newlyAddedMenu.id);
+                    formData.append("storeId", newStoreId);
+                    formData.append("menuName", newMenuName);
+                    formData.append("menuPrice", newMenuPrice);
+                    formData.append("status", "판매중"); // 기본값
+                    formData.append("file", file);
+
+                    console.log("이미지 업데이트 중..., 메뉴 ID:", newlyAddedMenu.id);
+                    await axios.put("http://localhost:8080/menu/menuUpdateByOwner", formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    });
+                    console.log("이미지 업데이트 완료");
                 }
-                if (onComplete) {
-                    onComplete();
-                }
-            })
-            .catch((err) => {
-                console.error("메뉴 추가 실패:", err);
-                alert("메뉴 추가에 실패했습니다.");
-            });
+            }
+            
+            alert("메뉴가 추가되었습니다.");
+            
+            // 입력 필드 초기화
+            setNewStoreId(storeId || "");
+            setNewMenuName("");
+            setNewMenuPrice("");
+            setFile(null);
+            
+            // 부모 컴포넌트에 완료 알림 (전체메뉴로 이동)
+            if (onTabChange) {
+                onTabChange("전체메뉴");
+            }
+            if (onComplete) {
+                onComplete();
+            }
+        } catch (err) {
+            console.error("메뉴 추가 실패:", err);
+            alert("메뉴 추가에 실패했습니다: " + (err.response?.data || err.message));
+        } finally {
+            setIsUploading(false);
+        }
     };
 
     const handleFileChange = (e) => {
-        setFile(e.target.files[0]);
-    };
-
-    const handleFolderChange = (e) => {
-        setFolder(e.target.value);
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        
-        if (!file) {
-            alert("파일을 선택하세요.");
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("folder", folder);
-
-        try {
-            const res = await axios.post("http://localhost:8080/menuImageInsertByOwner", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            });
-            console.log("서버 응답:", res.data);
-            alert("업로드 성공! image_id: " + res.data.id);
-            setNewImageId(res.data.id); // 이미지 ID 설정
-        } catch (err) {
-            console.error(err);
-            alert("업로드 실패");
+        const selectedFile = e.target.files[0];
+        if (selectedFile) {
+            // 파일 크기 체크 (5MB 제한)
+            if (selectedFile.size > 5 * 1024 * 1024) {
+                alert("파일 크기는 5MB를 초과할 수 없습니다.");
+                return;
+            }
+            // 파일 형식 체크
+            if (!selectedFile.type.startsWith('image/')) {
+                alert("이미지 파일만 업로드 가능합니다.");
+                return;
+            }
+            setFile(selectedFile);
         }
     };
 
@@ -89,44 +104,52 @@ export default function MenuAdd({ user, storeId, onComplete, onTabChange }) {
                 <button onClick={() => onTabChange("전체메뉴")}> 전체메뉴 </button>
                 <button onClick={() => onTabChange("메뉴추가")} className={style["active"]}> 메뉴 추가 </button>
             </div>
-            <form onSubmit={handleSubmit}>
-                <div className={style["insert_menu"]}>
-                    <div className={style["image_insert"]}>
-                        <input 
-                            className={style["storeNum"]}
-                            type="text"
-                            placeholder="가게번호를 입력해주세요"
-                            value={newStoreId}
-                            onChange={(e) => setNewStoreId(e.target.value)}
-                        /><br />
-                        <p> 메뉴 사진 추가하기</p>
-                        <input type="file"></input>
-                    </div>
-                    <div className={style["insertmenu_info"]}>
-                        <input
-                            type="text"
-                            placeholder="메뉴명"
-                            value={newMenuName}
-                            onChange={(e) => setNewMenuName(e.target.value)}
-                        /><br />
-
-                        <input
-                            type="text"
-                            placeholder="가격"
-                            value={newMenuPrice}
-                            onChange={(e) => setNewMenuPrice(e.target.value)}
-                        /><br />
-
-                        <button 
-                            type="button"
-                            className={style["insertmenu_button"]}
-                            onClick={handleMenuInsert}
-                        >
-                            추가하기
-                        </button>
-                    </div>
+            <div className={style["insert_menu"]}>
+                <div className={style["image_insert"]}>
+                    <input 
+                        className={style["storeNum"]}
+                        type="text"
+                        placeholder="가게번호를 입력해주세요"
+                        value={newStoreId}
+                        onChange={(e) => setNewStoreId(e.target.value)}
+                        disabled={isUploading}
+                    /><br />
+                    <p>메뉴 사진 추가하기</p>
+                    <input 
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        disabled={isUploading}
+                    />
+                    {file && <p>선택된 파일: {file.name}</p>}
                 </div>
-            </form>
+                <div className={style["insertmenu_info"]}>
+                    <input
+                        type="text"
+                        placeholder="메뉴명"
+                        value={newMenuName}
+                        onChange={(e) => setNewMenuName(e.target.value)}
+                        disabled={isUploading}
+                    /><br />
+
+                    <input
+                        type="number"
+                        placeholder="가격"
+                        value={newMenuPrice}
+                        onChange={(e) => setNewMenuPrice(e.target.value)}
+                        disabled={isUploading}
+                    /><br />
+
+                    <button 
+                        type="button"
+                        className={style["insertmenu_button"]}
+                        onClick={handleMenuInsert}
+                        disabled={isUploading}
+                    >
+                        {isUploading ? "추가 중..." : "추가하기"}
+                    </button>
+                </div>
+            </div>
         </>
     );
 }
