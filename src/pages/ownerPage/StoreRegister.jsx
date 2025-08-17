@@ -111,7 +111,7 @@ export default function StoreRegister() {
                                 <option value="12">아시안</option>
                             </select>
                         </div>
-                        <div className={style["store_firstimg"]}>
+                        {/* <div className={style["store_firstimg"]}>
                             <h3> 가게 대표 이미지 </h3>
                             <label>
                                 <input
@@ -119,7 +119,7 @@ export default function StoreRegister() {
                                     // onChange={handleFileChange}
                                 />
                             </label>
-                        </div>
+                        </div> */}
                     </div>
 
                     {/* 가게이름, 주소, 최소주문가격, 전화번호 */}
