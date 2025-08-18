@@ -106,6 +106,7 @@ export default function RoomCreate() {
             value={roomAddress}
             onClick={handleClick}
             onChange={(e) => setRoomAddress(e.target.value)}
+            readOnly
           />
         </div>
 
