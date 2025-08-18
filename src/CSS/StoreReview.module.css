@@ -79,6 +79,7 @@
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  min-height: 800px; /* 추가: 최소 높이 */
 }
 
 /* ===== 제목 ===== */
