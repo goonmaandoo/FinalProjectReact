@@ -107,6 +107,7 @@ export default function OrderConfirmModal({
       // 1. 주문 먼저 생성
       const newOrderId = await makeOrder(myOrder);
       onSetOrderId(newOrderId); // 부모 상태 변경
+      // room total 가격 + 호출
       const amount = totalPrice;
       console.log("어마운트",amount);
       // 3. 캐시 차감 (서비스 쪽에서 amount 음수 체크함)
@@ -134,7 +135,7 @@ export default function OrderConfirmModal({
       await onRefreshRoomUsers();
       onClose();
       //주문완료 navigate
-      
+      navigate(`/ordercomplete/${newOrderId}`);
     } catch (error) {
       if (error.response) {
         alert("결제 실패: " + error.response.data);

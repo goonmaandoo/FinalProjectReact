@@ -80,7 +80,7 @@ export default function RoomTest({ initialRoom, roomId }) {
                 // await axios.delete(`/api/room/${roomId}/blowUpRoom`);
                 // await axios.delete(`/api/roomJoin/${roomId}/deleteRoomOnlyJoin`);
                 console.log("올픽업", everyonePickedUp);
-                navigate(`/rating/${roomId}`);
+                navigate(`/gongucomplete/${roomId}`);
             }
 
         } catch (error) {
