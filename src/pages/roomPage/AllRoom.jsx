@@ -58,7 +58,7 @@ export default function AllRoom() {
                 //const response = await axios.get("http://localhost:8080/api/room/allRoomSelect");
                 const response = await axios.get(`http://localhost:8080/api/room/roomsbyId/${user?.id}`);
                 const rooms = response.data;
-                console.log("리스폰스1",response);
+                console.log("리스폰스1", response);
                 //console.log("리스폰스2",response2);
                 const roomsWithDistance = await Promise.all(
                     rooms.map(async (room) => {
@@ -174,8 +174,10 @@ export default function AllRoom() {
                                                 <div
                                                     className={styles.roomWithText}
                                                     style={{
-
-                                                        backgroundImage: `url("http://localhost:8080/image/imgfile/store/store_${room.storeId}.jpg")`,
+                                                        backgroundImage:
+                                                            window.innerWidth > 480
+                                                                ? `url("http://localhost:8080/image/imgfile/store/store_${room.storeId}.jpg")`
+                                                                : "none",
                                                         backgroundColor: "#eee",
                                                         backgroundSize: "cover",
                                                         backgroundPosition: "center 80%",
