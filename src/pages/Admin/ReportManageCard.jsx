@@ -15,7 +15,6 @@ export default function AdminReportCard({
   onReject,
   defaultExpanded = false,
 }) {
-  // 1) report가 null이어도 에러 안 나게 안전 디스트럭처링
   const {
     id,
     chatId,
@@ -33,7 +32,6 @@ export default function AdminReportCard({
     roomNo,
   } = report || {};
 
-  // 2) 모든 Hook은 조건문/early return보다 "위에" 둔다
   const [expanded, setExpanded] = useState(Boolean(defaultExpanded));
 
   const statusText = useMemo(() => {
@@ -56,7 +54,6 @@ export default function AdminReportCard({
     return String(v);
   };
 
-  // 3) (선택) early return은 Hook들 "이후"에 둬야 안전
   if (!report) return null;
 
   const displayUserId = usersId ?? userId;
