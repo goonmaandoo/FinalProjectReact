@@ -48,6 +48,7 @@ export default function StoreListPage() {
     const onStoreClick = (storeId) => {
         navigate(`/store/${storeId}`)
     }
+    
 
     return (
         <div className={styles["storelist_body"]}>

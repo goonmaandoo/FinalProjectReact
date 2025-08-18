@@ -93,6 +93,9 @@ export default function StoreDetail() {
                         <button onClick={() => {
                             navigate(`/selectroom/${storeId}`);window.scrollTo({ top: 0 });
                         }} className={styles["menu_confirm_btn"]}>개설된 방 확인</button>
+                        <button onClick={() => {
+                            navigate(`/store/${storeId}/reviews`);window.scrollTo({ top: 0 });
+                        }} className={styles["menu_confirm_btn"]}>리뷰 확인</button>
                     </div>
                     <hr className={styles["menu_hr"]} ></hr>
                     {menu.map((item) => (
