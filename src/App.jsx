@@ -67,7 +67,9 @@ import ReportManagement from "./pages/Admin/ReportManagement";
 import RoomManagement from "./pages/Admin/RoomManagement";
 import UpdateStatus from "./pages/Admin/UpdateStatus";
 import OrderDetailManagement from "./pages/Admin/OrderDetailManagement";
+import RefundManagement from "./pages/Admin/RefundManagement";
 import RoomGatekeeper from "./pages/testRoom/RoomGateKeeper";
+import LoginedCheck from "./components/user/LoginedCheck";
 
 
 function parseJwt(token) {
@@ -210,11 +212,27 @@ function App() {
             </LoginCheck>
           }
         />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={
+          <LoginedCheck>
+            <Login />
+          </LoginedCheck>
+        } />
         <Route path="/ownerusercheck" element={<RegisterCheck />} />
-        <Route path="/ownerregister" element={<OwnerRegister />} />
-        <Route path="/userregister" element={<UserRegister />} />
-        <Route path="/forgotpw" element={<ForgotPassword />} />
+        <Route path="/ownerregister" element={
+          <LoginedCheck>
+            <OwnerRegister />
+          </LoginedCheck>
+        } />
+        <Route path="/userregister" element={
+          <LoginedCheck>
+            <UserRegister />
+          </LoginedCheck>
+        } />
+        <Route path="/forgotpw" element={
+          <LoginedCheck>
+            <ForgotPassword />
+          </LoginedCheck>
+        } />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/moapolicy1" element={<MoaPolicy1 />} />
         <Route path="/moapolicy2" element={<MoaPolicy2 />} />
@@ -230,22 +248,23 @@ function App() {
         <Route path="/reviewmanagement" element={<ReviewManagement />} />
         <Route path="/orderyesno" element={<OrderYesNo />} />
         <Route path="/ownerpage" element={<OwnerPage />} />
-        <Route path="/updatestatus" element={<UpdateStatus />} /> 
-        
-        <Route path="/admin" element={<AdminPage/>}>
-          <Route index element={<Dashboard />} /> 
-          <Route path="dashboard"element={<Dashboard />} /> 
-          <Route path="storeManagement" element={<StoreManagement />} /> 
-          <Route path="userManagement" element={<UserManagement />} /> 
-          <Route path="active" element={<Active />} /> 
-          <Route path="ordermanagement" element={<OrderManagement />} /> 
-          <Route path="reviewadmin" element={<ReviewAdmin />} /> 
-          <Route path="reportmanagement" element={<ReportManagement />} /> 
-          <Route path="roommanagement" element={<RoomManagement />} /> 
+        <Route path="/updatestatus" element={<UpdateStatus />} />
+
+        <Route path="/admin" element={<AdminPage />}>
+          <Route index element={<Dashboard />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="storeManagement" element={<StoreManagement />} />
+          <Route path="userManagement" element={<UserManagement />} />
+          <Route path="active" element={<Active />} />
+          <Route path="ordermanagement" element={<OrderManagement />} />
+          <Route path="reviewadmin" element={<ReviewAdmin />} />
+          <Route path="reportmanagement" element={<ReportManagement />} />
+          <Route path="roommanagement" element={<RoomManagement />} />
           <Route path="qnamanagement" element={<AuthQna />} />
-          <Route path="orderdetail/:orderId" element={<OrderDetailManagement/>} />
+          <Route path="orderdetail/:orderId" element={<OrderDetailManagement />} />
+          <Route path="refund" element={<RefundManagement />} />
         </Route>
-        
+
 
       </Routes>
 

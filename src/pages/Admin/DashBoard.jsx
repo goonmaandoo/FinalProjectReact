@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from "react-router-dom";
-import styles from '../../CSS/Dashboard.module.css';
-import style from '../../CSS/AdminPage.module.css';
+import styles from '../../CSS/Admin/Dashboard.module.css';
+import style from '../../CSS/Admin/AdminPage.module.css';
 
 
 export default function Dashboard() {
@@ -12,6 +12,7 @@ export default function Dashboard() {
     const [users, setUsers] = useState(0);
     const [totalOrders, setTotalOrders] = useState(0);
     const [todayOrders, setTodayOrders] = useState(0);
+    const [totalSales, setTotalSales] = useState(0);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -71,6 +72,14 @@ export default function Dashboard() {
             })
             .then(count => setTotalOrders(count))
             .catch(console.error);
+        //총매출
+        fetch('http://localhost:8080/api/payment/totalCountPayment')
+            .then(res => {
+                if (!res.ok) throw new Error('서버 에러');
+                return res.json();
+            })
+            .then(count => setTotalSales(count))
+            .catch(console.error);
     }, []);
 
     return (
@@ -128,7 +137,7 @@ export default function Dashboard() {
                 <div className={styles["dash_box"]}>
                     <div className={styles["total_third"]}>
                         <div className={styles["total_title"]}>총 매출</div>
-                        <div className={styles["total_num"]}>$?</div>
+                        <div className={styles["total_num"]}>₩{totalSales}</div>
                     </div>
                 </div>
             </main>

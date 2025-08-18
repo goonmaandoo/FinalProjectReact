@@ -1,16 +1,14 @@
-import styles from '../../CSS/StoreManagement.module.css';
-import style from '../../CSS/AdminPage.module.css';
+import styles from '../../CSS/Admin/StoreManagement.module.css';
+import style from '../../CSS/Admin/AdminPage.module.css';
 import { useState, useEffect } from 'react';
 
 export default function Active() {
     // const [userCount, setUserCount] = useState(0);
-    const [totalCount, setTotalCount] = useState(0);
     const [unactiveCount, setUnactiveCount] = useState(0);
     const [banCount, setBanCount] = useState(0);
     const [userData, setUserData] = useState([]);
     const [selected, setSelected] = useState('nickname');
     const [keyword, setKeyword] = useState("");
-    const [sendUserId, setSendUserId] = useState("");
     const [subBanBtn, setSubBanBtn] = useState("all");
 
     const handleChange = (e) => {
@@ -20,6 +18,12 @@ export default function Active() {
     const handleStatusClick = (id) => {
         window.open(`/updatestatus?id=${id}`, "_blank", "width=500,height=300");
     };
+    
+    const onKeyDown = (e) => {
+        if (e.key === "Enter") {
+            handleSearch();
+        }
+    }
 
     const handleSearch = () => {
         let url = 'http://localhost:8080/api/users/';
@@ -114,9 +118,9 @@ export default function Active() {
             <div className={styles["input_value"]}>
                 <select id="table_th" value={selected} onChange={handleChange}>
                     <option value="nickname">닉네임</option>
-                    <option value="tel">전화번호</option>
+                    <option value="phoneNum">전화번호</option>
                 </select>
-                <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+                <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} onKeyDown={onKeyDown}/>
                 <button onClick={handleSearch}>검색</button>
             </div>
             <table className={styles["store_table"]}>

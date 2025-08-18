@@ -1,16 +1,22 @@
-import styles from '../../CSS/StoreManagement.module.css';
-import style from '../../CSS/AdminPage.module.css';
+import styles from '../../CSS/Admin/StoreManagement.module.css';
+import style from '../../CSS/Admin/AdminPage.module.css';
 import { useState, useEffect } from 'react';
 
 export default function StoreManagement() {
     const [storeCount, setStoreCount] = useState(0);
     const [store, setStore] = useState([]);
-    const [selected, setSelected] = useState('all');
+    const [selected, setSelected] = useState('user');
     const [keyword, setKeyword] = useState("");
 
     const handleChange = (e) => {
         setSelected(e.target.value);
     };
+    
+    const onKeyDown = (e) => {
+        if (e.key === "Enter") {
+            handleSearch();
+        }
+    }
 
     const handleSearch = () => {
         let url = 'http://localhost:8080/store/search';
@@ -59,13 +65,12 @@ export default function StoreManagement() {
             </div>
             <div className={styles["input_value"]}>
                 <select id="table_th" value={selected} onChange={handleChange}>
-                    <option value="all">전체</option>
                     <option value="user">사용자</option>
                     <option value="storeName">가게이름</option>
                     <option value="storeAddress">가게주소</option>
                     <option value="tel">전화번호</option>
                 </select>
-                <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} disabled={selected === 'all'} placeholder={selected === 'all' ? '검색 불가' : '검색어 입력'} />
+                <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} onKeyDown={onKeyDown}/>
                 <button onClick={handleSearch}>검색</button>
             </div>
 

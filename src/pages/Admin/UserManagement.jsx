@@ -1,5 +1,5 @@
-import styles from '../../CSS/StoreManagement.module.css';
-import style from '../../CSS/AdminPage.module.css';
+import styles from '../../CSS/Admin/StoreManagement.module.css';
+import style from '../../CSS/Admin/AdminPage.module.css';
 import { useState, useEffect } from 'react';
 
 export default function UserManagement() {
@@ -15,6 +15,12 @@ export default function UserManagement() {
     const handleChange = (e) => {
         setSelected(e.target.value);
     };
+
+    const onKeyDown = (e) => {
+        if (e.key === "Enter") {
+            handleSearch();
+        }
+    }
 
     const handleSearch = () => {
         let url = 'http://localhost:8080/api/users/';
@@ -119,13 +125,13 @@ export default function UserManagement() {
                     <option value="phoneNum">핸드폰번호</option>
                     <option value="email">이메일</option>
                 </select>
-                <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+                <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} onKeyDown={onKeyDown}/>
                 <button onClick={handleSearch}>검색</button>
             </div>
             <table className={styles["store_table"]}>
                 <thead>
                     <tr>
-                        <th>구분</th><th>닉네임</th><th>핸드폰번호</th><th>이메일</th><th>주소</th><th>상세주소</th><th>상태</th><th>모아머니</th>
+                        <th>구분번호</th><th>닉네임</th><th>핸드폰번호</th><th>이메일</th><th>주소</th><th>상세주소</th><th>상태</th><th>모아머니</th>
                     </tr>
                 </thead>
                 <tbody>

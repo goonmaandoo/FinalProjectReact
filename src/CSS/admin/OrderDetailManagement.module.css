@@ -15,9 +15,12 @@
     width: 510px;
 }
 .main_title{
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 700;
-
+}
+.sub_title{
+    font-size: 20px;
+    font-weight: 600;
 }
 .main_container{
     display: flex;
@@ -37,4 +40,39 @@
     width: 100%;
     padding: 20px;
     background-color: #EBEBEB;
+    border-radius: 10px;
+}
+.main_second_box{
+    font-size: 1.25rem;
+}
+.main_second_box_title{
+    font-weight: 600;
+}
+.order_box_title{
+    font-weight: 500;
+    font-size: 18px;
+}
+.order_box_title1{
+    font-size: 18px;
+}
+.order_box_name{
+    font-size: 18px;
+    color: rgb(48, 48, 48);
+}
+.order_box_container{
+    display: flex;
+    margin: 10px 0 15px 5px;
+    flex-direction: column;
+    gap: 5px;
+}
+.order_box_container2{
+    display: flex;
+    margin: 10px 0 15px 5px;
+    justify-content: space-between;
+}
+.order_box_total{
+    display: flex;
+    justify-self: flex-end;
+    font-size: 20px;
+    font-weight: 600;
 }

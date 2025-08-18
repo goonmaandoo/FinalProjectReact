@@ -1,4 +1,4 @@
-import styles from '../CSS/Hamburger.module.css'
+import styles from '../CSS/Components/Hamburger.module.css'
 import { useEffect, useState, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
@@ -236,7 +236,7 @@ export default function Hamburger({ isOpen, onClose }) {
                                             <img
                                                 className={styles["user_profile_image"]}
                                                 src={user?.profileUrl || "http://localhost:8080/image/profileimg/mypagePerson.png"}
-                                                onError={(e) => (e.currentTarget.src = "http://localhost:8080/image/profileimg/mypagePerson.png")} />
+                                                onError={(e) => (e.currentTarget.src = "http://localhost:8080/image/mypagePerson.png")} />
                                         </div>
                                         <div className={styles["userName"]}>{user?.nickname}님</div>
                                         <button className={styles["userName_btn"]} onClick={handleLogout}>로그아웃</button>

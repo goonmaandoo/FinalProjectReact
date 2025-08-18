@@ -1,17 +1,8 @@
-import styles from '../../CSS/AdminPage.module.css';
+import styles from '../../CSS/Admin/AdminPage.module.css';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate, Link, Outlet } from "react-router-dom";
 import { logout } from '../../redux/user';
-import Dashboard from "./Dashboard";
-import StoreManagement from './StoreManagement';
-import UserManagement from './UserManagement';
-import Active from './ActiveManagement';
-import OrderManagement from './OrderManagement';
-import ReviewAdmin from './ReviewAdmin';
-import ReportManagement from './ReportManagement';
-import RoomManagement from './RoomManagement';
-import AuthQna from '../Auth/AuthQna';
 
 
 
@@ -46,7 +37,7 @@ export default function AdminPage() {
         { id: "qna", label: "문의내역", path: "qnamanagement", content: "문의 내역을 확인하고 처리하세요" },
         { id: "room", label: "공구방관리", path: "roommanagement", content: "진행중이거나 완료된 공구방을 관리하세요" },
         { id: "report", label: "신고관리", path: "reportmanagement", content: "사용자 신고와 문의사항을 처리하세요" },
-        { id: "refund", label: "환불관리", path: "", content: "환불내역을 확인하고 관리하세요" },
+        { id: "refund", label: "환불관리", path: "refund", content: "환불내역을 확인하고 관리하세요" },
         { id: "orderdetail", label: "주문상세", path: "orderdetail", content: "주문의 상세 정보를 확인하고 관리하세요" },
         { id: "review", label: "댓글관리", path: "reviewadmin", content: "공구방과 음식점 리뷰 댓글을 관리하세요"  }
     ];

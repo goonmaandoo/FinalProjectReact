@@ -1,4 +1,4 @@
-import style from "../../CSS/OwnerDashboard.module.css"
+import style from "../../CSS/Owner/OwnerDashboard.module.css"
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
@@ -58,6 +58,34 @@ export default function StoreRegister() {
     }
 
 
+    // const updateProfile = async (file) => {
+    //     try {
+    //         const formData = new FormData();
+    //         formData.append("file", file);
+    //         formData.append("userId", user.id);
+
+    //         const res = await axios.post("/api/users/uploadProfileImage", formData, {
+    //             headers: { "Content-Type": "multipart/form-data" },
+    //         });
+
+    //         const profileUrlFromBackend = res.data.profileUrl;
+    //         console.log("백엔드에서 받은 profileUrl:", profileUrlFromBackend);
+    //         setProfileUrl(
+    //             `http://localhost:8080${profileUrlFromBackend}?t=${new Date().getTime()}`
+    //         );
+    //         alert("프로필 이미지가 업데이트 되었습니다!");
+    //     } catch (e) {
+    //         console.error("업로드 실패:", e);
+    //         alert("실패");
+    //     }
+    // };
+    // const handleFileChange = (e) => {
+    //     const file = e.target.files[0];
+    //     if (!file) return;
+
+    //     updateProfile(file);
+    // };
+
     return (
         <>
             <div className={style["outbox"]}>
@@ -83,9 +111,15 @@ export default function StoreRegister() {
                                 <option value="12">아시안</option>
                             </select>
                         </div>
-                        <div className={style["store_firstimg"]}>
+                        {/* <div className={style["store_firstimg"]}>
                             <h3> 가게 대표 이미지 </h3>
-                        </div>
+                            <label>
+                                <input
+                                    type="file"
+                                    // onChange={handleFileChange}
+                                />
+                            </label>
+                        </div> */}
                     </div>
 
                     {/* 가게이름, 주소, 최소주문가격, 전화번호 */}

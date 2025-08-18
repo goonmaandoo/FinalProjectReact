@@ -73,6 +73,14 @@ export default function RoomCreate() {
     }
   };
 
+  const handleClick = () => {
+    new window.daum.Postcode({
+        oncomplete: function (data) {
+          setRoomAddress(data.address);
+        },
+    }).open();
+};
+
   return (
     <div className={style['container']}>
       <div className={style['room_create_page_box']}>
@@ -96,7 +104,9 @@ export default function RoomCreate() {
             type="text"
             placeholder="공구방 주소"
             value={roomAddress}
+            onClick={handleClick}
             onChange={(e) => setRoomAddress(e.target.value)}
+            readOnly
           />
         </div>
 

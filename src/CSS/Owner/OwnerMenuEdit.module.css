@@ -86,7 +86,6 @@ button {
     background-color: white;
     padding: 20px;
     width: 350px;
-    height: 503px;
 }
 
 .menu_card img {
@@ -97,7 +96,6 @@ button {
 .menu_info {
     display: flex;
     justify-content: space-between;
-    align-items: center;
 }
 
 .menu_info p {
@@ -111,6 +109,18 @@ button {
 }
 
 /* 메뉴 상태 */
+.menu_status {
+    background-color: #04b310;
+    color: white;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
 .menu_status p {
     font-size: 14px;
 }
