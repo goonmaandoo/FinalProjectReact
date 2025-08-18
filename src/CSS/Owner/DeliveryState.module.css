@@ -21,3 +21,44 @@
     height: 1200px;
     padding: 20px;
 }
+.menuDetail {
+    border: 1px solid #ff6b6b;
+    border-radius: 10px; 
+    padding: 15px 20px;
+    color: black;
+    width: 800px;
+    font-size: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.menuDetail div {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+}
+
+.menuDetail span.menuInfo {
+    color: black;
+}
+
+/* 페이지네이션 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.pagination button {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+}
+
+.pagination .active {
+    background-color: #ff6b6b;
+    color: white;
+    font-weight: bold;
+}
