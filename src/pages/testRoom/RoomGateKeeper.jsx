@@ -77,5 +77,10 @@ export default function RoomGatekeeper() {
 
     if (!validated) return <div className={styles.gateKeeping}>공구방에 입장하고 있습니다...</div>;
 
-    return <RoomTest initialRoom={room} roomId={roomId} />;
+    return (
+        <div className={styles.gateWrapper}>
+            <RoomTest initialRoom={room} roomId={roomId} />
+        </div>
+    )
+
 }

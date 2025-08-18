@@ -40,7 +40,7 @@ const StartRating = () => {
     };
     fetchCurrentUser();
   }, []);
-
+  
   // ✅ 방 정보 조회
   useEffect(() => {
     if (!room_id) return;

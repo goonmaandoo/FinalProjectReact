@@ -5,10 +5,19 @@
   align-items: stretch;
   min-height: 600px;
   background-color: #f0f2f5;
-  padding: 30px 50px 50px 50px;
+  padding: 30px 20px 50px 20px;
   box-sizing: border-box;
   height: auto;
   width: 100%;
+}
+
+/* 새로운 콘텐츠 래퍼 클래스 추가 */
+.roomContentWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  max-width: 1280px;
 }
 
 /* 좌우 컬럼 레이아웃 */
@@ -479,14 +488,6 @@
 }
 
 .kickButton {
-  /* border-radius: 15px;
-  font-weight: 500;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-  justify-content: flex-end; */
   border: none;
   border-radius: 5px;
   width: 45px;
@@ -506,12 +507,12 @@
   border-bottom: 1px solid #ccc;
 }
 
-.cartItem>span:first-child {
+.cartItem > span:first-child {
   flex: 1;
   text-align: left;
 }
 
-.cartItem>span:nth-child(2) {
+.cartItem > span:nth-child(2) {
   width: 90px;
   text-align: right;
   margin-right: 15px;
@@ -566,7 +567,7 @@
   flex-shrink: 0;
 }
 
-.memberItem>.memberProfile {
+.memberItem > .memberProfile {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -618,15 +619,12 @@
   .roomContainer {
     padding: 20px 30px;
   }
-
   .leftColumn {
     width: 65%;
   }
-
   .menuWrapper {
     width: 35%;
   }
-
   .sectionTitle {
     font-size: 16px;
     padding: 12px 0px 6px 20px;
@@ -638,11 +636,9 @@
     width: 60%;
     margin-right: 15px;
   }
-
   .menuWrapper {
     width: 40%;
   }
-
   .memberNickname {
     font-size: 18px;
   }
@@ -653,85 +649,108 @@
     flex-direction: column;
     padding: 20px;
   }
-
+  .roomContentWrapper {
+    flex-direction: column;
+  }
   .leftColumn,
   .menuWrapper {
     width: 100%;
     margin-right: 0;
     margin-bottom: 20px;
   }
-
   .menuWrapper {
     padding: 15px;
   }
-
   .memberWrapper {
     min-height: 150px;
     height: auto;
   }
-
   .chatWrapper {
     max-height: 50vh;
   }
-
   .chatBody {
     padding: 10px 15px;
   }
-
   .chatInput {
     padding: 12px 15px;
   }
-
   .chatInput input {
     padding: 10px 12px;
   }
 }
 
 @media (max-width: 430px) {
-  .user_profile_img {
-    width: 30px;
-    /* 살짝 줄임 */
-    height: 30px;
+  /*
+   * 방장 정보 그룹 (곰돌이 이미지, 닉네임, 방장 타이틀)을 가로로 정렬
+   */
+  .userInfoWrapper {
+    display: flex;
+    flex-direction: row; /* 가로 정렬 */
+    align-items: center;
+    gap: 6px;
+    flex-grow: 1;
+    min-width: 0;
   }
 
+  .nickname {
+    font-size: 1rem;
+    max-width: none;
+  }
+
+  /* 방장 뱃지 스타일 */
+  .leaderTag {
+    font-size: 0.75rem;
+    color: #fff;
+    background-color: #0055ff;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+
+  /* 방장 액션 버튼들 */
+  .leaderActions {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    margin: 0;
+    min-width: 0;
+  }
+
+  /* 각 버튼의 스타일을 더 작게 조정 */
+  .leaderActions button {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    height: auto;
+    white-space: nowrap;
+    min-width: auto;
+  }
+
+  .user_profile_img {
+    width: 30px;
+    height: 30px;
+  }
   .host_container {
     display: flex;
     align-items: center;
     gap: 4px;
-    /* 간격 조금 줄임 */
     white-space: nowrap;
     overflow: hidden;
   }
-
-  .nickname {
-    font-size: 0.75rem;
-    /* 약간 키움 */
-    max-width: 65px;
-    /* 닉네임 영역 좀 더 확보 */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    color: #000;
-    font-weight: 600;
-    flex-shrink: 1;
-    min-width: 0;
-  }
-
   .host_name {
     font-size: 0.7rem;
-    /* 조금 키움 */
     color: #005500;
     font-weight: 700;
     margin-left: 4px;
     white-space: nowrap;
     max-width: 60px;
-    /* 호스트 이름 좀 더 공간 확보 */
     overflow: hidden;
     text-overflow: ellipsis;
     flex-shrink: 1;
     min-width: 0;
   }
-
   .status_buttons {
     display: flex;
     gap: 6px;
@@ -741,26 +760,20 @@
     padding: 0 4px;
     max-width: 100%;
   }
-
   .status_buttons button {
     font-size: 0.7rem;
-    /* 버튼 폰트 조금 키움 */
     padding: 5px 10px;
-    /* 패딩 약간 키움 */
     white-space: nowrap;
     flex-shrink: 0;
     min-width: auto;
     border-radius: 12px;
   }
-
   body,
   button,
   input,
   .chat_text {
     font-size: 0.95rem;
-    /* 기본 폰트 살짝 키움 */
   }
-
   button {
     line-height: 1.1;
   }

@@ -22,7 +22,7 @@ export default function AllRoom() {
 
     // 1. 처음 마운트 시, userId를 기반으로 userCoords를 가져와 설정
     useEffect(() => {
-        if(!user?.id) return;
+        if (!user?.id) return;
 
         const fetchUserLocation = async () => {
             try {
@@ -44,7 +44,7 @@ export default function AllRoom() {
                 setError("사용자 위치 정보를 가져올 수 없습니다.");
             }
         };
-            fetchUserLocation();
+        fetchUserLocation();
     }, [user]);
     // 2. userCoords가 변경될 때마다 roomList를 다시 가져와 필터링
     useEffect(() => {
@@ -55,9 +55,11 @@ export default function AllRoom() {
             }
 
             try {
-                const response = await axios.get("http://localhost:8080/api/room/allRoomSelect");
+                //const response = await axios.get("http://localhost:8080/api/room/allRoomSelect");
+                const response = await axios.get(`http://localhost:8080/api/room/roomsbyId/${user?.id}`);
                 const rooms = response.data;
-
+                console.log("리스폰스1",response);
+                //console.log("리스폰스2",response2);
                 const roomsWithDistance = await Promise.all(
                     rooms.map(async (room) => {
                         // ... (기존 필터링 로직)
@@ -116,7 +118,7 @@ export default function AllRoom() {
             });
 
             const joinData = response.data;
-            console.log("조인데이터",joinData);
+            console.log("조인데이터", joinData);
             if (joinData) {
                 // 데이터가 있으면 참여중
                 const move = window.confirm("이미 참여중인 방입니다. 이동하시겠습니까?");

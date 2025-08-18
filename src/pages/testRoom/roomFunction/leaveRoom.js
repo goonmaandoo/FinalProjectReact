@@ -1,9 +1,12 @@
 import axios from "axios";
 
-export async function handleLeaveRoom({ room, user, roomId, navigate }) {
+export async function handleLeaveRoom({ room, user, roomId, status, navigate }) {
 
     if (!room || !room.users || !user) return;
-
+    if (status==="배달중") {
+        alert('이미 배달주문이 시작되었습니다.')
+        return;
+    }
     // 1. 나가는 유저 제거
     const updatedUsers = room.users.filter(u => Number(u.userId) !== Number(user.id));
 
@@ -13,6 +16,7 @@ export async function handleLeaveRoom({ room, user, roomId, navigate }) {
         // ✅ 인원이 없거나, 방장이 나갈 경우 → 방 삭제
         if (updatedUsers.length === 0 || isLeaderLeaving) {
             await axios.delete(`/api/room/${roomId}/blowUpRoom`);
+            await axios.delete(`/api/roomJoin/${roomId}/deleteRoomOnlyJoin`);
             alert("공구방이 종료됩니다.");
             console.log("방 폭파");
             navigate("/mainpage");
