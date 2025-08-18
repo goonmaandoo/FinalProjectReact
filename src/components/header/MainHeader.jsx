@@ -84,7 +84,7 @@ export default function MainHeader({ toggleMenu }) {
             <div className={styles["main_container"]}>
                 <div className={styles["hLogo_img"]}>
                     <Link to="/mainpage" className={styles["hLogo_link"]}>
-                        <img src="http://localhost:8080/image/imgfile/main_img/main_logo.png" alt='로고' />
+                        <img src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/main_logo.png" alt='로고' />
                     </Link>
                 </div>
                 <div>
@@ -102,7 +102,7 @@ export default function MainHeader({ toggleMenu }) {
                         {isAuthenticated ? (
                             <>
                                 <button className={styles["location_btn"]} onClick={handleClick}>
-                                    <img className={styles["location_icon"]} src="http://localhost:8080/image/imgfile/main_img/location_icon_red.png" />
+                                    <img className={styles["location_icon"]} src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/location_icon_red.png" />
                                 </button>
                                 <div onClick={handleClick}>{user.address || "주소를 입력하세요"}</div>
                             </>
@@ -140,7 +140,7 @@ export default function MainHeader({ toggleMenu }) {
                 <div className={styles["main_hamburger"]}>
                     <button onClick={handleHamburgerClick} className={styles["main_hamburger_btn"]}>
                         <img
-                            src="http://localhost:8080/image/imgfile/main_img/main_hamburger-md.png"
+                            src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/main_hamburger-md.png"
                             alt="햄버거 메뉴"
                         />
                     </button>

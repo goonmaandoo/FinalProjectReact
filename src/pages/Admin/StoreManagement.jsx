@@ -61,7 +61,7 @@ export default function StoreManagement() {
                     <div className={styles["total_title"]}>가게</div>
                     <div className={styles["total_num"]}>{storeCount}</div>
                 </div>
-                <img src={`http://localhost:8080/image/imgfile/admin/storemanage.png`} />
+                <img src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/admin/storemanage.png`} />
             </div>
             <div className={styles["input_value"]}>
                 <select id="table_th" value={selected} onChange={handleChange}>

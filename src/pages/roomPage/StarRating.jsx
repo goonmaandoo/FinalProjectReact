@@ -16,7 +16,7 @@ const StartRating = () => {
   const [loading, setLoading] = useState(true);
 
   const basic_profile =
-    "https://epfwvrafnhdgvyfcrhbo.supabase.co/storage/v1/object/public/profile-image/mypagePerson.png";
+    "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileImg/mypagePerson.png";
 
   const SERVER_BASE = "http://localhost:8080";
 

@@ -95,7 +95,7 @@ export default function Active() {
                         <div className={styles["total_title"]}>{subBanBtn === "unactive" ? "탈퇴 회원" : "정지 회원"}</div>
                         <div className={styles["total_num"]}>{subBanBtn === "unactive" ? unactiveCount : banCount}</div>
                     </div>
-                    <img src={`http://localhost:8080/image/imgfile/admin/${subBanBtn}_user.png`} />
+                    <img src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/admin/${subBanBtn}_user.png`} />
                 </div>
                 :
                 <>
@@ -104,14 +104,14 @@ export default function Active() {
                             <div className={styles["total_title"]}>탈퇴 회원</div>
                             <div className={styles["total_num"]}>{unactiveCount}</div>
                         </div>
-                        <img src={`http://localhost:8080/image/imgfile/admin/unactive_user.png`} />
+                        <img src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/admin/unactive_user.png`} />
                     </div>
                     <div className={styles["store_box"]}>
                         <div className={styles["total_third"]}>
                             <div className={styles["total_title"]}>정지 회원</div>
                             <div className={styles["total_num"]}>{banCount}</div>
                         </div>
-                        <img src={`http://localhost:8080/image/imgfile/admin/ban_user.png`} />
+                        <img src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/admin/ban_user.png`} />
                     </div>
                 </>}
 

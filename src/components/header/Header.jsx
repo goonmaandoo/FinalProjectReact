@@ -45,12 +45,12 @@ export default function Header({ toggleMenu }) {
             <div className={styles["container"]}>
                 <div className={styles["hLogo_img"]}>
                     <Link to="/mainpage" className={styles["hLogo_link"]}>
-                        <img src="http://localhost:8080/image/imgfile/main_img/header_logo.png" alt='로고' />
+                        <img src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/header_logo.png" alt='로고' />
                     </Link>
                 </div>
                 <div className={styles["hLogo_img2"]}>
                     <Link to="/mainpage" className={styles["hLogo_link"]}>
-                        <img src="http://localhost:8080/image/imgfile/main_img/web_logo.png" alt='로고' />
+                        <img src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/web_logo.png" alt='로고' />
                     </Link>
                 </div>
                 <div className={styles["search"]}>
@@ -74,7 +74,7 @@ export default function Header({ toggleMenu }) {
                 <div className={styles["hamburger"]}>
                     <button onClick={handleHamburgerClick} className={styles["hamburger_btn"]}>
                         <img
-                            src="http://localhost:8080/image/imgfile/main_img/hamburger-md.png"
+                            src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/hamburger-md.png"
                             alt="햄버거 메뉴"
                         />
                     </button>

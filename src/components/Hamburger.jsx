@@ -100,7 +100,7 @@ export default function Hamburger({ isOpen, onClose }) {
                         <div className={styles["mypage"]}>
                             <img
                                 className={styles["mypage_icon"]}
-                                src="http://localhost:8080/image/imgfile/main_img/home-black.png"
+                                src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/home-black.png"
                                 alt="마이페이지"
                             />
                             <div className={styles["mypage_text"]}>
@@ -129,8 +129,8 @@ export default function Hamburger({ isOpen, onClose }) {
                                     <div>
                                         <img
                                             className={styles["user_profile_image"]}
-                                            src={user?.profileUrl ? `http://localhost:8080${user?.profileUrl}` : "http://localhost:8080/image/profileimg/mypagePerson.png"}
-                                            onError={(e) => (e.currentTarget.src = "http://localhost:8080/image/mypagePerson.png")} />
+                                            src={user?.profileUrl ? `http://localhost:8080${user?.profileUrl}` : "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/mypagePerson.png"}
+                                            onError={(e) => (e.currentTarget.src = "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/mypagePerson.png")} />
                                     </div>
                                     <div className={styles["userName"]}>{user?.nickname}님</div>
                                     <button className={styles["userName_btn"]} onClick={handleLogout}>로그아웃</button>
@@ -138,7 +138,7 @@ export default function Hamburger({ isOpen, onClose }) {
                                 <div className={styles["coin_box"]}>
                                     <img
                                         className={styles["coin_imo"]}
-                                        src="http://localhost:8080/image/imgfile/main_img/coin.png"
+                                        src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/coin.png"
                                         alt="코인"
                                     />
                                     <div className={styles["coin_confirm"]}>
@@ -148,7 +148,7 @@ export default function Hamburger({ isOpen, onClose }) {
                             </div>
                             <div className={styles["score_box"]}>
                                 <div className={styles["score_text"]}>{user.userRating}%</div>
-                                <img className={styles["score_img"]} src={`http://localhost:8080/image/imgfile/main_img/${face}.png`} />
+                                <img className={styles["score_img"]} src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/${face}.png`} />
                             </div>
                             <progress className={styles["gongu_progress"]} value={user.userRating} max={100}></progress>
                         </>
@@ -160,12 +160,12 @@ export default function Hamburger({ isOpen, onClose }) {
                     <div className={styles["event_banner"]}>
                         <img
                             className={styles["event_banner1"]}
-                            src="http://localhost:8080/image/imgfile/main_img/event_banner1.png"
+                            src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/event_banner1.png"
                             alt="배너1"
                         />
                         <img
                             className={styles["event_banner2"]}
-                            src="http://localhost:8080/image/imgfile/main_img/event_banner2.png"
+                            src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/event_banner2.png"
                             alt="배너2"
                         />
                     </div>
@@ -176,14 +176,14 @@ export default function Hamburger({ isOpen, onClose }) {
                                 userRoom.map((room) => (
                                     <div key={room.id} className={styles["chat_list_room"]} onClick={() => window.location.href = `/room/${room.id}`}>
                                         <img className={styles["chat_list_circle"]}
-                                            src={`http://localhost:8080/image/imgfile/store/store_${room.storeId}.jpg`} />
+                                            src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/store/store_${room.storeId}.jpg`} />
                                         <div className={styles["chat_room"]}>
                                             <div className={styles["chat_title_time"]}>
                                                 <div className={styles["chat_title"]}>{room.roomName}</div>
                                                 <div className={styles["chat_time"]}></div>
                                             </div>
                                             <div className={styles["chat_room_detail"]}>
-                                                <img src="http://localhost:8080/image/imgfile/main_img/octicon_people-24.png" />
+                                                <img src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/octicon_people-24.png" />
                                                 <div className={styles["chat_people"]}>
                                                     {room.joinCount}/{room.maxPeople} 참여중
                                                 </div>
@@ -206,7 +206,7 @@ export default function Hamburger({ isOpen, onClose }) {
                             <div className={styles["mypage"]}>
                                 <img
                                     className={styles["mypage_icon2"]}
-                                    src="http://localhost:8080/image/imgfile/main_img/home-black.png"
+                                    src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/home-black.png"
                                     alt="마이페이지"
                                 />
                                 <div className={styles["mypage_text2"]}>
@@ -235,8 +235,8 @@ export default function Hamburger({ isOpen, onClose }) {
                                         <div>
                                             <img
                                                 className={styles["user_profile_image"]}
-                                                src={user?.profileUrl || "http://localhost:8080/image/profileimg/mypagePerson.png"}
-                                                onError={(e) => (e.currentTarget.src = "http://localhost:8080/image/mypagePerson.png")} />
+                                                src={user?.profileUrl || "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/mypagePerson.png"}
+                                                onError={(e) => (e.currentTarget.src = "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/mypagePerson.png")} />
                                         </div>
                                         <div className={styles["userName"]}>{user?.nickname}님</div>
                                         <button className={styles["userName_btn"]} onClick={handleLogout}>로그아웃</button>
@@ -244,7 +244,7 @@ export default function Hamburger({ isOpen, onClose }) {
                                     <div className={styles["coin_box"]}>
                                         <img
                                             className={styles["coin_imo"]}
-                                            src="http://localhost:8080/image/imgfile/main_img/coin.png"
+                                            src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/coin.png"
                                             alt="코인"
                                         />
                                         <div className={styles["coin_confirm"]}>
@@ -254,7 +254,7 @@ export default function Hamburger({ isOpen, onClose }) {
                                 </div>
                                 <div className={styles["score_box"]}>
                                     <div className={styles["score_text"]}>{user.userRating}%</div>
-                                    <img className={styles["score_img"]} src={`http://localhost:8080/image/imgfile/main_img/${face}.png`} />
+                                    <img className={styles["score_img"]} src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/${face}.png`} />
                                 </div>
                                 <progress className={styles["gongu_progress"]} value={user.userRating} max={100}></progress>
                             </>
@@ -270,14 +270,14 @@ export default function Hamburger({ isOpen, onClose }) {
                                 userRoom.map((room) => (
                                     <div key={room.id} className={styles["chat_list_room"]} onClick={() => window.location.href = `/room/${room.id}`}> 
                                         <img className={styles["chat_list_circle"]}
-                                            src={`http://localhost:8080/image/imgfile/store/store_${room.storeId}.jpg`} />
+                                            src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/store/store_${room.storeId}.jpg`} />
                                         <div className={styles["chat_room"]}>
                                             <div className={styles["chat_title_time"]}>
                                                 <div className={styles["chat_title"]}>{room.roomName}</div>
                                                 <div className={styles["chat_time"]}></div>
                                             </div>
                                             <div className={styles["chat_room_detail"]}>
-                                                <img src="http://localhost:8080/image/imgfile/main_img/octicon_people-24.png" />
+                                                <img src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/octicon_people-24.png" />
                                                 <div className={styles["chat_people"]}>
                                                     {room.joinCount}/{room.maxPeople} 참여중
                                                 </div>

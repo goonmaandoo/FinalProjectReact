@@ -67,7 +67,7 @@ export default function AdminPage() {
                                         className={isActive ? styles["active_tab"] : ""}
                                         onClick={() => { if (tab.path) navigate(tab.path); window.scrollTo({ top: 0 }); }}>
                                         <span className={styles["side_imo"]}>
-                                            <img src={`http://localhost:8080/image/imgfile/admin/${tab.id}.png`} />
+                                            <img src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/admin/${tab.id}.png`} />
                                         </span>
                                         <span>{tab.label}</span>
                                     </li>   

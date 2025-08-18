@@ -54,7 +54,7 @@ export default function StoreListPage() {
         <div className={styles["storelist_body"]}>
             <div className={styles["circle_category_outer"]}>
                 <button className={styles["scroll_button"]} onClick={scrollLeft}>
-                    <img src="http://localhost:8080/image/imgfile/main_img/backbtn.png" alt="왼쪽" />
+                    <img src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/backbtn.png" alt="왼쪽" />
                 </button>
                 <div className={styles["circle_category_wrap"]} ref={categoryRef}>
                     {category.map((item) => (
@@ -62,7 +62,7 @@ export default function StoreListPage() {
                             onClick={() => navigate(`/storelist/${item.id}`)} className={selectedCategoryId === item.id ? styles["selected"] : ""} >
                             <div className={styles["circle_with_text"]}>
                                 <div className={styles["circle"]}>
-                                    <img src={`http://localhost:8080/image/imgfile/category/${item.category}.png`} alt={`${item.category}`}
+                                    <img src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/category/${item.category}.png`} alt={`${item.category}`}
                                     />
                                 </div>
                                 <div className={styles["circle_text"]}>{item.num}</div>
@@ -71,7 +71,7 @@ export default function StoreListPage() {
                     ))}
                 </div>
                 <button className={styles["scroll_button"]} onClick={scrollRight}>
-                    <img src="http://localhost:8080/image/imgfile/main_img/backbtn2.png" alt="오른쪽" />
+                    <img src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/backbtn2.png" alt="오른쪽" />
                 </button>
             </div>
             <div className={styles["second_body"]}>
@@ -81,7 +81,7 @@ export default function StoreListPage() {
                             <Link key={item.id} to={`/store/${item.id}`} onClick={() => onStoreClick(item.id)}>
                                 <div className={styles["img_explain_wrap"]}>
                                     <div className={styles["storesquare_img"]}>
-                                        <img src={`http://localhost:8080/image/imgfile/store/store_${item.id}.jpg`} alt={`${item.storeName} 이미지`} />
+                                        <img src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/store/store_${item.id}.jpg`} alt={`${item.storeName} 이미지`} />
                                     </div>
                                     <div className={styles["storeexplain"]}>
                                         <div className={styles["score_detail"]}>
