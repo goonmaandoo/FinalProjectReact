@@ -20,7 +20,7 @@ export default function Dashboard() {
 
     useEffect(() => {
         //전체 공구방
-        fetch('http://localhost:8080/api/room/totalCount')
+        fetch('/api/room/totalCount')
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
@@ -28,7 +28,7 @@ export default function Dashboard() {
             .then(count => setTotal(count))
             .catch(console.error);
         //모집중
-        fetch('http://localhost:8080/api/room/joinIngCount')
+        fetch('/api/room/joinIngCount')
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
@@ -36,7 +36,7 @@ export default function Dashboard() {
             .then(count => setJoin(count))
             .catch(console.error);
         //진행중
-        fetch('http://localhost:8080/api/room/ingCount')
+        fetch('/api/room/ingCount')
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
@@ -44,7 +44,7 @@ export default function Dashboard() {
             .then(count => setIng(count))
             .catch(console.error);
         //진행마감
-        fetch('http://localhost:8080/api/room/endCount')
+        fetch('/api/room/endCount')
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
@@ -52,7 +52,7 @@ export default function Dashboard() {
             .then(count => setEnd(count))
             .catch(console.error);
         //사용자수
-        fetch('http://localhost:8080/api/users/totalCount')
+        fetch('/api/users/totalCount')
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
@@ -60,7 +60,7 @@ export default function Dashboard() {
             .then(count => setUsers(count))
             .catch(console.error);
         //총주문수
-        fetch('http://localhost:8080/api/orders/orderTodayCount')
+        fetch('/api/orders/orderTodayCount')
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
@@ -68,7 +68,7 @@ export default function Dashboard() {
             .then(count => setTodayOrders(count))
             .catch(console.error);
         //총주문수
-        fetch('http://localhost:8080/api/orders/ordersCount')
+        fetch('/api/orders/ordersCount')
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
@@ -76,7 +76,7 @@ export default function Dashboard() {
             .then(count => setTotalOrders(count))
             .catch(console.error);
         //총매출
-        fetch('http://localhost:8080/api/payment/totalCountPayment')
+        fetch('/api/payment/totalCountPayment')
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
