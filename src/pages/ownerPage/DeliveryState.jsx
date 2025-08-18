@@ -1,18 +1,29 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import style from '../../CSS/Owner/DeliveryState.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 export default function DeliveryState() {
 
     const user = useSelector((state) => state.auth.user);
-    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [expandedOrders, setExpandedOrders] = useState({});
-    const [room, setRoom] = useState([]);
+
+    // 페이지네이션
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 6; // 한 페이지에 보여줄 주문 개수
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentOrders = orders.slice(indexOfFirstItem, indexOfLastItem);
+
+    const totalPages = Math.ceil(orders.length / itemsPerPage);
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+    }
 
     useEffect(() => {
         fetchOrders();
@@ -51,10 +62,12 @@ export default function DeliveryState() {
                 console.error(err);
                 alert("상태 변경 중 오류가 발생했습니다.");
             })
-    }
+    };
 
     if (loading) return <div>로딩 중...</div>;
     if (error) return <div>{error}</div>;
+
+
 
     return (
         <div className={style["outbox"]}>
@@ -63,7 +76,7 @@ export default function DeliveryState() {
                     <div className={style["noOrders"]}>주문 내역이 없습니다.</div>
                 )}
 
-                {orders.map(order => (
+                {currentOrders.map(order => (
                     <div key={order.orderId} className={style.deliveryStateBox}>
                         <div className={style.deliveryInfo}>
                             <div className={style.orderHeader}>
@@ -80,7 +93,19 @@ export default function DeliveryState() {
 
                             {expandedOrders[order.orderId] && (
                                 <div className={style.menuDetail} style={{ whiteSpace: 'pre-wrap', marginTop: '8px' }}>
-                                    {order.roomOrder}
+                                    {(() => {
+                                        try {
+                                            const menuList = JSON.parse(order.roomOrder);
+                                            return menuList.map((item, index) => (
+                                                <div key={index}>
+                                                    <span className={style.menuName}> {item.menu_name} </span>
+                                                    <span className={style.menuInfo}> 수량: {item.quantity}개</span>
+                                                </div>
+                                            ));
+                                        } catch (e) {
+                                            return order.roomOrder; // JSON 파싱 실패하면 원본 그대로
+                                        }
+                                    })()}
                                 </div>
                             )}
 
@@ -112,6 +137,20 @@ export default function DeliveryState() {
                         </div>
                     </div>
                 ))}
+
+                {totalPages > 1 && (
+                    <div className={style["pagination"]}>
+                        {pageNumbers.map(number => (
+                            <button
+                                key={number}
+                                onClick={() => setCurrentPage(number)}
+                                className={currentPage === number ? style["active"] : ""}
+                            >
+                                {number}
+                            </button>
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     );

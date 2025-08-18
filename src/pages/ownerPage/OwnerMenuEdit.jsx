@@ -12,6 +12,7 @@ export default function OwnerMenuEdit() {
     const [selectedTab, setSelectedTab] = useState("전체메뉴");
     const [selectedMenu, setSelectedMenu] = useState(null);
 
+    // 페이지네이션
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
 
