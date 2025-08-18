@@ -12,12 +12,13 @@ export default function OrderConfirmModal({
   userId,
   room,
   roomId,
+  token,
   onSetOrderId,
   onRefreshRoomUsers,
   onClose,
 }) {
   const [cash, setCash] = useState(user?.cash);
-  const token = useSelector((s) => s.auth?.token);
+  //const token = useSelector((s) => s.auth?.token);
 
   // 캐쉬 불러오기.
   const fetchCash = async () => {
@@ -101,22 +102,23 @@ export default function OrderConfirmModal({
       roomOrder,
       totalPrice,
     };
-
+    console.log("토큰",token);
     try {
       // 1. 주문 먼저 생성
       const newOrderId = await makeOrder(myOrder);
       onSetOrderId(newOrderId); // 부모 상태 변경
       const amount = totalPrice;
+      console.log("어마운트",amount);
       // 3. 캐시 차감 (서비스 쪽에서 amount 음수 체크함)
       await axios.post(
         '/api/users/cash/pay',
-        { cash: amount },
+        {  cash: amount },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
 
-      alert("결제가 완료되었습니다.");
+      //alert("결제가 완료되었습니다."); 
 
       // 4. ready 상태 업데이트 및 리프레시
       await axios.put('/api/room/updateReady', {
@@ -131,7 +133,8 @@ export default function OrderConfirmModal({
 
       await onRefreshRoomUsers();
       onClose();
-
+      //주문완료 navigate
+      
     } catch (error) {
       if (error.response) {
         alert("결제 실패: " + error.response.data);

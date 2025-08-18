@@ -585,6 +585,7 @@ export default function RoomTest({ initialRoom, roomId }) {
                 userId={user?.id}
                 room={room}
                 roomId={roomId}
+                token={token}
                 onSetOrderId={setOrderId}
                 onRefreshRoomUsers={fetchRoomUsers}
                 onClose={() => setShowPaymentModal(false)}
