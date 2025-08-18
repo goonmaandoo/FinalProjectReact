@@ -109,11 +109,11 @@ export default function ReportManagement() {
       targetUserId: report.userId,
     });
 
-  const handleTempBan = (report, days) =>
+  const handleTempBan = (report) =>
     progressReport(report.id, {
-      adminComment: `${days}일 임시 제한`,
-      action: "ban_days",
       days: 7,
+      adminComment: `7일 임시 제한`,
+      action: "ban_days",
       targetUserId: report.userId,
     });
 
