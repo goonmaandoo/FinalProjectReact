@@ -3,7 +3,7 @@ import styles from './OrderConfirmModal.module.css';
 import axios from 'axios';
 import { makeOrder } from './roomFunction/makeOrder';
 import { useSelector } from 'react-redux';
-
+import { useNavigate } from 'react-router-dom';
 export default function OrderConfirmModal({
   user,
   visible,
@@ -17,6 +17,7 @@ export default function OrderConfirmModal({
   onRefreshRoomUsers,
   onClose,
 }) {
+  const navigate = useNavigate();
   const [cash, setCash] = useState(user?.cash);
   //const token = useSelector((s) => s.auth?.token);
 
@@ -141,6 +142,7 @@ export default function OrderConfirmModal({
         alert("결제 실패: " + error.response.data);
       } else {
         alert("서버 연결 실패");
+        console.error("서버에러?",error);
       }
       console.error('주문 처리 실패:', error);
     }

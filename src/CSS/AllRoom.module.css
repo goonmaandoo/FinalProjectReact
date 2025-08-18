@@ -345,7 +345,8 @@
 }
 
 /* 1280px 미만 (데스크탑) */
-.main_container {
+@media (max-width: 1280px) {
+  .main_container {
     width: 100%;
     padding: 60px 15px;
   }
@@ -357,7 +358,7 @@
   }
 
   .AllRoomBody {
-    flex-direction: column-reverse; /* Changed from column to column-reverse */
+    flex-direction: column-reverse;
     height: auto;
     width: 100%;
     padding: 15px;
@@ -413,8 +414,8 @@
     background-color: white;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
+}
 
-/* 768px 미만 (태블릿) */
 /* 768px 미만 (태블릿) */
 @media (max-width: 768px) {
   .main_container {
@@ -428,7 +429,7 @@
   }
 
   .AllRoomBody {
-    flex-direction: column-reverse; /* Added for consistency */
+    flex-direction: column-reverse;
   }
 
   .rooms {
@@ -448,17 +449,6 @@
     position: relative;
     height: auto;
     width: 100%;
-    /* 배경 이미지를 포함하는 div에서 텍스트가 분리되도록 수정 */
-    background-size: cover;
-    background-position: center 80%;
-    border-radius: 10px 10px 0 0;
-    padding-bottom: 0; /* 기존 패딩 제거 */
-  }
-  
-  /* roomList에서 이미지와 디테일 정보를 수직으로 정렬 */
-  .roomList a {
-    display: flex;
-    flex-direction: column;
   }
 
   .roomListImg {
@@ -471,8 +461,10 @@
   .roomDetail {
     padding: 8px 15px;
     border-radius: 0 0 10px 10px;
-    background-color: white; /* 투명도를 없애고 흰색 배경으로 설정 */
-    position: static; /* 절대 위치를 제거하고 정상적인 흐름으로 변경 */
+    background-color: rgba(255, 255, 255, 0.8);
+    position: absolute;
+    bottom: 0;
+    left: 0;
     width: 100%;
     box-sizing: border-box;
   }
@@ -519,92 +511,25 @@
     flex-direction: column;
   }
 
-  .roomWithText {
-    position: relative;
-    height: auto;
-    width: 100%;
-    background-size: cover;
-    background-position: center 80%;
-    border-radius: 10px 10px 0 0;
-    padding-bottom: 0;
-  }
-
   .roomListImg {
     width: 100%;
     height: 100px;
   }
 
   .roomTitle {
-    font-size: 14px;
-  }
-
-  .roomDetail {
-    padding: 8px 10px;
-    background-color: white; /* 투명도를 없애고 흰색 배경으로 설정 */
-    position: static; /* 절대 위치 제거 */
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .gongu_progress {
-    height: 6px;
-  }
-
-  .roomAddress,
-  .roomDistance,
-  .gongu_people,
-  .gongu_delivery {
     font-size: 12px;
   }
-}
-
-/* 480px 미만 (모바일) */
-@media (max-width: 480px) {
-  .main_container {
-    padding: 20px 5px;
-    margin: 20px 20px;
-  }
-
-  .AllRoomhead {
-    font-size: 16px;
-    height: 45px;
-    padding: 0 10px;
-  }
-
-  .AllRoomBody {
-    padding: 10px;
-  }
-
-  .rooms {
-    height: auto;
-    min-height: 200px;
-  }
-
-  .room_no_result {
-    min-height: 200px;
-  }
-
-  .roomList {
-    flex-direction: column;
-  }
-
-  .roomListImg {
-    width: 100%;
-    height: 100px;
-  }
-
-  .roomTitle {
-    font-size: 14px;
-  }
 
   .roomDetail {
-    padding: 8px 10px;
+    padding: 2px 3px;
     background-color: rgba(255, 255, 255, 0.8);
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
+    height: 35px;
     box-sizing: border-box;
+    font: 5px;
   }
 
   .gongu_progress {
