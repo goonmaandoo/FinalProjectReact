@@ -136,7 +136,7 @@ export default function GonguComplete() {
 
   const goToReview = () => {
     if (roomInfo?.id) {
-      navigate(`/review/${roomInfo.id}`);
+      navigate(`/rating/${roomInfo.id}`);
     } else {
       alert("room_id가 없어 리뷰 페이지로 이동할 수 없습니다.");
     }
