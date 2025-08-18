@@ -2,9 +2,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 50px;
-    padding-bottom: 50px;
+    padding: 80px 0;
     width: 100vw;
+    min-height: 800px;
 }
 
 .room_create_page_box {
@@ -23,6 +23,7 @@
 .input_label_box {
     margin-top: 5px;
     margin-bottom: 5px;
+    width: 100%;
 }
 
 .label_box {
