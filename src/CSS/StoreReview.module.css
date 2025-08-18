@@ -1,0 +1,121 @@
+.container {
+  width: 100%;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 2px 4px 10px rgba(0,0,0,0.1);
+}
+
+.title {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.loading, .noReview {
+  text-align: center;
+  color: #777;
+  font-size: 1rem;
+  padding: 20px;
+}
+
+.reviewList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.reviewBox {
+  background: #fafafa;
+  border-radius: 10px;
+  padding: 15px;
+  border: 1px solid #eee;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.user {
+  font-weight: bold;
+  color: #333;
+}
+
+.date {
+  font-size: 0.9rem;
+  color: #999;
+}
+
+.stars {
+  font-size: 1.2rem;
+  color: #ffcc00;
+  margin-bottom: 10px;
+}
+
+.comment {
+  font-size: 1rem;
+  color: #444;
+  line-height: 1.4;
+  white-space: pre-wrap;
+}
+/* ===== 반응형 추가 ===== */
+@media (max-width: 400px) {
+  .container {
+    margin: 20px 10px;
+    padding: 15px;
+  }
+
+  .title {
+    font-size: 1.4rem;
+  }
+
+  .reviewBox {
+    padding: 12px;
+  }
+
+  .stars {
+    font-size: 1rem;
+  }
+
+  .comment {
+    font-size: 0.95rem;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .date {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 10px;
+  }
+
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .reviewBox {
+    padding: 10px;
+  }
+
+  .stars {
+    font-size: 0.95rem;
+  }
+
+  .comment {
+    font-size: 0.9rem;
+  }
+}
