@@ -50,41 +50,13 @@ export default function StoreRegister() {
 
             alert("가게 등록 성공!");
             console.log(response.data);
-            navigate("/ownerdashboard");
+            navigate("/ownerpage");
         } catch (error) {
             console.error(error);
             alert("등록 중 오류 발생");
         }
     }
 
-
-    // const updateProfile = async (file) => {
-    //     try {
-    //         const formData = new FormData();
-    //         formData.append("file", file);
-    //         formData.append("userId", user.id);
-
-    //         const res = await axios.post("/api/users/uploadProfileImage", formData, {
-    //             headers: { "Content-Type": "multipart/form-data" },
-    //         });
-
-    //         const profileUrlFromBackend = res.data.profileUrl;
-    //         console.log("백엔드에서 받은 profileUrl:", profileUrlFromBackend);
-    //         setProfileUrl(
-    //             `http://localhost:8080${profileUrlFromBackend}?t=${new Date().getTime()}`
-    //         );
-    //         alert("프로필 이미지가 업데이트 되었습니다!");
-    //     } catch (e) {
-    //         console.error("업로드 실패:", e);
-    //         alert("실패");
-    //     }
-    // };
-    // const handleFileChange = (e) => {
-    //     const file = e.target.files[0];
-    //     if (!file) return;
-
-    //     updateProfile(file);
-    // };
 
     return (
         <>
