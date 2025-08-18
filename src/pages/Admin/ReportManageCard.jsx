@@ -10,6 +10,7 @@ const STATUS_TEXT = {
 
 export default function AdminReportCard({
   report,
+  onInProgress,
   onTempBan,
   onPermanentBan,
   onReject,
@@ -70,14 +71,22 @@ export default function AdminReportCard({
         <div className={styles.metaGroup}>
           <div className={styles.metaTitle}>신고 대상</div>
           <div className={styles.metaValue}>
-            {targetNickname ?? (displayUserId ? `#${displayUserId}` : "-")}
+            {targetNickname
+              ? `${targetNickname} (#${displayUserId})`
+              : displayUserId
+              ? `#${displayUserId}`
+              : "-"}
           </div>
         </div>
 
         <div className={`${styles.metaGroup} ${styles.metaRight}`}>
           <div className={styles.metaTitle}>
             신고자 :{" "}
-            {reporterNickname ?? (reportedBy != null ? `#${reportedBy}` : "-")}{" "}
+            {reporterNickname
+              ? `${reporterNickname} (#${reportedBy})`
+              : reportedBy != null
+              ? `#${reportedBy}`
+              : "-"}{" "}
             <span className={`${styles.pill} ${pillClass}`}>{statusText}</span>
           </div>
           <div className={styles.metaSub}>
@@ -128,15 +137,21 @@ export default function AdminReportCard({
             <div className={styles.actionBar}>
               <button
                 className={`${styles.btn} ${styles.btnOutline}`}
+                onClick={() => onInProgress?.(report)}
+              >
+                진행 중 전환
+              </button>
+              <button
+                className={`${styles.btn} ${styles.btnGreen}`}
                 onClick={() => onReject?.(report)}
               >
                 기각
               </button>
               <button
-                className={`${styles.btn} ${styles.btnGreen}`}
+                className={`${styles.btn} ${styles.btnOrange}`}
                 onClick={() => onTempBan?.(report)}
               >
-                임시 정지
+                7일 임시 정지
               </button>
               <button
                 className={`${styles.btn} ${styles.btnRed}`}
