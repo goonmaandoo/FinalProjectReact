@@ -22,9 +22,8 @@ export default function ReportManagement() {
   //간단 필터
   const [filters, setFilters] = useState({
     status: "", //pending, resolved, rejected
-    userId: "", //피신고자 ID
+    userId: "", //신고 대상자 ID
     reportedBy: "", //신고자 ID
-    keyword: "", //사유 키워드
   });
 
   const totalPages = useMemo(
@@ -41,7 +40,6 @@ export default function ReportManagement() {
       status: filters.status || undefined,
       userId: filters.userId || undefined,
       reportedBy: filters.reportedBy || undefined,
-      keyword: filters.keyword || undefined,
     };
     const res = await axios.get("/api/chatReports/admin", { params, signal });
     //서버 응답 형식 : { items: [...], total: number }
@@ -84,6 +82,10 @@ export default function ReportManagement() {
           adminId,
           reportId,
         });
+      } else if (action === "in-progress") {
+        await axios.patch(`/api/chatReports/${reportId}/in-progress`, null, {
+          params: { adminId },
+        });
       } else {
         console.warn("Unknown action:", action);
       }
@@ -95,7 +97,11 @@ export default function ReportManagement() {
       alert("신고 처리 중 오류가 발생했습니다.");
     }
   }
-
+  const handleInProgress = (report) =>
+    progressReport(report.id, {
+      action: "in-progress",
+      targetUserId: report.userId,
+    });
   const handleReject = (report) =>
     progressReport(report.id, {
       adminComment: "주의(무시 처리)",
@@ -107,7 +113,7 @@ export default function ReportManagement() {
     progressReport(report.id, {
       adminComment: `${days}일 임시 제한`,
       action: "ban_days",
-      days,
+      days: 7,
       targetUserId: report.userId,
     });
 
@@ -149,7 +155,7 @@ export default function ReportManagement() {
             </label>
 
             <label className={styles.filterItem}>
-              <span>피신고자ID</span>
+              <span>신고 대상자ID</span>
               <input
                 value={filters.userId}
                 onChange={(e) =>
@@ -167,17 +173,6 @@ export default function ReportManagement() {
                   setFilters((s) => ({ ...s, reportedBy: e.target.value }))
                 }
                 placeholder="예) 45"
-              />
-            </label>
-
-            <label className={`${styles.filterItem} ${styles.filterGrow}`}>
-              <span>키워드</span>
-              <input
-                value={filters.keyword}
-                onChange={(e) =>
-                  setFilters((s) => ({ ...s, keyword: e.target.value }))
-                }
-                placeholder="사유 검색"
               />
             </label>
 
@@ -222,6 +217,7 @@ export default function ReportManagement() {
                   userId: r.userId,
                   targetNickname: r.targetNickname,
                   targetState: r.targetState ?? "active",
+                  reportedBy: r.reportedBy,
                   reporterNickname: r.reporterNickname,
                   reportedAt: r.createdAt,
                   responseStatus: r.responseStatus ?? "pending",
@@ -229,6 +225,7 @@ export default function ReportManagement() {
                   reason: r.reason,
                   roomNo: r.roomNo,
                 }}
+                onInProgress={handleInProgress}
                 onReject={handleReject}
                 onTempBan={handleTempBan}
                 onPermanentBan={handlePermanentBan}
