@@ -73,15 +73,10 @@ export default function ReportManagement() {
   ) {
     try {
       if (action === "none") {
-        // "무시"는 보통 반려로 처리
         await axios.patch(`/api/chatReports/${reportId}/reject`, null, {
           params: { adminId },
         });
-
-        // (선택) adminComment 서버에 남기고 싶으면 별도 로그 API가 있어야 함.
-        // await axios.post(`/api/admin/audit`, { reportId, adminComment, action: 'ignore' });
       } else if (action === "ban_days") {
-        // 1) 신고 상태는 '처리완료'
         await axios.post(`/api/reports/ban`, {
           userId: targetUserId,
           days,
@@ -89,9 +84,6 @@ export default function ReportManagement() {
           adminId,
           reportId,
         });
-        // 2) 밴 API가 있다면 여기에 호출 추가 (없으면 주석 유지)
-        // await axios.post(`/api/users/${targetUserId}/ban-days`, { days }, { params: { adminId } });
-        // 영구정지: days가 매우 크면 서버에서 perm-ban으로 처리하도록 구현 권장
       } else {
         console.warn("Unknown action:", action);
       }
