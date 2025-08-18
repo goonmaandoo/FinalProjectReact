@@ -100,7 +100,7 @@ export default function OwnerMenuEdit() {
                                     currentMenuList.map(menu => (
                                         <div key={menu.id} className={style["menu_card"]}>
                                             <img
-                                                src={`http://localhost:8080/image/imgfile/${menu.folder}/${menu.filename}`}
+                                                src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/${menu.folder}/${menu.filename}`}
                                                 alt="메뉴 이미지"
                                                 className={style["menu_image"]}
                                             />

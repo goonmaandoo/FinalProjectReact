@@ -103,7 +103,7 @@ export default function MainPage() {
                                     <div className={styles["circle_with_text"]}>
                                         <div className={styles["circle"]}>
                                             <img
-                                                src={`http://localhost:8080/image/imgfile/category/${item.category}.png`}
+                                                src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/category/${item.category}.png`}
                                                 alt={`${item.category} 이미지`} />
                                         </div>
                                         <div className={styles["circle_text"]}>{item.num}</div>
@@ -126,7 +126,7 @@ export default function MainPage() {
                                     <Link key={items.id} to={`/room/${items.id}`}>
                                         <div className={styles["gongu_with_text"]}>
                                             <img className={styles["square_img"]}
-                                                src={`http://localhost:8080/image/imgfile/store/store_${items.storeId}.jpg`}
+                                                src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/store/store_${items.storeId}.jpg`}
                                                 alt={`${items.roomName} 이미지`} />
                                             <div className={styles["square"]}>
                                                 <div className={styles["gongu_title"]}>{items.roomName}</div>
@@ -135,7 +135,7 @@ export default function MainPage() {
                                                 <progress className={styles["gongu_progress"]} value={items.joinCount} max={items.maxPeople}></progress>
                                                 <div className={styles["gongu_bottom"]}>
                                                     <div style={{ display: "flex", alignItems: "center" }}>
-                                                        <img src="http://localhost:8080/image/imgfile/main_img/octicon_people-24.png" />
+                                                        <img src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/octicon_people-24.png" />
                                                         <div className={styles["gongu_people"]}>{items.joinCount}/{items.maxPeople} 참여중</div>
                                                     </div>
                                                     <div className={styles["gongu_delivery"]}>배달비 무료</div>
@@ -158,7 +158,7 @@ export default function MainPage() {
                                     <div className={styles["popular_with_text"]}>
                                         <img
                                             className={styles["popular_img"]}
-                                            src={`http://localhost:8080/image/imgfile/popular/popular_${item.id}.jpg`} />
+                                            src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/popular/popular_${item.id}.jpg`} />
                                         <div className={styles["popular_square"]}>
                                             <div className={styles["popular_title"]}>{item.title}</div>
                                             <div className={styles["popular_detail"]}>

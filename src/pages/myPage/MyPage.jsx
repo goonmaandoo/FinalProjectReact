@@ -101,7 +101,7 @@ export default function MyPage() {
     }
   }, [user]);
 
-  const basic_profile = "http://localhost:8080/image/profileImg/mypagePerson.png";
+  const basic_profile = "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileImg/mypagePerson.png";
   const updateProfile = async (file) => {
     try {
       const formData = new FormData();
@@ -150,7 +150,7 @@ export default function MyPage() {
                 <div>프로필수정</div>
                 <img
                   className={styles.circle_pencil}
-                  src="http://localhost:8080/image/imgfile/main_img/line-md_pencil (1).png"
+                  src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/line-md_pencil (1).png"
                 />
               </label>
             </div>
@@ -160,7 +160,7 @@ export default function MyPage() {
               <div className={styles.userDetail}>
                 <img
                   className={styles.bearImage}
-                  src={`http://localhost:8080/image/imgfile/main_img/${bear}.png`}
+                  src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/${bear}.png`}
                 />
                 <div className={styles.usernickName}>{user?.nickname} 님</div>
               </div>
@@ -171,7 +171,7 @@ export default function MyPage() {
           <div className={styles.user_cash}>
             <img
               className={styles["coin_imo"]}
-              src="http://localhost:8080/image/imgfile/main_img/coin.png"
+              src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/coin.png"
               alt="코인"
             />
             <div className={styles["coin_confirm"]}>

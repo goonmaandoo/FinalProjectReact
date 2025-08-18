@@ -73,7 +73,7 @@ export default function SearchPage() {
                                 (category === "전체" ? storeData.slice(0, 4) : storeData).map((item) => (
                                     <Link key={item.id} to={`/store/${item.id}`}>
                                         <div className={styles["search_result"]}>
-                                            <img className={styles["search_store_img"]} src={`http://localhost:8080/image/imgfile/store/store_${item.id}.jpg`} alt={`${item.storeName}`}></img>
+                                            <img className={styles["search_store_img"]} src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/store/store_${item.id}.jpg`} alt={`${item.storeName}`}></img>
                                             <div className={styles["search_store_detail"]}>
                                                 <div>
                                                     <div className={styles["search_store_name"]}>{item.storeName}</div>
@@ -104,7 +104,7 @@ export default function SearchPage() {
                                 (category === "전체" ? menuData.slice(0, 4) : menuData).map((item) => (
                                     <Link key={item.id} to={`/store/${item.storeId}`}>
                                         <div className={styles["search_result"]}>
-                                            <img className={styles["search_store_img"]} src={`http://localhost:8080/image/imgfile/${item.folder}/${item.filename}`} alt={`${item.menuName}`}></img>
+                                            <img className={styles["search_store_img"]} src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/${item.folder}/${item.filename}`} alt={`${item.menuName}`}></img>
                                             <div className={styles["search_store_detail"]}>
                                                 <div>
                                                     <div className={styles["search_store_name"]}>{item.menuName}</div>
@@ -137,7 +137,7 @@ export default function SearchPage() {
                                     <Link key={item.id} to={`/room/${item.id}`} onClick={(e) => roomClick(e, item.id)}>
                                         <div className={styles["search_result"]}>
                                             <img className={styles["search_store_img"]}
-                                                src={`http://localhost:8080/image/imgfile/store/store_${item.storeId}.jpg`} alt={`${item.storeId}`}></img>
+                                                src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/store/store_${item.storeId}.jpg`} alt={`${item.storeId}`}></img>
                                             <div className={styles["search_store_detail"]}>
                                                 <div>
                                                     <div className={styles["search_store_name"]}>{item.roomName}</div>

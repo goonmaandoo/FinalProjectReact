@@ -67,7 +67,7 @@ export default function OwnerPage() {
                                         className={menu === tab.label ? styles["active_tab"] : ""}
                                         onClick={() => { setMenu(tab.label); window.scrollTo({ top: 0 }); }}>
                                         <span className={styles["side_imo"]}>
-                                            <img src={`http://localhost:8080/image/imgfile/owner/${tab.id}.png`} />
+                                            <img src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/owner/${tab.id}.png`} />
                                         </span>
                                         <span>{tab.label}</span>
                                     </li>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from "react-router-dom";
 import styles from '../../CSS/Admin/Dashboard.module.css';
 import style from '../../CSS/Admin/AdminPage.module.css';
@@ -14,6 +14,9 @@ export default function Dashboard() {
     const [todayOrders, setTodayOrders] = useState(0);
     const [totalSales, setTotalSales] = useState(0);
     const navigate = useNavigate();
+
+    const [file, setFile] = useState(null);
+  const [url, setUrl] = useState("");
 
     useEffect(() => {
         //전체 공구방
@@ -82,8 +85,52 @@ export default function Dashboard() {
             .catch(console.error);
     }, []);
 
+    const handleFileChange = (e) => {
+        setFile(e.target.files[0]);
+      };
+    
+      const handleUpload = async () => {
+        if (!file) {
+          alert("파일을 선택하세요!");
+          return;
+        }
+    
+        const formData = new FormData();
+        formData.append("file", file);
+    
+        try {
+          const res = await fetch("http://localhost:8080/api/files/upload", {
+            method: "POST",
+            body: formData,
+          });
+    
+          if (!res.ok) {
+            throw new Error("업로드 실패");
+          }
+    
+          const url = await res.text(); // 서버에서 presigned URL 또는 업로드 경로 반환
+          setUrl(url);
+          alert("업로드 성공!");
+        } catch (err) {
+          console.error(err);
+          alert("업로드 실패");
+        }
+      };
+
     return (
         <>
+        <div>
+      <input type="file" onChange={handleFileChange} />
+      <button onClick={handleUpload}>업로드</button>
+      {url && (
+        <div>
+          <p>파일 URL:</p>
+          <a href={url} target="_blank" rel="noopener noreferrer">
+            {url}
+          </a>
+        </div>
+      )}
+    </div>
             <div>
                 <div className={style["side_menu_box"]}>
                     <div className={style["side_title"]}>대시보드</div>
@@ -115,7 +162,7 @@ export default function Dashboard() {
                 <div className={styles["dash_box"]}>
                     <div className={styles["total_second"]}>
                         <div className={styles["total_title"]}>
-                            <span><img src={`http://localhost:8080/image/imgfile/main_img/today_order.png`} /></span>
+                            <span><img src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/today_order.png`} /></span>
                             오늘 주문 건수
                         </div>
                         <div className={styles["total_num"]}>
@@ -123,7 +170,7 @@ export default function Dashboard() {
                     </div>
                     <hr />
                     <div className={styles["total_second"]}>
-                        <div className={styles["total_title"]}><span><img src={`http://localhost:8080/image/imgfile/main_img/today_order.png`} /></span>총 주문 건수</div>
+                        <div className={styles["total_title"]}><span><img src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/today_order.png`} /></span>총 주문 건수</div>
                         <div className={styles["total_num"]}>
                             <Link to="/admin/ordermanagement">{totalOrders}건</Link></div>
                     </div>

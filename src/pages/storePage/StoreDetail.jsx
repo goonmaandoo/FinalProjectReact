@@ -48,9 +48,9 @@ export default function StoreDetail() {
     return store ? (
         <main className={styles["main_box"]}>
             <div className={styles["main_container"]}>
-                <img className={styles["square_img"]} src={`http://localhost:8080/image/imgfile/store/store_${store.id}.jpg`} />
+                <img className={styles["square_img"]} src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/store/store_${store.id}.jpg`} />
                 <div className={styles["detail_box"]}>
-                    <img src="http://localhost:8080/image/imgfile/main_img/Vector.png" />
+                    <img src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/Vector.png" />
                     <div className={styles["detail_text"]}>다같이 주문하면 무료배달</div>
                     <div className={styles["store_name"]}>{store.storeName}</div>
                     <div className={styles["store_star"]}>
@@ -106,7 +106,7 @@ export default function StoreDetail() {
                                 <div className={styles["menu_price"]}>{thousands(item.menuPrice)}원</div>
                             </div>
                             <img className={styles["menu_img"]} 
-                            src={`http://localhost:8080/image/imgfile/${item.folder}/${item.filename}`} alt={item.menuName}/>
+                            src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/${item.folder}/${item.filename}`} alt={item.menuName}/>
                             </div>
                             <hr className={styles["menu_hr"]} ></hr>
                         </div>

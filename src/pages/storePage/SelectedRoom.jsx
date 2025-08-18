@@ -48,7 +48,7 @@ export default function SelectRoom() {
         <main className={styles["main_container"]}>
             <div className={styles["main_contents"]}>
                 <div className={styles["main_head"]}>
-                    <img onClick={() => { navigate(-1); }} className={styles["back_btn"]} src="http://localhost:8080/image/imgfile/main_img/backbtn.png"></img>
+                    <img onClick={() => { navigate(-1); }} className={styles["back_btn"]} src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/backbtn.png"></img>
                     <div>개설된 방 : </div>
                     {store && <div className={styles["store_name"]}>&nbsp;{store.storeName}</div>}
                 </div>
@@ -61,7 +61,7 @@ export default function SelectRoom() {
                                 )}
                                 <div key={item.id} className={styles["search_result"]} >
                                     <img className={styles["search_store_img"]}
-                                        src={`http://localhost:8080/image/imgfile/store/store_${item.storeId}.jpg`} alt={`${item.storeId}`}></img>
+                                        src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/store/store_${item.storeId}.jpg`} alt={`${item.storeId}`}></img>
                                     <div className={styles["search_store_detail"]}>
                                         <div>
                                             <div className={styles["search_store_name"]}>{item.roomName}</div>
