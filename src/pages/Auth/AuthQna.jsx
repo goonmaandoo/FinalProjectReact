@@ -73,94 +73,100 @@ export default function AuthQna() {
 
     return (
         <>
-                {/* <div className={styles.authQnaContainer}> */}
-                    <div className={styles.AuthHeadContainer}>
-                        <div className={styles.headMain}>문의 내역</div>
-                        <div className={styles.headSub}>QnA문의 내역입니다.</div>
-                        <div className={styles.radioWrapper}>
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="filter"
-                                    value="selectAll"
-                                    checked={filter === "selectAll"}
-                                    onChange={handleFilterChange}
-                                />{" "}
-                                전체
-                            </label>
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="filter"
-                                    value="selectAllAnswer"
-                                    checked={filter === "selectAllAnswer"}
-                                    onChange={handleFilterChange}
-                                />{" "}
-                                답변됨
-                            </label>
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="filter"
-                                    value="selectAllQna"
-                                    checked={filter === "selectAllQna"}
-                                    onChange={handleFilterChange}
-                                />{" "}
-                                미답변
-                            </label>
+            {/* <div className={styles.authQnaContainer}> */}
+            <div className={styles.AuthHeadContainer}>
+                <div className={styles.headMain}>문의 내역</div>
+                <div className={styles.headSub}>QnA문의 내역입니다.</div>
+                <div className={styles.radioWrapper}>
+                    <label>
+                        <input
+                            type="radio"
+                            name="filter"
+                            value="selectAll"
+                            checked={filter === "selectAll"}
+                            onChange={handleFilterChange}
+                        />{" "}
+                        전체
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            name="filter"
+                            value="selectAllAnswer"
+                            checked={filter === "selectAllAnswer"}
+                            onChange={handleFilterChange}
+                        />{" "}
+                        답변됨
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            name="filter"
+                            value="selectAllQna"
+                            checked={filter === "selectAllQna"}
+                            onChange={handleFilterChange}
+                        />{" "}
+                        미답변
+                    </label>
+                </div>
+            </div>
+            {qnaList.length > 0 ? (
+                qnaList.map((qna) => (
+                    <div className={styles.authQnaCard} key={qna.id}>
+                        <div className={styles.authnQnatitle}>
+                            <span>{qna.title}</span>
+                            <div className={styles.authQnatitleRight}>
+                                <span className={styles.qnaStatus}>아이디: {qna.userId}</span>
+                                <span
+                                    className={styles.answerStatus}
+                                    style={{ background: qna.qanswer ? "#ff7272" : "#c3c3c3" }}
+                                >
+                                    {qna.qanswer ? "답변완료" : "미답변"}
+                                </span>
+                                <span
+                                    className={styles.addAnswerBtn}
+                                    onClick={() => writeAnswer(qna.id)}
+                                >
+                                    {qna.qanswer ? "답변수정" : "답변등록"}
+                                </span>
+                                {viewId === qna.id ? (
+                                    <ArrowDropUpIcon className={styles.arrowIcon} onClick={() => openAnswer(qna.id)} />
+                                ) : (
+                                    <ArrowDropDownIcon className={styles.arrowIcon} onClick={() => openAnswer(qna.id)} />
+                                )}
+                            </div>
                         </div>
-                    </div>
-                    {qnaList.map((qna) => (
-                        <div className={styles.authQnaCard} key={qna.id}>
-                            <div className={styles.authnQnatitle}>
-                                <span>{qna.title}</span>
-                                <div className={styles.authQnatitleRight}>
-                                    <span className={styles.qnaStatus}>아이디: {qna.userId}</span>
-                                    <span
-                                        className={styles.answerStatus}
-                                        style={{ background: qna.qanswer ? "#ff7272" : "#c3c3c3" }}
+                        {viewId === qna.id && (
+                            <div className={styles.authnQnaContents}>{qna.qContents}</div>
+                        )}
+                        {answerWriting && writingId === qna.id && (
+                            <div className={styles.answerCard}>
+                                <div className={styles.answerBody}>
+                                    <textarea
+                                        value={answer}
+                                        onChange={(e) => setAnswer(e.target.value)}
+                                        style={{ resize: "none" }}
+                                    />
+                                </div>
+                                <div className={styles.completeWrapper}>
+                                    <button
+                                        className={styles.completeAnswerBtn}
+                                        type="button"
+                                        onClick={answerUpdate}
                                     >
-                                        {qna.qanswer ? "답변완료" : "미답변"}
-                                    </span>
-                                    <span
-                                        className={styles.addAnswerBtn}
-                                        onClick={() => writeAnswer(qna.id)}
-                                    >
-                                        {qna.qanswer ? "답변수정" : "답변등록"}
-                                    </span>
-                                    {viewId === qna.id ? (
-                                        <ArrowDropUpIcon className={styles.arrowIcon} onClick={() => openAnswer(qna.id)} />
-                                    ) : (
-                                        <ArrowDropDownIcon className={styles.arrowIcon} onClick={() => openAnswer(qna.id)} />
-                                    )}
+                                        작성완료
+                                    </button>
                                 </div>
                             </div>
-                            {viewId === qna.id && (
-                                <div className={styles.authnQnaContents}>{qna.qContents}</div>
-                            )}
-                            {answerWriting && writingId === qna.id && (
-                                <div className={styles.answerCard}>
-                                    <div className={styles.answerBody}>
-                                        <textarea
-                                            value={answer}
-                                            onChange={(e) => setAnswer(e.target.value)}
-                                            style={{ resize: "none" }}
-                                        />
-                                    </div>
-                                    <div className={styles.completeWrapper}>
-                                        <button
-                                            className={styles.completeAnswerBtn}
-                                            type="button"
-                                            onClick={answerUpdate}
-                                        >
-                                            작성완료
-                                        </button>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    ))}
-                {/* </div> */}
+                        )}
+                    </div>
+                ))
+            ) : (
+                <div className={styles.noQnaMessage}>
+                    <p>문의내역이 없습니다.</p>
+                </div>
+            )}
+
         </>
     );
 }
