@@ -43,7 +43,7 @@ function Login() {
                 if(user.role === "owner"){
                     navigate("/ownerpage");
                 }else if(user.role === "admin") {
-                    navigate("/admin");
+                    navigate("/adminpage");
                 } else {
                     navigate("/mainpage");
                 }
