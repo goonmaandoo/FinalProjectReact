@@ -15,8 +15,8 @@ export default function Dashboard() {
     const [totalSales, setTotalSales] = useState(0);
     const navigate = useNavigate();
 
-    const [file, setFile] = useState(null);
-  const [url, setUrl] = useState("");
+//     const [file, setFile] = useState(null);
+//   const [url, setUrl] = useState("");
 
     useEffect(() => {
         //전체 공구방
@@ -85,41 +85,41 @@ export default function Dashboard() {
             .catch(console.error);
     }, []);
 
-    const handleFileChange = (e) => {
-        setFile(e.target.files[0]);
-      };
+    // const handleFileChange = (e) => {
+    //     setFile(e.target.files[0]);
+    //   };
     
-      const handleUpload = async () => {
-        if (!file) {
-          alert("파일을 선택하세요!");
-          return;
-        }
+    //   const handleUpload = async () => {
+    //     if (!file) {
+    //       alert("파일을 선택하세요!");
+    //       return;
+    //     }
     
-        const formData = new FormData();
-        formData.append("file", file);
+    //     const formData = new FormData();
+    //     formData.append("file", file);
     
-        try {
-          const res = await fetch("http://localhost:8080/api/files/upload", {
-            method: "POST",
-            body: formData,
-          });
+    //     try {
+    //       const res = await fetch("http://localhost:8080/api/files/upload", {
+    //         method: "POST",
+    //         body: formData,
+    //       });
     
-          if (!res.ok) {
-            throw new Error("업로드 실패");
-          }
+    //       if (!res.ok) {
+    //         throw new Error("업로드 실패");
+    //       }
     
-          const url = await res.text(); // 서버에서 presigned URL 또는 업로드 경로 반환
-          setUrl(url);
-          alert("업로드 성공!");
-        } catch (err) {
-          console.error(err);
-          alert("업로드 실패");
-        }
-      };
+    //       const url = await res.text(); // 서버에서 presigned URL 또는 업로드 경로 반환
+    //       setUrl(url);
+    //       alert("업로드 성공!");
+    //     } catch (err) {
+    //       console.error(err);
+    //       alert("업로드 실패");
+    //     }
+    //   };
 
     return (
         <>
-        <div>
+        {/* <div>
       <input type="file" onChange={handleFileChange} />
       <button onClick={handleUpload}>업로드</button>
       {url && (
@@ -130,7 +130,7 @@ export default function Dashboard() {
           </a>
         </div>
       )}
-    </div>
+    </div> */}
             <div>
                 <div className={style["side_menu_box"]}>
                     <div className={style["side_title"]}>대시보드</div>

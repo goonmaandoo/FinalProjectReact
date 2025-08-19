@@ -14,10 +14,9 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
-      // ✅ 웹소켓 프록시 설정 추가
       '/ws-chat': {
         target: 'http://localhost:8080',
-        ws: true, // ✅ 웹소켓 프록시 활성화
+        ws: true,
         changeOrigin: true,
         secure: false,
       },
