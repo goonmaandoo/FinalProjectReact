@@ -3,7 +3,7 @@ import styles from './OrderConfirmModal.module.css';
 import axios from 'axios';
 import { makeOrder } from './roomFunction/makeOrder';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+
 export default function OrderConfirmModal({
   user,
   visible,
@@ -12,16 +12,15 @@ export default function OrderConfirmModal({
   userId,
   room,
   roomId,
-  token,
   onSetOrderId,
   onRefreshRoomUsers,
   onClose,
+  onComplete,   // ✅ 부모에서 전달될 콜백
 }) {
-  const navigate = useNavigate();
-  const [cash, setCash] = useState(user?.cash);
-  //const token = useSelector((s) => s.auth?.token);
+  const [cash, setCash] = useState(user?.cash || 0);
+  const token = useSelector((s) => s.auth?.token);
 
-  // 캐쉬 불러오기.
+  // ✅ 캐쉬 불러오기
   const fetchCash = async () => {
     if (!token) return;
     try {
@@ -40,7 +39,7 @@ export default function OrderConfirmModal({
 
   useEffect(() => {
     const onMessage = (event) => {
-      if (event.origin !== window.location.origin) return; // 보안
+      if (event.origin !== window.location.origin) return;
       if (event.data?.type === "CASH_CHARGED") {
         fetchCash();
       }
@@ -54,9 +53,10 @@ export default function OrderConfirmModal({
 
   if (!visible) return null;
 
+  // ✅ 주문 확인 및 결제 처리
   const handleOrderConfirm = async () => {
-    console.log('totalPrice:', totalPrice, 'type:', typeof totalPrice);
     if (!room || !room.users) return;
+
     if (cart.length === 0) {
       alert('메뉴를 먼저 선택해주세요.');
       return;
@@ -69,11 +69,7 @@ export default function OrderConfirmModal({
 
     if (cash < totalPrice) {
       alert('캐쉬 잔액이 부족합니다.');
-      window.open(
-        "/cash/cashcharge",
-        "_blank",
-        "width=420,height=500"
-      );
+      window.open("/cash/cashcharge", "_blank", "width=420,height=500");
       return;
     }
 
@@ -103,49 +99,45 @@ export default function OrderConfirmModal({
       roomOrder,
       totalPrice,
     };
-    console.log("토큰", token);
+
     try {
-      // 1. 주문 먼저 생성
+      // 1. 주문 생성
       const newOrderId = await makeOrder(myOrder);
-      onSetOrderId(newOrderId); // 부모 상태 변경
-      // room total 가격 + 호출
-      const amount = totalPrice;
-      console.log("어마운트", amount);
-      // 3. 캐시 차감 (서비스 쪽에서 amount 음수 체크함)
+      onSetOrderId(newOrderId);
+
+      // 2. 캐시 차감
       await axios.post(
         '/api/users/cash/pay',
-        { cash: amount },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+        { cash: totalPrice },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      //alert("결제가 완료되었습니다."); 
+      alert("결제가 완료되었습니다.");
 
-      // 4. ready 상태 업데이트 및 리프레시
+      // ✅ 부모에서 콜백이 있을 때만 실행
+      if (typeof onComplete === "function") {
+        onComplete();
+      }
+
+      // 3. ready 상태 업데이트
       await axios.put('/api/room/updateReady', {
         id: roomId,
         users: JSON.stringify(updatedUsers),
-        kickId: room.kickId
+        kickId: room.kickId,
       });
 
       await axios.put(`/api/room/${roomId}/readyCount`, null, {
         params: { delta },
       });
-      await axios.put(`/api/room/${roomId}/roomOrder`, null, {
-        params: { delta: totalPrice },
-      });
+
       await onRefreshRoomUsers();
-      alert('결제가 완료되었습니다');
+
       onClose();
-      //주문완료 navigate
-      //navigate(`/ordercomplete/${newOrderId}`);
     } catch (error) {
       if (error.response) {
         alert("결제 실패: " + error.response.data);
       } else {
         alert("서버 연결 실패");
-        console.error("서버에러?", error);
       }
       console.error('주문 처리 실패:', error);
     }
@@ -159,9 +151,8 @@ export default function OrderConfirmModal({
         </div>
 
         <div className={styles.myCash}>내 캐쉬: {cash.toLocaleString()}원</div>
-        <div className={styles.myMenu}>
-          Menu
-        </div>
+
+        <div className={styles.myMenu}>Menu</div>
         <div className={styles.orderList}>
           {cart.map(item => (
             <div key={item.id} className={styles.orderItem}>
@@ -171,7 +162,9 @@ export default function OrderConfirmModal({
             </div>
           ))}
         </div>
+
         <p><strong>총 금액: {totalPrice.toLocaleString()}원</strong></p>
+
         <div className={styles.buttonGroup}>
           <button className={styles.modalButton} onClick={handleOrderConfirm}>확인</button>
           <button className={styles.modalButton} onClick={onClose}>취소</button>
