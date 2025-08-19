@@ -51,7 +51,7 @@ export default function MainPage() {
             .catch(console.error);
 
         //인기메뉴 조회
-        fetch('http://localhost:8080/popular/all')
+        fetch('api/popular/all')
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
