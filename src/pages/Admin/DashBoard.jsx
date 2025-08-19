@@ -15,12 +15,12 @@ export default function Dashboard() {
     const [totalSales, setTotalSales] = useState(0);
     const navigate = useNavigate();
 
-    const [file, setFile] = useState(null);
-  const [url, setUrl] = useState("");
+//     const [file, setFile] = useState(null);
+//   const [url, setUrl] = useState("");
 
     useEffect(() => {
         //전체 공구방
-        fetch('http://localhost:8080/api/room/totalCount')
+        fetch('/api/room/totalCount')
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
@@ -28,7 +28,7 @@ export default function Dashboard() {
             .then(count => setTotal(count))
             .catch(console.error);
         //모집중
-        fetch('http://localhost:8080/api/room/joinIngCount')
+        fetch('/api/room/joinIngCount')
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
@@ -36,7 +36,7 @@ export default function Dashboard() {
             .then(count => setJoin(count))
             .catch(console.error);
         //진행중
-        fetch('http://localhost:8080/api/room/ingCount')
+        fetch('/api/room/ingCount')
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
@@ -44,7 +44,7 @@ export default function Dashboard() {
             .then(count => setIng(count))
             .catch(console.error);
         //진행마감
-        fetch('http://localhost:8080/api/room/endCount')
+        fetch('/api/room/endCount')
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
@@ -52,7 +52,7 @@ export default function Dashboard() {
             .then(count => setEnd(count))
             .catch(console.error);
         //사용자수
-        fetch('http://localhost:8080/api/users/totalCount')
+        fetch('/api/users/totalCount')
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
@@ -60,7 +60,7 @@ export default function Dashboard() {
             .then(count => setUsers(count))
             .catch(console.error);
         //총주문수
-        fetch('http://localhost:8080/api/orders/orderTodayCount')
+        fetch('/api/orders/orderTodayCount')
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
@@ -68,7 +68,7 @@ export default function Dashboard() {
             .then(count => setTodayOrders(count))
             .catch(console.error);
         //총주문수
-        fetch('http://localhost:8080/api/orders/ordersCount')
+        fetch('/api/orders/ordersCount')
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
@@ -76,7 +76,7 @@ export default function Dashboard() {
             .then(count => setTotalOrders(count))
             .catch(console.error);
         //총매출
-        fetch('http://localhost:8080/api/payment/totalCountPayment')
+        fetch('/api/payment/totalCountPayment')
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
@@ -85,41 +85,41 @@ export default function Dashboard() {
             .catch(console.error);
     }, []);
 
-    const handleFileChange = (e) => {
-        setFile(e.target.files[0]);
-      };
+    // const handleFileChange = (e) => {
+    //     setFile(e.target.files[0]);
+    //   };
     
-      const handleUpload = async () => {
-        if (!file) {
-          alert("파일을 선택하세요!");
-          return;
-        }
+    //   const handleUpload = async () => {
+    //     if (!file) {
+    //       alert("파일을 선택하세요!");
+    //       return;
+    //     }
     
-        const formData = new FormData();
-        formData.append("file", file);
+    //     const formData = new FormData();
+    //     formData.append("file", file);
     
-        try {
-          const res = await fetch("http://localhost:8080/api/files/upload", {
-            method: "POST",
-            body: formData,
-          });
+    //     try {
+    //       const res = await fetch("http://localhost:8080/api/files/upload", {
+    //         method: "POST",
+    //         body: formData,
+    //       });
     
-          if (!res.ok) {
-            throw new Error("업로드 실패");
-          }
+    //       if (!res.ok) {
+    //         throw new Error("업로드 실패");
+    //       }
     
-          const url = await res.text(); // 서버에서 presigned URL 또는 업로드 경로 반환
-          setUrl(url);
-          alert("업로드 성공!");
-        } catch (err) {
-          console.error(err);
-          alert("업로드 실패");
-        }
-      };
+    //       const url = await res.text(); // 서버에서 presigned URL 또는 업로드 경로 반환
+    //       setUrl(url);
+    //       alert("업로드 성공!");
+    //     } catch (err) {
+    //       console.error(err);
+    //       alert("업로드 실패");
+    //     }
+    //   };
 
     return (
         <>
-        <div>
+        {/* <div>
       <input type="file" onChange={handleFileChange} />
       <button onClick={handleUpload}>업로드</button>
       {url && (
@@ -130,7 +130,7 @@ export default function Dashboard() {
           </a>
         </div>
       )}
-    </div>
+    </div> */}
             <div>
                 <div className={style["side_menu_box"]}>
                     <div className={style["side_title"]}>대시보드</div>

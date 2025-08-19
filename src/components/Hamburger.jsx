@@ -50,7 +50,7 @@ export default function Hamburger({ isOpen, onClose }) {
     useEffect(() => {
         if (!user?.id) return;
         //진행중인 공구방
-        axios.get(`http://localhost:8080/api/room/roomsbyId/${user.id}`)
+        axios.get(`/api/room/roomsbyId/${user.id}`)
             .then(res => {
                 console.log("RoomsbyId response:", res.data);
                 setUserRoom(res.data);

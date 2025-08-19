@@ -5,21 +5,22 @@ import MyHeader from "./MyHeader";
 import { useState, useEffect, useRef } from "react";
 import GaugeBar from "../../component/funtion/common/gaugeBar";
 import axios from "axios";
+
 export default function MyPage() {
   const location = useLocation();
   const currentMenu = location.pathname.split("/").pop();
   const [profileUrl, setProfileUrl] = useState("");
-
   const [error, setError] = useState(null);
   const [cash, setCash] = useState(null);
   const popupRef = useRef(null);
   const [loading, setLoading] = useState(false);
-
   const dispatch = useDispatch();
-
   const user = useSelector((state) => state.auth.user);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const token = useSelector((s) => s.auth?.token);
+  const [file, setFile] = useState(null);
+  const [url, setUrl] = useState("");
+  const [imageError, setImageError] = useState(false);
 
   //마이페이지 캐쉬 조회
   const fetchCash = async () => {
@@ -96,40 +97,75 @@ export default function MyPage() {
   }, [user]);
 
   useEffect(() => {
-    if (user?.profileUrl) {
-      setProfileUrl(`http://localhost:8080${user.profileUrl}`);
+    if (user?.url) {
+      setUrl(`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/${user.id}/profile.png`);
     }
   }, [user]);
 
-  const basic_profile = "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileImg/mypagePerson.png";
-  const updateProfile = async (file) => {
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("userId", user.id);
+  const basic_profile = "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/mypagePerson.png";
+  // const updateProfile = async (file) => {
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append("file", file);
+  //     formData.append("userId", user.id);
 
-      const res = await axios.post("/api/users/uploadProfileImage", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+  //     const res = await axios.post("/api/users/uploadProfileImage", formData, {
+  //       headers: { "Content-Type": "multipart/form-data" },
+  //     });
+
+  //     const profileUrlFromBackend = res.data.profileUrl;
+  //     console.log("백엔드에서 받은 profileUrl:", profileUrlFromBackend);
+  //     setProfileUrl(
+  //       `http://localhost:8080${profileUrlFromBackend}?t=${new Date().getTime()}`
+  //     );
+  //     alert("프로필 이미지가 업데이트 되었습니다!");
+  //   } catch (e) {
+  //     console.error("업로드 실패:", e);
+  //     alert("실패");
+  //   }
+  // };
+
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (!file) return;
+
+  //   updateProfile(file);
+  // };
+
+  // const handleFileChange = (e) => {
+  //     setFile(e.target.files[0]);
+  //   };
+
+  const handleUpload = async (e) => {
+
+    const selectedFile = e.target.files[0];
+
+    if (!selectedFile) {
+      alert("파일을 선택하세요!");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    formData.append("userId", user.id.toString());
+
+    try {
+      const res = await axios.post("/api/files/upload/profile", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
 
-      const profileUrlFromBackend = res.data.profileUrl;
-      console.log("백엔드에서 받은 profileUrl:", profileUrlFromBackend);
-      setProfileUrl(
-        `http://localhost:8080${profileUrlFromBackend}?t=${new Date().getTime()}`
-      );
+      console.log("업로드 성공:", res.data);
+      setUrl(`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/${res.data}`);
       alert("프로필 이미지가 업데이트 되었습니다!");
-    } catch (e) {
-      console.error("업로드 실패:", e);
-      alert("실패");
+    } catch (err) {
+      console.error("업로드 실패:", err);
+      alert("업로드 실패: " + (err.response?.data || err.message));
     }
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
 
-    updateProfile(file);
-  };
   return (
     <main className={styles.myPage_main}>
       <div className={styles.myPage_box}>
@@ -137,14 +173,14 @@ export default function MyPage() {
           <div className={styles.circle_with_text}>
             <img
               className={styles.circle}
-              src={profileUrl || basic_profile}
+              src={url || basic_profile}
               onError={(e) => (e.target.src = basic_profile)}
             />
             <div>
               <label className={styles.circle_text}>
                 <input
                   type="file"
-                  onChange={handleFileChange}
+                  onChange={handleUpload}
                   className={styles.fileUpload}
                 />
                 <div>프로필수정</div>
