@@ -20,7 +20,8 @@ export default function MyPage() {
   const token = useSelector((s) => s.auth?.token);
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState("");
-  const [imageError, setImageError] = useState(false);
+
+  const basic_profile = "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/mypagePerson.png";
 
   //마이페이지 캐쉬 조회
   const fetchCash = async () => {
@@ -97,44 +98,13 @@ export default function MyPage() {
   }, [user]);
 
   useEffect(() => {
-    if (user?.url) {
+    if (user?.id) {
       setUrl(`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/${user.id}/profile.png`);
     }
   }, [user]);
 
-  const basic_profile = "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/mypagePerson.png";
-  // const updateProfile = async (file) => {
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append("file", file);
-  //     formData.append("userId", user.id);
+  
 
-  //     const res = await axios.post("/api/users/uploadProfileImage", formData, {
-  //       headers: { "Content-Type": "multipart/form-data" },
-  //     });
-
-  //     const profileUrlFromBackend = res.data.profileUrl;
-  //     console.log("백엔드에서 받은 profileUrl:", profileUrlFromBackend);
-  //     setProfileUrl(
-  //       `http://localhost:8080${profileUrlFromBackend}?t=${new Date().getTime()}`
-  //     );
-  //     alert("프로필 이미지가 업데이트 되었습니다!");
-  //   } catch (e) {
-  //     console.error("업로드 실패:", e);
-  //     alert("실패");
-  //   }
-  // };
-
-  // const handleFileChange = (e) => {
-  //   const file = e.target.files[0];
-  //   if (!file) return;
-
-  //   updateProfile(file);
-  // };
-
-  // const handleFileChange = (e) => {
-  //     setFile(e.target.files[0]);
-  //   };
 
   const handleUpload = async (e) => {
 
