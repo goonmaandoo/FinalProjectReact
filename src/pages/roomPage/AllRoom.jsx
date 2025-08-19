@@ -146,7 +146,7 @@ export default function AllRoom() {
                     <img
                         onClick={() => { navigate(-1); }}
                         className={styles.back_btn}
-                        src="http://localhost:8080/image/imgfile/main_img/backbtn.png"
+                        src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/backbtn.png"
                         alt="뒤로가기 버튼"
                     />
                     <div>진행중인 공구방</div>
@@ -177,7 +177,7 @@ export default function AllRoom() {
                                                     style={{
                                                         backgroundImage:
                                                             window.innerWidth > 480
-                                                                ? `url("http://localhost:8080/image/imgfile/store/store_${room.storeId}.jpg")`
+                                                                ? `url("https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/store/store_${room.storeId}.jpg")`
                                                                 : "none",
                                                         backgroundColor: "#eee",
                                                         backgroundSize: "cover",

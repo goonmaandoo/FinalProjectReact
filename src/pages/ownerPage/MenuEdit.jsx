@@ -80,7 +80,7 @@ const handleMenuUpdate = () => {
             <div className={style["edit_menu"]}>
                 <div className={style["edit_menu_image"]}>
                     <img
-                        src={`http://localhost:8080/image/imgfile/${selectedMenu.folder}/${selectedMenu.filename}`}
+                        src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/${selectedMenu.folder}/${selectedMenu.filename}`}
                         alt="메뉴 이미지"
                         className={style["menu_image"]}
                     />

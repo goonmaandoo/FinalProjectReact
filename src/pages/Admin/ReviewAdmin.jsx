@@ -24,7 +24,7 @@ export default function ReviewAdmin() {
                         <div className={styles["total_title"]}>{subReviewBtn === "ban" ? "숨긴 댓글" : "신고된 댓글"}</div>
                         <div className={styles["total_num"]}>?</div>
                     </div>
-                    <img src={`http://localhost:8080/image/imgfile/admin/${subReviewBtn}_review.png`} />
+                    <img src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/admin/${subReviewBtn}_review.png`} />
                 </div>
                 :
                 <>
@@ -33,21 +33,21 @@ export default function ReviewAdmin() {
                             <div className={styles["total_title"]}>총 댓글수</div>
                             <div className={styles["total_num"]}>?</div>
                         </div>
-                        <img src={`http://localhost:8080/image/imgfile/admin/total_review.png`} />
+                        <img src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/admin/total_review.png`} />
                     </div>
                     <div className={styles["store_box"]}>
                         <div className={styles["total_third"]}>
                             <div className={styles["total_title"]}>숨긴 댓글</div>
                             <div className={styles["total_num"]}>?</div>
                         </div>
-                        <img src={`http://localhost:8080/image/imgfile/admin/ban_review.png`} />
+                        <img src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/admin/ban_review.png`} />
                     </div>
                     <div className={styles["store_box"]}>
                         <div className={styles["total_third"]}>
                             <div className={styles["total_title"]}>신고된 댓글</div>
                             <div className={styles["total_num"]}>?</div>
                         </div>
-                        <img src={`http://localhost:8080/image/imgfile/admin/stop_review.png`} />
+                        <img src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/admin/stop_review.png`} />
                     </div>
                 </>}
         </>

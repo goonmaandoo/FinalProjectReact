@@ -40,7 +40,7 @@ export const renderRoomMarkers = ({
         position: roomCoords,
         title: room.roomName,
         image: new window.kakao.maps.MarkerImage(
-          "http://localhost:8080/image/imgfile/main_img/web_logo.png",
+          "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/web_logo.png",
           new window.kakao.maps.Size(38.55, 33.55)
         ),
       });
@@ -51,7 +51,7 @@ export const renderRoomMarkers = ({
       const content = `
         <div class="${styles.mapOverlay}" id="overlay-${room.id}">
           <div id="roomImage-${room.id}">
-            <img class="${styles.infowindowImg}" src="http://localhost:8080/image/imgfile/store/store_${room.storeId}.jpg" />
+            <img class="${styles.infowindowImg}" src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/store/store_${room.storeId}.jpg" />
           </div>
           <strong id="roomName-${room.id}" class="${styles.mapRoomName}">${room.roomName}</strong>
           <button id="closeButton-${room.id}" class="${styles.infowindowClose}">×</button>

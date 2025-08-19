@@ -73,7 +73,7 @@ function Login() {
                 <div className={style["login-box"]}>
                     <div className={style["login-left"]}>
                         <img
-                            src="http://localhost:8080/image/imgfile/main_img/main_logo.png" alt='로고'
+                            src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/main_logo.png" alt='로고'
                             className={style["login-logo"]}
                         />
                     </div>

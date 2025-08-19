@@ -39,7 +39,7 @@ export default function RoomTest({ initialRoom, roomId }) {
     const navigate = useNavigate();
     const user = useSelector((state) => state.auth.user);
     const token = useSelector((state) => state.auth?.token);
-    const basic_profile = "http://localhost:8080/image/profileImg/mypagePerson.png";
+    const basic_profile = "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileImg/mypagePerson.png";
 
     const fetchRoomUsers = async () => {
         try {
@@ -372,7 +372,7 @@ export default function RoomTest({ initialRoom, roomId }) {
                         >
                             <img
                                 className={styles.backIcon}
-                                src="http://localhost:8080/image/imgfile/main_img/backbtn.png"
+                                src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/backbtn.png"
                                 alt="뒤로가기"
                             />
                         </button>
@@ -417,10 +417,10 @@ export default function RoomTest({ initialRoom, roomId }) {
                                                         className={styles.bearImage}
                                                         src={
                                                             member.rating >= 80
-                                                                ? "http://localhost:8080/image/imgfile/main_img/good.png"
+                                                                ? "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/good.png"
                                                                 : member.rating < 30
-                                                                    ? "http://localhost:8080/image/imgfile/main_img/bad.png"
-                                                                    : "http://localhost:8080/image/imgfile/main_img/soso.png"
+                                                                    ? "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/bad.png"
+                                                                    : "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/soso.png"
                                                         }
                                                         alt="곰등급"
                                                     />
@@ -481,7 +481,7 @@ export default function RoomTest({ initialRoom, roomId }) {
                             <p className={styles.sectionTitle}>채팅</p>
                             <img
                                 className={styles.chatIcon}
-                                src="http://localhost:8080/image/imgfile/main_img/chatemoji.png"
+                                src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/chatemoji.png"
                             />
                         </div>
                         <div className={styles.chatBody} ref={chatBodyRef}>
@@ -531,7 +531,7 @@ export default function RoomTest({ initialRoom, roomId }) {
                                     <p className={styles.menuPrice}>{menu.menuPrice.toLocaleString()}원</p>
                                     <button className={styles.addToCartBtn} onClick={() => addToCart(menu)}><img
                                         className={styles.circle_pencil}
-                                        src="http://localhost:8080/image/imgfile/main_img/cart.png"
+                                        src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/cart.png"
                                     /></button>
                                 </div>
                             ))

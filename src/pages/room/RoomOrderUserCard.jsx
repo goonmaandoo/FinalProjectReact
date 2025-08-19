@@ -20,7 +20,7 @@ export default function RoomOrderUserCard({
     const [isSelf, setIsSelf] = useState(false);
     const [orderId, setOrderId] = useState(null);
     const [user, setUser] = useState(null);
-    const basic_profile = "https://epfwvrafnhdgvyfcrhbo.supabase.co/storage/v1/object/public/profile-image/mypagePerson.png"
+    const basic_profile = "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileImg/mypagePerson.png"
     
     useEffect(() => {
         async function fetchOrder() {
