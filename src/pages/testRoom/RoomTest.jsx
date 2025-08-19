@@ -34,7 +34,7 @@ export default function RoomTest({ initialRoom, roomId }) {
     const [kickId, setKickId] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isValidating, setIsValidating] = useState(true);
-    const [minPirce, setMinPrice] = useState(null);
+    const [minPrice, setMinPrice] = useState(null);
     const totalPrice = cart.reduce((sum, item) => sum + (item.menuPrice * item.quantity), 0);
     const navigate = useNavigate();
     const user = useSelector((state) => state.auth.user);
@@ -162,12 +162,14 @@ export default function RoomTest({ initialRoom, roomId }) {
                     console.log("스토어아이디2", roomData.storeId);
                     const menuResponse = await axios.get(`/api/menu/store/${roomData.storeId}`);
                     //const storeResponse = await axios.post('/api/store/selectStore', {id: roomData.storeId});
-                    const storeResponse = axios.get(`/api/store/${roomData.storeId}/min-price`);
+                    const storeResponse = await axios.get(`/api/store/${roomData.storeId}/min-price`);
                     console.log("메뉴 데이터", menuResponse);
                     console.log("메뉴s", menuResponse.menuName);
                     console.log("최소금액", storeResponse);
+                    console.log("최소금액2", storeResponse.data);
+                    console.log("최소금액3", storeResponse.minPrice);
                     setMenuList(menuResponse.data);
-                    setMinPrice(storeResponse.minPirce);
+                    setMinPrice(storeResponse.data);
                 }
             } catch (error) {
                 console.error("룸 불러오기 실패:", error);
@@ -213,7 +215,9 @@ export default function RoomTest({ initialRoom, roomId }) {
             await axios.put(`/api/room/${roomId}/readyCount`, null, {
                 params: { delta: -1 },
             });
-
+            await axios.put(`/api/room/${roomId}/roomOrder`, null, {
+                params: { delta: -totalPrice },
+            });
             await fetchRoomUsers(); // 상태 동기화
 
         } catch (error) {
@@ -279,15 +283,17 @@ export default function RoomTest({ initialRoom, roomId }) {
         );
     };
     // 최종 주문
-    const handleFinalOrder = () => {
-        const updatedStatus = "주문진행중";
+    const handleFinalOrder = async () => {
+        const beforeOrder = await selectAllRoom(roomId);
+        const updatedStatus = "배달중";
         alert("최종주문하시겠습니까?");
         console.log("올레디", allReady);
-        console.log("최주", minPirce);
-        console.log("토주", totalPrice);
-        // if ( totalPrice < minPirce) {
-        //     alert("최소주문금액을 채워주세요");
-        // }
+        console.log("최소주문", minPrice);
+        console.log("방 주문", beforeOrder.roomOrder);
+        if ( beforeOrder.roomOrder < minPrice) {
+            alert("최소주문금액을 채워주세요");
+            return;
+        }
         if (allReady) {
             alert("주문 완료!");
             updateRoomStatus(roomId, updatedStatus);
@@ -437,11 +443,11 @@ export default function RoomTest({ initialRoom, roomId }) {
                                                     <div className={styles.leaderActions}>
                                                         <button
                                                             className={styles.finalOrderBtn}
-                                                            disabled={!allReady || status === "주문진행중"}
+                                                            disabled={!allReady || status === "배달중"}
                                                             onClick={handleFinalOrder}
                                                             style={{
-                                                                backgroundColor: (!allReady || status === "주문진행중") ? 'gray' : 'green',
-                                                                cursor: (!allReady || status === "주문진행중") ? 'not-allowed' : 'pointer',
+                                                                backgroundColor: (!allReady || status === "배달중") ? 'gray' : 'green',
+                                                                cursor: (!allReady || status === "배달중") ? 'not-allowed' : 'pointer',
                                                             }}
                                                         >
                                                             최종주문
