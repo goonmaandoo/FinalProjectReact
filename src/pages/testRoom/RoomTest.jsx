@@ -70,7 +70,7 @@ export default function RoomTest({ initialRoom, roomId }) {
             setStatus(updatedRoom.status);
             //setAllReady(everyoneReady);
             if (everyoneReady) {
-                setStatus('주문진행중');
+                //setStatus('주문진행중');
                 setAllReady(everyoneReady);
             }
             setAllPickup(everyonePickedUp); // <-- 상태 선언 필요!
@@ -158,6 +158,7 @@ export default function RoomTest({ initialRoom, roomId }) {
                 }
                 //setKickId(roomData.kickId);
                 setRoom(roomData);
+                setSelectedChat(roomData.status);
                 if (roomData.storeId) {
                     console.log("스토어아이디2", roomData.storeId);
                     const menuResponse = await axios.get(`/api/menu/store/${roomData.storeId}`);
@@ -297,7 +298,7 @@ export default function RoomTest({ initialRoom, roomId }) {
         if (allReady) {
             alert("주문 완료!");
             updateRoomStatus(roomId, updatedStatus);
-
+            setStatus(updatedStatus);
             //setPollingReady(false);
             return;
         } else {

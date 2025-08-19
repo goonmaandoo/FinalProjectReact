@@ -17,9 +17,10 @@ export default function GonguComplete() {
     const fetchData = async () => {
       try {
         setLoading(true);
-
+        console.log('룸아이디',roomId)
         // 1. 공구방 정보 조회
         const roomRes = await axios.get("/api/room/allRoomSelect");
+        console.log("룸res",roomRes);
         const room = roomRes.data.find((r) => r.id === parseInt(roomId));
         if (!room) throw new Error("해당 공구방을 찾을 수 없습니다.");
         setRoomInfo(room);
