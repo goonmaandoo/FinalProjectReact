@@ -62,6 +62,7 @@ export default function AllRoom() {
                 //console.log("리스폰스2",response2);
                 const roomsWithDistance = await Promise.all(
                     rooms.map(async (room) => {
+                        if (room.status !== "모집중") return null;
                         // ... (기존 필터링 로직)
                         const roomCoords = await getCoordinates(room.roomAddress);
                         if (!roomCoords) return null;
@@ -181,7 +182,7 @@ export default function AllRoom() {
                                                         backgroundColor: "#eee",
                                                         backgroundSize: "cover",
                                                         backgroundPosition: "center 80%",
-                                                        padding: "1rem"
+                                                        padding: "36px 0px 0px 0px",
                                                     }}
                                                 >
                                                     <div className={styles.roomDetail}>

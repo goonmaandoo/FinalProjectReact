@@ -134,9 +134,10 @@ export default function OrderConfirmModal({
       });
 
       await onRefreshRoomUsers();
+      alert('결제가 완료되었습니다'); 
       onClose();
       //주문완료 navigate
-      navigate(`/ordercomplete/${newOrderId}`);
+      //navigate(`/ordercomplete/${newOrderId}`);
     } catch (error) {
       if (error.response) {
         alert("결제 실패: " + error.response.data);
