@@ -173,3 +173,23 @@
     /* width: 1105px; */
     height: 70px;
 }
+/* 페이지네이션 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.pagination button {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+}
+
+.pagination .active {
+    background-color: #ff6b6b;
+    color: white;
+    font-weight: bold;
+}

@@ -6,6 +6,20 @@ export default function RoomManagement() {
     const [roomData, setRoomData] = useState([]);
     const [activeRoomId, setActiveRoomId] = useState(null);
 
+    // 페이지네이션
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 6; // 한 페이지에 보여줄 주문 개수
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentRoomData = roomData.slice(indexOfFirstItem, indexOfLastItem);
+
+    const totalPages = Math.ceil(roomData.length / itemsPerPage);
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+    }
+
     useEffect(() => {
         fetch('http://localhost:8080/api/room/getAllRoomsWithUsers')
             .then(res => {
@@ -18,7 +32,6 @@ export default function RoomManagement() {
             .catch(console.error);
     }, []);
 
-
     return (
         <div>
             <div>
@@ -27,10 +40,10 @@ export default function RoomManagement() {
                 </div>
                 <div className={style["side_detail"]}>진행중이거나 완료된 공구방을 관리하세요</div>
             </div>
-            {roomData.map((item) => (
+            
+            {currentRoomData.map((item) => (
                 <div key={item.id}>
                     <div className={activeRoomId === item.id ? styles["store_box_active"] : styles["store_box"]}>
-                        {/* <div key={item.id} className={styles["store_box"]}> */}
                         <div className={styles["total"]}>
                             <div className={styles["total_title"]}>
                                 <div className={styles["room_name"]}>{item.roomName}</div>
@@ -52,7 +65,6 @@ export default function RoomManagement() {
                                     {activeRoomId === item.id ? "접기" : "펼치기"}
                                 </button>
                             </div>
-
                         </div>
                     </div>
                     {activeRoomId === item.id && (
@@ -71,6 +83,20 @@ export default function RoomManagement() {
                     )}
                 </div>
             ))}
+            
+            {totalPages > 1 && (
+                <div className={styles["pagination"]}>
+                    {pageNumbers.map(number => (
+                        <button
+                            key={number}
+                            onClick={() => setCurrentPage(number)}
+                            className={currentPage === number ? styles["active"] : ""}
+                        >
+                            {number}
+                        </button>
+                    ))}
+                </div>
+            )}
         </div>
     )
 }
