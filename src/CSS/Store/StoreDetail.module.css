@@ -320,11 +320,11 @@
     }
     .menu_make_btn{
         height: 50px;
-        font-size: 1.25rem;
+        font-size: 1rem;
     }
     .menu_confirm_btn{
         height: 50px;
-        font-size: 1.25rem;
+        font-size: 1rem;
     }
     .store_name{
         font-Size: 1.5rem;
@@ -371,11 +371,11 @@
 @media (max-width:450px){
     .menu_make_btn{
         height: 45px;
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
     .menu_confirm_btn{
         height: 45px;
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
     
 }

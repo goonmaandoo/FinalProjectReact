@@ -16,13 +16,13 @@ export default function SelectRoom() {
 
     useEffect(() => {
         //가게조회
-        axios.get(`http://localhost:8080/store/storeDetail/${storeId}`)
+        axios.get(`/api/store/storeDetail/${storeId}`)
             .then(res => {
                 setStore(res.data);
             })
             .catch(console.error);
         //개설된 공구방 조회
-        axios.get(`http://localhost:8080/api/room/storeid/${storeId}`)
+        axios.get(`/api/room/storeid/${storeId}`)
             .then(res => {
                 setRoom(res.data);
             })

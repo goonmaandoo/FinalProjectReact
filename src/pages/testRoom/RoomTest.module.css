@@ -5,7 +5,7 @@
   align-items: stretch;
   min-height: 600px;
   background-color: #f0f2f5;
-  padding: 30px 20px 50px 20px;
+  padding: 50px 20px;
   box-sizing: border-box;
   height: auto;
   width: 100%;
@@ -618,7 +618,7 @@
 /* 반응형 디자인 추가 */
 @media (max-width: 1200px) {
   .roomContainer {
-    padding: 20px 30px;
+    padding: 50px 20px;
   }
   .leftColumn {
     width: 65%;
@@ -648,7 +648,7 @@
 @media (max-width: 768px) {
   .roomContainer {
     flex-direction: column;
-    padding: 20px;
+    padding: 30px 20px;
   }
   .roomContentWrapper {
     flex-direction: column;

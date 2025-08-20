@@ -56,7 +56,7 @@ export default function AllRoom() {
 
             try {
                 //const response = await axios.get("http://localhost:8080/api/room/allRoomSelect");
-                const response = await axios.get(`http://localhost:8080/api/room/roomsbyId/${user?.id}`);
+                const response = await axios.get(`/api/room/roomsbyId/${user?.id}`);
                 const rooms = response.data;
                 console.log("리스폰스1", response);
                 //console.log("리스폰스2",response2);

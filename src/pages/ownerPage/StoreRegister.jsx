@@ -39,7 +39,7 @@ export default function StoreRegister() {
         }
 
         try {
-            const response = await axios.post("http://localhost:8080/store/storeInsert", {
+            const response = await axios.post("/api/store/storeInsert", {
                 menuCategoryId: menuCategoryId,
                 storeName: storeName,
                 storeAddress: storeAddress,

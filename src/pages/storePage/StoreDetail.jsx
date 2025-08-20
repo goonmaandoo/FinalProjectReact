@@ -14,15 +14,17 @@ export default function StoreDetail() {
     const [isKakaoReady, setIsKakaoReady] = useState(false);
 
     useEffect(() => {
-        // 가게 상세 조회
-        axios.get(`http://localhost:8080/store/storeDetail/${storeId}`)
+
+        //가게 조회
+        axios.get(`/api/store/storeDetail/${storeId}`)
             .then(res => {
                 setStore(res.data); // res.data에 avgRating, reviewCount 포함되어야 함
             })
             .catch(console.error);
 
-        // 메뉴 조회
-        axios.get(`http://localhost:8080/menu/storeMenu/image/${storeId}`)
+        //메뉴 조회
+        axios.get(`/api/menu/storeMenu/image/${storeId}`)
+
             .then(res => {
                 setMenu(res.data);
             })

@@ -273,6 +273,7 @@ export default function RoomTest({ initialRoom, roomId }) {
 
         console.log("메뉴 저장");
     };
+
     const increaseQuantity = (id) => {
         setCart(prevCart => prevCart.map(item =>
             item.id === id ? { ...item, quantity: item.quantity + 1 } : item
@@ -438,6 +439,7 @@ export default function RoomTest({ initialRoom, roomId }) {
                                     room.users.map((member, idx) => {
                                         const isLeader = room?.leaderId && member.userId.toString() === room.leaderId.toString();
                                         const isPickedUp = member.pickup; // 픽업 상태 변수 추가
+
                                         let statusMessage = "";
                                         if (member.ready && member.pickup) {
                                             statusMessage = "픽업완료";
@@ -446,11 +448,7 @@ export default function RoomTest({ initialRoom, roomId }) {
                                         }
                                         return (
                                             <div key={idx} className={styles.memberItem}>
-                                                <img
-                                                    src={member.profileurl ? `http://localhost:8080${member.profileurl}` : basic_profile}
-                                                    alt={member.nickname}
-                                                    className={styles.memberProfile}
-                                                />
+                                                <img src={member.profileUrl ? `https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/${member.profileUrl}` : basic_profile} alt={member.user_id} />
                                                 <div className={styles.userInfoWrapper}>
                                                     <p className={styles.memberNickname}>{member.nickname}</p>
                                                     <img
@@ -528,7 +526,7 @@ export default function RoomTest({ initialRoom, roomId }) {
                             {chatLog.map((chat, idx) => (
                                 <div key={idx} className={styles.chatMessage}>
                                     {/* <img src={chat.profileurl} alt={chat.nickname} /> */}
-                                    <img src={chat.profileUrl ? `http://localhost:8080${chat.profileUrl}` : basic_profile} alt={chat.nickname} />
+                                    <img src={chat.profileUrl ? `https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/${chat.profileUrl}` : basic_profile} alt={chat.nickname} />
                                     <div className={styles.chatContentLeft}>
                                         <div className={styles.nickname}>{chat.nickname}</div>
                                         <div className={styles.chatText}>{chat.chat}</div>

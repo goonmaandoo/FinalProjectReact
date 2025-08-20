@@ -29,8 +29,7 @@ export default function StoreReview() {
       console.log("📥 fetchReviews 호출 - storeId:", storeId);
 
       try {
-        // ✅ /api 상대경로 사용
-        const response = await axios.get(`http://localhost:8080/store/${storeId}/reviews`);
+        const response = await axios.get(`/api/store/${storeId}/reviews`);
         console.log("✅ API 응답:", response.data);
 
         setReviews(response.data);

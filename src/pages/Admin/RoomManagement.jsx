@@ -21,7 +21,7 @@ export default function RoomManagement() {
     }
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/room/getAllRoomsWithUsers')
+        fetch('/api/room/getAllRoomsWithUsers')
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();

@@ -17,12 +17,12 @@ export default function SearchPage() {
                 setRoomData(res.data);
             })
             .catch(console.error);
-        axios.get(`http://localhost:8080/store/keyword/${keyword}`)
+        axios.get(`/api/store/keyword/${keyword}`)
             .then(res => {
                 setStoreData(res.data);
             })
             .catch(console.error);
-        axios.get(`http://localhost:8080/menu/keyword/${keyword}`)
+        axios.get(`/api/menu/keyword/${keyword}`)
             .then(res => {
                 setMenuData(res.data);
             })

@@ -23,7 +23,7 @@ export default function UserManagement() {
     }
 
     const handleSearch = () => {
-        let url = 'http://localhost:8080/api/users/';
+        let url = '/api/users/';
         if (subUserBtn === 'all') {
             url += `userSearchAdmin?type=${selected}&keyword=${encodeURIComponent(keyword)}`;
         } else if (subUserBtn === 'user') {
@@ -41,7 +41,7 @@ export default function UserManagement() {
     };
     //데이터 불러오기
     useEffect(() => {
-        fetch('http://localhost:8080/api/users/totalCount')
+        fetch('/api/users/totalCount')
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
