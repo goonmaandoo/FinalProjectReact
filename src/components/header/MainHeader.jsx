@@ -50,7 +50,7 @@ export default function MainHeader({ toggleMenu }) {
     //주소 업데이트
     async function updateAddress(address, addressDetail) {
         if (!user?.id) return;
-        await axios.post("http://localhost:8080/api/users/addressUpdateDetail", {
+        await axios.post("/api/users/addressUpdateDetail", {
             id: user.id,
             address: address,
             addressDetail: addressDetail,
@@ -60,7 +60,7 @@ export default function MainHeader({ toggleMenu }) {
                 window.location.reload();
             })
             .catch(console.error);
-        fetch(`http://localhost:8080/api/users/UserInfo/${user.id}`)
+        fetch(`/api/users/UserInfo/${user.id}`)
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();

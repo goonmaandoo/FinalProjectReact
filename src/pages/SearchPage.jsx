@@ -12,7 +12,7 @@ export default function SearchPage() {
     const [storeData, setStoreData] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/room/keyword/${keyword}`)
+        axios.get(`/api/room/keyword/${keyword}`)
             .then(res => {
                 setRoomData(res.data);
             })
