@@ -12,7 +12,7 @@ export default function Hamburger({ isOpen, onClose }) {
     const smallMenuRef = useRef(null);
     const [userRoom, setUserRoom] = useState([]);
     const [menuHeight, setMenuHeight] = useState("auto");
-    const [myRating, setMyRating] = useState(0);
+    const [url, setUrl] = useState("");
     const [face, setFace] = useState("soso");
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -21,6 +21,8 @@ export default function Hamburger({ isOpen, onClose }) {
     const user = useSelector((state) => state.auth.user);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
+    const basic_profile = "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/mypagePerson.png";
+
     console.log("현재 user 값:", user);
 
     const handleLogout = () => {
@@ -28,6 +30,13 @@ export default function Hamburger({ isOpen, onClose }) {
         localStorage.removeItem("token");
         navigate("/mainpage");
     }
+
+    useEffect(() => {
+        if (user?.id) {
+            console.log("user id:", user.id);
+            setUrl(`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/${user.profileUrl}?t=${Date.now()}`);
+        }
+    }, [user]);
 
     useEffect(() => {
         function updateHeight() {
@@ -129,7 +138,7 @@ export default function Hamburger({ isOpen, onClose }) {
                                     <div>
                                         <img
                                             className={styles["user_profile_image"]}
-                                            src={user?.profileUrl ? `http://localhost:8080${user?.profileUrl}` : "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/mypagePerson.png"}
+                                            src={url || basic_profile}
                                             onError={(e) => (e.currentTarget.src = "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/mypagePerson.png")} />
                                     </div>
                                     <div className={styles["userName"]}>{user?.nickname}님</div>
@@ -235,7 +244,7 @@ export default function Hamburger({ isOpen, onClose }) {
                                         <div>
                                             <img
                                                 className={styles["user_profile_image"]}
-                                                src={user?.profileUrl || "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/mypagePerson.png"}
+                                                src={user?.id ? {url} : "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/mypagePerson.png"}
                                                 onError={(e) => (e.currentTarget.src = "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/mypagePerson.png")} />
                                         </div>
                                         <div className={styles["userName"]}>{user?.nickname}님</div>

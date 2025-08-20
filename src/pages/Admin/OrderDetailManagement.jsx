@@ -10,7 +10,7 @@ export default function OrderDetailManagement() {
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/orders/OrderDetail/${orderId}`)
+        axios.get(`/api/orders/OrderDetail/${orderId}`)
             .then(res => {
                 setOrders(res.data);
             })

@@ -9,7 +9,6 @@ import axios from "axios";
 export default function MyPage() {
   const location = useLocation();
   const currentMenu = location.pathname.split("/").pop();
-  const [profileUrl, setProfileUrl] = useState("");
   const [error, setError] = useState(null);
   const [cash, setCash] = useState(null);
   const popupRef = useRef(null);
@@ -18,7 +17,6 @@ export default function MyPage() {
   const user = useSelector((state) => state.auth.user);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const token = useSelector((s) => s.auth?.token);
-  const [file, setFile] = useState(null);
   const [url, setUrl] = useState("");
 
   const basic_profile = "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/mypagePerson.png";
@@ -128,6 +126,7 @@ export default function MyPage() {
 
       console.log("업로드 성공:", res.data);
       setUrl(`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/${res.data}`);
+      window.location.reload();
       alert("프로필 이미지가 업데이트 되었습니다!");
     } catch (err) {
       console.error("업로드 실패:", err);

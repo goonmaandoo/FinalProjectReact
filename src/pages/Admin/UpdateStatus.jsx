@@ -13,7 +13,7 @@ export default function UpdateStatus() {
     const [statusBtn, setStatusBtn] = useState("");
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/users/UserInfo/${id}`)
+        axios.get(`/api/users/UserInfo/${id}`)
             .then(res => {
                 setUsers(res.data);
                 setStatus(res.data.status);
@@ -39,7 +39,7 @@ export default function UpdateStatus() {
         handleUpdateClickBan("ban");
     };
     const handleUpdateClickBan = (newStatus) =>{
-        axios.post(`http://localhost:8080/api/users/updateStatusBan`,null, {
+        axios.post(`/api/users/updateStatusBan`,null, {
             params: {
                 id,
                 status:newStatus,
@@ -61,7 +61,7 @@ export default function UpdateStatus() {
     }
 
     const handleUpdateClick = (newStatus) =>{
-        axios.post(`http://localhost:8080/api/users/updateStatus`,null, {
+        axios.post(`/api/users/updateStatus`,null, {
             params: {
                 id,
                 status:newStatus,

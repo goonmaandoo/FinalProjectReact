@@ -19,7 +19,7 @@ export default function StoreManagement() {
     }
 
     const handleSearch = () => {
-        let url = 'http://localhost:8080/store/search';
+        let url = '/api/store/search';
         if (selected !== 'all' && keyword.trim() !== '') {
             url += `?type=${selected}&keyword=${encodeURIComponent(keyword)}`;
         }
@@ -33,14 +33,14 @@ export default function StoreManagement() {
     };
     //데이터 불러오기
     useEffect(() => {
-        fetch('http://localhost:8080/store/storeCount')
+        fetch('/store/storeCount')
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
             })
             .then(count => setStoreCount(count))
             .catch(console.error);
-        fetch('http://localhost:8080/store/userAll')
+        fetch('/api/store/userAll')
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();

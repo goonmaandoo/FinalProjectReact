@@ -33,7 +33,7 @@ export default function MainPage() {
     }
     useEffect(() => {
         //공구방 조회
-        fetch('/api/room/allWithCount')
+        fetch("/api/room/allWithCount")
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
@@ -42,7 +42,7 @@ export default function MainPage() {
             .catch(console.error);
 
         //카테고리 조회
-        fetch('http://localhost:8080/category/all')
+        fetch("/api/category/all")
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
@@ -51,7 +51,7 @@ export default function MainPage() {
             .catch(console.error);
 
         //인기메뉴 조회
-        fetch('/api/popular/all')
+        fetch("/api/popular/all")
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();

@@ -15,7 +15,7 @@ export default function RefundManagement() {
     };
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/payment/allPayment?comments=${subRefundBtn}`)
+        fetch(`/api/payment/allPayment?comments=${subRefundBtn}`)
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
@@ -30,12 +30,12 @@ export default function RefundManagement() {
 
         try {
             await axios.post(
-                `http://localhost:8080/api/payment/insertCashRefund?userId=${userId}&amount=${amount}`
+                `/api/payment/insertCashRefund?userId=${userId}&amount=${amount}`
             );
             alert("환불 처리 완료");
 
             await axios.post(
-                `http://localhost:8080/api/payment/updateStatus?id=${id}`
+                `/api/payment/updateStatus?id=${id}`
             )
             
             window.location.reload();
@@ -51,12 +51,12 @@ export default function RefundManagement() {
 
         try {
             await axios.post(
-                `http://localhost:8080/api/payment/insertOrderCancel?userId=${userId}&amount=${amount}`
+                `/api/payment/insertOrderCancel?userId=${userId}&amount=${amount}`
             );
             alert("주문 취소 완료");
 
             await axios.post(
-                `http://localhost:8080/api/payment/updateStatus?id=${id}`
+                `/api/payment/updateStatus?id=${id}`
             )
 
             window.location.reload();
@@ -66,7 +66,7 @@ export default function RefundManagement() {
         }
     }
     const handleSearch = () => {
-        let url = 'http://localhost:8080/api/payment/';
+        let url = '/api/payment/';
         if (subRefundBtn === 'all') {
             url += `refundSearchAll?type=${selected}&keyword=${encodeURIComponent(keyword)}`;
         } else if (subRefundBtn === 'cash') {

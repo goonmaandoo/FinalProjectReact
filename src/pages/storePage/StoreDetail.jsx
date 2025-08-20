@@ -16,13 +16,13 @@ export default function StoreDetail() {
 
     useEffect(() => {
         //가게 조회
-        axios.get(`http://localhost:8080/store/storeDetail/${storeId}`)
+        axios.get(`/api/store/storeDetail/${storeId}`)
             .then(res => {
                 setStore(res.data);
             })
             .catch(console.error);
         //메뉴 조회
-        axios.get(`http://localhost:8080/menu/storeMenu/image/${storeId}`)
+        axios.get(`/api/menu/storeMenu/image/${storeId}`)
             .then(res => {
                 setmenu(res.data);
             })

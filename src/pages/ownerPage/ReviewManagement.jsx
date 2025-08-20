@@ -19,7 +19,7 @@ export default function ReviewManagement() {
 
     const fetchReviews = async () => {
         try {
-            const res = await axios.get(`http://localhost:8080/api/review/selectReviewByOwner/${ownerId}`);
+            const res = await axios.get(`/api/review/selectReviewByOwner/${ownerId}`);
             const data = res.data;
 
             setReviews(data);

@@ -14,7 +14,7 @@ export default function StoreListPage() {
 
     useEffect(() => {
         //카테고리 조회
-        fetch('http://localhost:8080/category/all')
+        fetch('/api/category/all')
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
@@ -24,7 +24,7 @@ export default function StoreListPage() {
     }, []);
     useEffect(() => {
         //카테고리 Id별 가게 조회
-        const url = selectedCategoryId === 1 ? `http://localhost:8080/store/all` : `http://localhost:8080/store/categoryId/${selectedCategoryId}`
+        const url = selectedCategoryId === 1 ? `/api/store/all` : `/api/store/categoryId/${selectedCategoryId}`
         console.log('요청 URL:', url);
         axios.get(url)
             .then(res => {

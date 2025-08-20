@@ -22,7 +22,7 @@ export default function OrderManagement() {
     }
 
     const handleSearch = () => {
-        let url = 'http://localhost:8080/api/orders/orderSearch';
+        let url = '/api/orders/orderSearch';
         if (keyword.trim() !== '') {
             url += `?type=${selected}&keyword=${encodeURIComponent(keyword)}`;
         }
@@ -36,7 +36,7 @@ export default function OrderManagement() {
     };
 
     const handleCashSearch = () => {
-        let url = 'http://localhost:8080/api/payment/search';
+        let url = '/api/payment/search';
         if (keyword.trim() !== '') {
             url += `?type=${selected}&keyword=${encodeURIComponent(keyword)}`;
         }
@@ -51,14 +51,14 @@ export default function OrderManagement() {
 
     //데이터 불러오기
     useEffect(() => {
-        fetch('http://localhost:8080/api/orders/orderList')
+        fetch('/api/orders/orderList')
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
             })
             .then(data => { console.log(data); setOrders(data) })
             .catch(console.error);
-        fetch(`http://localhost:8080/api/payment/allPaymentInOnly`)
+        fetch(`/api/payment/allPaymentInOnly`)
             .then(res => {
                 if (!res.ok) throw new Error('서버 에러');
                 return res.json();
