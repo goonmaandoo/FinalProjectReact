@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import style from "../../CSS/Owner/OwnerDashboard.module.css";
 
-
 export default function OwnerDashboard() {
     // 공구방 카운트
     const [ingCount, setIngCount] = useState(0);
@@ -11,6 +10,9 @@ export default function OwnerDashboard() {
     // 주문 카운트
     const [todayOrderCount, setTodayOrderCount] = useState(0);
     const [totalOrderCount, setTotalOrderCount] = useState(0);
+
+    // 오늘 매출액
+    const [todaySales, setTodaySales] = useState(0);
 
     // 최근 주문 목록
     const [recentOrders, setRecentOrders] = useState([]);
@@ -34,14 +36,29 @@ export default function OwnerDashboard() {
                 setTodayOrderCount(todayOrdersRes.data);
                 setTotalOrderCount(totalOrdersRes.data);
 
-                // 최근 주문 목록 (전체 주문에서 최신 5개만)
+                // 전체 주문 가져오기
                 const orderRes = await axios.get("/api/orders/getAllOrders");
                 let ordersData = orderRes.data || [];
 
                 // 최신순 정렬
                 ordersData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-                // 5개만 추출
+                // 오늘 날짜 (yyyy-mm-dd)
+                const today = new Date().toISOString().slice(0, 10);
+
+                // 오늘 주문 필터링
+                const todayOrders = ordersData.filter(order =>
+                    order.createdAt?.slice(0, 10) === today
+                );
+
+                // 오늘 매출액 합계
+                const todaySalesSum = todayOrders.reduce(
+                    (sum, order) => sum + (order.totalPrice || 0),
+                    0
+                );
+                setTodaySales(todaySalesSum);
+
+                // 최근 주문 4개만 추출
                 ordersData = ordersData.slice(0, 4);
 
                 // 사용자 정보 매핑 (주소)
@@ -98,7 +115,7 @@ export default function OwnerDashboard() {
                 <div className={style["today_order"]}>
                     <div className={style["status_box"]}>
                         <h3>오늘 매출액</h3>
-                        <h4>?원</h4>
+                        <h4>{todaySales.toLocaleString()}원</h4>
                     </div>
                 </div>
 
