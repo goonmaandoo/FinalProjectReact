@@ -19,16 +19,23 @@ export default function GonguComplete() {
         setLoading(true);
 
         // 1. 공구방 정보 조회
-        const roomRes = await axios.get("/api/room/allRoomSelect");
-        const room = roomRes.data.find((r) => r.id === parseInt(roomId));
+        // const roomRes = await axios.get("/api/room/allRoomSelect");
+        // const room = roomRes.data.find((r) => r.id === parseInt(roomId));
+
+        // 컨트롤러 변경하여 테스팅 성공
+        const response = await axios.post("/api/room/selectAllRoom", {
+          id: roomId
+        });
+        const room = response.data[0];
         if (!room) throw new Error("해당 공구방을 찾을 수 없습니다.");
+
         setRoomInfo(room);
 
         // 2. 주문 조회
         const orderRes = await axios.get("/api/orders/getOrderListByRoom", {
           params: { roomId: room.id },
         });
-        const orders = orderRes.data;
+        const orders = orderRes.data || [];
 
         // 3. 주문 내역 파싱 및 사용자 ID 수집
         const userIdSet = new Set();
@@ -54,8 +61,13 @@ export default function GonguComplete() {
         // 4. 메뉴 정보 조회
         let menus = [];
         if (room.storeId) {
-          const menuRes = await axios.get(`/menu/storeMenu/${room.storeId}`);
-          menus = menuRes.data;
+          try {
+            const menuRes = await axios.get(`/menu/storeMenu/${room.storeId}`);
+            menus = menuRes.data;
+          } catch (e) {
+            console.error("메뉴 조회 실패:", e);
+            menus = [];
+          }
         }
 
         // 5. 사용자 닉네임 조회
@@ -118,7 +130,7 @@ export default function GonguComplete() {
         setLoading(false);
       } catch (err) {
         console.error("공구완료 페이지 로딩 오류:", err);
-        setError(err.message);
+        setError("페이지 로딩 중 오류가 발생했습니다.");
         setLoading(false);
       }
     };
@@ -143,7 +155,8 @@ export default function GonguComplete() {
   };
 
   if (loading) return <div className={styles.orderInfo}>주문 정보를 불러오는 중...</div>;
-  if (error) return <div className={styles.orderInfo}>오류 발생: {error}</div>;
+  if (error) return <div className={styles.orderInfo}>{error}</div>;
+  if (!roomInfo) return <div className={styles.orderInfo}>해당 공구방이 존재하지 않습니다.</div>;
 
   return (
     <div className={styles.container}>

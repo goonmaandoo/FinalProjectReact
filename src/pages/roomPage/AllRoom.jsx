@@ -20,7 +20,7 @@ export default function AllRoom() {
     const roomRefs = useRef({});
     const scrollContainerRef = useRef(null);
 
-    // 1. 처음 마운트 시, userId를 기반으로 userCoords를 가져와 설정
+    // 1. 첫 마운트 userId, usercoords 세팅
     useEffect(() => {
         if (!user?.id) return;
 
@@ -32,10 +32,10 @@ export default function AllRoom() {
                 const fetchedAddress = userResponse.data.address;
                 const detailAddress = userResponse.data.addressDetail;
                 console.log("상세주소", detailAddress);
-                // ✅ 로컬 변수를 사용해 getCoordinates를 호출
+                
                 const coords = await getCoordinates(fetchedAddress);
 
-                // ✅ 두 상태를 동시에 업데이트
+                
                 setUserAddress(fetchedAddress);
                 setUserCoords(coords);
 
@@ -86,7 +86,7 @@ export default function AllRoom() {
         };
 
         fetchRoomsByLocation();
-    }, [userCoords]); // ⭐️ userCoords에 의존
+    }, [userCoords]); 
 
     // roomList 상태 확인 로그
     useEffect(() => {

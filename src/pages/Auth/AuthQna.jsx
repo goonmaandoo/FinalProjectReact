@@ -3,6 +3,7 @@ import axios from "axios";
 import styles from "../../CSS/AuthQna.module.css";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+
 export default function AuthQna() {
     const [qnaList, setQnaList] = useState([]);
     const [writingId, setWritingId] = useState(null);
@@ -10,14 +11,32 @@ export default function AuthQna() {
     const [answer, setAnswer] = useState("");
     const [filter, setFilter] = useState("selectAll");
     const [viewId, setViewId] = useState("");
+
+    // 페이지네이션
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5; // 한 페이지에 보여줄 주문 개수
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentQnaList = qnaList.slice(indexOfFirstItem, indexOfLastItem);
+
+    const totalPages = Math.ceil(qnaList.length / itemsPerPage);
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+    }
+
     // 필터 고르기
     const handleFilterChange = (e) => {
         setFilter(e.target.value);
+        setCurrentPage(1); // 필터 변경 시 첫 페이지로 이동
     };
+
     // 펼치기 버튼
     const openAnswer = (qnaId) => {
         setViewId(prev => (prev === qnaId ? null : qnaId));
     }
+
     // 필터 변경 시마다 API 호출하여 데이터 갱신
     useEffect(() => {
         let apiUrl = "/api/qna/selectAll";
@@ -73,7 +92,6 @@ export default function AuthQna() {
 
     return (
         <>
-            {/* <div className={styles.authQnaContainer}> */}
             <div className={styles.AuthHeadContainer}>
                 <div className={styles.headMain}>문의 내역</div>
                 <div className={styles.headSub}>QnA문의 내역입니다.</div>
@@ -110,8 +128,9 @@ export default function AuthQna() {
                     </label>
                 </div>
             </div>
-            {qnaList.length > 0 ? (
-                qnaList.map((qna) => (
+
+            {currentQnaList.length > 0 ? (
+                currentQnaList.map((qna) => (
                     <div className={styles.authQnaCard} key={qna.id}>
                         <div className={styles.authnQnatitle}>
                             <span>{qna.title}</span>
@@ -167,6 +186,19 @@ export default function AuthQna() {
                 </div>
             )}
 
+            {totalPages > 1 && (
+                <div className={styles["pagination"]}>
+                    {pageNumbers.map(number => (
+                        <button
+                            key={number}
+                            onClick={() => setCurrentPage(number)}
+                            className={currentPage === number ? styles["active"] : ""}
+                        >
+                            {number}
+                        </button>
+                    ))}
+                </div>
+            )}
         </>
     );
 }

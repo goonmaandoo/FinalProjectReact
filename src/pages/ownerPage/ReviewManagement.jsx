@@ -15,6 +15,20 @@ export default function ReviewManagement() {
     const [avgScore, setAvgScore] = useState(0);
     const [newReviewCount, setNewReviewCount] = useState(0);
 
+    // 페이지네이션
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 3; // 한 페이지에 보여줄 주문 개수
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentReviews = reviews.slice(indexOfFirstItem, indexOfLastItem);
+
+    const totalPages = Math.ceil(reviews.length / itemsPerPage);
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+    }
+
     const ownerId = user.id;
 
     const fetchReviews = async () => {
@@ -89,7 +103,7 @@ export default function ReviewManagement() {
 
                 <div className={style["review_list"]}>
                     <h2> 리뷰목록 </h2>
-                    {reviews.map((review, index) => (
+                    {currentReviews.map((review, index) => (
                         <div key={index} className={style["review_content"]}>
                             <p className={style["nickname"]}><b>{review.nickname}</b> ({review.score}점)</p>
                             <p>{review.status}</p>
@@ -106,6 +120,20 @@ export default function ReviewManagement() {
                             </div>
                         </div>
                     ))}
+
+                    {totalPages > 1 && (
+                        <div className={style["pagination"]}>
+                            {pageNumbers.map(number => (
+                                <button
+                                    key={number}
+                                    onClick={() => setCurrentPage(number)}
+                                    className={currentPage === number ? style["active"] : ""}
+                                >
+                                    {number}
+                                </button>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

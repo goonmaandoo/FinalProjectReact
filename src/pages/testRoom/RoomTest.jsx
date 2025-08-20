@@ -9,6 +9,7 @@ import { handleLeaveRoom } from './roomFunction/leaveRoom';
 import { selectRoomJoin } from './roomFunction/selectRoomJoin';
 import { insertRoomJoin } from './roomFunction/insertRoomjoin';
 import OrderConfirmModal from './OrderconfirmModal';
+import OrderCompleteModal from './OrderCompleteModal';
 import ReportModal from './ReportModal';
 import axios from "axios";
 import { getInRoom } from './roomFunction/getInRoom';
@@ -29,12 +30,13 @@ export default function RoomTest({ initialRoom, roomId }) {
     const [orderId, setOrderId] = useState(null);
     const [showPaymentModal, setShowPaymentModal] = useState(false);
     const [showReportModal, setShowReportModal] = useState(false);
+    const [showOrderCompleteModal, setShowOrderCompleteModal] = useState(false);
     const [selectedChat, setSelectedChat] = useState(null);
     const [leader, setLeader] = useState(false);
     const [kickId, setKickId] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isValidating, setIsValidating] = useState(true);
-    const [minPirce, setMinPrice] = useState(null);
+    const [minPrice, setMinPrice] = useState(null);
     const totalPrice = cart.reduce((sum, item) => sum + (item.menuPrice * item.quantity), 0);
     const navigate = useNavigate();
     const user = useSelector((state) => state.auth.user);
@@ -56,9 +58,9 @@ export default function RoomTest({ initialRoom, roomId }) {
                 return;
             }
 
-            // ✅ 모든 유저 ready, pickup 여부 확인
+            // ready / pickup 체크
             const everyoneReady = updatedRoom.users.every(user => user.ready === true);
-            const everyonePickedUp = updatedRoom.users.every(user => user.pickup === true); // <-- 추가
+            const everyonePickedUp = updatedRoom.users.every(user => user.pickup === true);
 
             // 상태 업데이트
             setRoom(prev => ({
@@ -70,12 +72,12 @@ export default function RoomTest({ initialRoom, roomId }) {
             setStatus(updatedRoom.status);
             //setAllReady(everyoneReady);
             if (everyoneReady) {
-                setStatus('주문진행중');
+                //setStatus('주문진행중');
                 setAllReady(everyoneReady);
             }
             setAllPickup(everyonePickedUp); // <-- 상태 선언 필요!
 
-            // ✅ 모든 유저 픽업 완료 & 주문 완료 상태일 경우 평점 페이지로 이동
+            // 올 픽업시 리뷰로
             if (everyonePickedUp) {
                 // await axios.delete(`/api/room/${roomId}/blowUpRoom`);
                 // await axios.delete(`/api/roomJoin/${roomId}/deleteRoomOnlyJoin`);
@@ -88,7 +90,7 @@ export default function RoomTest({ initialRoom, roomId }) {
         }
     };
 
-    // ✅ 채팅 메시지 폴링
+    // 채팅 폴링
     useEffect(() => {
         if (!user) return;
 
@@ -108,14 +110,14 @@ export default function RoomTest({ initialRoom, roomId }) {
         return () => clearInterval(intervalId);
     }, [user, roomId]);
 
-    // ✅ 채팅 로그 업데이트 시 스크롤 최하단 이동
+    // 채팅 스크롤 이동
     useEffect(() => {
         if (chatBodyRef.current) {
             chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
         }
     }, [chatLog]);
 
-    // ✅ 채팅 전송 함수
+    // 채팅
     const handleSendMessage = async () => {
         if (!inputMessage.trim()) {
             console.log("메시지 전송 실패: 메시지가 비어있음.");
@@ -137,7 +139,7 @@ export default function RoomTest({ initialRoom, roomId }) {
         }
     };
 
-    // ✅ 방 정보 불러오기
+    // 방 정보 불러오기
     useEffect(() => {
         if (!user) return;
 
@@ -162,12 +164,14 @@ export default function RoomTest({ initialRoom, roomId }) {
                     console.log("스토어아이디2", roomData.storeId);
                     const menuResponse = await axios.get(`/api/menu/store/${roomData.storeId}`);
                     //const storeResponse = await axios.post('/api/store/selectStore', {id: roomData.storeId});
-                    const storeResponse = axios.get(`/api/store/${roomData.storeId}/min-price`);
+                    const storeResponse = await axios.get(`/api/store/${roomData.storeId}/min-price`);
                     console.log("메뉴 데이터", menuResponse);
                     console.log("메뉴s", menuResponse.menuName);
                     console.log("최소금액", storeResponse);
+                    console.log("최소금액2", storeResponse.data);
+                    console.log("최소금액3", storeResponse.minPrice);
                     setMenuList(menuResponse.data);
-                    setMinPrice(storeResponse.minPirce);
+                    setMinPrice(storeResponse.data);
                 }
             } catch (error) {
                 console.error("룸 불러오기 실패:", error);
@@ -176,7 +180,7 @@ export default function RoomTest({ initialRoom, roomId }) {
         fetchRoom();
     }, [user, roomId]);
 
-    // 🔁 준비 상태 폴링: room 전체 정보 주기적으로 받아오기
+    // 준비 상태 폴링: room 전체 정보
     useEffect(() => {
         if (!roomId || !pollingReady) {
             console.log("폴링스탑");
@@ -213,7 +217,9 @@ export default function RoomTest({ initialRoom, roomId }) {
             await axios.put(`/api/room/${roomId}/readyCount`, null, {
                 params: { delta: -1 },
             });
-
+            await axios.put(`/api/room/${roomId}/roomOrder`, null, {
+                params: { delta: -totalPrice },
+            });
             await fetchRoomUsers(); // 상태 동기화
 
         } catch (error) {
@@ -279,27 +285,61 @@ export default function RoomTest({ initialRoom, roomId }) {
             .filter(item => item.quantity > 0)
         );
     };
+
+    const handleFinalOrderUpdate = async () => {
+    if (!room || !room.users) return;
+
+    const updatedUsers = room.users.map(u =>
+        Number(u.userId) === Number(user.id) ? { ...u, ready: true } : u
+    );
+
+    const delta = 1; // ready count 증가
+    try {
+        // 1. ready 상태 업데이트
+        await axios.put('/api/room/updateReady', {
+            id: roomId,
+            users: JSON.stringify(updatedUsers),
+            kickId: room.kickId,
+        });
+
+        // 2. room_order 업데이트 (최종 주문 반영)
+        await axios.put(`/api/room/${roomId}/roomOrder`, null, {
+            params: { delta: totalPrice },
+        });
+
+        // 3. 방 상태 fetch
+        await fetchRoomUsers();
+
+    } catch (error) {
+        console.error("최종 주문 업데이트 실패:", error);
+    }
+};
+
     // 최종 주문
-    const handleFinalOrder = () => {
-        const updatedStatus = "주문진행중";
+    const handleFinalOrder = async () => {
+    const beforeOrder = await selectAllRoom(roomId);
+        const updatedStatus = "배달중";
         alert("최종주문하시겠습니까?");
         console.log("올레디", allReady);
-        console.log("최주", minPirce);
-        console.log("토주", totalPrice);
-        // if ( totalPrice < minPirce) {
-        //     alert("최소주문금액을 채워주세요");
-        // }
-        if (allReady) {
-            alert("주문 완료!");
-            updateRoomStatus(roomId, updatedStatus);
+        console.log("최소주문", minPrice);
+        console.log("방 주문", beforeOrder.roomOrder);
 
-            //setPollingReady(false);
-            return;
-        } else {
-            alert("아직 메뉴를 고르고 있는 참여자가 있습니다.");
-            return
-        }
-    };
+    if (beforeOrder.roomOrder < minPrice) {
+        alert("최소주문금액을 채워주세요");
+        return;
+    }
+
+    if (allReady) {
+        alert("주문 완료!");
+        updateRoomStatus(roomId, updatedStatus);
+        await fetchRoomUsers();
+        return;
+    } else {
+        alert("아직 메뉴를 고르고 있는 참여자가 있습니다.");
+        return;
+    }
+};
+
 
     const changeStatus = async () => {
         if (!room || !room.status) {
@@ -435,11 +475,11 @@ export default function RoomTest({ initialRoom, roomId }) {
                                                     <div className={styles.leaderActions}>
                                                         <button
                                                             className={styles.finalOrderBtn}
-                                                            disabled={!allReady || status === "주문진행중"}
+                                                            disabled={!allReady || status === "배달중"}
                                                             onClick={handleFinalOrder}
                                                             style={{
-                                                                backgroundColor: (!allReady || status === "주문진행중") ? 'gray' : 'green',
-                                                                cursor: (!allReady || status === "주문진행중") ? 'not-allowed' : 'pointer',
+                                                                backgroundColor: (!allReady || status === "배달중") ? 'gray' : 'green',
+                                                                cursor: (!allReady || status === "배달중") ? 'not-allowed' : 'pointer',
                                                             }}
                                                         >
                                                             최종주문
@@ -575,19 +615,36 @@ export default function RoomTest({ initialRoom, roomId }) {
                 </div>
             </div>
 
-            <OrderConfirmModal
-                user={user}
-                visible={showPaymentModal}
+<OrderConfirmModal
+    user={user}
+    visible={showPaymentModal}
+    cart={cart}
+    totalPrice={totalPrice}
+    userId={user?.id}
+    room={room}
+    roomId={roomId}
+    token={token}
+    onSetOrderId={setOrderId}
+    onRefreshRoomUsers={fetchRoomUsers}
+    onClose={() => setShowPaymentModal(false)}   // ✅ 반드시 추가
+    onComplete={() => {
+        setShowPaymentModal(false);
+        setShowOrderCompleteModal(true);
+        handleFinalOrderUpdate();
+    }}
+/>
+
+
+             {/* 주문 완료 모달 */}
+            <OrderCompleteModal
+                visible={showOrderCompleteModal}
+                onClose={() => setShowOrderCompleteModal(false)}
                 cart={cart}
                 totalPrice={totalPrice}
-                userId={user?.id}
                 room={room}
-                roomId={roomId}
-                token={token}
-                onSetOrderId={setOrderId}
-                onRefreshRoomUsers={fetchRoomUsers}
-                onClose={() => setShowPaymentModal(false)}
+                user={user}
             />
+
             <ReportModal
                 visible={showReportModal}
                 onClose={() => setShowReportModal(false)}

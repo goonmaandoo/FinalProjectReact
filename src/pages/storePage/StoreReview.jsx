@@ -13,11 +13,9 @@ export default function StoreReview() {
   // 날짜 포맷 함수
   const formatDate = (dateStr) => {
     if (!dateStr) return "날짜 없음";
-    // 마이크로초 제거
     const cleanStr = dateStr.split(".")[0];
     const d = new Date(cleanStr);
     if (isNaN(d)) return "날짜 없음";
-
     const year = d.getFullYear();
     const month = String(d.getMonth() + 1).padStart(2, "0");
     const day = String(d.getDate()).padStart(2, "0");
@@ -36,7 +34,13 @@ export default function StoreReview() {
 
         setReviews(response.data);
       } catch (error) {
-        console.error("❌ 리뷰 불러오기 실패:", error);
+        if (error.response) {
+          console.error("❌ 서버 응답 오류:", error.response.status, error.response.data);
+        } else if (error.request) {
+          console.error("❌ 요청했지만 응답 없음:", error.request);
+        } else {
+          console.error("❌ Axios 요청 오류:", error.message);
+        }
       } finally {
         setLoading(false);
         console.log("⏹️ fetchReviews 완료");
@@ -59,12 +63,8 @@ export default function StoreReview() {
           {reviews.map((review) => (
             <div key={review.id} className={style.reviewBox}>
               <div className={style.header}>
-                <span className={style.user}>
-                  👤 {review.nickname || "익명"}
-                </span>
-                <span className={style.date}>
-                  {formatDate(review.createdAt)}
-                </span>
+                <span className={style.user}>👤 {review.nickname || "익명"}</span>
+                <span className={style.date}>{formatDate(review.createdAt)}</span>
               </div>
               <div className={style.stars}>
                 {"★".repeat(review.score)}
