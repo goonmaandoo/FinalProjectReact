@@ -9,6 +9,7 @@ import { handleLeaveRoom } from './roomFunction/leaveRoom';
 import { selectRoomJoin } from './roomFunction/selectRoomJoin';
 import { insertRoomJoin } from './roomFunction/insertRoomjoin';
 import OrderConfirmModal from './OrderconfirmModal';
+import OrderCompleteModal from './OrderCompleteModal';
 import ReportModal from './ReportModal';
 import axios from "axios";
 import { getInRoom } from './roomFunction/getInRoom';
@@ -29,6 +30,7 @@ export default function RoomTest({ initialRoom, roomId }) {
     const [orderId, setOrderId] = useState(null);
     const [showPaymentModal, setShowPaymentModal] = useState(false);
     const [showReportModal, setShowReportModal] = useState(false);
+    const [showOrderCompleteModal, setShowOrderCompleteModal] = useState(false);
     const [selectedChat, setSelectedChat] = useState(null);
     const [leader, setLeader] = useState(false);
     const [kickId, setKickId] = useState(null);
@@ -282,29 +284,61 @@ export default function RoomTest({ initialRoom, roomId }) {
             .filter(item => item.quantity > 0)
         );
     };
+
+    const handleFinalOrderUpdate = async () => {
+    if (!room || !room.users) return;
+
+    const updatedUsers = room.users.map(u =>
+        Number(u.userId) === Number(user.id) ? { ...u, ready: true } : u
+    );
+
+    const delta = 1; // ready count 증가
+    try {
+        // 1. ready 상태 업데이트
+        await axios.put('/api/room/updateReady', {
+            id: roomId,
+            users: JSON.stringify(updatedUsers),
+            kickId: room.kickId,
+        });
+
+        // 2. room_order 업데이트 (최종 주문 반영)
+        await axios.put(`/api/room/${roomId}/roomOrder`, null, {
+            params: { delta: totalPrice },
+        });
+
+        // 3. 방 상태 fetch
+        await fetchRoomUsers();
+
+    } catch (error) {
+        console.error("최종 주문 업데이트 실패:", error);
+    }
+};
+
     // 최종 주문
     const handleFinalOrder = async () => {
-        const beforeOrder = await selectAllRoom(roomId);
+    const beforeOrder = await selectAllRoom(roomId);
         const updatedStatus = "배달중";
         alert("최종주문하시겠습니까?");
         console.log("올레디", allReady);
         console.log("최소주문", minPrice);
         console.log("방 주문", beforeOrder.roomOrder);
-        if ( beforeOrder.roomOrder < minPrice) {
-            alert("최소주문금액을 채워주세요");
-            return;
-        }
-        if (allReady) {
-            alert("주문 완료!");
-            updateRoomStatus(roomId, updatedStatus);
-            await fetchRoomUsers();
-            //setPollingReady(false);
-            return;
-        } else {
-            alert("아직 메뉴를 고르고 있는 참여자가 있습니다.");
-            return
-        }
-    };
+
+    if (beforeOrder.roomOrder < minPrice) {
+        alert("최소주문금액을 채워주세요");
+        return;
+    }
+
+    if (allReady) {
+        alert("주문 완료!");
+        updateRoomStatus(roomId, updatedStatus);
+        await fetchRoomUsers();
+        return;
+    } else {
+        alert("아직 메뉴를 고르고 있는 참여자가 있습니다.");
+        return;
+    }
+};
+
 
     const changeStatus = async () => {
         if (!room || !room.status) {
@@ -583,19 +617,36 @@ export default function RoomTest({ initialRoom, roomId }) {
                 </div>
             </div>
 
-            <OrderConfirmModal
-                user={user}
-                visible={showPaymentModal}
+<OrderConfirmModal
+    user={user}
+    visible={showPaymentModal}
+    cart={cart}
+    totalPrice={totalPrice}
+    userId={user?.id}
+    room={room}
+    roomId={roomId}
+    token={token}
+    onSetOrderId={setOrderId}
+    onRefreshRoomUsers={fetchRoomUsers}
+    onClose={() => setShowPaymentModal(false)}   // ✅ 반드시 추가
+    onComplete={() => {
+        setShowPaymentModal(false);
+        setShowOrderCompleteModal(true);
+        handleFinalOrderUpdate();
+    }}
+/>
+
+
+             {/* 주문 완료 모달 */}
+            <OrderCompleteModal
+                visible={showOrderCompleteModal}
+                onClose={() => setShowOrderCompleteModal(false)}
                 cart={cart}
                 totalPrice={totalPrice}
-                userId={user?.id}
                 room={room}
-                roomId={roomId}
-                token={token}
-                onSetOrderId={setOrderId}
-                onRefreshRoomUsers={fetchRoomUsers}
-                onClose={() => setShowPaymentModal(false)}
+                user={user}
             />
+
             <ReportModal
                 visible={showReportModal}
                 onClose={() => setShowReportModal(false)}

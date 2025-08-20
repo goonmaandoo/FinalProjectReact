@@ -4,7 +4,7 @@ import axios from "axios";
 import styles from "../../CSS/StarRating.module.css";
 import { FaStar } from "react-icons/fa";
 
-const StartRating = () => {
+const StarRating = () => {
   const { room_id } = useParams();
   const navigate = useNavigate();
 
@@ -35,6 +35,7 @@ const StartRating = () => {
     };
     fetchCurrentUser();
   }, []);
+
   // ✅ 방 정보 조회 및 참여자 세팅
   useEffect(() => {
     if (!room_id || !currentUserId) return;
@@ -50,11 +51,12 @@ const StartRating = () => {
             (user) => Number(user.id) !== Number(currentUserId)
           );
 
-          const usersWithProfile = otherUsers.map((user) => ({
+          const usersWithProfile = otherUsers.map((user, idx) => ({
             ...user,
             profileUrl: user.profileUrl
               ? `${SERVER_BASE}${user.profileUrl}?t=${new Date().getTime()}`
               : null,
+            key: `user-${user.id}-${idx}`, // ✅ 중복 key 방지
           }));
 
           setParticipants(usersWithProfile);
@@ -112,7 +114,9 @@ const StartRating = () => {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>
-        {roomInfo ? `${roomInfo.roomName} 방의 사용자 평가하기` : "사용자 평가하기"}
+        {roomInfo
+          ? `${roomInfo.roomName} 방의 사용자 평가하기`
+          : "사용자 평가하기"}
       </h2>
 
       {participants.length === 0 ? (
@@ -120,7 +124,7 @@ const StartRating = () => {
       ) : (
         <div className={styles.userList}>
           {participants.map((user) => (
-            <div key={user.id} className={styles.userBox}>
+            <div key={user.key} className={styles.userBox}>
               <img
                 src={user.profileUrl || basic_profile}
                 alt="프로필"
@@ -131,9 +135,13 @@ const StartRating = () => {
               <div className={styles.stars}>
                 {[1, 2, 3, 4, 5].map((n) => (
                   <FaStar
-                    key={n}
+                    key={`star-${user.id}-${n}`} // ✅ 별점 key도 고유하게
                     size={20}
-                    className={n <= (ratings[user.id] || 0) ? styles.activeStar : styles.inactiveStar}
+                    className={
+                      n <= (ratings[user.id] || 0)
+                        ? styles.activeStar
+                        : styles.inactiveStar
+                    }
                     onClick={() => handleRating(user.id, n)}
                   />
                 ))}
@@ -154,4 +162,4 @@ const StartRating = () => {
   );
 };
 
-export default StartRating;
+export default StarRating;
