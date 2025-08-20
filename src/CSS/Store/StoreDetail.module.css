@@ -75,6 +75,7 @@
     height: 100%;
     width: 550px;
     box-sizing: border-box;
+    min-height: 200px;
 }
 .address_text{
     padding: 28px 10px 28px 34px;
@@ -215,18 +216,17 @@
         border-radius: 0 0 10px 10px;
         height: 180px;
         width: 100%;
-        box-sizing: border-box;
     }
     .menu_btn{
         gap: 30px;
     }
     .menu_make_btn{
         height: 60px;
-        font-size: 1.625rem;
+        font-size: 1.5rem;
     }
     .menu_confirm_btn{
         height: 60px;
-        font-size: 1.625rem;
+        font-size: 1.5rem;
     }
     .menu_text{
         padding: 40px 40px;
@@ -251,7 +251,6 @@
         border-radius: 0 0 10px 10px;
         height: 180px;
         width: 100%;
-        box-sizing: border-box;
     }
     .square_img {
         height: 300px;
@@ -345,9 +344,8 @@
     }
     .address_map{
         border-radius: 0 0 10px 10px;
-        height: 130px;
+        height: 150px;
         width: 100%;
-        box-sizing: border-box;
     }
     .menu_box{
         padding: 20px 30px;

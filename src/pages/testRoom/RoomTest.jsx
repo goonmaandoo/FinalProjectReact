@@ -41,7 +41,7 @@ export default function RoomTest({ initialRoom, roomId }) {
     const navigate = useNavigate();
     const user = useSelector((state) => state.auth.user);
     const token = useSelector((state) => state.auth?.token);
-    const basic_profile = "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileImg/mypagePerson.png";
+    const basic_profile = "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/mypagePerson.png";
 
     const fetchRoomUsers = async () => {
         try {
@@ -448,7 +448,7 @@ export default function RoomTest({ initialRoom, roomId }) {
                                         }
                                         return (
                                             <div key={idx} className={styles.memberItem}>
-                                                <img src={member.profileUrl ? `https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/${member.profileUrl}` : basic_profile} alt={member.user_id} />
+                                                <img src={member.profileurl ? `https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/${member.profileurl}?t=${Date.now()}` : basic_profile}  className={styles.memberProfile} alt={member.nickname} />
                                                 <div className={styles.userInfoWrapper}>
                                                     <p className={styles.memberNickname}>{member.nickname}</p>
                                                     <img
@@ -526,7 +526,7 @@ export default function RoomTest({ initialRoom, roomId }) {
                             {chatLog.map((chat, idx) => (
                                 <div key={idx} className={styles.chatMessage}>
                                     {/* <img src={chat.profileurl} alt={chat.nickname} /> */}
-                                    <img src={chat.profileUrl ? `https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/${chat.profileUrl}` : basic_profile} alt={chat.nickname} />
+                                    <img src={chat.profileUrl ? `https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/${chat.profileUrl}?t=${Date.now()}` : basic_profile} alt={chat.nickname} />
                                     <div className={styles.chatContentLeft}>
                                         <div className={styles.nickname}>{chat.nickname}</div>
                                         <div className={styles.chatText}>{chat.chat}</div>
