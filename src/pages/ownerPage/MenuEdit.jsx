@@ -19,7 +19,7 @@ export default function MenuEdit({ selectedMenu, user, onComplete, onTabChange }
 const handleMenuUpdate = () => {
     const formData = new FormData();
     formData.append("id", selectedMenu.id);
-    formData.append("storeId", selectedMenu.storeId); // 이 값이 있는지 확인!
+    formData.append("storeId", selectedMenu.storeId);
     formData.append("menuName", editedMenuName);
     formData.append("menuPrice", editedMenuPrice);
     formData.append("status", editedMenuStatus);
@@ -47,7 +47,7 @@ const handleMenuUpdate = () => {
         }
     })
     .catch((err) => {
-        console.error("상세 오류:", err.response); // 더 자세한 오류 확인
+        console.error("상세 오류:", err.response);
         alert("메뉴 수정에 실패했습니다.");
     });
 };

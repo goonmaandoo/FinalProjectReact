@@ -11,7 +11,7 @@ export default function StoreRegister() {
     const [storeAddress, setStoreAddress] = useState("");
     const [minPrice, setMinPrice] = useState("");
     const [tel, setTel] = useState("");
-    const [ownerId, setOwnerId] = useState(""); // 예시: 로그인된 ownerId (임시 고정값)
+    const [ownerId, setOwnerId] = useState("");
 
     const user = useSelector((state) => state.auth.user);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -32,7 +32,7 @@ export default function StoreRegister() {
             return;
         }
 
-        // 숫자인지 검사 (빈 문자열도 걸러주기 위해 trim 사용)
+        // 숫자인지 검사
         if (!minPrice.trim() || isNaN(minPrice)) {
             alert("최소주문가격은 숫자만 입력해주세요.");
             return;
