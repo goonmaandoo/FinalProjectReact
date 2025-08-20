@@ -17,11 +17,16 @@ export default function GonguComplete() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        console.log('룸아이디',roomId)
+
         // 1. 공구방 정보 조회
-        const roomRes = await axios.get("/api/room/allRoomSelect");
-        console.log("룸res",roomRes);
-        const room = roomRes.data.find((r) => r.id === parseInt(roomId));
+        // const roomRes = await axios.get("/api/room/allRoomSelect");
+        // const room = roomRes.data.find((r) => r.id === parseInt(roomId));
+
+        // 컨트롤러 변경하여 테스팅 성공
+        const response = await axios.post("/api/room/selectAllRoom", {
+          id: roomId
+        });
+        const room = response.data[0];
         if (!room) throw new Error("해당 공구방을 찾을 수 없습니다.");
         setRoomInfo(room);
 
