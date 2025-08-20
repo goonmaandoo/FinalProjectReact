@@ -17,7 +17,7 @@ export default function ReviewManagement() {
 
     // 페이지네이션
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 3; // 한 페이지에 보여줄 주문 개수
+    const itemsPerPage = 3;
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;

@@ -12,13 +12,13 @@ export default function OrderList() {
             try {
                 setLoading(true);
 
-                // 1. 주문 목록 API 호출
+
                 const orderRes = await axios.get("/api/orders/getAllOrders");
                 const ordersData = orderRes.data;
 
                 console.log("ordersData sample:", ordersData[0]);
 
-                // 2. 주문에서 userId 또는 user_id 등 키 확인 후 추출
+ 
                 const userIds = [
                     ...new Set(
                         ordersData
@@ -28,13 +28,13 @@ export default function OrderList() {
                 ];
                 console.log("userIds extracted:", userIds);
 
-                // 3. 사용자 정보 API 호출
+
                 const userRes = await axios.post("/api/users/findUsersByIds", userIds);
                 const usersData = userRes.data;
 
                 console.log("usersData from backend:", usersData);
 
-                // 4. userId 또는 id 키 체크하며 매핑 객체 생성
+
                 const userAddressMap = {};
                 usersData.forEach((user) => {
                     const key = user.userId ?? user.id;
@@ -44,7 +44,7 @@ export default function OrderList() {
                     };
                 });
 
-                // 5. 주문 데이터에 메뉴, 주소 붙이기
+
                 const parsedOrders = ordersData.map((order) => {
                     let items = [];
                     try {
@@ -53,7 +53,7 @@ export default function OrderList() {
                                 ? JSON.parse(order.roomOrder)
                                 : order.roomOrder;
 
-                        // 배열이면 그대로, 객체면 menu로 접근
+            
                         items = Array.isArray(roomOrderData)
                             ? roomOrderData
                             : roomOrderData.menu || [];
@@ -61,7 +61,7 @@ export default function OrderList() {
                         items = [];
                     }
 
-                    // 주문의 userId 확인
+      
                     const userKey = order.userId ?? order.user_id ?? order.id;
                     const userAddr = userAddressMap[userKey] || {};
 
@@ -85,7 +85,7 @@ export default function OrderList() {
         fetchOrdersAndUsers();
     }, []);
 
-    // 메뉴 펼침 토글
+
     const toggleExpand = (orderId) => {
         setExpandedOrderIds((prev) => {
             const newSet = new Set(prev);

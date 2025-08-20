@@ -26,7 +26,7 @@ export default function OwnerMenuEdit() {
         pageNumbers.push(i);
     }
 
-    // 메뉴 리스트 새로고침 함수
+    // 메뉴 리스트 새로고침
     const refreshMenuList = () => {
         if (!user || !user.id) return;
 
@@ -66,12 +66,12 @@ export default function OwnerMenuEdit() {
         }
     };
 
-    // 메뉴 추가 완료 후 콜백
+
     const handleMenuAddComplete = () => {
         refreshMenuList();
     };
 
-    // 메뉴 수정 완료 후 콜백
+
     const handleMenuEditComplete = () => {
         setSelectedTab("전체메뉴");
         setSelectedMenu(null);
