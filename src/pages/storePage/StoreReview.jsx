@@ -35,7 +35,11 @@ export default function StoreReview() {
         setReviews(response.data);
       } catch (error) {
         if (error.response) {
-          console.error(" 서버 응답 오류:", error.response.status, error.response.data);
+          console.error(
+            " 서버 응답 오류:",
+            error.response.status,
+            error.response.data
+          );
         } else if (error.request) {
           console.error(" 요청했지만 응답 없음:", error.request);
         } else {
@@ -63,8 +67,12 @@ export default function StoreReview() {
           {reviews.map((review) => (
             <div key={review.id} className={style.reviewBox}>
               <div className={style.header}>
-                <span className={style.user}>👤 {review.nickname || "익명"}</span>
-                <span className={style.date}>{formatDate(review.createdAt)}</span>
+                <span className={style.user}>
+                  👤 {review.nickname || "익명"}
+                </span>
+                <span className={style.date}>
+                  {formatDate(review.createdAt)}
+                </span>
               </div>
               <div className={style.stars}>
                 {"★".repeat(review.score)}

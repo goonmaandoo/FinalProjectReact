@@ -1,309 +1,423 @@
-import styles from '../CSS/Components/Hamburger.module.css'
+import styles from "../CSS/Components/Hamburger.module.css";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../redux/user';
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../redux/user";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Hamburger({ isOpen, onClose }) {
-    const [isReady, setIsReady] = useState(false);
-    const menuRef = useRef();
-    const smallMenuRef = useRef(null);
-    const [userRoom, setUserRoom] = useState([]);
-    const [menuHeight, setMenuHeight] = useState("auto");
-    const [url, setUrl] = useState("");
-    const [face, setFace] = useState("soso");
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+  const [isReady, setIsReady] = useState(false);
+  const menuRef = useRef();
+  const smallMenuRef = useRef(null);
+  const [userRoom, setUserRoom] = useState([]);
+  const [menuHeight, setMenuHeight] = useState("auto");
+  const [url, setUrl] = useState("");
+  const [face, setFace] = useState("soso");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  const user = useSelector((state) => state.auth.user);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
-    const user = useSelector((state) => state.auth.user);
-    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const basic_profile =
+    "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/mypagePerson.png";
 
-    const basic_profile = "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/mypagePerson.png";
+  console.log("현재 user 값:", user);
 
-    console.log("현재 user 값:", user);
+  const handleLogout = () => {
+    dispatch(logout());
+    localStorage.removeItem("token");
+    navigate("/mainpage");
+  };
 
-    const handleLogout = () => {
-        dispatch(logout());
-        localStorage.removeItem("token");
-        navigate("/mainpage");
+  useEffect(() => {
+    if (user?.id) {
+      console.log("user id:", user.id);
+      setUrl(
+        `https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/${
+          user.profileUrl
+        }?t=${Date.now()}`
+      );
+    }
+  }, [user]);
+
+  useEffect(() => {
+    function updateHeight() {
+      const footer = document.querySelector("footer");
+      const footerHeight = footer ? footer.offsetHeight : 0;
+      const docHeight = document.body.scrollHeight;
+      const topOffset = 115;
+
+      const calculatedHeight = docHeight - footerHeight - topOffset;
+      setMenuHeight(calculatedHeight > 0 ? calculatedHeight : "auto");
     }
 
-    useEffect(() => {
-        if (user?.id) {
-            console.log("user id:", user.id);
-            setUrl(`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/${user.profileUrl}?t=${Date.now()}`);
-        }
-    }, [user]);
+    updateHeight();
+    window.addEventListener("resize", updateHeight);
 
-    useEffect(() => {
-        function updateHeight() {
-            const footer = document.querySelector("footer");
-            const footerHeight = footer ? footer.offsetHeight : 0;
-            const docHeight = document.body.scrollHeight;
-            const topOffset = 115;
+    return () => {
+      window.removeEventListener("resize", updateHeight);
+    };
+  }, []);
+  useEffect(() => {
+    if (!user?.id) return;
+    //진행중인 공구방
+    axios
+      .get(`/api/room/roomsbyId/${user.id}`)
+      .then((res) => {
+        console.log("RoomsbyId response:", res.data);
+        setUserRoom(res.data);
+      })
+      .catch((err) => console.error("RoomsbyId error:", err));
+  }, [user?.id]);
 
-            const calculatedHeight = docHeight - footerHeight - topOffset;
-            setMenuHeight(calculatedHeight > 0 ? calculatedHeight : "auto");
-        }
+  console.log("현재 user 값:", userRoom);
 
-        updateHeight();
-        window.addEventListener("resize", updateHeight);
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      // 햄버거 버튼 클릭은 제외
+      const isHamburgerButton =
+        e.target.closest('[class*="hamburger_btn"]') ||
+        e.target.closest('[class*="main_hamburger_btn"]');
+      if (isHamburgerButton) {
+        return;
+      }
+      const clickedInsideMain =
+        menuRef.current && menuRef.current.contains(e.target);
+      const clickedInsideSmall =
+        smallMenuRef.current && smallMenuRef.current.contains(e.target);
+      if (!clickedInsideMain && !clickedInsideSmall) {
+        onClose();
+      }
+    };
+    if (isOpen) {
+      // 약간의 지연을 주어 초기 클릭과 분리
+      const timer = setTimeout(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+      }, 50);
+      return () => {
+        clearTimeout(timer);
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen, onClose]);
 
-        return () => {
-            window.removeEventListener("resize", updateHeight);
-        };
-    }, []);
-    useEffect(() => {
-        if (!user?.id) return;
-        //진행중인 공구방
-        axios.get(`/api/room/roomsbyId/${user.id}`)
-            .then(res => {
-                console.log("RoomsbyId response:", res.data);
-                setUserRoom(res.data);
-            })
-            .catch(err => console.error("RoomsbyId error:", err));
-    }, [user?.id])
+  if (!isOpen) return null;
 
-    console.log("현재 user 값:", userRoom);
-
-    useEffect(() => {
-        const handleClickOutside = (e) => {
-            // 햄버거 버튼 클릭은 제외
-            const isHamburgerButton = e.target.closest('[class*="hamburger_btn"]') ||
-                e.target.closest('[class*="main_hamburger_btn"]');
-            if (isHamburgerButton) {
-                return;
-            }
-            const clickedInsideMain = menuRef.current && menuRef.current.contains(e.target);
-            const clickedInsideSmall = smallMenuRef.current && smallMenuRef.current.contains(e.target);
-            if (!clickedInsideMain && !clickedInsideSmall) {
-                onClose();
-            }
-        };
-        if (isOpen) {
-            // 약간의 지연을 주어 초기 클릭과 분리
-            const timer = setTimeout(() => {
-                document.addEventListener("mousedown", handleClickOutside);
-            }, 50);
-            return () => {
-                clearTimeout(timer);
-                document.removeEventListener("mousedown", handleClickOutside);
-            };
-        }
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, [isOpen, onClose]);
-
-
-    if (!isOpen) return null;
-
-    return (
-        <>
-            <div className={styles["main"]} ref={menuRef}>
-                <div className={styles["hamburger_nav"]} style={{ height: `${menuHeight - 60}px` }}>
-                    <div className={styles["mypage"]}>
-                        <div className={styles["mypage"]}>
-                            <img
-                                className={styles["mypage_icon"]}
-                                src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/home-black.png"
-                                alt="마이페이지"
-                            />
-                            <div className={styles["mypage_text"]}>
-                                {user ? <Link to="/mypage/userinfo" onClick={() => onclose()} >마이페이지</Link> : <Link to="/mainpage" >마이페이지</Link>}
-                            </div>
-                        </div>
-                        <div>
-                            <div>
-                                {user ? user.role === "owner"
-                                    ? <div>
-                                        <Link to="/ownerpage" onClick={() => onclose()}>사장님 페이지 →</Link>
-                                    </div>
-                                    : user.role === "admin"
-                                        ? <div>
-                                            <Link to="/admin" onClick={() => onclose()}>관리자 페이지 →</Link>
-                                        </div>
-                                        : ""
-                                    : ""}
-                            </div>
-                        </div>
-                    </div>
-                    {user ? (
-                        <>
-                            <div className={styles["user_coin"]}>
-                                <div className={styles["user_box"]}>
-                                    <div>
-                                        <img
-                                            className={styles["user_profile_image"]}
-                                            src={url || basic_profile}
-                                            onError={(e) => (e.currentTarget.src = "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/mypagePerson.png")} />
-                                    </div>
-                                    <div className={styles["userName"]}>{user?.nickname}님</div>
-                                    <button className={styles["userName_btn"]} onClick={handleLogout}>로그아웃</button>
-                                </div>
-                                <div className={styles["coin_box"]}>
-                                    <img
-                                        className={styles["coin_imo"]}
-                                        src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/coin.png"
-                                        alt="코인"
-                                    />
-                                    <div className={styles["coin_confirm"]}>
-                                        {user?.cash ?? 0}
-                                    </div>
-                                </div>
-                            </div>
-                            <div className={styles["score_box"]}>
-                                <div className={styles["score_text"]}>{user.userRating}%</div>
-                                <img className={styles["score_img"]} src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/${face}.png`} />
-                            </div>
-                            <progress className={styles["gongu_progress"]} value={user.userRating} max={100}></progress>
-                        </>
-                    ) : (
-                        <div id={styles["user_notlogin"]}>
-                            <Link to="/login" onClick={() => onclose()} >로그인이 필요합니다</Link>
-                        </div>
-                    )}
-                    <div className={styles["event_banner"]}>
-                        <img
-                            className={styles["event_banner1"]}
-                            src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/event_banner1.png"
-                            alt="배너1"
-                        />
-                        <img
-                            className={styles["event_banner2"]}
-                            src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/event_banner2.png"
-                            alt="배너2"
-                        />
-                    </div>
-                    {user && (
-                        <div className={styles["chat_list"]}>
-                            <div className={styles["chat_list_title"]}>참여중인 채팅방 목록</div>
-                            {userRoom.length > 0 ? (
-                                userRoom.map((room) => (
-                                    <div key={room.id} className={styles["chat_list_room"]} onClick={() => window.location.href = `/room/${room.id}`}>
-                                        <img className={styles["chat_list_circle"]}
-                                            src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/store/store_${room.storeId}.jpg`} />
-                                        <div className={styles["chat_room"]}>
-                                            <div className={styles["chat_title_time"]}>
-                                                <div className={styles["chat_title"]}>{room.roomName}</div>
-                                                <div className={styles["chat_time"]}></div>
-                                            </div>
-                                            <div className={styles["chat_room_detail"]}>
-                                                <img src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/octicon_people-24.png" />
-                                                <div className={styles["chat_people"]}>
-                                                    {room.joinCount}/{room.maxPeople} 참여중
-                                                </div>
-                                                <div className={styles["chat_state"]}>{room.status}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))
-                            ) : (
-                                <div>참여중인 채팅방이 없습니다.</div>
-                            )}
-                        </div>
-                    )}
-                </div>
+  return (
+    <>
+      <div className={styles["main"]} ref={menuRef}>
+        <div
+          className={styles["hamburger_nav"]}
+          style={{ height: `${menuHeight - 60}px` }}
+        >
+          <div className={styles["mypage"]}>
+            <div className={styles["mypage"]}>
+              <img
+                className={styles["mypage_icon"]}
+                src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/home-black.png"
+                alt="마이페이지"
+              />
+              <div className={styles["mypage_text"]}>
+                {user ? (
+                  <Link to="/mypage/userinfo" onClick={() => onclose()}>
+                    마이페이지
+                  </Link>
+                ) : (
+                  <Link to="/mainpage">마이페이지</Link>
+                )}
+              </div>
             </div>
             <div>
-                <AnimatePresence>
-                    <motion.nav key="mobile-nav" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.4 }} style={{ originY: 0 }} ref={smallMenuRef} className={styles.small_menu} >
-                        <div className={styles["mypage"]}>
-                            <div className={styles["mypage"]}>
-                                <img
-                                    className={styles["mypage_icon2"]}
-                                    src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/home-black.png"
-                                    alt="마이페이지"
-                                />
-                                <div className={styles["mypage_text2"]}>
-                                    {user ? <Link to="/mypage/userinfo" onClick={() => onclose()} >마이페이지</Link> : <Link to="/mainpage">마이페이지</Link>}
-                                </div>
-                            </div>
-                            <div>
-                                <div>
-                                    {user ? user.role === "owner"
-                                        ? <div className={styles["mypage_text1"]}>
-                                            <Link to="/ownerpage" onClick={() => onclose()}>사장님 페이지 →</Link>
-                                        </div>
-                                        : user.role === "admin"
-                                            ? <div className={styles["mypage_text1"]}>
-                                                <Link to="/adminpage" onClick={() => onclose()}>관리자 페이지 →</Link>
-                                            </div>
-                                            : ""
-                                        : ""}
-                                </div>
-                            </div>
-                        </div>
-                        {user ? (
-                            <>
-                                <div className={styles["user_coin"]}>
-                                    <div className={styles["user_box"]}>
-                                        <div>
-                                            <img
-                                                className={styles["user_profile_image"]}
-                                                src={user?.id ? {url} : "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/mypagePerson.png"}
-                                                onError={(e) => (e.currentTarget.src = "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/mypagePerson.png")} />
-                                        </div>
-                                        <div className={styles["userName"]}>{user?.nickname}님</div>
-                                        <button className={styles["userName_btn"]} onClick={handleLogout}>로그아웃</button>
-                                    </div>
-                                    <div className={styles["coin_box"]}>
-                                        <img
-                                            className={styles["coin_imo"]}
-                                            src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/coin.png"
-                                            alt="코인"
-                                        />
-                                        <div className={styles["coin_confirm"]}>
-                                            {user.cash !== null ? user.cash.toLocaleString() : "0"}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className={styles["score_box"]}>
-                                    <div className={styles["score_text"]}>{user.userRating}%</div>
-                                    <img className={styles["score_img"]} src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/${face}.png`} />
-                                </div>
-                                <progress className={styles["gongu_progress"]} value={user.userRating} max={100}></progress>
-                            </>
-                        ) : (
-                            <div id={styles["user_notlogin2"]}>
-                                <Link to="/login" onClick={() => onclose()}>로그인이 필요합니다</Link>
-                            </div>
-                        )}
-                        {user && (
-                        <div className={styles["chat_list"]}>
-                            <div className={styles["chat_list_title"]}>참여중인 채팅방 목록</div>
-                            {userRoom.length > 0 ? (
-                                userRoom.map((room) => (
-                                    <div key={room.id} className={styles["chat_list_room"]} onClick={() => window.location.href = `/room/${room.id}`}> 
-                                        <img className={styles["chat_list_circle"]}
-                                            src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/store/store_${room.storeId}.jpg`} />
-                                        <div className={styles["chat_room"]}>
-                                            <div className={styles["chat_title_time"]}>
-                                                <div className={styles["chat_title"]}>{room.roomName}</div>
-                                                <div className={styles["chat_time"]}></div>
-                                            </div>
-                                            <div className={styles["chat_room_detail"]}>
-                                                <img src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/octicon_people-24.png" />
-                                                <div className={styles["chat_people"]}>
-                                                    {room.joinCount}/{room.maxPeople} 참여중
-                                                </div>
-                                                <div className={styles["chat_state"]}>{room.status}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))
-                            ) : (
-                                <div>참여중인 채팅방이 없습니다.</div>
-                            )}
-                        </div>
-                    )}
-                    </motion.nav>
-                </AnimatePresence>
+              <div>
+                {user ? (
+                  user.role === "owner" ? (
+                    <div>
+                      <Link to="/ownerpage" onClick={() => onclose()}>
+                        사장님 페이지 →
+                      </Link>
+                    </div>
+                  ) : user.role === "admin" ? (
+                    <div>
+                      <Link to="/admin" onClick={() => onclose()}>
+                        관리자 페이지 →
+                      </Link>
+                    </div>
+                  ) : (
+                    ""
+                  )
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
-        </>
-
-    )
+          </div>
+          {user ? (
+            <>
+              <div className={styles["user_coin"]}>
+                <div className={styles["user_box"]}>
+                  <div>
+                    <img
+                      className={styles["user_profile_image"]}
+                      src={url || basic_profile}
+                      onError={(e) =>
+                        (e.currentTarget.src =
+                          "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/mypagePerson.png")
+                      }
+                    />
+                  </div>
+                  <div className={styles["userName"]}>{user?.nickname}님</div>
+                  <button
+                    className={styles["userName_btn"]}
+                    onClick={handleLogout}
+                  >
+                    로그아웃
+                  </button>
+                </div>
+                <div className={styles["coin_box"]}>
+                  <img
+                    className={styles["coin_imo"]}
+                    src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/coin.png"
+                    alt="코인"
+                  />
+                  <div className={styles["coin_confirm"]}>
+                    {user?.cash ?? 0}
+                  </div>
+                </div>
+              </div>
+              <div className={styles["score_box"]}>
+                <div className={styles["score_text"]}>{user.userRating}%</div>
+                <img
+                  className={styles["score_img"]}
+                  src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/${face}.png`}
+                />
+              </div>
+              <progress
+                className={styles["gongu_progress"]}
+                value={user.userRating}
+                max={100}
+              ></progress>
+            </>
+          ) : (
+            <div id={styles["user_notlogin"]}>
+              <Link to="/login" onClick={() => onclose()}>
+                로그인이 필요합니다
+              </Link>
+            </div>
+          )}
+          <div className={styles["event_banner"]}>
+            <img
+              className={styles["event_banner1"]}
+              src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/event_banner1.png"
+              alt="배너1"
+            />
+            <img
+              className={styles["event_banner2"]}
+              src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/event_banner2.png"
+              alt="배너2"
+            />
+          </div>
+          {user && (
+            <div className={styles["chat_list"]}>
+              <div className={styles["chat_list_title"]}>
+                참여중인 채팅방 목록
+              </div>
+              {userRoom.length > 0 ? (
+                userRoom.map((room) => (
+                  <div
+                    key={room.id}
+                    className={styles["chat_list_room"]}
+                    onClick={() => (window.location.href = `/room/${room.id}`)}
+                  >
+                    <img
+                      className={styles["chat_list_circle"]}
+                      src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/store/store_${room.storeId}.jpg`}
+                    />
+                    <div className={styles["chat_room"]}>
+                      <div className={styles["chat_title_time"]}>
+                        <div className={styles["chat_title"]}>
+                          {room.roomName}
+                        </div>
+                        <div className={styles["chat_time"]}></div>
+                      </div>
+                      <div className={styles["chat_room_detail"]}>
+                        <img src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/octicon_people-24.png" />
+                        <div className={styles["chat_people"]}>
+                          {room.joinCount}/{room.maxPeople} 참여중
+                        </div>
+                        <div className={styles["chat_state"]}>
+                          {room.status}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div>참여중인 채팅방이 없습니다.</div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+      <div>
+        <AnimatePresence>
+          <motion.nav
+            key="mobile-nav"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            style={{ originY: 0 }}
+            ref={smallMenuRef}
+            className={styles.small_menu}
+          >
+            <div className={styles["mypage"]}>
+              <div className={styles["mypage"]}>
+                <img
+                  className={styles["mypage_icon2"]}
+                  src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/home-black.png"
+                  alt="마이페이지"
+                />
+                <div className={styles["mypage_text2"]}>
+                  {user ? (
+                    <Link to="/mypage/userinfo" onClick={() => onclose()}>
+                      마이페이지
+                    </Link>
+                  ) : (
+                    <Link to="/mainpage">마이페이지</Link>
+                  )}
+                </div>
+              </div>
+              <div>
+                <div>
+                  {user ? (
+                    user.role === "owner" ? (
+                      <div className={styles["mypage_text1"]}>
+                        <Link to="/ownerpage" onClick={() => onclose()}>
+                          사장님 페이지 →
+                        </Link>
+                      </div>
+                    ) : user.role === "admin" ? (
+                      <div className={styles["mypage_text1"]}>
+                        <Link to="/adminpage" onClick={() => onclose()}>
+                          관리자 페이지 →
+                        </Link>
+                      </div>
+                    ) : (
+                      ""
+                    )
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+            </div>
+            {user ? (
+              <>
+                <div className={styles["user_coin"]}>
+                  <div className={styles["user_box"]}>
+                    <div>
+                      <img
+                        className={styles["user_profile_image"]}
+                        src={
+                          user?.id
+                            ? { url }
+                            : "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/mypagePerson.png"
+                        }
+                        onError={(e) =>
+                          (e.currentTarget.src =
+                            "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/mypagePerson.png")
+                        }
+                      />
+                    </div>
+                    <div className={styles["userName"]}>{user?.nickname}님</div>
+                    <button
+                      className={styles["userName_btn"]}
+                      onClick={handleLogout}
+                    >
+                      로그아웃
+                    </button>
+                  </div>
+                  <div className={styles["coin_box"]}>
+                    <img
+                      className={styles["coin_imo"]}
+                      src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/coin.png"
+                      alt="코인"
+                    />
+                    <div className={styles["coin_confirm"]}>
+                      {user.cash !== null ? user.cash.toLocaleString() : "0"}
+                    </div>
+                  </div>
+                </div>
+                <div className={styles["score_box"]}>
+                  <div className={styles["score_text"]}>{user.userRating}%</div>
+                  <img
+                    className={styles["score_img"]}
+                    src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/${face}.png`}
+                  />
+                </div>
+                <progress
+                  className={styles["gongu_progress"]}
+                  value={user.userRating}
+                  max={100}
+                ></progress>
+              </>
+            ) : (
+              <div id={styles["user_notlogin2"]}>
+                <Link to="/login" onClick={() => onclose()}>
+                  로그인이 필요합니다
+                </Link>
+              </div>
+            )}
+            {user && (
+              <div className={styles["chat_list"]}>
+                <div className={styles["chat_list_title"]}>
+                  참여중인 채팅방 목록
+                </div>
+                {userRoom.length > 0 ? (
+                  userRoom.map((room) => (
+                    <div
+                      key={room.id}
+                      className={styles["chat_list_room"]}
+                      onClick={() =>
+                        (window.location.href = `/room/${room.id}`)
+                      }
+                    >
+                      <img
+                        className={styles["chat_list_circle"]}
+                        src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/store/store_${room.storeId}.jpg`}
+                      />
+                      <div className={styles["chat_room"]}>
+                        <div className={styles["chat_title_time"]}>
+                          <div className={styles["chat_title"]}>
+                            {room.roomName}
+                          </div>
+                          <div className={styles["chat_time"]}></div>
+                        </div>
+                        <div className={styles["chat_room_detail"]}>
+                          <img src="https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/main_img/octicon_people-24.png" />
+                          <div className={styles["chat_people"]}>
+                            {room.joinCount}/{room.maxPeople} 참여중
+                          </div>
+                          <div className={styles["chat_state"]}>
+                            {room.status}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div>참여중인 채팅방이 없습니다.</div>
+                )}
+              </div>
+            )}
+          </motion.nav>
+        </AnimatePresence>
+      </div>
+    </>
+  );
 }
