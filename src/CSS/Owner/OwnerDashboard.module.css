@@ -140,53 +140,6 @@ button{
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-/* storeregister */
-.category_firstimg{
-    display: flex;
-}
-.category_select{
-    margin-right: 50px;
-}
-.category_firstimg h3{
-    font-size: 28px;
-}
-.store_info h3{
-    font-size: 28px;
-}
-.store_info input{
-    width: 100%;
-    height: 90px;
-    border-radius: 10px;
-    font-size: 20px;
-}
-
-.store_register_button {
-    background-color: #ff9d9d;
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 10px;
-    font-size: 22px;
-    cursor: pointer;
-    margin-top: 40px;
-}
-.button-wrapper {
-    text-align: right;
-    margin-top: 40px;
-}
-
-
-/* select,option 스타일 */
-.category_select select {
-    width: 250px;
-    height: 60px;
-    font-size: 18px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    background-color: #d9d9d9;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
-
 /* 가게관리 */
 .store_card{
     background-color: white;

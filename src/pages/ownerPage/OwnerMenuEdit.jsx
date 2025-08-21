@@ -30,7 +30,7 @@ export default function OwnerMenuEdit() {
     const refreshMenuList = () => {
         if (!user || !user.id) return;
 
-        axios.get(`http://localhost:8080/menu/ownerWithImage/${user.id}`)
+        axios.get(`api/menu/ownerWithImage/${user.id}`)
             .then(res => {
                 setMenuList(res.data);
                 if (res.data.length > 0) {
@@ -50,7 +50,7 @@ export default function OwnerMenuEdit() {
 
     const handleMenuDelete = (menuId) => {
         if (window.confirm("정말 삭제하시겠습니까?")) {
-            axios.get(`http://localhost:8080/menu/menuDeleteByOwner/${menuId}`)
+            axios.get(`api/menu/menuDeleteByOwner/${menuId}`)
                 .then((res) => {
                     if (res.data > 0) {
                         alert("메뉴가 삭제되었습니다.");

@@ -1,0 +1,137 @@
+/* ===== 상단 탭 버튼 ===== */
+.tab-buttons {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.tab-buttons button {
+    padding: 12px 30px;
+    font-size: 20px;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    background-color: #f2f2f2;
+    color: #555;
+    transition: 0.3s;
+}
+
+
+.tab-buttons button.active {
+    background-color: #ffb1b1;
+    color: white;
+}
+
+/* ===== 가게 정보 ===== */
+.category_firstimg {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.category_select {
+    margin-right: 50px;
+}
+
+.category_firstimg h3 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.store_info h3 {
+    font-size: 28px;
+    margin-top: 20px;
+}
+
+.store_info input {
+    width: 100%;
+    height: 60px;
+    border-radius: 10px;
+    font-size: 20px;
+    border: 1px solid #ccc;
+    padding: 0 15px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+/* select, option 스타일 */
+.category_select select {
+    width: 250px;
+    height: 60px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #d9d9d9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* 등록 버튼 */
+.store_register_button {
+    background-color: #ff9d9d;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-size: 22px;
+    cursor: pointer;
+    margin-top: 40px;
+    transition: 0.3s;
+}
+
+
+.button-wrapper {
+    text-align: right;
+    margin-top: 40px;
+}
+
+/* ===== 가게 이미지 ===== */
+.store_firstimg h3 {
+    font-size: 21px;
+    margin-bottom: 15px;
+}
+
+.store_firstimg p {
+    font-size: 14px;
+    color: red;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.store_firstimg input[type="text"] {
+    width: 200px;
+    height: 40px;
+    border-radius: 10px;
+    font-size: 18px;
+    padding: 0 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+}
+
+.store_firstimg button {
+    background-color: #ffb1b1;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    width: 80px;
+    height: 40px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.store_firstimg button:hover {
+    background-color: #ff8f8f;
+}
+
+::-webkit-file-upload-button{
+    border-radius: 10px;
+    font-size: 16px;
+    padding: 5px;
+    background-color: #d9d9d9;
+    border: none;
+}
+::-webkit-file-upload-button:hover{
+    background-color: #ccc;
+    cursor: pointer;
+}
