@@ -1,0 +1,104 @@
+/* 페이지네이션 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.page_btn {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  background: #f9f9f9;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.page_btn:hover:not(:disabled) {
+  background: #e0f7e9;
+  border-color: #34a853;
+}
+.page_btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.page_info {
+  font-weight: bold;
+  margin: 0 8px;
+}
+.page_size {
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+
+/* 테이블 */
+.review_table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+.review_table th {
+  background-color: #f0f4f7;
+  padding: 8px;
+  border-bottom: 2px solid #ccc;
+  text-align: left;
+}
+.review_table td {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
+.review_table tr:hover {
+  background-color: #fafafa;
+}
+
+/* 버튼 */
+.btn_action {
+  padding: 4px 10px;
+  margin-right: 6px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+}
+.btn_success {
+  background-color: #4caf50;
+  color: white;
+}
+.btn_success:hover {
+  background-color: #45a049;
+}
+.btn_danger {
+  background-color: #f44336;
+  color: white;
+}
+.btn_danger:hover {
+  background-color: #da190b;
+}
+.btn_action:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.page_size_wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.page_size_label {
+  font-weight: 500;
+}
+
+.page_size_select {
+  padding: 4px 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.page_size_select:hover {
+  border-color: #34a853; /* hover 시 초록색 테두리 */
+}

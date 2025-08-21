@@ -1,64 +1,64 @@
 /* CSS/MoaPolicy.module.css */
 
 .container {
-    max-width: 80rem;
-    margin: 40px auto;
-    padding: 0 20px;
-    font-family: 'Noto Sans KR', sans-serif;
-    color: #333;
-    line-height: 1.6;
+  max-width: 80rem;
+  margin: 40px auto;
+  padding: 0 20px;
+  font-family: "Noto Sans KR", sans-serif;
+  color: #333;
+  line-height: 1.6;
 }
 
 h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: #FF6B6B;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #ff6b6b;
 }
 
 h2 {
-    font-size: 1.8rem;
-    margin-top: 2.5rem;
-    margin-bottom: 1rem;
-    color: #1A535C;
+  font-size: 1.8rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  color: #1a535c;
 }
 
 p {
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
 }
 
 @media (max-width: 1060px) {
-    .container {
-        margin: 30px 15px;
-    }
+  .container {
+    margin: 30px 15px;
+  }
 
-    h1 {
-        font-size: 2rem;
-    }
+  h1 {
+    font-size: 2rem;
+  }
 
-    h2 {
-        font-size: 1.5rem;
-    }
+  h2 {
+    font-size: 1.5rem;
+  }
 
-    p {
-        font-size: 1rem;
-    }
+  p {
+    font-size: 1rem;
+  }
 }
 
 @media (max-width: 600px) {
-    .container {
-        margin: 20px 10px;
-    }
+  .container {
+    margin: 20px 10px;
+  }
 
-    h1 {
-        font-size: 1.6rem;
-    }
+  h1 {
+    font-size: 1.6rem;
+  }
 
-    h2 {
-        font-size: 1.2rem;
-    }
+  h2 {
+    font-size: 1.2rem;
+  }
 
-    p {
-        font-size: 0.9rem;
-    }
+  p {
+    font-size: 0.9rem;
+  }
 }

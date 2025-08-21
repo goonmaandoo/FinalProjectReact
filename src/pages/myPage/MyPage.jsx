@@ -19,7 +19,8 @@ export default function MyPage() {
   const token = useSelector((s) => s.auth?.token);
   const [url, setUrl] = useState("");
 
-  const basic_profile = "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/mypagePerson.png";
+  const basic_profile =
+    "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/mypagePerson.png";
 
   //마이페이지 캐쉬 조회
   const fetchCash = async () => {
@@ -97,16 +98,16 @@ export default function MyPage() {
 
   useEffect(() => {
     if (user?.id) {
-        console.log("user id:", user.id);
-        setUrl(`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/${user.profileUrl}?t=${Date.now()}`);
+      console.log("user id:", user.id);
+      setUrl(
+        `https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/${
+          user.profileUrl
+        }?t=${Date.now()}`
+      );
     }
-}, [user]);
-
-  
-
+  }, [user]);
 
   const handleUpload = async (e) => {
-
     const selectedFile = e.target.files[0];
 
     if (!selectedFile) {
@@ -126,7 +127,9 @@ export default function MyPage() {
       });
 
       console.log("업로드 성공:", res.data);
-      setUrl(`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/${res.data}`);
+      setUrl(
+        `https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/${res.data}`
+      );
       window.location.reload();
       alert("프로필 이미지가 업데이트 되었습니다!");
     } catch (err) {
@@ -134,7 +137,6 @@ export default function MyPage() {
       alert("업로드 실패: " + (err.response?.data || err.message));
     }
   };
-
 
   return (
     <main className={styles.myPage_main}>

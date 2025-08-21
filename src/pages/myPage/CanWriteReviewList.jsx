@@ -30,11 +30,9 @@ export default function CanWriteReviewList() {
       })
       .then((response) => {
         console.log("응답: ", response.data);
-        setTimeout(() => {
-          setOrders(response.data.content || []);
-          setTotalCount(response.data.totalElements || 0);
-          setLoading(false);
-        }, 2000); //강제 로딩 2초
+        setOrders(response.data.content || []);
+        setTotalCount(response.data.totalElements || 0);
+        setLoading(false);
       })
       .catch((err) => {
         setOrders([]);

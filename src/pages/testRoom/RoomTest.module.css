@@ -778,8 +778,8 @@
     line-height: 1.1;
   }
   .readyDone {
-  color: green;
-  font-weight: 600;
-  margin: 14px;
-}
+    color: green;
+    font-weight: 600;
+    margin: 14px;
+  }
 }

@@ -1,24 +1,24 @@
-import styles from '../CSS/MainPage.module.css';
+import styles from "../CSS/MainPage.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 // import { logout } from '../redux/user';
 // import LoginCheck from '../components/user/LoginCheck';
 
 export default function MainPage() {
-    const [keyword, setKeyword] = useState('');
-    const [rooms, setRooms] = useState([]);
-    const [category, setCategory] = useState([]);
-    const [popular, setPopular] = useState([]);
-    const navigate = useNavigate();
-    const user = useSelector((state) => state.auth.user);
+  const [keyword, setKeyword] = useState("");
+  const [rooms, setRooms] = useState([]);
+  const [category, setCategory] = useState([]);
+  const [popular, setPopular] = useState([]);
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.auth.user);
 
-    //검색창
-    const onKeyDown = (e) => {
-        if (e.key === "Enter") {
-            search();
-        }
+  //검색창
+  const onKeyDown = (e) => {
+    if (e.key === "Enter") {
+      search();
     }
+  };
 
     //검색창
     const search = () => {

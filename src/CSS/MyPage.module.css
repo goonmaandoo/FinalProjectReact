@@ -771,6 +771,18 @@ input[readOnly] {
 
 /* 480px 미만 (모바일) */
 @media (max-width: 480px) {
+  .my_MenuUl {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2열 그리드 */
+    gap: 12px;
+  }
+
+  .my_MenuLi {
+    margin-bottom: 0; /* grid에서 gap으로 간격 관리 */
+    text-align: center;
+  }
+
   .myPage_box {
     padding: 40px 10px;
   }
@@ -839,11 +851,11 @@ input[readOnly] {
     font-size: 14px;
   }
   .gaugeBar {
-  width: 300px;
-  height: 20px;
-  margin: none;
-  background-color: #eee;
-  left: 1px;
-  top: 20px;
-}
+    width: 300px;
+    height: 20px;
+    margin: none;
+    background-color: #eee;
+    left: 1px;
+    top: 20px;
+  }
 }
