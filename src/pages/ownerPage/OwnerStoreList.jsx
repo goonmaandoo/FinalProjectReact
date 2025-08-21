@@ -38,7 +38,7 @@ export default function StoreManagement() {
         }
 
         const ownerId = user.id;
-        axios.get(`http://localhost:8080/store/storeByOwnerId/${ownerId}`)
+        axios.get(`api/store/storeByOwnerId/${ownerId}`)
             .then(res => {
                 console.log("가게 리스트:", res.data);
                 setStoreList(res.data);
@@ -53,7 +53,7 @@ export default function StoreManagement() {
         if (!confirmed) return;
 
         try {
-            await axios.get(`http://localhost:8080/store/storeDelete/${storeId}`);
+            await axios.get(`api/store/storeDelete/${storeId}`);
             setStoreList(prevList => prevList.filter(store => store.id !== storeId));
         } catch (err) {
             console.error("가게 삭제 실패:", err);
@@ -72,7 +72,7 @@ export default function StoreManagement() {
         };
 
         try {
-            await axios.put("http://localhost:8080/store/storeUpdate", updatedStore);
+            await axios.put("api/store/storeUpdate", updatedStore);
             alert("수정 완료!");
             setStoreList(prev =>
                 prev.map(store =>
