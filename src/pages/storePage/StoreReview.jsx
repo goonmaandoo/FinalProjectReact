@@ -8,7 +8,7 @@ export default function StoreReview() {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  console.log(" StoreReview 렌더링 - storeId:", storeId);
+  console.log("StoreReview 렌더링 - storeId:", storeId);
 
   // 날짜 포맷 함수
   const formatDate = (dateStr) => {
@@ -26,12 +26,11 @@ export default function StoreReview() {
     if (!storeId) return;
 
     const fetchReviews = async () => {
-      console.log("📥 fetchReviews 호출 - storeId:", storeId);
+      console.log(" fetchReviews 호출 - storeId:", storeId);
 
       try {
-
         const response = await axios.get(`/api/store/${storeId}/reviews`);
-        console.log("✅ API 응답:", response.data);
+        console.log(" API 응답:", response.data);
 
         setReviews(response.data);
       } catch (error) {

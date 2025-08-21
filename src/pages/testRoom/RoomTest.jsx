@@ -204,7 +204,7 @@ export default function RoomTest({ initialRoom, roomId }) {
             console.log("주문 취소!");
             setOrderId(null);
 
-            // 🔁 ready false로 변경
+            // ready false로 변경
             const updatedUsers = room.users.map(u =>
                 Number(u.userId) === Number(user.id) ? { ...u, ready: false } : u
             );
@@ -626,7 +626,7 @@ export default function RoomTest({ initialRoom, roomId }) {
     token={token}
     onSetOrderId={setOrderId}
     onRefreshRoomUsers={fetchRoomUsers}
-    onClose={() => setShowPaymentModal(false)}   // ✅ 반드시 추가
+    onClose={() => setShowPaymentModal(false)}   
     onComplete={() => {
         setShowPaymentModal(false);
         setShowOrderCompleteModal(true);

@@ -20,7 +20,7 @@ const StarRating = () => {
 
   const SERVER_BASE = "http://localhost:8080";
 
-  // ✅ 현재 로그인 유저 조회
+  // 현재 로그인 유저 조회
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
@@ -36,7 +36,7 @@ const StarRating = () => {
     fetchCurrentUser();
   }, []);
 
-  // ✅ 방 정보 조회 및 참여자 세팅
+  // 방 정보 조회 및 참여자 세팅
   useEffect(() => {
     if (!room_id || !currentUserId) return;
 
@@ -56,7 +56,7 @@ const StarRating = () => {
             profileUrl: user.profileUrl
               ? `${SERVER_BASE}${user.profileUrl}?t=${new Date().getTime()}`
               : null,
-            key: `user-${user.id}-${idx}`, // ✅ 중복 key 방지
+            key: `user-${user.id}-${idx}`, //  중복 key 방지
           }));
 
           setParticipants(usersWithProfile);
@@ -73,12 +73,12 @@ const StarRating = () => {
     fetchRoom();
   }, [room_id, currentUserId]);
 
-  // ✅ 별점 클릭 처리
+  // 별점 클릭 처리
   const handleRating = (userId, value) => {
     setRatings((prev) => ({ ...prev, [userId]: value }));
   };
 
-  // ✅ 제출 처리
+  // 제출 처리
   const handleSubmit = async () => {
     if (participants.length !== Object.keys(ratings).length) {
       alert("모든 사용자에게 별점을 주세요!");
@@ -120,7 +120,7 @@ const StarRating = () => {
       </h2>
 
       {participants.length === 0 ? (
-        <p>⚠️ 방에 평가할 사용자가 없습니다.</p>
+        <p> 방에 평가할 사용자가 없습니다.</p>
       ) : (
         <div className={styles.userList}>
           {participants.map((user) => (
@@ -135,7 +135,7 @@ const StarRating = () => {
               <div className={styles.stars}>
                 {[1, 2, 3, 4, 5].map((n) => (
                   <FaStar
-                    key={`star-${user.id}-${n}`} // ✅ 별점 key도 고유하게
+                    key={`star-${user.id}-${n}`} // 별점 key도 고유하게
                     size={20}
                     className={
                       n <= (ratings[user.id] || 0)
