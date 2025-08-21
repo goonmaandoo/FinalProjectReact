@@ -1,5 +1,5 @@
-import styles from '../../CSS/Store/StoreDetail.module.css'
-import { useParams, useNavigate } from 'react-router-dom';
+import styles from "../../CSS/Store/StoreDetail.module.css";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import thousands from "thousands";
 import axios from "axios";

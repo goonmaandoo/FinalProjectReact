@@ -51,7 +51,9 @@ export default function AdminReportCard({
     try {
       const d = v instanceof Date ? v : new Date(v);
       if (!isNaN(d)) return d.toLocaleString();
-    } catch {}
+    } catch (error) {
+      console.log(error);
+    }
     return String(v);
   };
 
