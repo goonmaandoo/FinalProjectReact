@@ -8,7 +8,7 @@ export default function StoreReview() {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  console.log("🟢 StoreReview 렌더링 - storeId:", storeId);
+  console.log("StoreReview 렌더링 - storeId:", storeId);
 
   // 날짜 포맷 함수
   const formatDate = (dateStr) => {
@@ -26,24 +26,24 @@ export default function StoreReview() {
     if (!storeId) return;
 
     const fetchReviews = async () => {
-      console.log("📥 fetchReviews 호출 - storeId:", storeId);
+      console.log(" fetchReviews 호출 - storeId:", storeId);
 
       try {
         const response = await axios.get(`/api/store/${storeId}/reviews`);
-        console.log("✅ API 응답:", response.data);
+        console.log(" API 응답:", response.data);
 
         setReviews(response.data);
       } catch (error) {
         if (error.response) {
-          console.error("❌ 서버 응답 오류:", error.response.status, error.response.data);
+          console.error(" 서버 응답 오류:", error.response.status, error.response.data);
         } else if (error.request) {
-          console.error("❌ 요청했지만 응답 없음:", error.request);
+          console.error(" 요청했지만 응답 없음:", error.request);
         } else {
-          console.error("❌ Axios 요청 오류:", error.message);
+          console.error(" Axios 요청 오류:", error.message);
         }
       } finally {
         setLoading(false);
-        console.log("⏹️ fetchReviews 완료");
+        console.log(" fetchReviews 완료");
       }
     };
 
