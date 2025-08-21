@@ -221,12 +221,10 @@ button {
     color: #444;
 }
 
-/* 기존 라디오 버튼 숨기기 */
 input[type="radio"] {
     display: none;
 }
 
-/* 라디오 버튼과 연결된 label만 스타일 */
 input[type="radio"]+label {
     position: relative;
     padding-left: 30px;
@@ -238,7 +236,7 @@ input[type="radio"]+label {
     display: inline-block;
 }
 
-/* 커스텀 원형 만들기 */
+/* 커스텀 원형 */
 input[type="radio"]+label::before {
     content: "";
     position: absolute;

@@ -63,7 +63,6 @@
     background-color: #ffc3c3;
 }
 
-/* 기존 스타일은 그대로 유지하고 이걸 맨 아래에 추가하면 돼 */
 
 @media (max-width: 1024px) {
     .login-box {
