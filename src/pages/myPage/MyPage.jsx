@@ -97,9 +97,10 @@ export default function MyPage() {
 
   useEffect(() => {
     if (user?.id) {
-      setUrl(`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/${user.id}/profile.png`);
+        console.log("user id:", user.id);
+        setUrl(`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/${user.profileUrl}?t=${Date.now()}`);
     }
-  }, [user]);
+}, [user]);
 
   
 

@@ -81,7 +81,7 @@
   overflow-y: auto;
   padding: 16px 24px;
   box-sizing: border-box;
-  min-height: 0;
+  min-height: 300px;
 }
 
 /* 참여 유저 */
@@ -90,7 +90,6 @@
   flex-direction: column;
   height: 40%;
   border-bottom: 1px solid #e0e0e0;
-  min-height: 200px;
 }
 
 .memberWrapper ul {
@@ -200,7 +199,7 @@
   flex-direction: column;
   min-height: 0;
   flex-grow: 1;
-  max-height: calc(90vh - 200px);
+  min-height: 300px;
   overflow: hidden;
 }
 
@@ -210,8 +209,7 @@
   overflow-y: auto;
   padding: 16px 24px;
   box-sizing: border-box;
-  min-height: 100;
-  max-height: 200px;
+  min-height: 300px;
   background-color: white;
   border-left: 4px solid white;
   border-right: 4px solid white;
@@ -333,7 +331,8 @@
 }
 
 .menuList {
-  max-height: 235px;
+  max-height: 350px;
+  min-height: 300px;
   overflow-y: auto;
   padding: 8px;
   margin-bottom: 24px;
@@ -383,9 +382,9 @@
 }
 
 .cartWrapper {
-  max-height: 200px;
   overflow-y: auto;
   padding-right: 8px;
+  min-height: 300px;
 }
 
 .leaderActions {
@@ -477,7 +476,7 @@
 }
 
 .cartTitle {
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 600;
   margin-bottom: 7px;
 }
@@ -504,7 +503,7 @@
 .cartItem {
   display: flex;
   align-items: center;
-  padding: 8px 0;
+  padding: 15px 0;
   border-bottom: 1px solid #ccc;
 }
 
