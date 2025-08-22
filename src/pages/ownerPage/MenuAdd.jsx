@@ -59,10 +59,14 @@ export default function MenuAdd({ user, imageId, onComplete, onTabChange }) {
         setFile(e.target.files[0]);
     };
 
-
     const handleUpload = async () => {
         if (!file) {
             alert("파일을 선택하세요!");
+            return;
+        }
+
+        if (!newStoreId) {
+            alert("가게번호를 먼저 입력해주세요!");
             return;
         }
 
@@ -73,19 +77,27 @@ export default function MenuAdd({ user, imageId, onComplete, onTabChange }) {
         formData.append("storeId", newStoreId);
 
         try {
-            // 1. 파일 업로드 (fetch로 서버 저장)
+            // 파일 업로드 (fetch로 서버 저장)
             const res = await fetch("api/files/upload/menuByOwner", {
                 method: "POST",
                 body: formData,
             });
-            if (!res.ok) throw new Error("파일 업로드 실패");
+            
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
 
-            const url = await res.text();
-            setUrl(url);
+            const responseData = await res.json(); // text()가 아닌 json()으로 변경
+            console.log("서버 응답:", responseData);
+            
+            // 서버에서 받은 데이터로 상태 업데이트
+            setUrl(responseData.url);
+            setImageId(responseData.imageId.toString()); // imageId 상태 업데이트
+            
+            alert("업로드 성공!");
 
-            alert("업로드 성공");
         } catch (err) {
-            console.error("에러:", err);
+            console.error("업로드 에러:", err);
             alert("업로드 실패: " + err.message);
         } finally {
             setIsUploading(false);
@@ -118,14 +130,11 @@ export default function MenuAdd({ user, imageId, onComplete, onTabChange }) {
 
                     {url && (
                         <div>
-                            <p>파일 URL:</p>
-                            <a href={url} target="_blank" rel="noopener noreferrer">
-                                {url}
-                            </a>
+                            <p> 업로드된 이미지 </p>
+                            <img src={url} alt="업로드된 이미지" style={{maxWidth: "200px", maxHeight: "200px"}} />
                         </div>
                     )}
-                    {newImageId && <p>업로드된 이미지 ID: {newImageId}</p>}
-                    <button onClick={handleUpload} disabled={isUploading}>
+                    <button onClick={handleUpload} disabled={isUploading || !newStoreId}>
                         {isUploading ? "업로드 중..." : "이미지등록하기"}
                     </button>
                 </div>
