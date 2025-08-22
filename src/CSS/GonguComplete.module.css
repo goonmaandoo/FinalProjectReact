@@ -160,7 +160,7 @@
   background-color: #e5e5e5;
 }
 
-/* 데스크탑 또는 태블릿 대응 (화면 너비가 768px 이상일 때) */
+
 @media (min-width: 768px) {
   .container {
     max-width: 600px;
@@ -206,7 +206,7 @@
   }
 }
 
-/* 아주 작은 모바일 대응 */
+
 @media (max-width: 450px) {
   .mainTitle {
     font-size: 20px;
