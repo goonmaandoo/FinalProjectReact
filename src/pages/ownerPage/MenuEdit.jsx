@@ -59,10 +59,9 @@ export default function MenuEdit({ selectedMenu, storeId, user, onComplete, onTa
         const formData = new FormData();
         formData.append("file", file);
         formData.append("imageId", newImageId);
-        formData.append("storeId", newStoreId);
 
         try {
-            const res = await fetch("api/files/upload/updateMenu", {
+            const res = await fetch("api/files/upload/menuImageByOwner", {
                 method: "POST",
                 body: formData,
             });
