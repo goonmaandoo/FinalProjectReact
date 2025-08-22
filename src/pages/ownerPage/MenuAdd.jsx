@@ -2,8 +2,8 @@ import style from "../../CSS/OwnerMenuEdit.module.css";
 import { useState } from "react";
 import axios from "axios";
 
-export default function MenuAdd({ user, storeId, imageId, onComplete, onTabChange }) {
-    const [newStoreId, setNewStoreId] = useState(storeId || "");
+export default function MenuAdd({ user, imageId, onComplete, onTabChange }) {
+    const [newStoreId, setNewStoreId] = useState("");
     const [newImageId, setImageId] = useState(""); // 업로드된 이미지 ID 저장
     const [newMenuName, setNewMenuName] = useState("");
     const [newMenuPrice, setNewMenuPrice] = useState("");
@@ -33,7 +33,7 @@ export default function MenuAdd({ user, storeId, imageId, onComplete, onTabChang
             alert("메뉴가 추가되었습니다.");
 
             // 입력 필드 초기화
-            setNewStoreId(storeId || "");
+            setNewStoreId("");
             setNewMenuName("");
             setNewMenuPrice("");
             setFile(null);
@@ -83,7 +83,7 @@ export default function MenuAdd({ user, storeId, imageId, onComplete, onTabChang
             const url = await res.text();
             setUrl(url);
 
-            alert("업로드 + DB 저장 완료 (이미지 ID: " + newId + ")");
+            alert("업로드 성공");
         } catch (err) {
             console.error("에러:", err);
             alert("업로드 실패: " + err.message);
