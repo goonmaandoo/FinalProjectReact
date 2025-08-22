@@ -68,18 +68,16 @@ export default function OrderDetailManagement() {
                                 <span className={styles["order_box_name"]}>{orders.tel}</span>
                             </div>
                         </div>
-                        {orders.roomOrder && orders.roomOrder.map((item, index) => (
-                            <div key={index}>
                                 <div className={styles["sub_title"]}>메뉴정보</div>
-                                <div className={styles["order_box_container2"]}>
+                                {orders.roomOrder && orders.roomOrder.map((item, index) => (
+                                <div  key={index} className={styles["order_box_container2"]}>
                                     <div>
                                         <span className={styles["order_box_title1"]}>{item.menu_name}</span>
                                     </div>
                                     <div className={styles["order_box_title1"]}>수량: {item.quantity}개</div>
                                     <div className={styles["order_box_title1"]}>가격: {item.menu_price}원</div>
                                 </div>
-                            </div>
-                            ))}
+                                ))}
                         <div className={styles["order_box_total"]}>총 주문금액 : {orders.totalPrice}원</div>
                     </div>
                 </div>

@@ -474,9 +474,7 @@ export default function RoomTest({ initialRoom, roomId }) {
                         <img
                           src={
                             member.profileurl
-                              ? `https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/${
-                                  member.profileurl
-                                }?t=${Date.now()}`
+                              ? `https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/${member.profileurl}?t=${Date.now()}`
                               : basic_profile
                           }
                           className={styles.memberProfile}
