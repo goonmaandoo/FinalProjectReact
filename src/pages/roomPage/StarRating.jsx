@@ -15,9 +15,7 @@ const StarRating = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const basic_profile =
-    "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileImg/mypagePerson.png";
-
+  const basic_profile = "https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/profileimg/mypagePerson.png";
   const SERVER_BASE = "http://localhost:8080";
 
   // 현재 로그인 유저 조회
