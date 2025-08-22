@@ -15,6 +15,9 @@ export default function StoreManagement() {
         tel: ""
     });
 
+    // 로딩 상태
+    const [loading, setLoading] = useState(true);
+
     // 페이지네이션 상태
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 3;
@@ -34,10 +37,12 @@ export default function StoreManagement() {
     useEffect(() => {
         if (!user || !user.id) {
             console.log("로그인된 사장님 정보 없음");
+            setLoading(false);
             return;
         }
 
         const ownerId = user.id;
+        setLoading(true);
         axios.get(`api/store/storeByOwnerId/${ownerId}`)
             .then(res => {
                 console.log("가게 리스트:", res.data);
@@ -45,7 +50,8 @@ export default function StoreManagement() {
             })
             .catch(err => {
                 console.error("가게 불러오기 실패:", err);
-            });
+            })
+            .finally(() => setLoading(false));
     }, [user]);
 
     const deletebutton = async (storeId) => {
@@ -91,7 +97,9 @@ export default function StoreManagement() {
             <div className={style["outbox"]}>
                 <div className={style["rightbox"]}>
                     <div className={style["storelist"]}>
-                        {currentStoreList.length > 0 ? (
+                        {loading ? (
+                            <p>로딩중...</p>
+                        ) : currentStoreList.length > 0 ? (
                             currentStoreList.map((store) => (
                                 <div key={store.id} className={style["store_card"]}>
                                     <h5>가게번호: {store.id}</h5>
@@ -179,7 +187,7 @@ export default function StoreManagement() {
                     </div>
 
                     {/* 페이지네이션 버튼 */}
-                    {totalPages > 1 && (
+                    {!loading && totalPages > 1 && (
                         <div className={style["pagination"]}>
                             {pageNumbers.map((number) => (
                                 <button

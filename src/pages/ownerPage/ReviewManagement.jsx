@@ -15,6 +15,9 @@ export default function ReviewManagement() {
     const [avgScore, setAvgScore] = useState(0);
     const [newReviewCount, setNewReviewCount] = useState(0);
 
+    // 로딩 상태
+    const [loading, setLoading] = useState(true);
+
     // 페이지네이션
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 3;
@@ -33,6 +36,7 @@ export default function ReviewManagement() {
 
     const fetchReviews = async () => {
         try {
+            setLoading(true);
             const res = await axios.get(`/api/review/selectReviewByOwner/${ownerId}`);
             const data = res.data;
 
@@ -57,6 +61,8 @@ export default function ReviewManagement() {
 
         } catch (err) {
             console.error("리뷰 불러오기 실패:", err);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -103,25 +109,32 @@ export default function ReviewManagement() {
 
                 <div className={style["review_list"]}>
                     <h2> 리뷰목록 </h2>
-                    {currentReviews.map((review, index) => (
-                        <div key={index} className={style["review_content"]}>
-                            <p className={style["nickname"]}><b>{review.nickname}</b> ({review.score}점)</p>
-                            <p>{review.status}</p>
-                            <p className={style["review_date"]}><FormattedDate dateString={review.createdAt} /></p>
-                            <p>{review.comments}</p>
 
-                            <div className={style["review_managebtn"]}>
-                                <button className={style["review_openbtn"]}
-                                    onClick={() => updateReviewStatus(review.id, "공개")}> 공개 </button>
-                                <button className={style["review_hidebtn"]}
-                                    onClick={() => updateReviewStatus(review.id, "비공개")}> 숨김 </button>
-                                <button className={style["review_reportbtn"]}
-                                    onClick={() => updateReviewStatus(review.id, "임시제한")}> 신고 </button>
+                    {loading ? (
+                        <p>로딩중...</p>
+                    ) : currentReviews.length > 0 ? (
+                        currentReviews.map((review, index) => (
+                            <div key={index} className={style["review_content"]}>
+                                <p className={style["nickname"]}><b>{review.nickname}</b> ({review.score}점)</p>
+                                <p>{review.status}</p>
+                                <p className={style["review_date"]}><FormattedDate dateString={review.createdAt} /></p>
+                                <p>{review.comments}</p>
+
+                                <div className={style["review_managebtn"]}>
+                                    <button className={style["review_openbtn"]}
+                                        onClick={() => updateReviewStatus(review.id, "공개")}> 공개 </button>
+                                    <button className={style["review_hidebtn"]}
+                                        onClick={() => updateReviewStatus(review.id, "비공개")}> 숨김 </button>
+                                    <button className={style["review_reportbtn"]}
+                                        onClick={() => updateReviewStatus(review.id, "임시제한")}> 신고 </button>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))
+                    ) : (
+                        <p>등록된 리뷰가 없습니다.</p>
+                    )}
 
-                    {totalPages > 1 && (
+                    {!loading && totalPages > 1 && (
                         <div className={style["pagination"]}>
                             {pageNumbers.map(number => (
                                 <button

@@ -12,6 +12,9 @@ export default function OwnerMenuEdit() {
     const [selectedTab, setSelectedTab] = useState("전체메뉴");
     const [selectedMenu, setSelectedMenu] = useState(null);
 
+    // 로딩 상태
+    const [loading, setLoading] = useState(true);
+
     // 페이지네이션
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
@@ -30,6 +33,7 @@ export default function OwnerMenuEdit() {
     const refreshMenuList = () => {
         if (!user || !user.id) return;
 
+        setLoading(true); // 로딩 시작
         axios.get(`api/menu/ownerWithImage/${user.id}`)
             .then(res => {
                 setMenuList(res.data);
@@ -37,7 +41,8 @@ export default function OwnerMenuEdit() {
                     setStoreId(res.data[0].storeId);
                 }
             })
-            .catch(console.error);
+            .catch(console.error)
+            .finally(() => setLoading(false)); // 로딩 끝
     };
 
     useEffect(() => {
@@ -66,11 +71,9 @@ export default function OwnerMenuEdit() {
         }
     };
 
-
     const handleMenuAddComplete = () => {
         refreshMenuList();
     };
-
 
     const handleMenuEditComplete = () => {
         setSelectedTab("전체메뉴");
@@ -96,12 +99,14 @@ export default function OwnerMenuEdit() {
                                 <button onClick={() => handleTabChange("메뉴추가")}> 메뉴 추가 </button>
                             </div>
                             <div className={style["all_menu"]}>
-                                {currentMenuList.length > 0 ? (
+                                {loading ? (
+                                    <p>로딩중...</p>
+                                ) : currentMenuList.length > 0 ? (
                                     currentMenuList.map(menu => (
                                         <div key={menu.id} className={style["menu_card"]}>
                                             <img
                                                 src={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/${menu.folder}/${menu.filename}`}
-                                                alt={`https://s3.us-east-1.amazonaws.com/delivery-bucket2025.08/imgfile/${menu.folder}/${menu.filename}`}
+                                                alt={menu.menuName}
                                                 className={style["menu_image"]}
                                             />
                                             <div className={style["menu_info"]}>
@@ -135,7 +140,7 @@ export default function OwnerMenuEdit() {
                                 )}
                             </div>
 
-                            {totalPages > 1 && (
+                            {!loading && totalPages > 1 && (
                                 <div className={style["pagination"]}>
                                     {pageNumbers.map(number => (
                                         <button
