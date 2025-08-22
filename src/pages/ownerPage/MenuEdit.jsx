@@ -2,11 +2,13 @@ import style from "../../CSS/OwnerMenuEdit.module.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function MenuEdit({ selectedMenu, user, onComplete, onTabChange }) {
+export default function MenuEdit({ selectedMenu, storeId, user, onComplete, onTabChange }) {
     const [editedMenuName, setEditedMenuName] = useState("");
     const [editedMenuPrice, setEditedMenuPrice] = useState("");
     const [editedMenuStatus, setEditedMenuStatus] = useState("판매중");
     const [file, setFile] = useState(null);
+    const [newImageId, setImageId] = useState("");
+    const [newStoreId, setNewStoreId] = useState(storeId || "");
 
     useEffect(() => {
         if (selectedMenu) {
@@ -16,44 +18,64 @@ export default function MenuEdit({ selectedMenu, user, onComplete, onTabChange }
         }
     }, [selectedMenu]);
 
-const handleMenuUpdate = () => {
-    const formData = new FormData();
-    formData.append("id", selectedMenu.id);
-    formData.append("storeId", selectedMenu.storeId);
-    formData.append("menuName", editedMenuName);
-    formData.append("menuPrice", editedMenuPrice);
-    formData.append("status", editedMenuStatus);
-    
-    if (file) {
-        formData.append("file", file);
-    }
+    const handleMenuUpdate = () => {
+        const formData = new FormData();
+        formData.append("id", selectedMenu.id);
+        formData.append("storeId", selectedMenu.storeId);
+        formData.append("menuName", editedMenuName);
+        formData.append("menuPrice", editedMenuPrice);
+        formData.append("status", editedMenuStatus);
 
-    // FormData 내용 로그 확인
-    console.log("=== 전송할 데이터 ===");
-    for (let [key, value] of formData.entries()) {
-        console.log(key, ":", value);
-    }
 
-    axios.put(`http://localhost:8080/menu/menuUpdateByOwner`, formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        }
-    })
-    .then(() => {
-        alert("메뉴가 수정되었습니다.");
-        setFile(null);
-        if (onComplete) {
-            onComplete();
-        }
-    })
-    .catch((err) => {
-        console.error("상세 오류:", err.response);
-        alert("메뉴 수정에 실패했습니다.");
-    });
-};
+
+        axios.put(`api/menu/menuUpdateByOwner`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+            .then(() => {
+                alert("메뉴가 수정되었습니다.");
+                setFile(null);
+                if (onComplete) {
+                    onComplete();
+                }
+            })
+            .catch((err) => {
+                console.error("상세 오류:", err.response);
+                alert("메뉴 수정에 실패했습니다.");
+            });
+    };
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
+    };
+
+    const handleUpload = async () => {
+        if (!file) {
+            alert("파일을 선택하세요!");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("imageId", newImageId);
+        formData.append("storeId", newStoreId);
+
+        try {
+            const res = await fetch("api/files/upload/updateMenu", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (!res.ok) throw new Error("업로드 실패");
+
+            const url = await res.text();
+            setUrl(url);
+            alert("업로드 성공!");
+        } catch (err) {
+            console.error(err);
+            alert("업로드 실패");
+        }
     };
 
     if (!selectedMenu) {
@@ -86,14 +108,15 @@ const handleMenuUpdate = () => {
                     />
                 </div>
                 <div>
-                    <label> 메뉴 이미지 수정하기 </label>
+                    {/* <label> 메뉴 이미지 수정하기 </label>
                     <input 
                         type="file"
                         accept="image/*"
                         onChange={handleFileChange}
                     />
-                    {file && <p>선택된 파일: {file.name}</p>}
-                    
+                    <button onClick={handleUpload}> 이미지 수정하기 </button>
+                    <br/> */}
+
                     <label>메뉴명</label><br />
                     <input
                         type="text"
@@ -141,6 +164,15 @@ const handleMenuUpdate = () => {
                     >
                         수정하기
                     </button>
+                </div>
+                <div className={style["store_firstimg"]}>
+                    <h3>수정할 메뉴 이미지</h3>
+                    <label>
+                        <input type="file" onChange={handleFileChange} />
+                    </label>
+                    {/* <input type="text" placeholder="이미지번호" onChange={(e) => setId(e.target.value)} />
+                    <p>가게관리에서 가게번호를 정확히 입력해주세요.</p> */}
+                    <button onClick={handleUpload}>등록</button>
                 </div>
             </div>
         </>

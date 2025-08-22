@@ -113,6 +113,7 @@ export default function StoreRegister() {
                         <div className={style["category_select"]}>
                             <h3>카테고리</h3>
                             <select value={menuCategoryId} onChange={(e) => setMenuCategoryId(e.target.value)}>
+                                <option value=""> 카테고리를 선택하세요 </option>
                                 <option value="2">피자</option>
                                 <option value="3">한식</option>
                                 <option value="4">분식</option>
@@ -154,7 +155,8 @@ export default function StoreRegister() {
                             <input type="file" onChange={handleFileChange} />
                             <p>이미지는 jpg형식의 파일로 올려주세요.</p>
                         </label>
-                        <input type="text" placeholder="id" onChange={(e) => setId(e.target.value)} />
+                        <input type="text" placeholder="가게번호" onChange={(e) => setId(e.target.value)} />
+                        <p>가게관리에서 가게번호를 정확히 입력해주세요.</p>
                         <button onClick={handleUpload}>등록</button>
                     </div>
                 </div>

@@ -2,8 +2,8 @@ import style from "../../CSS/OwnerMenuEdit.module.css";
 import { useState } from "react";
 import axios from "axios";
 
-export default function MenuAdd({ user, storeId, imageId, onComplete, onTabChange }) {
-    const [newStoreId, setNewStoreId] = useState(storeId || "");
+export default function MenuAdd({ user, imageId, onComplete, onTabChange }) {
+    const [newStoreId, setNewStoreId] = useState("");
     const [newImageId, setImageId] = useState(""); // 업로드된 이미지 ID 저장
     const [newMenuName, setNewMenuName] = useState("");
     const [newMenuPrice, setNewMenuPrice] = useState("");
@@ -28,12 +28,12 @@ export default function MenuAdd({ user, storeId, imageId, onComplete, onTabChang
             };
 
             console.log("메뉴 등록 데이터:", newMenu);
-            const menuResponse = await axios.post("http://localhost:8080/menu/menuInsertByOwner", newMenu);
+            const menuResponse = await axios.post("api/menu/menuInsertByOwner", newMenu);
 
             alert("메뉴가 추가되었습니다.");
 
             // 입력 필드 초기화
-            setNewStoreId(storeId || "");
+            setNewStoreId("");
             setNewMenuName("");
             setNewMenuPrice("");
             setFile(null);
@@ -59,94 +59,37 @@ export default function MenuAdd({ user, storeId, imageId, onComplete, onTabChang
         setFile(e.target.files[0]);
     };
 
-    // const handleUpload = async () => {
-    //     if (!file) {
-    //         alert("파일을 선택하세요!");
-    //         return;
-    //     }
 
-    //     console.log("이미지 업데이트 중...");
-    //     setIsUploading(true);
-
-    //     const formData = new FormData();
-    //     formData.append("file", file);
-    //     formData.append("storeId", newStoreId);
-
-    //     try {
-    //         const res = await fetch("http://localhost:8080/api/files/upload/menuByOwner", {
-    //             method: "POST",
-    //             body: formData,
-    //         });
-
-    //         if (!res.ok) {
-    //             throw new Error("업로드 실패");
-    //         }
-
-    //         const url = await res.text(); // URL 받기 (서버에서 문자열로 반환)
-    //         setUrl(url);
-
-    //         // URL에서 ID 추출 (예: menu_209.jpg 에서 209 추출)
-    //         const match = url.match(/menu_(\d+)/);
-    //         if (match) {
-    //             const extractedId = match[1];
-    //             setImageId(extractedId);
-    //             console.log("이미지 업데이트 완료, 이미지 ID:", extractedId);
-    //         } else {
-    //             console.log("URL에서 이미지 ID를 찾을 수 없습니다:", url);
-    //         }
-    //         alert("업로드 성공!");
-
-    //     } catch (err) {
-    //         console.error(err);
-    //         alert("업로드 실패");
-    //     } finally {
-    //         setIsUploading(false);
-    //     }
-    // };
     const handleUpload = async () => {
         if (!file) {
             alert("파일을 선택하세요!");
             return;
         }
 
-         setIsUploading(true);
+        setIsUploading(true);
 
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("storeId", newStoreId);
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("storeId", newStoreId);
 
-    try {
-        // 1. 파일 업로드 (fetch로 서버 저장)
-        const res = await fetch("http://localhost:8080/api/files/upload/menuByOwner", {
-            method: "POST",
-            body: formData,
-        });
-        if (!res.ok) throw new Error("파일 업로드 실패");
+        try {
+            // 1. 파일 업로드 (fetch로 서버 저장)
+            const res = await fetch("api/files/upload/menuByOwner", {
+                method: "POST",
+                body: formData,
+            });
+            if (!res.ok) throw new Error("파일 업로드 실패");
 
-        const url = await res.text();
-        setUrl(url);
+            const url = await res.text();
+            setUrl(url);
 
-        // 2. 이미지 DB insert
-        const imageDto = {
-            folder: "menuImages",  // 저장 경로(서버 정책 맞게 수정)
-            filename: file.name    // 파일명
-        };
-
-        const insertRes = await axios.post(
-            "http://localhost:8080/menuImageInsertByOwner",
-            imageDto
-        );
-
-        const newId = insertRes.data;
-        setImageId(newId);
-
-        alert("업로드 + DB 저장 완료 (이미지 ID: " + newId + ")");
-    } catch (err) {
-        console.error("에러:", err);
-        alert("업로드 실패: " + err.message);
-    } finally {
-        setIsUploading(false);
-    }
+            alert("업로드 성공");
+        } catch (err) {
+            console.error("에러:", err);
+            alert("업로드 실패: " + err.message);
+        } finally {
+            setIsUploading(false);
+        }
     };
 
     return (
@@ -173,7 +116,14 @@ export default function MenuAdd({ user, storeId, imageId, onComplete, onTabChang
                         disabled={isUploading}
                     />
 
-                    {file && <p>선택된 파일: {file.name}</p>}
+                    {url && (
+                        <div>
+                            <p>파일 URL:</p>
+                            <a href={url} target="_blank" rel="noopener noreferrer">
+                                {url}
+                            </a>
+                        </div>
+                    )}
                     {newImageId && <p>업로드된 이미지 ID: {newImageId}</p>}
                     <button onClick={handleUpload} disabled={isUploading}>
                         {isUploading ? "업로드 중..." : "이미지등록하기"}
