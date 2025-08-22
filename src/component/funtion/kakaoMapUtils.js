@@ -7,7 +7,7 @@ export const initUserMap = ({
     mapInstance,
     geocoder,
     userMarker,
-    onUserLocationUpdate, // ⭐️ 부모의 상태 업데이트 함수로 이름을 변경합니다.
+    onUserLocationUpdate, //  부모의 상태 업데이트 함수로 이름을 변경합니다.
     updateAddress,
 }) => {
     console.log("사용할 유저 좌표, 주소",userAddress,userCoords);
@@ -46,7 +46,7 @@ export const initUserMap = ({
               if (status === window.kakao.maps.services.Status.OK) {
                 const newAddress = res[0].address.address_name;
                 
-                // ⭐️ 부모 컴포넌트의 상태를 주소와 좌표 모두 업데이트
+                //  부모 컴포넌트의 상태를 주소와 좌표 모두 업데이트
                 onUserLocationUpdate(newAddress, { lat: newPos.getLat(), lng: newPos.getLng() });
                 
                 // 백엔드에 주소 업데이트 요청

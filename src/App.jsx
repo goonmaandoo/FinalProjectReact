@@ -170,7 +170,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/mainpage" replace />} />
         <Route path="/mainpage" element={<MainPage />} />
-        <Route path="/roomPage/AllRoom" element={<AllRoom />} />
+        <Route path="/roomPage/AllRoom" element={
+          <LoginCheck>
+            <AllRoom />
+          </LoginCheck>
+        } />
         <Route
           path="/room/create/:storeId"
           element={
