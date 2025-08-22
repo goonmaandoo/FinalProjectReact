@@ -7,7 +7,7 @@ export default function OrderCompleteModal({ visible, onClose, cart, totalPrice,
     return (
         <div className={styles.modalOverlay}>
             <div className={styles.modalBox}>
-                <h2 className={styles.title}>✅ 주문 완료</h2>
+                <h2 className={styles.title}> 주문 완료</h2>
                 <p className={styles.subTitle}>{room?.roomName} - 영수증</p>
 
                 <div className={styles.receipt}>

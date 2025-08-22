@@ -53,7 +53,7 @@ const OrderComplete = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <i className="fas fa-check-circle"></i>
-        <h1>주문 완료 🎉</h1>
+        <h1>주문 완료 </h1>
       </div>
 
       <div className={styles.orderInfo}>
