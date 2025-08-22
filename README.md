@@ -1,12 +1,120 @@
-# React + Vite
+# Delivery-MoA 사이트 기획서
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 1. 프로젝트 개요
 
-Currently, two official plugins are available:
+### 1.1 프로젝트명
+"배달모아"
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 1.2 기획의도
+- '공동구매'를 통한 배달비 절감과 최소주문금액 부담감 해소
+- 채팅을 통한 실시간 소통
+- 위치 기반 서비스를 통한 이웃 커뮤니티 형성
 
-## Expanding the ESLint configuration
+### 1.3 목적
+- 비용 절감과 소통을 동시에 이루는 새로운 배달 문화 창출
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 1.4 차별점
+- 최소주문금액 부담 해소에 따른 소량 주문 가능
+- 지역 주민과 자연스러운 커뮤니티 형성
+- 공구방 일원간 소통
+
+## 2. 주요 기능 상세
+
+### 2.1 메인화면
+- 내 위치 설정
+- 카테고리별 가게 확인
+- 진행중인 공구방 확인
+- 검색창에 키워드 입력 시 가게, 메뉴, 공구방 출력
+
+### 2.2 햄버거바
+- 친절도 및 잔여 캐시 확인
+- 입장한 공구방 리스트
+
+### 2.3 사용자관리
+- 사장님과 일반회원 회원가입 및 로그인
+- 회원정보 수정 및 탈퇴
+
+### 2.4 가게 리스트 및 상세페이지
+- 카테고리에 맞춰 가게 출력
+- 가게 위치 지도상에 표시
+- 공구방 개설과 개설된 방 확인 가능
+
+### 2.5 공구과정
+- 공구방 입장하기
+- 개인메뉴 주문 후 방장이 최종주문
+- 배달완료 시 픽업
+- 공구종료 및 사용자 평가
+
+### 2.6 마이페이지
+- 캐시(사이트 내 가상화폐) 충전
+- 사용자 평가에 따른 친절도 게이지 업데이트
+- 주문내역 확인
+- 문의남기기 및 문의내역 확인
+- 가게 리뷰 남기기 및 리뷰 확인
+
+### 2.7 사장님페이지
+- 가게등록 및 가게관리
+- 메뉴관리
+- 배달접수 및 현황 체크
+- 리뷰관리
+- 주문확인
+
+### 2.8 관리자페이지
+- 주문리스트 확인
+- 회원리스트 확인
+- 가게관리
+- 탈퇴, 정지 회원 관리
+- 문의내역
+- 공구방리스트 확인
+- 신고관리
+- 환불관리
+- 댓글관리
+
+## 3. 기술 스택
+
+### 3.1 언어
+- HTML, CSS, JavaScript
+- Java
+
+### 3.2 프레임워크
+
+#### 3.2.1 웹
+- 리액트
+- spring boot
+
+#### 3.2.2 앱
+- flutter
+
+### 3.3 데이터베이스
+- 오라클
+
+### 3.4 개발툴
+- Visual Studio Code
+- IntelliJ
+- Github
+- AWS
+
+## 4. ERD 요약
+- users : 회원 정보
+- qna : 문의내역
+- payment : 캐시내역
+- image : 이미지
+- menu_category : 메뉴 카테고리
+- menu : 메뉴
+- review : 리뷰
+- store : 가게
+- room : 공구방
+- room_join : 입장한공구방
+- orders : 주문
+- chat : 채팅내역
+- chat_report : 신고
+
+## 5. 프로젝트 기간
+- 2025.07 ~ 2025.08
+
+## 6. 팀소개
+- 박채원(팀장) : Github 및 AWS 구축, 메인페이지, 가게리스트, 가게상세페이지, 주문상세페이지, 햄버거바, 관리자페이지
+- 선승희 : 회원가입, 로그인, 회원정보 수정 및 탈퇴, 사장님페이지
+- 강상욱 : 마이페이지, 관리자페이지, flutter
+- 김호수 : 공구방 생성, 가게 리뷰페이지, 주문완료 영수증, 사장님페이지
+- 이태웅 : 공구방, 지도, 친절도 게이지, 마이페이지, 관리자페이지

@@ -1,10 +1,7 @@
-/* CSS/MoaPolicy.module.css */
-
 .container {
   max-width: 80rem;
   margin: 40px auto;
   padding: 0 20px;
-  font-family: "Noto Sans KR", sans-serif;
   color: #333;
   line-height: 1.6;
 }
