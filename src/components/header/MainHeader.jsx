@@ -89,12 +89,12 @@ export default function MainHeader({ toggleMenu }) {
                 </div>
                 <div>
                     <ul className={styles["main_menu"]}>
-                        <li><Link to="/storelist">메뉴</Link></li>
+                        <li><Link to="/storelist/1">메뉴</Link></li>
                         <li>
-                            <Link to="/" state="">진행중인 공구</Link>
+                            <Link to="roomPage/AllRoom" state="">진행중인 공구</Link>
                         </li>
-                        <li>랭킹</li>
-                        <li>이벤트</li>
+                        <li></li>
+                        <li>마이페이지</li>
                     </ul>
                 </div>
                 <div className={styles["location"]}>
