@@ -132,7 +132,7 @@ button{
     margin-top: 10px;
 }
 
-/* 최근 주문 박스 */
+
 .recent_order_box {
     background-color: white;
     border-radius: 10px;
@@ -210,21 +210,21 @@ button{
 }
 
 
-/* 사이드바 */
+
 .sidebar {
     width: 220px;
     background-color: white;
     border-right: 1px solid #ddd;
 }
 
-/* 메인 컨텐츠 */
+
 .main_content {
     flex: 1;
     padding: 20px;
     background-color: #f5f5f5;
 }
 
-/* 상단 헤더 */
+
 .content_header {
     background-color: #ff6b6b;
     color: white;
@@ -245,7 +245,7 @@ button{
     opacity: 0.9;
 }
 
-/* 주문 현황 요약 */
+
 .status_summary {
     background-color: white;
     padding: 20px;
@@ -288,7 +288,7 @@ button{
 }
 
 
-/* 사이드바 - 기존 leftbox 스타일 활용 */
+
 .sidebar {
     width: 220px;
     background-color: white;
@@ -297,7 +297,7 @@ button{
     flex-shrink: 0;
 }
 
-/* 메인 컨텐츠 - 기존 rightbox 스타일 활용 */
+
 .main_content {
     flex: 1;
     padding: 20px;
@@ -305,7 +305,7 @@ button{
     overflow-y: auto;
 }
 
-/* 상단 헤더 */
+
 .content_header {
     background-color: #ff6b6b;
     color: white;
@@ -327,7 +327,7 @@ button{
     opacity: 0.9;
 }
 
-/* 주문 현황 요약 */
+
 .status_summary {
     background-color: white;
     padding: 20px;
@@ -374,7 +374,7 @@ button{
 
 
 
-/* 필터 버튼 */
+
 .filter_buttons {
     padding: 15px 20px;
     display: flex;
@@ -405,7 +405,7 @@ button{
 
 
 
-/* OrderList 컴포넌트 전용 스타일 */
+
 .order_container {
     width: 100%;
     max-width: 1240px;
@@ -417,7 +417,7 @@ button{
 }
 
 .order_list_container {
-  max-height: 600px; /* 원하는 높이 */
+  max-height: 600px; 
   overflow-y: auto;
   padding: 15px;
   background: #fff;
@@ -425,7 +425,7 @@ button{
   box-shadow: 2px 4px 10px rgba(0,0,0,0.1);
 }
 
-/* 스크롤바 커스터마이징 (선택) */
+
 .order_list_container::-webkit-scrollbar {
   width: 8px;
 }
@@ -438,7 +438,7 @@ button{
 }
 
 
-/* 주문 내역 헤더 */
+
 .order_list_header {
     font-size: 16px;
     font-weight: bold;
@@ -447,7 +447,7 @@ button{
     color: #333;
 }
 
-/* 주문이 없을 때 */
+
 .empty_state {
     text-align: center;
     color: #999;
@@ -455,7 +455,7 @@ button{
     padding: 30px 0;
 }
 
-/* 개별 주문 아이템 */
+
 .order_item {
     background-color: #f9f9f9;
     border: 1px solid #e0e0e0;
@@ -465,7 +465,7 @@ button{
     box-shadow: none;
 }
 
-/* 주문번호와 날짜가 있는 헤더 */
+
 .order_header {
     display: flex;
     justify-content: space-between;
@@ -487,7 +487,7 @@ button{
     font-weight: normal;
 }
 
-/* "메뉴" 타이틀 행 */
+
 .menu_title_row {
     font-size: 14px;
     font-weight: bold;
@@ -497,12 +497,12 @@ button{
     user-select: auto;
 }
 
-/* 메뉴 펼침 아이콘 */
+
 .menu_title_row > span {
     font-size: 14px;
 }
 
-/* 메뉴 아이템 목록 (펼쳐졌을 때) */
+
 .order_items {
     background-color: #ffe0e0;
     padding: 8px 10px;
@@ -511,7 +511,7 @@ button{
     margin-bottom: 8px;
 }
 
-/* 각 메뉴 아이템 행 */
+
 .menu_item_row {
     display: flex;
     justify-content: space-between;
@@ -520,7 +520,7 @@ button{
     color: #555;
 }
 
-/* 고객 주소 정보 */
+
 .customer_info {
     font-size: 12px;
     color: #555;
