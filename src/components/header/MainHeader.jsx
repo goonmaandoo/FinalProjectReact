@@ -93,8 +93,9 @@ export default function MainHeader({ toggleMenu }) {
                         <li>
                             <Link to="roomPage/AllRoom" state="">진행중인 공구</Link>
                         </li>
-                        <li></li>
-                        <li>마이페이지</li>
+                        <li>
+                            <Link to="/mypage">마이페이지</Link>
+                        </li>
                     </ul>
                 </div>
                 <div className={styles["location"]}>
