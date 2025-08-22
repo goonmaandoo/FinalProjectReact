@@ -87,7 +87,7 @@ export default function MenuAdd({ user, imageId, onComplete, onTabChange }) {
                 throw new Error(`HTTP error! status: ${res.status}`);
             }
 
-            const responseData = await res.json(); // text()가 아닌 json()으로 변경
+            const responseData = await res.json();
             console.log("서버 응답:", responseData);
             
             // 서버에서 받은 데이터로 상태 업데이트
