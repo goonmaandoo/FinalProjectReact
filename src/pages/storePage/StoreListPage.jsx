@@ -116,7 +116,7 @@ export default function StoreListPage() {
                       <div className={styles["store_star"]}>
                         <span className={styles["star"]}>★</span>
                         <span className={styles["score"]}>
-                          {item.avgRating ? item.avgRating.toFixed(1) : "0.0"} (
+                          {item.avgRating ? item.avgRating.toFixed(1) : "5.0"} (
                           {item.reviewCount || 0})
                         </span>
                       </div>

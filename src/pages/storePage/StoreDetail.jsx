@@ -70,7 +70,7 @@ export default function StoreDetail() {
                     <div className={styles["store_star"]}>
                         <div className={styles["star"]}>★</div>
                         <div className={styles["score"]}>
-                            {store.avgRating ? store.avgRating.toFixed(1) : "0.0"}
+                            {store.avgRating ? store.avgRating.toFixed(1) : "5.0"}
                             ({store.reviewCount || 0})
                         </div>
                     </div>
