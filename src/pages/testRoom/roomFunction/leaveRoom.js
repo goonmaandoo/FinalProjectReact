@@ -13,7 +13,7 @@ export async function handleLeaveRoom({ room, user, roomId, status, navigate }) 
     const isLeaderLeaving = String(user.id) === String(room.leaderId);
 
     try {
-        // ✅ 인원이 없거나, 방장이 나갈 경우 → 방 삭제
+        // 인원이 없거나, 방장이 나갈 경우 → 방 삭제
         if (updatedUsers.length === 0 || isLeaderLeaving) {
             await axios.delete(`/api/room/${roomId}/blowUpRoom`);
             await axios.delete(`/api/roomJoin/${roomId}/deleteRoomOnlyJoin`);
@@ -23,7 +23,7 @@ export async function handleLeaveRoom({ room, user, roomId, status, navigate }) 
             return;
         }
 
-        // ✅ 일반 유저가 나갈 경우 → users 배열만 업데이트
+        // 일반 유저가 나갈 경우 → users 배열만 업데이트
         await axios.put('/api/room/updateReady', {
             id: roomId,
             users: JSON.stringify(updatedUsers),

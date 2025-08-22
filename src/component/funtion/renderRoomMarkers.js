@@ -28,7 +28,7 @@ export const renderRoomMarkers = ({
       //   { lat: res[0].y, lng: res[0].x }
       // );
       const distance = getDistance(
-        { lat: userCoords.lat, lng: userCoords.lng }, // ✅ userCoords 객체의 속성을 직접 사용
+        { lat: userCoords.lat, lng: userCoords.lng }, // userCoords 객체의 속성을 직접 사용
         { lat: res[0].y, lng: res[0].x }
       );
 

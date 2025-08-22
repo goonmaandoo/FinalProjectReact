@@ -59,7 +59,7 @@ export default function RoomGatekeeper() {
                     };
 
                     const updatedUsers = [...roomData.users, newUser];
-                    await getInRoom(roomId, updatedUsers, user.id); // ✅ navigate 없음
+                    await getInRoom(roomId, updatedUsers, user.id); // navigate 없음
                     roomData.users = updatedUsers;
                 }
 
