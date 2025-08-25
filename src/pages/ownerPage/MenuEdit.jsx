@@ -1,4 +1,4 @@
-import style from "../../CSS/OwnerMenuEdit.module.css";
+import style from "../../CSS/Owner/MenuEdit.module.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -9,6 +9,8 @@ export default function MenuEdit({ selectedMenu, storeId, user, onComplete, onTa
     const [file, setFile] = useState(null);
     const [newImageId, setImageId] = useState("");
     const [newStoreId, setNewStoreId] = useState(storeId || "");
+    const [isUploading, setIsUploading] = useState(false);
+    const [url, setUrl] = useState("");
 
     useEffect(() => {
         if (selectedMenu) {
@@ -26,7 +28,9 @@ export default function MenuEdit({ selectedMenu, storeId, user, onComplete, onTa
         formData.append("menuPrice", editedMenuPrice);
         formData.append("status", editedMenuStatus);
 
-
+        if (newImageId) {
+            formData.append("imageId", newImageId);
+        }
 
         axios.put(`api/menu/menuUpdateByOwner`, formData, {
             headers: {
@@ -56,26 +60,41 @@ export default function MenuEdit({ selectedMenu, storeId, user, onComplete, onTa
             return;
         }
 
+
+        setIsUploading(true);
+
         const formData = new FormData();
         formData.append("file", file);
-        formData.append("imageId", newImageId);
+        formData.append("storeId", selectedMenu.storeId);
 
         try {
-            const res = await fetch("api/files/upload/menuImageByOwner", {
+            // 파일 업로드 (fetch로 서버 저장)
+            const res = await fetch("api/files/upload/menuByOwner", {
                 method: "POST",
                 body: formData,
             });
 
-            if (!res.ok) throw new Error("업로드 실패");
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
 
-            const url = await res.text();
-            setUrl(url);
+            const responseData = await res.json();
+            console.log("서버 응답:", responseData);
+
+            // 서버에서 받은 데이터로 상태 업데이트
+            setUrl(responseData.url);
+            setImageId(responseData.imageId.toString()); // imageId 상태 업데이트
+
             alert("업로드 성공!");
+
         } catch (err) {
-            console.error(err);
-            alert("업로드 실패");
+            console.error("업로드 에러:", err);
+            alert("업로드 실패: " + err.message);
+        } finally {
+            setIsUploading(false);
         }
     };
+
 
     if (!selectedMenu) {
         return (
@@ -107,14 +126,17 @@ export default function MenuEdit({ selectedMenu, storeId, user, onComplete, onTa
                     />
                 </div>
                 <div>
-                    {/* <label> 메뉴 이미지 수정하기 </label>
-                    <input 
-                        type="file"
-                        accept="image/*"
-                        onChange={handleFileChange}
-                    />
-                    <button onClick={handleUpload}> 이미지 수정하기 </button>
-                    <br/> */}
+                    <div className={style["store_firstimg"]}>
+                        <h3>수정할 메뉴 이미지</h3>
+
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleFileChange}
+                            disabled={isUploading}
+                        />
+                        <button className={style["insertmenu_button"]} onClick={handleUpload}>등록</button>
+                    </div>
 
                     <label>메뉴명</label><br />
                     <input
@@ -164,15 +186,7 @@ export default function MenuEdit({ selectedMenu, storeId, user, onComplete, onTa
                         수정하기
                     </button>
                 </div>
-                <div className={style["store_firstimg"]}>
-                    <h3>수정할 메뉴 이미지</h3>
-                    <label>
-                        <input type="file" onChange={handleFileChange} />
-                    </label>
-                    {/* <input type="text" placeholder="이미지번호" onChange={(e) => setId(e.target.value)} />
-                    <p>가게관리에서 가게번호를 정확히 입력해주세요.</p> */}
-                    <button onClick={handleUpload}>등록</button>
-                </div>
+
             </div>
         </>
     );
