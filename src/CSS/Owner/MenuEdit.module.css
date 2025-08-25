@@ -1,0 +1,135 @@
+.menu_button button {
+    margin-right: 10px;
+    border: none;
+    cursor: pointer;
+    background-color: #ff6b6b;
+    color: white;
+    border-radius: 10px;
+    font-size: 16px;
+    padding: 10px;
+}
+/* 메뉴수정 전체 레이아웃 */
+.edit_menu {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: flex-start;
+    padding: 30px;
+    background: #fff;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+/* 메뉴 이미지 */
+.edit_menu_image img {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 15px;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* 입력 폼 영역 */
+.edit_menu label {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+.edit_input {
+    padding: 12px 16px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+    width: 100%;
+}
+
+/* 라디오 버튼 그룹 */
+.radio_group {
+    display: flex;
+
+    gap: 30px;
+}
+
+/* 라디오 버튼 */
+input[type="radio"]+label {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    user-select: none;
+    font-weight: 600;
+    font-size: 16px;
+    color: #444;
+    display: inline-block;
+    margin-top: 0;
+}
+
+/* 라디오 버튼 디자인 */
+input[type="radio"]+label::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ff6b6b;
+    border-radius: 50%;
+    background-color: white;
+    transition: all 0.2s ease;
+}
+
+input[type="radio"]:checked+label::after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    background-color: #ff6b6b;
+    border-radius: 50%;
+}
+
+/* 버튼 */
+.insertmenu_button {
+    background-color: #ff9d9d;
+    color: white;
+    height: 45px;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0 20px;
+    box-shadow: 0 3px 8px rgba(255, 157, 157, 0.3);
+    transition: all 0.2s ease;
+}
+
+.insertmenu_button:hover {
+    background-color: #ff6b6b;
+}
+
+/* 파일 업로드 영역 */
+.store_firstimg {
+    margin-bottom: 25px;
+    align-items: center;
+    gap: 15px;
+}
+
+.store_firstimg h3 {
+    font-size: 18px;
+    color: #444;
+    margin-right: 15px;
+    margin-bottom: 0;
+}
+
+.store_firstimg input[type="file"] {
+    flex: 1;
+    font-size: 15px;
+}
